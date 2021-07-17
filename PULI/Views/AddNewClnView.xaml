@@ -1,0 +1,378 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:controls="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+             mc:Ignorable="d"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             x:Class="PULI.Views.AddNewClnView">
+
+    <Grid x:Name="AddNewLayout">
+    <ScrollView>
+    <StackLayout x:Name="AllForm" IsVisible="false">
+            <Frame  Padding="0,0,0,0"
+                           Margin="5,10,5,10"
+                           CornerRadius="30">
+                <StackLayout Orientation="Horizontal"
+                                     WidthRequest="280"
+                                     HorizontalOptions="FillAndExpand"
+                                     Margin="5,-10,5,0"
+                                     >
+
+                    <Button BackgroundColor="#f1ab86"
+                                                Text="新增案主"
+                                                TextColor="White"
+                                                FontSize="20"
+                                                BorderWidth="1"
+                                               BorderRadius="30" 
+                                                WidthRequest="100"
+                                                HeightRequest="45"
+                                                IsVisible="FALSE"
+                                            
+                                                HorizontalOptions="FillAndExpand"
+                                                x:Name="buttonadd"
+                                                Margin="5,5,-5,5"
+                                                Pressed="Button_OnPressed"
+                                                
+                                                Clicked="buttonadd_Clicked"/>
+
+                    <Button BackgroundColor= "White"
+                                            Text="修改案主"
+                                            TextColor="#f1ab86"
+                                            FontSize="20"
+                                            BorderWidth="1"
+                                            BorderRadius="30" 
+                                            WidthRequest="100"
+                                             IsVisible="FALSE"
+                                            HeightRequest="45"
+                                            Pressed="Button2_OnPressed"
+                                           
+                                            HorizontalOptions="FillAndExpand"
+                                            x:Name="buttonrenew"
+                                            Margin="0,5,5,5"
+                                            Clicked="buttonrenew_Clicked"/>
+                </StackLayout>
+            </Frame>
+            <StackLayout x:Name="AddForm">
+                <Frame BackgroundColor="#98c1d9"
+                                Margin="10,0,10,0"
+                               Padding="0,0,0,10"
+                              
+                               CornerRadius="20">
+                    <StackLayout >
+                        <Label Text="案主資訊"
+                                   FontSize="Large"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                                   Margin="5,5,5,0"
+                                   Padding="5,0,0,8"
+                                   TextColor="White"
+                                   
+                                   />
+                    </StackLayout>
+                </Frame>
+                <Frame BorderColor="#98c1d9"
+                               BackgroundColor="#E0F0F5"
+                               Margin="10,-20,10,0">
+                    <StackLayout x:Name="resComStack">
+
+                        <Label Text="請正確填寫下列資訊"
+                                       FontSize="Large"
+                                       Margin="0,0,0,0"
+                                       TextColor="#326292"/>
+
+                        <!--<StackLayout x:Name="usr_infoStack"
+                                             IsVisible="True"
+                                             IsEnabled="True"
+                                             Margin="10,0,10,0">
+
+                            </StackLayout>-->
+
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="姓" FontSize="18"></Label>
+                            <Frame  BorderColor="Black" CornerRadius="20" Margin="0,0,0,0" Padding="10,3,10,3">
+                                <Entry  x:Name="_usrNamea"  
+                                        Placeholder = "點我輸入"
+                                        HeightRequest = "50"
+                                        VerticalOptions = "Center"
+                                        PlaceholderColor = "#ADB5BD"
+                                        TextColor = "#326292"
+                                            ClassId="姓"
+                                        HorizontalOptions="FillAndExpand" />
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="名" FontSize="18"></Label>
+                            <Frame  BorderColor="Black" CornerRadius="20" Margin="0,0,0,0" Padding="10,3,10,3">
+                                <Entry  x:Name="_usrNameb"  
+                                        Placeholder = "點我輸入"
+                                        HeightRequest = "50"
+                                        VerticalOptions = "Center"
+                                        PlaceholderColor = "#ADB5BD"
+                                        TextColor = "#326292"
+                                            ClassId="名"
+                                        HorizontalOptions="FillAndExpand" />
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="身分證" FontSize="18"></Label>
+                            <Frame  BorderColor="Black" CornerRadius="20" Margin="0,0,0,0" Padding="10,3,10,3">
+                                <Entry  x:Name="_usrCard"  
+                                        Placeholder = "點我輸入"
+                                        HeightRequest = "50"
+                                        VerticalOptions = "Center"
+                                        PlaceholderColor = "#ADB5BD"
+                                        TextColor = "#326292"
+                                        HorizontalOptions="FillAndExpand" />
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="性別" FontSize="18"></Label>
+                            <Frame  BorderColor="Black" CornerRadius="20" Margin="0,0,0,0" Padding="10,3,10,3">
+                                <Entry  x:Name="_usrGender"  
+                                        Placeholder = "點我輸入"
+                                        HeightRequest = "50"
+                                        VerticalOptions = "Center"
+                                        PlaceholderColor = "#ADB5BD"
+                                            ClassId="性別"
+                                        TextColor = "#326292"
+                                        HorizontalOptions="FillAndExpand" />
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="生日" FontSize="18"></Label>
+                            <Frame  BorderColor="Black" CornerRadius="20" Margin="0,0,0,0" Padding="10,3,10,3">
+                                <DatePicker 
+                                                x:Name="DP"
+                                                VerticalOptions="Center" 
+                                                HorizontalOptions="FillAndExpand"
+                                                Date="{x:Static sys:DateTime.Today}"
+                                                Format="yyyy-MM-dd"
+                                                TextColor = "#326292"
+                                                MaximumDate="{x:Static sys:DateTime.Today}"
+                                                DateSelected="DP_DateSelected">
+                                </DatePicker>
+                            </Frame>
+
+                            <!--<Frame  BorderColor="Black" CornerRadius="20" Margin="0,0,0,0" Padding="10,3,10,3">
+                                    <Entry  x:Name="_usrBirthday"  
+                                        Placeholder = "點我輸入"
+                                        HeightRequest = "50"
+                                        VerticalOptions = "Center"
+                                        PlaceholderColor = "#ADB5BD"
+                                        TextColor = "#326292"
+                                            ClassId="生日"
+                                        HorizontalOptions="FillAndExpand" />
+                                </Frame>-->
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="電話" FontSize="18"></Label>
+                            <Frame  BorderColor="Black" CornerRadius="20" Margin="0,0,0,0" Padding="10,3,10,3">
+                                <Entry  x:Name="_usrPhone"  
+                                        Placeholder = "點我輸入"
+                                        HeightRequest = "50"
+                                        VerticalOptions = "Center"
+                                        PlaceholderColor = "#ADB5BD"
+                                        TextColor = "#326292"
+                                            ClassId="電話"
+                                        HorizontalOptions="FillAndExpand" />
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="手機" FontSize="18"></Label>
+                            <Frame  BorderColor="Black" CornerRadius="20" Margin="0,0,0,0" Padding="10,3,10,3">
+                                <Entry  x:Name="_usrCellPhone"  
+                                        Placeholder = "點我輸入"
+                                        HeightRequest = "50"
+                                        VerticalOptions = "Center"
+                                        PlaceholderColor = "#ADB5BD"
+                                        TextColor = "#326292"
+                                            ClassId="手機"
+                                        HorizontalOptions="FillAndExpand" />
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical" VerticalOptions="Center"  Padding="10,3,10,3">
+
+                            <!--<controls:TintedImage x:Name="buttonImage" TintColor="Blue" HeightRequest="50" WidthRequest="50" Source="fill.png"/>-->
+                            <Frame BackgroundColor="#fcd5ce" 
+                               HeightRequest="40" 
+                               WidthRequest="150" 
+                               Margin="5,0,0,0" 
+                               Padding="0,5,0,5" 
+                               CornerRadius="20" 
+                               x:Name="photo"
+                               IsVisible="True"
+                               IsEnabled="True">        
+                                <Frame.GestureRecognizers>
+
+                                    <TapGestureRecognizer Tapped="btnCam_Clicked" />
+
+                                </Frame.GestureRecognizers>
+                                <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand"  VerticalOptions="Center">
+                                        <controls:TintedImage x:Name="buttonImage" TintColor="White" HeightRequest="22" WidthRequest="22" Source="camera.png"/>
+                                        <!--<Button 
+                                            Text="填寫會員資料"
+                                            TextColor="White"
+                                            FontSize="15"
+                                            IsVisible="True"
+                                            IsEnabled="True"
+                                            BorderWidth="1"
+                                            BorderRadius="20"
+                                            HorizontalOptions="End"
+                                            x:Name="user_detail_btn"
+                                            Margin="0,0,10,0"
+                                            Clicked="User_Detail_Clicked"/>-->
+                                        <Label Text="照片記錄" TextColor="White"
+                                           FontSize="18"
+                                           Padding="0,0,0,0"
+                                           VerticalTextAlignment="Center"
+                                           HorizontalTextAlignment="Center"/>
+                                       
+
+                                    </StackLayout>
+                                   
+                                </StackLayout>
+                            </Frame>
+
+                        </StackLayout>
+                        <Image x:Name="img" HorizontalOptions="Center" VerticalOptions="Center" />
+                        <!--<StackLayout Orientation="Vertical">
+                          
+                            <Button x:Name="photo" 
+                                    BackgroundColor="#fcd5ce"
+                                    Text="照片記錄" 
+                                    FontSize="18"
+                                     BorderWidth="1"
+                                        WidthRequest="200"
+                                        HeightRequest="50"
+                                        BorderRadius="25"
+                                     Margin="0,10,0,0"
+                                        HorizontalOptions="CenterAndExpand"
+                                     Clicked="photo_Clicked"
+                                    ></Button>
+                        </StackLayout>-->
+                        
+                        
+                        <!--<StackLayout Orientation="Vertical">
+                                <Label Text="經度" FontSize="18"></Label>
+                                <Frame  BorderColor="Black" CornerRadius="20" Margin="0,0,0,0" Padding="10,3,10,3">
+                                    <Entry  x:Name="_usrLon"  
+                                        Placeholder = "點我輸入"
+                                        HeightRequest = "50"
+                                        IsEnabled="False"
+                                        VerticalOptions = "Center"
+                                        PlaceholderColor = "#326292"
+                                        TextColor = "#326292"
+                                        HorizontalOptions="FillAndExpand" />
+                                </Frame>
+                            </StackLayout>
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="緯度" FontSize="18"></Label>
+                                <Frame  BorderColor="Black" CornerRadius="20" Margin="0,0,0,0" Padding="10,3,10,3">
+                                    <Entry  x:Name="_usrLat"  
+                                        Placeholder = "點我輸入"
+                                        HeightRequest = "50"
+                                        IsEnabled="False"
+                                        VerticalOptions = "Center"
+                                        PlaceholderColor = "#326292"
+                                        TextColor = "#326292"
+                                        HorizontalOptions="FillAndExpand" />
+                                </Frame>
+                            </StackLayout>-->
+                        <!--<StackLayout Orientation="Vertical">
+                            <Label Text="年齡" FontSize="18"></Label>
+                            <Frame  BorderColor="Black" CornerRadius="20" Margin="0,0,0,0" Padding="10,3,10,3">
+                                <Entry  x:Name="_usrAge"  
+                                        Placeholder = "點我輸入"
+                                        HeightRequest = "50"
+                                        VerticalOptions = "Center"
+                                        PlaceholderColor = "#326292"
+                                        TextColor = "#326292"
+                                        HorizontalOptions="FillAndExpand" />
+                            </Frame>
+                        </StackLayout>-->
+
+                        <!--<StackLayout Orientation="Horizontal">
+
+                                <CheckBox x:Name="privacy_check"
+                                              CheckedChanged="privacy_check_CheckedChanged"/>
+
+                                <StackLayout Padding="-5,8,0,0">
+
+                                    <Label x:Name="privacyLabel"
+                                               FontSize="Small"
+                                               TextColor="Black" />
+
+                                </StackLayout>
+
+                            </StackLayout>-->
+
+
+
+                        <Button BackgroundColor="#98c1d9"
+                                        Text="送出資料"
+                                        TextColor="White"
+                                        FontSize="20"
+                                        BorderWidth="1"
+                                        WidthRequest="300"
+                                        HeightRequest="50"
+                                        BorderRadius="25"
+                                        HorizontalOptions="CenterAndExpand"
+                                        x:Name="usrCommand"
+                                        Margin="0,10,0,0"
+                                    Clicked="Command_Clicked"
+                                       />
+
+                    </StackLayout>
+
+                </Frame>
+            </StackLayout>
+            <StackLayout x:Name="RenewForm">
+                <Frame BackgroundColor="#a4c3b2"
+                                Margin="10,0,10,0"
+                               Padding="0,0,0,10"
+                              
+                               CornerRadius="20">
+                    <StackLayout >
+                        <Label Text="案主資訊"
+                                   FontSize="Large"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                                   Margin="5,5,5,0"
+                                   Padding="5,0,0,8"
+                                   TextColor="White"
+                                   
+                                   />
+                    </StackLayout>
+                </Frame>
+               
+
+
+                <Frame 
+                               BackgroundColor="#eaf4f4"
+                               Margin="10,-20,10,0"
+                    >
+                    <StackLayout >
+
+
+                        <ListView x:Name="listview"
+                                          ItemSelected="listview_ItemSelected"
+                                          HasUnevenRows="True"
+                                         
+                                          SeparatorColor="#073b4c">
+
+                        </ListView>
+                        <!--<BoxView Color="#83c5be"
+                                 HeightRequest="5"
+                                 HorizontalOptions="FillAndExpand"
+                                 Margin="10,0,10,0"/>-->
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </StackLayout>
+        
+    </ScrollView>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="PULI.Views.MapView">
+    <StackLayout>
+        <Frame 
+                           Padding="0,0,0,0"
+                           Margin="5,10,5,10"
+                           CornerRadius="30">
+            <StackLayout Orientation="Horizontal"
+                                     WidthRequest="280"
+                                     HorizontalOptions="FillAndExpand"
+                                     Margin="5,0,5,0"
+                                     >
+                <Button BackgroundColor="#f1ab86"
+                                                Text="社工map"
+                                                TextColor="White"
+                                                FontSize="20"
+                                                BorderWidth="1"
+                                               BorderRadius="30" 
+                                                WidthRequest="100"
+                                                HeightRequest="45"
+                                                IsVisible="FALSE"
+                                            
+                                                HorizontalOptions="FillAndExpand"
+                                                x:Name="buttonhelp"
+                                                Margin="0,5,-5,5"
+                                                Pressed="Button_OnPressed"
+                                                
+                                                Clicked="buttonhelp_Clicked"/>
+
+                <Button BackgroundColor= "White"
+                                            Text="送餐map"
+                                            TextColor="#f1ab86"
+                                            FontSize="20"
+                                            BorderWidth="1"
+                                            BorderRadius="30" 
+                                            WidthRequest="100"
+                                             IsVisible="FALSE"
+                                            HeightRequest="45"
+                                            Pressed="Button2_OnPressed"
+                                           
+                                            HorizontalOptions="FillAndExpand"
+                                            x:Name="buttondeliver"
+                                            Margin="0,5,0,5"
+                                            Clicked="buttondeliver_Clicked"/>
+            </StackLayout>
+        </Frame>
+        <StackLayout x:Name="Dist" BackgroundColor="White"
+                      HorizontalOptions="Center"
+                     Orientation="Horizontal"
+                     HeightRequest="30"
+                     WidthRequest="500"
+                     VerticalOptions="Center">
+            <Label x:Name="distance" TextColor="Black" FontSize="18"></Label>
+        </StackLayout>
+        <StackLayout x:Name="Lat" BackgroundColor="White"
+                      HorizontalOptions="Center"
+                     Orientation="Horizontal"
+                     HeightRequest="30"
+                     WidthRequest="500"
+                     VerticalOptions="Center">
+            <Label x:Name="Latitude" TextColor="Black" FontSize="18"></Label>
+        </StackLayout>
+        <StackLayout x:Name="Lot" BackgroundColor="White"
+                      HorizontalOptions="Center"
+                     Orientation="Horizontal"
+                     HeightRequest="30"
+                     WidthRequest="500"
+                     VerticalOptions="Center">
+            <Label x:Name="Longitude" TextColor="Black" FontSize="18"></Label>
+        </StackLayout>
+        <!--<StackLayout x:Name="Lat" BackgroundColor="White"
+                      HorizontalOptions="Center"
+                     Orientation="Horizontal"
+                     HeightRequest="30"
+                     WidthRequest="500"
+                     VerticalOptions="Center">
+            <Label x:Name="latitude"  TextColor="Black" FontSize="18"></Label>
+        </StackLayout>
+        <StackLayout x:Name="Lot" BackgroundColor="White"
+                      HorizontalOptions="Center"
+                     Orientation="Horizontal"
+                     HeightRequest="30"
+                     WidthRequest="500"
+                     VerticalOptions="Center">
+            <Label x:Name="longitude"  TextColor="Black" FontSize="18"></Label>
+        </StackLayout>-->
+        <StackLayout Orientation="Vertical">
+            <StackLayout IsVisible="False" IsEnabled="False" x:Name="formin_1" 
+                         BackgroundColor="White"
+                         HorizontalOptions="Center"
+                         Orientation="Horizontal"
+                         HeightRequest="30"
+                         WidthRequest="500"
+                         VerticalOptions="Center">
+                <Label Text="簽到成功" TextColor="Black" FontSize="18"></Label>
+                <Label x:Name="setname" TextColor="Black" FontSize="18"></Label>
+                <Label Text="的家" TextColor="Black" FontSize="18"></Label>
+            </StackLayout>
+            <StackLayout x:Name="formin_2" IsVisible="False" IsEnabled="False"
+                         BackgroundColor="White"
+                         HorizontalOptions="Center"
+                         HeightRequest="170"
+                         WidthRequest="500"
+                         VerticalOptions="Center">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="個案名稱 : " TextColor="Black" FontSize="18"></Label>
+                    <Label x:Name="setname3" TextColor="Black" FontSize="18"></Label>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="代餐種類 : " TextColor="Black" FontSize="18"></Label>
+                    <Label x:Name="dys05_type" TextColor="Black" FontSize="18"></Label>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="電話 : " TextColor="Black" FontSize="18"></Label>
+                    <Label x:Name="ct06_telephone" TextColor="Black" FontSize="18"></Label>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="放置點 : " TextColor="Black" FontSize="18"></Label>
+                    <Label x:Name="sec06" TextColor="Black" FontSize="18"></Label>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="餐種 : " TextColor="Black" FontSize="18"></Label>
+                    <Label x:Name="dys03" TextColor="Black" FontSize="18"></Label>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="餐別 : " TextColor="Black" FontSize="18"></Label>
+                    <Label x:Name="dys02" TextColor="Black" FontSize="18"></Label>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout IsVisible="False" IsEnabled="False" x:Name="formout" 
+                     BackgroundColor="White"
+                     HorizontalOptions="Center"
+                     Orientation="Horizontal"
+                     HeightRequest="30"
+                     WidthRequest="500"
+                     VerticalOptions="Center">
+            <Label Text="簽退成功" TextColor="Black" FontSize="18"></Label>
+            <Label x:Name="setname2" TextColor="Black" FontSize="18"></Label>
+            <Label Text="的家" TextColor="Black" FontSize="18"></Label>
+        </StackLayout>
+        <StackLayout IsVisible="False" IsEnabled="False" x:Name="DeliverEnd" 
+                     BackgroundColor="White"
+                     HorizontalOptions="Center"
+                     Orientation="Horizontal"
+                     HeightRequest="30"
+                     WidthRequest="500"
+                     VerticalOptions="Center">
+            <Label Text="今日已送餐完畢" TextColor="Black" FontSize="18" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
+        </StackLayout>
+        <maps:Map x:Name="MyMap"
+                  IsEnabled="False"
+                  IsVisible="false"
+                      IsShowingUser="True" />
+        <maps:Map x:Name="DeliverMap"
+                  IsEnabled="False"
+                  IsVisible="false"
+                      IsShowingUser="True" />
+
+        <StackLayout Orientation="Vertical" Padding="5,5,5,5"  x:Name="Form" IsVisible="false" IsEnabled="False">
+            <StackLayout x:Name="quesStack" Orientation="Vertical" >
+
+
+            </StackLayout>
+          
+        </StackLayout>
+
+        <StackLayout x:Name="InfoWindow" IsVisible="false" HorizontalOptions="Center" VerticalOptions="Center" >
+            <Label x:Name="clnName" FontSize="18" TextColor="Black"></Label>
+            <Label x:Name="clnGender" FontSize="18" TextColor="Black"></Label>
+            <Label x:Name="clnBday" FontSize="18" TextColor="Black"></Label>
+            <Label x:Name="clnPhone" FontSize="18" TextColor="Black"></Label>
+            <Label x:Name="clnCellphone" FontSize="18" TextColor="Black"></Label>
+            <StackLayout Orientation="Horizontal" ClassId="{Binding ct01}">
+                <Button BackgroundColor="#f1ab86" IsVisible="false"
+                                                    Text="導航"
+                                                    TextColor="White"
+                                                    FontSize="20"
+                                                    BorderWidth="1"
+                                                   BorderRadius="30" 
+                                                    WidthRequest="120"
+                                                    HeightRequest="45" 
+                                                    HorizontalOptions="Center"
+                                                     
+                                                    x:Name="navigatebtn"
+                                                    Margin="0,5,0,5"
+                                                    Clicked="navigatebtn_Clicked"/>
+                <Button BackgroundColor="#f08080" IsVisible="false"
+                                                    Text="關閉"
+                                                    TextColor="White"
+                                                    FontSize="20"
+                                                    BorderWidth="1"
+                                                   BorderRadius="30" 
+                                                    WidthRequest="120"
+                                                    HeightRequest="45" 
+                                                    HorizontalOptions="Center"
+                                                    x:Name="closebtn"
+                                                    Margin="0,5,0,5"
+                                                    Clicked="closebtn_Clicked"/>
+            </StackLayout>
+        </StackLayout>
+        
+      
+    </StackLayout>
+    
+</ContentPage>

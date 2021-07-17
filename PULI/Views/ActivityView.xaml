@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="PULI.Views.ActivityView">
+    <StackLayout Orientation="Vertical">
+        <Frame BackgroundColor="#5ABFC9"
+                           
+                           Padding="0,0,0,0"
+                           Margin="2,5,2,2"
+                           CornerRadius="30">
+            <StackLayout Orientation="Horizontal"
+                                     WidthRequest="280"
+                                     HorizontalOptions="FillAndExpand"
+                                     Margin="2,0,2,0"
+                                     >
+
+                <Button BackgroundColor="White"
+                                                Text="總表"
+                                                TextColor="#5ABFC9"
+                                                FontSize="20"
+                                                BorderWidth="1"
+                                               BorderRadius="30" 
+                                                WidthRequest="100"
+                                                HeightRequest="45"
+                                                IsVisible="FALSE"
+                                            
+                                                HorizontalOptions="FillAndExpand"
+                                                x:Name="buttonres"
+                                                Margin="5,5,5,5"
+                                                
+                                                
+                                                Clicked="buttonres_Clicked"/>
+
+                <!--<Button BackgroundColor= "#5ABFC9"
+                                            Text="異動表"
+                                            TextColor="White"
+                                            FontSize="20"
+                                            BorderWidth="1"
+                                            BorderRadius="30" 
+                                            WidthRequest="100"
+                                             IsVisible="FALSE"
+                                            HeightRequest="45"
+                                            Pressed="Button2_OnPressed"
+                                           
+                                            HorizontalOptions="FillAndExpand"
+                                            x:Name="buttoncheck"
+                                            Margin="0,5,5,5"
+                                            Clicked="buttoncheck_Clicked"/>-->
+            </StackLayout>
+        </Frame>
+       
+        <StackLayout x:Name="resComStack"
+                     IsVisible="false"
+                     IsEnabled="False"
+                                 Margin="5,5,5,5">
+            <ScrollView Orientation="Both" HeightRequest="400">
+                <StackLayout x:Name="TotalStack" >
+
+
+                </StackLayout>
+                <!--<ListView x:Name="listview" 
+                      HorizontalOptions="Center"
+                      VerticalOptions="Center"
+                           SeparatorColor="#073b4c"
+                         
+                        HasUnevenRows="True"
+                        />-->
+
+            </ScrollView>
+            <ScrollView Orientation="Both" HeightRequest="200">
+                <StackLayout x:Name="TotalStack_other" >
+
+
+                </StackLayout>
+                <!--<ListView x:Name="listview" 
+                      HorizontalOptions="Center"
+                      VerticalOptions="Center"
+                           SeparatorColor="#073b4c"
+                         
+                        HasUnevenRows="True"
+                        />-->
+
+            </ScrollView>
+            <!--<Frame BorderColor="#f1ab86"
+                               BackgroundColor="#FBE6DA"
+                                CornerRadius="20"
+                               Margin="2,-10,2,0">
+                
+            </Frame>-->
+
+
+        </StackLayout>
+        
+        <!--<StackLayout >
+            <ListView x:Name="listview_stop" 
+                      HorizontalOptions="Center"
+                      VerticalOptions="Center"
+                           SeparatorColor="#073b4c"
+                         
+                        HasUnevenRows="True"
+                        />
+
+
+        </StackLayout>-->
+        <!--<StackLayout Margin="5,0,5,0">
+
+            <Label Text="停餐名單 : "
+                                       TextColor="Black"
+                                       FontSize="Medium" />
+
+            <Label x:Name="stop"
+                                       FontSize="Medium"
+                                       TextColor="Black"
+                                       Text="" />
+
+        </StackLayout>
+        <StackLayout Margin="5,5,5,5">
+
+            <Label Text="復餐名單 : "
+                                       TextColor="Black"
+                                       FontSize="Medium" />
+
+            <Label x:Name="restore"
+                                       FontSize="Medium"
+                                       TextColor="Black"
+                                       Text="" />
+
+        </StackLayout>-->
+
+        <StackLayout x:Name="resSucStack"
+                                 IsVisible="False"
+                                 IsEnabled="False"
+                                 Margin="5,5,5,100">
+            <Frame BorderColor="#f1ab86"
+                               BackgroundColor="#FBE6DA"
+                                CornerRadius="20"
+                               Margin="2,-18,2,0">
+                <ListView x:Name="listview2" 
+                          HorizontalOptions="Center"
+                      VerticalOptions="Center"
+                          
+                          SeparatorColor="#073b4c"
+                         
+                          HasUnevenRows="True"/>
+            </Frame>
+        </StackLayout>
+        
+        
+        <StackLayout x:Name="resSucStack2"
+                                 IsVisible="False"
+                                 IsEnabled="False"
+                     HorizontalOptions="FillAndExpand"
+                     VerticalOptions="FillAndExpand"
+                                 Margin="5,5,5,0"
+                     Padding="0,0,0,0">
+            <Label Text="暫無異動資訊"
+                       HorizontalOptions="Center"
+                      VerticalOptions="Center"
+                     
+                       FontSize="20"
+                       ></Label>
+            <!--<Frame BorderColor="#f1ab86"
+                               BackgroundColor="#FBE6DA"
+                                CornerRadius="20"
+                               Margin="2,-18,2,0">
+                
+            </Frame>-->
+        </StackLayout>
+
+
+        <!--<StackLayout x:Name="total">
+            <ListView x:Name="listview" 
+                      HorizontalOptions="Center"
+                      VerticalOptions="Center"
+                                 IsVisible="false"
+                      IsEnabled="False"
+                        HasUnevenRows="True"
+                        />
+
+        </StackLayout>
+        <StackLayout x:Name="change">
+            <ListView x:Name="listview2" 
+                                      IsVisible="false"
+                      IsEnabled="False"
+                    HasUnevenRows="True"
+                    />
+        </StackLayout>-->
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PULI.Views.TestView">
+    <StackLayout>
+        <ScrollView>
+            <StackLayout x:Name="quesStack" Orientation="Vertical" ClassId="">
+
+
+            </StackLayout>
+
+        </ScrollView>
+        <Button BackgroundColor="#a8dadc"
+                            Text="上傳"
+                            TextColor="White"
+                            FontSize="20"
+                            IsEnabled="False"
+                            IsVisible="false"
+                            HeightRequest="50"
+                            WidthRequest="300"
+                            BorderWidth="1"
+                            BorderRadius="20"
+                            HorizontalOptions="Center"
+                            VerticalOptions="End"
+                            x:Name="uploadbtn"
+                            Clicked="post_questionClicked"
+                            Padding="2,2,2,2"
+                            />
+        <!--<Button Text="上傳" 
+                x:Name="uploadbtn"
+                IsEnabled="False"
+                IsVisible="false"
+                        Clicked="post_questionClicked" 
+                        Padding="10,10,10,0"
+                        >
+        </Button>-->
+    </StackLayout>
+   
+</ContentPage>

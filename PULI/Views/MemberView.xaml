@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+            
+            
+             x:Class="PULI.Views.MemberView">
+    <Grid>
+
+       
+
+
+
+
+        <!--<Frame BackgroundColor="#fae1dd" Margin="30,10,30,0" VerticalOptions="Start" HasShadow="False" CornerRadius="20" IsVisible="False" IsEnabled="False" x:Name="UserInfo">
+            <StackLayout Orientation="Vertical"
+                             Padding="10,0,10,0"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center">
+
+                <yummy:PancakeView HeightRequest="150"
+                                   Padding="35,0,35,0"
+                                   
+                                    
+                                   BackgroundColor="#f8edeb"
+                                       CornerRadius="20">
+
+                    <Image Source="member_icon.png"
+                            HeightRequest="150"
+                          
+                               Aspect="AspectFit" />
+
+                </yummy:PancakeView>
+
+                <StackLayout Padding="0,0,0,0"
+                             
+                                 Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal"  VerticalOptions="Center" HorizontalOptions="Center" Padding="-20,0,0,-5">
+                        <StackLayout Orientation="Vertical"  Spacing="0.5">
+                            <Label Text=""
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Center"
+                                                FontSize="18"
+                                                TextColor="Black"
+                                                x:Name="usrname" />
+                            <Label Text="使用者名稱"
+                                               TextColor="#ADADAD"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Center"
+                                              FontSize="15" />
+
+                        </StackLayout>
+
+                        <BoxView Color="Black"
+                                 WidthRequest="1"
+                                 HeightRequest="35"
+                                 VerticalOptions="Start"
+                                 Margin="30,5,40,0"/>
+
+                        <StackLayout Orientation="Vertical" Padding="0,0,0,0" Spacing="0.5">
+
+                            <Label x:Name="auth"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Center"
+                                               FontSize="18"
+                                               TextColor="Black"
+                                               Text="" />
+
+                            <Label Text="身份"
+                                                   TextColor="#ADADAD"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Center"
+                                                   FontSize="15" />
+
+
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+
+            </StackLayout>
+        </Frame>
+        <StackLayout IsVisible="False" IsEnabled="False" x:Name="FormInfo" Padding="0,250,0,0">
+            <Label Text="回饋單"
+                           Margin="10,5,10,0"
+                           TextColor="#5ABFC9"
+                           HorizontalOptions="StartAndExpand"
+                           FontSize="Large"/>
+
+            <BoxView Color="#5ABFC9"
+                             HeightRequest="1"
+                             HorizontalOptions="FillAndExpand"
+                             Margin="10,0,10,0"/>-->
+        <!--<ListView x:Name="listview"
+                              ItemSelected="listview_ItemSelected"
+                              HasUnevenRows="True"
+                              Margin="10,0,10,0"
+                              SeparatorColor="#5ABFC9"/>-->
+        <!--
+        </StackLayout>
+    </Grid>-->
+        <StackLayout HorizontalOptions="CenterAndExpand"
+                         VerticalOptions="StartAndExpand"
+                         x:Name="memberView">
+            <Frame BackgroundColor="#fae1dd" Margin="10,10,10,0" VerticalOptions="Start" HasShadow="False" CornerRadius="20"  x:Name="UserInfo">
+               
+                    <StackLayout Orientation="Horizontal"
+                                     Padding="10,0,10,0"
+                            
+                                     HorizontalOptions="CenterAndExpand"
+                                     VerticalOptions="StartAndExpand"  >
+
+                        <yummy:PancakeView HeightRequest="100"
+                                               WidthRequest="100"
+                                           Padding="0,15,0,0"
+                                           BackgroundColor="#f8edeb"
+                                               CornerRadius="50">
+
+                            <Image Source="user2.png"
+                                    HeightRequest="150"
+                          
+                                       Aspect="AspectFit" />
+
+                        </yummy:PancakeView>
+
+                        <BoxView Color="Black"
+                                     WidthRequest="1"
+                                     HeightRequest="75"
+                                     VerticalOptions="Center"
+                                     Margin="20,5,10,0"/>
+
+                        <StackLayout Padding="10,0,0,0"
+                                     VerticalOptions="Center"
+                                         Orientation="Vertical">
+
+                            <StackLayout Orientation="Horizontal">
+
+                                <Label Text="使用者 : "
+                                           TextColor="Black"
+                                           FontSize="Medium" />
+
+                                <Label x:Name="usrname"
+                                           FontSize="Medium"
+                                           TextColor="Black"
+                                           Text="" />
+
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal">
+
+                                <Label Text="身分 : "
+                                           TextColor="Black"
+                                           FontSize="Medium" />
+
+                                <Label x:Name="auth"
+                                           FontSize="Medium"
+                                           TextColor="Red"
+                                           Text="" />
+
+                            </StackLayout>
+
+                        
+
+
+                        </StackLayout>
+                    
+                    </StackLayout>
+                    
+             
+            </Frame>
+            <StackLayout Orientation="Horizontal" 
+                             HorizontalOptions="CenterAndExpand" x:Name="UsrInfobtn">
+
+                <!--<Button BackgroundColor="#5ABFC9"
+                            Text="總表"
+                            TextColor="White"
+                            FontSize="18"
+                            IsVisible="True"
+                            IsEnabled="True"
+                            BorderWidth="1"
+                            BorderRadius="20"
+                            HorizontalOptions="End"
+                            x:Name="total_btn"
+                            Clicked="total_btn_clicked"
+                            Margin="0,10,5,0"
+                            />-->
+
+
+
+                <!--<Button BackgroundColor="#5ABFC9"
+                            Text="異動表"
+                            TextColor="White"
+                            FontSize="18"
+                            IsVisible="True"
+                            IsEnabled="True"
+                            BorderWidth="1"
+                            BorderRadius="20"
+                            HorizontalOptions="End"
+                            x:Name="user_detail_btn"
+                            Margin="0,10,5,0"
+                            />-->
+
+                <Button BackgroundColor="#5ABFC9"
+                            Text="上傳工作紀錄"
+                            TextColor="White"
+                            FontSize="18"
+                            IsVisible="True"
+                            IsEnabled="True"
+                            BorderWidth="1"
+                            BorderRadius="20"
+                            HorizontalOptions="End"
+                            x:Name="upload_btn"
+                            Clicked="upload_btn_clicked"
+                            Margin="0,10,5,0"
+                            />
+                <!--<Button BackgroundColor="#5ABFC9"
+                            Text="新增案主"
+                            TextColor="White"
+                            FontSize="18"
+                            IsVisible="false"
+                            IsEnabled="False"
+                            BorderWidth="1"
+                            BorderRadius="20"
+                            HorizontalOptions="End"
+                            x:Name="addnew_btn"
+                            Clicked="addnew_btn_clicked"
+                            Margin="0,10,5,0"
+                            />-->
+                <Button BackgroundColor="#f08080"
+                            Text="登出"
+                            TextColor="White"
+                            FontSize="18"
+                            IsVisible="True"
+                            IsEnabled="True"
+                            BorderWidth="1"
+                            BorderRadius="20"
+                            HorizontalOptions="End"
+                            Clicked="logout"
+                            Margin="0,10,0,0"
+                            />
+
+            </StackLayout>
+            <StackLayout  x:Name="FormInfo">
+                <Label Text="無網路打卡紀錄"
+                           Margin="10,0,10,0"
+                           TextColor="#5ABFC9"
+                           HorizontalOptions="StartAndExpand"
+                           FontSize="Large"/>
+
+                <BoxView Color="#5ABFC9"
+                             HeightRequest="1"
+                             HorizontalOptions="FillAndExpand"
+                             Margin="10,0,10,0"/>
+                <StackLayout Orientation="Horizontal">
+                    <StackLayout x:Name="punch_in_record">
+                        <Frame BackgroundColor="#e8e8e4" Padding="0,5,0,5" CornerRadius="30"  Margin="5,5,5,5">
+                            <Label Text="簽到" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" FontSize="18" ></Label>
+                        </Frame>
+                        <ListView x:Name="listview"
+                                              HasUnevenRows="True"
+                                              Margin="5,0,5,0"
+                                              HeightRequest="400"
+                                              SeparatorColor="#073b4c">
+
+                        </ListView>
+                        <!--<BoxView Color="#83c5be"
+                                     HeightRequest="5"
+                                     HorizontalOptions="FillAndExpand"
+                                     Margin="10,0,10,0"/>-->
+                    </StackLayout>
+                    <BoxView Color="#5ABFC9"
+                             WidthRequest="1"
+                             VerticalOptions="FillAndExpand"
+                             Margin="0,0,0,0"
+                             
+                             />
+                    <StackLayout x:Name="punch_out_record">
+                        <Frame BackgroundColor="#e8e8e4" Padding="0,5,0,5" CornerRadius="30"  Margin="5,5,5,5">
+                            <Label Text="簽退" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" FontSize="18" BackgroundColor="#e8e8e4"></Label>
+                        </Frame>
+                        <ListView x:Name="listview2"
+                                              HasUnevenRows="True"
+                                              Margin="5,0,5,0"
+                                              HeightRequest="400"
+                                              SeparatorColor="#073b4c">
+
+                        </ListView>
+                        <!--<BoxView Color="#83c5be"
+                                     HeightRequest="5"
+                                     HorizontalOptions="FillAndExpand"
+                                     Margin="10,0,10,0"/>-->
+                    </StackLayout>
+                </StackLayout>
+                <!--<Frame 
+                               BackgroundColor="#eaf4f4"
+                               Margin="10,-20,10,0">
+                   
+                </Frame>-->
+                <!--<ListView x:Name="listview"
+                              ItemSelected="listview_ItemSelected"
+                              HasUnevenRows="True"
+                              Margin="10,0,10,0"
+                              SeparatorColor="#5ABFC9"/>-->
+            </StackLayout>
+        </StackLayout>
+    </Grid>
+</ContentPage>

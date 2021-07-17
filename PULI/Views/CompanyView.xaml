@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+             mc:Ignorable="d"
+             x:Class="PULI.Views.CompanyView">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <ListView x:Name="questionnaireView" SelectionMode="None" HasUnevenRows="True" >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                              
+                                <StackLayout Orientation="Vertical" Padding="5,5,5,5" >
+                                    <StackLayout  Padding="5,5,0,5" Orientation="Horizontal">
+                                        <Label Text="{Binding ClientName}" TextColor="DarkBlue" FontSize="20"/>
+                                        <Label Text="{Binding qb_order}" FontSize="20"/>
+                                        <Label Text="{Binding wqh_s_num}" />
+                                        <Label Text="{Binding qh_s_num}"  />
+                                        <Label Text="{Binding qh01}" />
+                                    </StackLayout>
+                                    <StackLayout Orientation="Vertical">
+                                        <Frame Padding="10,5,10,5" BackgroundColor="#eddcd2" CornerRadius="10" HasShadow="False">
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="{Binding qbs[1].qb_order}"
+                                                       FontSize="Medium"
+                                                       TextColor="Black" />
+                                                <Label Text="{Binding qbs[1].qb01}"
+                                                       FontSize="Medium"
+                                                       TextColor="Black" />
+
+                                                <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+
+                                                    <CheckBox 
+                                                      Color="#264653"
+                                                    CheckedChanged="yesonecheck"
+                                                         ClassId="{Binding both2}"
+                                                         
+                                                      />
+                                                    <!--<input:RadioButtonGroupView>
+                                                        <input:RadioButton Text="是" TextFontSize="Medium" TextColor="Black"/>
+                                                    </input:RadioButtonGroupView>-->
+                                                    <Label Text="是"
+                                                       FontSize="Medium"
+                                                           
+                                                       TextColor="Black" />
+
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal" HorizontalOptions="End" >
+
+                                                    <CheckBox 
+                                                      Color="#264653"
+                                                        CheckedChanged="noonecheck"
+                                                         ClassId="{Binding both2}"
+                                                      />
+
+                                                    <Label Text="否"
+                                                       FontSize="Medium"
+                                                       TextColor="Black" />
+                                                </StackLayout>
+                                            </StackLayout>
+                                           
+                                           
+                                        </Frame>
+                                       
+                                        <Frame Padding="10,5,10,5" BackgroundColor="#eddcd2" CornerRadius="10" HasShadow="False">
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="{Binding qbs[0].qb_order}"
+                                                       FontSize="Medium"
+                                                       TextColor="Black" />
+                                                <Label Text="{Binding qbs[0].qb01}"
+                                                       FontSize="Medium"
+                                                       TextColor="Black" />
+
+                                                <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                                                    
+                                                    <CheckBox 
+                                                      Color="#264653"
+                                                        CheckedChanged="yescheck"
+                                                        ClassId="{Binding both}"
+                                                      />
+                                                    <Label Text="是"
+                                                       FontSize="Medium"
+                                                           
+                                                       TextColor="Black" />
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal" HorizontalOptions="End" >
+                                                    
+                                                    <CheckBox 
+                                                      Color="#264653"
+                                                      CheckedChanged="nocheck"
+                                                        ClassId="{Binding both}"
+                                                      />
+                                                    <Label Text="否"
+                                                       FontSize="Medium"
+                                                       TextColor="Black" />
+                                                </StackLayout>
+
+                                            </StackLayout>
+                                        </Frame>
+                                    </StackLayout>
+                                </StackLayout>
+                          
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Text="上傳" Clicked="post_questionClicked"></Button>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+            <!--<ContentPage.Content>
+        <ListView x:Name="listview" VerticalOptions="FillAndExpand">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" Padding="5,0,5,0">
+                            <Label  Text="{Binding Name}" HorizontalOptions="StartAndExpand" FontSize="30"/>
+                            <Label  Text="{Binding Questionnum}" HorizontalOptions="StartAndExpand" FontSize="30"/>
+                            <Label  Text="{Binding Question}" HorizontalOptions="StartAndExpand" FontSize="30"/>
+
+                            <input:CheckBox    IsChecked="{Binding isChecked}"  Type="Check" Color="White"  TextColor="White" HeightRequest="40" 
+                                             CheckChanged="CheckBox_CheckChanged"  BindingContext="{Binding .}" />
+
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentPage.Content>-->
+</ContentPage>

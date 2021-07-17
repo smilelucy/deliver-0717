@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="PULI.MainPage">
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" IsVisible="true" IsEnabled="True" x:Name="Login" Padding="0,100,0,0">
+            <Label Text="請輸入帳號密碼來登入" FontSize="30" 
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"  />
+            <!--<StackLayout Orientation="Vertical">
+                <Picker x:Name="IndustryTypePicker1" SelectedIndex="{Binding Industry}" HorizontalOptions="FillAndExpand">
+                    <Picker.Items>
+                        <x:String>社工</x:String>
+                        <x:String>外送員</x:String>
+                    </Picker.Items>
+                </Picker>
+            </StackLayout>-->
+            <StackLayout x:Name="identityStack" Orientation="Vertical">
+
+            </StackLayout>
+            
+            <StackLayout Orientation="Vertical" >
+                <Label Text="帳號 : " 
+                               FontSize="20"/>
+                <Frame  BorderColor="Olive" CornerRadius="20" Margin="0,0,0,0" Padding="10,5,10,5">
+                    <Entry  x:Name="account"  
+                                Placeholder = "點我輸入"
+                                HeightRequest = "50"
+                                VerticalOptions = "Center"
+                                PlaceholderColor = "#326292"
+                                TextColor = "#326292"
+                                HorizontalOptions="FillAndExpand" />
+                </Frame>
+            </StackLayout>
+
+
+            <StackLayout Orientation="Vertical" >
+                <Label Text="密碼 : "  FontSize="20"/>
+                <Frame  BorderColor="Olive" CornerRadius="20" Padding="10,5,10,5" Margin="0,0,0,0">
+                    <Entry IsPassword="True" 
+                                               x:Name="pwd" 
+                                               Placeholder = "點我輸入"
+                                                HeightRequest = "50"
+                                                VerticalOptions = "Center"
+                                                PlaceholderColor = "#326292"
+                                                TextColor = "#326292"
+                                               HorizontalOptions="FillAndExpand"/>
+                </Frame>
+            </StackLayout>
+
+            <Button x:Name="loginbtn" Text="登入" 
+                        HorizontalOptions="Center" 
+                        WidthRequest="200"  
+                        Padding="0,0,0,0" 
+                        Margin="0,10,0,0"
+                        CornerRadius="20"
+                        FontSize="20"
+                        BackgroundColor="DarkKhaki" Clicked="login_Clicked"/>
+            <Label  FontSize="Small"
+                               HorizontalTextAlignment="End"
+                    VerticalTextAlignment="End"
+                    Padding="0,100,0,0"
+                                           TextColor="Black"
+                                           Text="Ver_1.2" />
+        </StackLayout>
+        <StackLayout VerticalOptions="Center"
+                             HorizontalOptions="Center"
+                     x:Name="AutoLogin"
+                     IsVisible="false"
+                     IsEnabled="false">
+
+            <Frame>
+
+                <Label x:Name="searchLabel"
+                               Text="登入中...請稍後!"
+                               HorizontalOptions="Start"
+                               VerticalOptions="Start"
+                               FontSize="Medium"
+                               TextColor="Black"/>
+
+            </Frame>
+
+        </StackLayout>
+    </StackLayout>
+</ContentPage>
