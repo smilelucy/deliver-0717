@@ -438,7 +438,7 @@ namespace Deliver.Services
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                Console.WriteLine("con~~~ " + content.ToString());
+                //Console.WriteLine("con~~~ " + content.ToString());
                 var list = JsonConvert.DeserializeObject<List<questionnaire>>(content);
                 return list;
                 Console.WriteLine("GETQOOO");

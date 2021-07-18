@@ -244,9 +244,9 @@ namespace PULI.Views
                                         {
                                             if (TempResetLabelList.qb_order == i.qb_order)
                                             {
-                                                Console.WriteLine("name~~~ " + TempResetLabelList.wqh_s_num);
-                                                Console.WriteLine("qborder~~ " + TempResetLabelList.qb_order);
-                                                Console.WriteLine("yesorno~~~ " + TempResetLabelList.yesorno);
+                                                //Console.WriteLine("name~~~ " + TempResetLabelList.wqh_s_num);
+                                                //Console.WriteLine("qborder~~ " + TempResetLabelList.qb_order);
+                                                //Console.WriteLine("yesorno~~~ " + TempResetLabelList.yesorno);
                                                 YesOrNoAlreadyChoose[a.wqh_s_num + i.qb_order] = TempResetLabelList.yesorno;
                                                 //Console.WriteLine("bingoname~~~ " + TempResetList.wqh_s_num);
                                                 //Console.WriteLine("qborder~~ " + i.qb_order);
@@ -2899,6 +2899,7 @@ namespace PULI.Views
                                                         if (j == "否")
                                                         {
                                                             Console.WriteLine("NEG~~ ");
+                                                            Console.WriteLine("A~~~~ ");
                                                             stack_ques.Children.RemoveAt(1);
                                                             //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
                                                             //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "否";
@@ -2907,6 +2908,7 @@ namespace PULI.Views
                                                         else
                                                         {
                                                             Console.WriteLine("POS~~~ ");
+                                                            Console.WriteLine("B~~~~ ");
                                                             stack_ques.Children.RemoveAt(3);
 
                                                             //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
@@ -2918,16 +2920,20 @@ namespace PULI.Views
 
                                                     if (YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] != "")
                                                     {
-                                                        Console.WriteLine("in~~~ ");
+                                                    Console.WriteLine("in~~~ ");
                                                         // for 後來改選項
                                                         if (j == "否")
                                                         {
+                                                            Console.WriteLine("C~~~~ ");
+                                                            Console.WriteLine("j~~ " + j);
                                                             YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
                                                             YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "否";
                                                             ResetLabelSaveToDB(questionList.wqh_s_num, i.qb_order, "否");
                                                         }
                                                         else
                                                         {
+                                                            Console.WriteLine("D~~~~ ");
+                                                            Console.WriteLine("j~~~ " + j);
                                                             YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
                                                             YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "是";
                                                             ResetLabelSaveToDB(questionList.wqh_s_num, i.qb_order, "是");
@@ -2935,11 +2941,29 @@ namespace PULI.Views
                                                         if (YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] == "是")
                                                         {
                                                             Console.WriteLine("yesin~~~ ");
+                                                            Console.WriteLine("E~~~~ ");
+                                                            stack_ques.Children.RemoveAt(2);
+                                                            var check_box_try = new CheckBox // 產生checkbox
+                                                            {
+
+                                                                IsChecked = true,
+                                                                Margin = new Thickness(-5, 0, 0, 0),
+                                                                //Color = Color.FromHex("264653")
+                                                                Color = Color.Green,
+
+                                                            };
+                                                            stack_ques.Children.Insert(2, check_box_try);
                                                             stack_ques.Children.RemoveAt(3); // 把原本的"是"刪掉
 
-                                                            //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
-                                                            //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "是";
-                                                            stack_ques.Children.Insert(3, stack_check2); // 把"是"變成紅色
+                                                        //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
+                                                        //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "是";
+                                                        var label_check_try = new Label // 選項
+                                                        {
+                                                            Text = j,
+                                                            TextColor = Color.Green,
+                                                            FontSize = 20
+                                                        };
+                                                        stack_ques.Children.Insert(3, label_check_try); // 把"是"變成綠色
                                                             stack_ques.Children.RemoveAt(0); // 把"否"綠色的checkbox刪掉
                                                             var check_box_origin_false = new CheckBox // 產生checkbox
                                                             {
@@ -2972,12 +2996,33 @@ namespace PULI.Views
                                                         }
                                                         else
                                                         {
-                                                            Console.WriteLine("noin~~~ ");
+                                                            Console.WriteLine("noin2975~~~ ");
+                                                            Console.WriteLine("wqh~~~ " + questionList.wqh_s_num);
+                                                            Console.WriteLine("qb~~~ " + i.qb_order);
+                                                            Console.WriteLine("F~~~~ ");
+                                                            stack_ques.Children.RemoveAt(0);
+                                                            var check_box_try = new CheckBox // 產生checkbox
+                                                            {
+
+                                                                IsChecked = true,
+                                                                Margin = new Thickness(-5, 0, 0, 0),
+                                                                //Color = Color.FromHex("264653")
+                                                                Color = Color.Red,
+
+                                                            };
+                                                            stack_ques.Children.Insert(0, check_box_try);
                                                             stack_ques.Children.RemoveAt(1);
-                                                            //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
-                                                            //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "否";
-                                                            stack_ques.Children.Insert(1, stack_check2);
-                                                            stack_ques.Children.RemoveAt(2);
+                                                        //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
+                                                        //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "否";
+
+                                                        var label_check_try = new Label // 選項
+                                                        {
+                                                            Text = j,
+                                                            TextColor = Color.Red,
+                                                            FontSize = 20
+                                                        };
+                                                        stack_ques.Children.Insert(1, label_check_try); // 把"是"變成綠色
+                                                        stack_ques.Children.RemoveAt(2);
                                                             var check_box_origin_true = new CheckBox // 產生checkbox
                                                             {
 
@@ -3019,12 +3064,14 @@ namespace PULI.Views
                                                 {
                                                     if (j == "否")
                                                     {
+                                                        Console.WriteLine("G~~~~ ");
                                                         YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
                                                         YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "否";
                                                         ResetLabelSaveToDB(questionList.wqh_s_num, i.qb_order, "否");
                                                     }
                                                     else
                                                     {
+                                                        Console.WriteLine("H~~~~ ");
                                                         YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
                                                         YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "是";
                                                         ResetLabelSaveToDB(questionList.wqh_s_num, i.qb_order, "是");
@@ -3613,7 +3660,9 @@ namespace PULI.Views
                                                         }
                                                         else
                                                         {
-                                                            Console.WriteLine("noin~~~ ");
+                                                            Console.WriteLine("noin3618~~~ ");
+                                                            Console.WriteLine("wqh~~~ " + questionList.wqh_s_num);
+                                                            Console.WriteLine("qb~~~ " + i.qb_order);
                                                             stack_ques.Children.RemoveAt(3);
                                                             //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
                                                             //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "否";
@@ -4259,7 +4308,9 @@ namespace PULI.Views
                                                         }
                                                         else
                                                         {
-                                                            Console.WriteLine("noin~~~ ");
+                                                            Console.WriteLine("noin4266~~~ ");
+                                                            Console.WriteLine("wqh~~~ " + questionList.wqh_s_num);
+                                                            Console.WriteLine("qb~~~ " + i.qb_order);
                                                             stack_ques.Children.RemoveAt(3);
                                                             //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
                                                             //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "否";
@@ -5712,6 +5763,17 @@ namespace PULI.Views
             {
                 ////Console.WriteLine("reapetin~~~ ");
                 //Console.WriteLine("_QB_S_NUM@@@@222 " + questionList.qb_s_num);
+                /*
+                foreach (var a in questionList.qbs)
+                {
+                    YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "";
+                    YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "@@";
+                    ResetLabelSaveToDB(questionList.wqh_s_num, a.qb_order, "@@");
+                    Console.WriteLine("addwqh~~ " + questionList.wqh_s_num);
+                    Console.WriteLine("ordr~~~ " + a.qb_order);
+                }
+                */
+                
                 var same_ans = new Button // 更多題目的回饋單
                 {
                     Text = "同上",
@@ -5913,48 +5975,15 @@ namespace PULI.Views
                             };
                             if (YesOrNoAlreadyChoose_for_sameans[questionList.wqh_s_num + a.qb_order] == "")
                             {
-                                if (temp_j == "否")
-                                {
-                                    Console.WriteLine("NEGsameinnnnn~~~ ");
-                                    //stack_ques.Children.RemoveAt(0);
-                                    //stack_ques.Children.Insert(0, stack_check2);
-                                    //stack_ques.Children.Insert(1, stack_check2);
-                                    Console.WriteLine("wqh~~ " + questionList.wqh_s_num);
-                                    Console.WriteLine("qb~~~ " + a.qb_order);
-                                    Console.WriteLine("stack_count~~ " + ques_stack_count);
-                                    Console.WriteLine("count~~~ " + Stack_Count[questionList.wqh_s_num + a.qb_order]);
-                                    quesStack.Children.RemoveAt(Stack_Count[questionList.wqh_s_num + a.qb_order] - 1);
-
-                                    //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
-                                    //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "否";
-
-                                    /*
-                                    if (stack_check2 != null)
-                                    {
-                                        Console.WriteLine("NEGin2222~~ ");
-                                        var check_box_2 = new CheckBox // 產生checkbox
-                                        {
-
-                                            IsChecked = true,
-                                            Margin = new Thickness(-5, 0, 0, 0),
-                                            //Color = Color.FromHex("264653")
-                                            Color = Color.Red,
-
-                                        };
-                                        stack_ques.Children.Add(check_box_2);
-                                        stack_ques.Children.Add(stack_check2);
-
-                                    }
-                                    */
-
-                                    //quesStack.Children.Insert(5, stack_check2);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("POSsameinnnnn~~~ ");
-                                    quesStack.Children.RemoveAt(Stack_Count[questionList.wqh_s_num + a.qb_order] - 1);
-
-                                }
+                                Console.WriteLine("NEGsameinnnnn~~~ ");
+                                //stack_ques.Children.RemoveAt(0);
+                                //stack_ques.Children.Insert(0, stack_check2);
+                                //stack_ques.Children.Insert(1, stack_check2);
+                                Console.WriteLine("wqh~~ " + questionList.wqh_s_num);
+                                Console.WriteLine("qb~~~ " + a.qb_order);
+                                Console.WriteLine("stack_count~~ " + ques_stack_count);
+                                Console.WriteLine("count~~~ " + Stack_Count[questionList.wqh_s_num + a.qb_order]);
+                                quesStack.Children.RemoveAt(Stack_Count[questionList.wqh_s_num + a.qb_order] - 1);
                                 if (a.qb_order == "1")
                                 {
                                     if (temp_j == "否")
@@ -5993,7 +6022,7 @@ namespace PULI.Views
                                         choose_false_stack.Children.Add(check_box_false);
                                         label_check = new Label // 選項
                                         {
-                                            Text = temp_j,
+                                            Text = "否",
                                             TextColor = Color.Red,
                                             //Margin = new Thickness(-10, 0, 0, 0),
                                             FontSize = 20
@@ -6034,6 +6063,9 @@ namespace PULI.Views
                                             Content = choose_false_stack_final
                                         };
                                         quesStack.Children.Insert(Stack_Count[questionList.wqh_s_num + a.qb_order] - 1, choose_false_frame);
+                                        YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "";
+                                        YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "否";
+                                        ResetLabelSaveToDB(questionList.wqh_s_num, a.qb_order, "否");
                                     }
                                     else
                                     {
@@ -6088,7 +6120,7 @@ namespace PULI.Views
                                         choose_true_stack.Children.Add(check_box_origin_true);
                                         var true_label = new Label // 選項
                                         {
-                                            Text = temp_j,
+                                            Text = "是",
                                             TextColor = Color.Green,
                                             //Margin = new Thickness(-10, 0, 0, 0),
                                             FontSize = 20
@@ -6113,6 +6145,9 @@ namespace PULI.Views
                                             Content = choose_true_stack_final
                                         };
                                         quesStack.Children.Insert(Stack_Count[questionList.wqh_s_num + a.qb_order] - 1, choose_true_frame);
+                                        YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "";
+                                        YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "是";
+                                        ResetLabelSaveToDB(questionList.wqh_s_num, a.qb_order, "是");
                                     }
 
                                 }
@@ -6172,7 +6207,7 @@ namespace PULI.Views
                                         choose_false_stack.Children.Add(check_box_origin_true);
                                         label_check = new Label // 選項
                                         {
-                                            Text = temp_j,
+                                            Text = "否",
                                             TextColor = Color.Green,
                                             //Margin = new Thickness(-10, 0, 0, 0),
                                             FontSize = 20
@@ -6196,6 +6231,9 @@ namespace PULI.Views
                                             Content = choose_false_stack_final
                                         };
                                         quesStack.Children.Insert(Stack_Count[questionList.wqh_s_num + a.qb_order] - 1, choose_false_frame);
+                                        YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "";
+                                        YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "否";
+                                        ResetLabelSaveToDB(questionList.wqh_s_num, a.qb_order, "否");
                                     }
                                     else
                                     {
@@ -6233,7 +6271,7 @@ namespace PULI.Views
                                         choose_true_stack.Children.Add(check_box_false);
                                         var true_label = new Label // 選項
                                         {
-                                            Text = temp_j,
+                                            Text = "是",
                                             TextColor = Color.Red,
                                             //Margin = new Thickness(-10, 0, 0, 0),
                                             FontSize = 20
@@ -6275,6 +6313,9 @@ namespace PULI.Views
                                             Content = choose_true_stack_final
                                         };
                                         quesStack.Children.Insert(Stack_Count[questionList.wqh_s_num + a.qb_order] - 1, choose_true_frame);
+                                        YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "";
+                                        YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "是";
+                                        ResetLabelSaveToDB(questionList.wqh_s_num, a.qb_order, "是");
                                     }
                                 }
                                 else
@@ -6317,7 +6358,7 @@ namespace PULI.Views
                                             choose_true_stack.Children.Add(check_box_false);
                                             label_check = new Label // 選項
                                             {
-                                                Text = temp_j,
+                                                Text = "已發",
                                                 TextColor = Color.Green,
                                                 //Margin = new Thickness(-10, 0, 0, 0),
                                                 FontSize = 20
@@ -6359,6 +6400,9 @@ namespace PULI.Views
                                                 Content = choose_true_stack_final
                                             };
                                             quesStack.Children.Insert(Stack_Count[questionList.wqh_s_num + a.qb_order] - 1, choose_true_frame);
+                                            YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "";
+                                            YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "已發";
+                                            ResetLabelSaveToDB(questionList.wqh_s_num, a.qb_order, "已發");
                                         }
                                         else
                                         {
