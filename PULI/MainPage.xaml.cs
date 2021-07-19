@@ -443,7 +443,7 @@ namespace PULI
                 Console.WriteLine("Internet~~~" + CrossConnectivity.Current.IsConnected);
                 if (CrossConnectivity.Current.IsConnected) // 有網路
                 {
-                    AutoLogin.IsVisible = false;
+                    
                     Loginway = "Enter";
                     Console.WriteLine("AAA " + account.Text);
                     Console.WriteLine("BBB " + pwd.Text);
@@ -459,14 +459,14 @@ namespace PULI
                         Console.WriteLine("_residentity22~~~~" + _identity);
                     }
                     userList = await web.Login(account.Text, pwd.Text, _identity);
-                    _login_time = userList.login_time;
-                    Console.WriteLine("login_time~~~" + _login_time);
-                    //Console.WriteLine("usrstate~~~" + userList.state);
+                    //AutoLogin.IsVisible = true;
+                   
+                    Console.WriteLine("usrstate~~~" + userList.state);
                     Console.WriteLine("internet222~~~" + CrossConnectivity.Current.IsConnected);
                     if (userList.state == "false")
                     {
-                        AutoLogin.IsVisible = true;
-                        searchLabel.Text = param.CONNECT_PASSWORD_ERROR_MESSAGE;
+                        //AutoLogin.IsVisible = true;
+                        DisplayAlert("提示", "帳號或密碼錯誤", "ok");
                         //await DisplayAlert("提示", "帳號或密碼錯誤", "ok");
                         //if (CrossConnectivity.Current.IsConnected == false)
                         //{
@@ -493,6 +493,9 @@ namespace PULI
                         Console.WriteLine("OOOOOAAAA " + token);
                         AUTH = userList.acc_auth;
                         NAME = userList.acc_name;
+                        Content = ViewService.LoadingLogin();
+                        _login_time = userList.login_time;
+                        Console.WriteLine("login_time~~~" + _login_time);
                         BeaconScan scan = new BeaconScan();
                        
                         //if (BeaconScan.BleStatus == 0)
@@ -731,10 +734,17 @@ namespace PULI
                     Content = time_picker
                 };
 
+                var notice_lable = new Label
+                {
+                    FontSize = 16,
+                    Text = "(社工身分選擇早上或下午皆可以)",
+                    TextColor = Color.Red
+                };
+
                 StackLayout time_stack = new StackLayout
                 {
                     Orientation = StackOrientation.Vertical,
-                    Children = { time_label, time_frame }
+                    Children = { time_label, time_frame , notice_lable}
                 };
 
                 StackLayout final_stack = new StackLayout

@@ -62,7 +62,7 @@
             <Label  FontSize="Small"
                                HorizontalTextAlignment="End"
                     VerticalTextAlignment="End"
-                    Padding="0,100,0,0"
+                    Padding="0,80,0,0"
                                            TextColor="Black"
                                            Text="Ver_1.2" />
         </StackLayout>

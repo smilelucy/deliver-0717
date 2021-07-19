@@ -46,6 +46,7 @@ namespace PULI.Views
         public Dictionary<string, bool> CheckboxList = new Dictionary<string, bool>(); // for判斷有沒有點未發(觸發第四題題目)
         public static Dictionary<string, bool> IsResetList = new Dictionary<string, bool>(); // 點選checkbox後判斷label顏色
         public Dictionary<string, int> RepeatOrNotList = new Dictionary<string, int>(); // for判斷是否有兩筆訂單的情況(觸發同上按鈕)
+        public Dictionary<string, int> RepeatOrNotList_for_second_name = new Dictionary<string, int>(); // for判斷是否有兩筆訂單的情況(觸發同上按鈕)
         public Dictionary<string, bool> EntryList = new Dictionary<string, bool>(); // for判斷觸發問答題(第五題)
         public static Dictionary<string, string> IsGreenOrRed = new Dictionary<string, string>(); // 點選checkbox後判斷label顏色
         public Dictionary<string, string> EntrytxtList = new Dictionary<string, string>(); // for存SQLite裡面抓出來的entry text
@@ -169,6 +170,8 @@ namespace PULI.Views
                             YesOrNoAlreadyChoose[a.wqh_s_num + i.qb_order] = "";
                             YesOrNoAlreadyChoose_for_sameans[a.wqh_s_num + i.qb_order] = "";
                             Stack_Number[a.ClientName + a.wqh_s_num + i.qb_order] = 0;
+                            RepeatOrNotList[a.ClientName] = 0;
+                            RepeatOrNotList_for_second_name[a.ClientName + a.wqh_s_num] = 0;
                             //Stack_Count[]
                         }
                     }
@@ -350,6 +353,9 @@ namespace PULI.Views
                             if (RepeatOrNotList.ContainsKey(questionnaireslist[a].ClientName) == true && RepeatOrNotList[questionnaireslist[a].ClientName] == 1)
                             {
                                 RepeatOrNotList[questionnaireslist[a].ClientName] = -1;
+                                RepeatOrNotList_for_second_name[questionnaireslist[a].ClientName + questionnaireslist[a].wqh_s_num] = 2;
+                                //Console.WriteLine("同上questionnaireslist[a].wqh_s_num~AA~ " + questionnaireslist[a].wqh_s_num);
+                               //Console.WriteLine("同上questionnaireslist[a].name~~ " + questionnaireslist[a].ClientName);
                                 //////Console.WriteLine("Addrepeat~~ ");
                                 //////Console.WriteLine("Add~~~ " + questionnaireslist[a].ClientName);
 
@@ -357,6 +363,9 @@ namespace PULI.Views
                             else
                             {
                                 RepeatOrNotList[questionnaireslist[a].ClientName] = 1;
+                                RepeatOrNotList_for_second_name[questionnaireslist[a].ClientName + questionnaireslist[a].wqh_s_num] = 1;
+                                //Console.WriteLine("同上questionnaireslist[a].wqh_s_num~BB~ " + questionnaireslist[a].wqh_s_num);
+                                //Console.WriteLine("同上questionnaireslist[a].name~~ " + questionnaireslist[a].ClientName);
                             }
                         }
                         else
@@ -2854,31 +2863,9 @@ namespace PULI.Views
                                                         FontSize = 20
                                                     };
                                                 }
+                                                
 
-                                                //}
-                                                //else
-                                                //{
-                                                //    label_check = new Label // 選項
-                                                //    {
-                                                //        Text = j,
-                                                //        TextColor = Color.Black,
-                                                //        FontSize = 20
-                                                //    };
-                                                //}
-                                                //if(stack_check.ClassId == questionList.wqh_s_num + i.qb_order)
-                                                //{
-                                                //    if(ANS2 == "是")
-                                                //    {
-                                                //        stack_ques.Children.RemoveAt(0);
-                                                //    }
-                                                //    else
-                                                //    {
-                                                //        stack_ques.Children.RemoveAt(1);
-                                                //    }
-                                                //}
-                                                //Console.WriteLine("classid~~~ " + stack_check.ClassId);
-                                                //stack_ques.Children.RemoveAt();
-
+                                                
                                                 if ((stack_ques.Children.Where(x => x.ClassId == stack_name).ToString()) != null)
                                                 {
                                                     Console.WriteLine("成功~~ ");
@@ -2894,26 +2881,110 @@ namespace PULI.Views
                                                         Children = { label_check },
                                                         ClassId = questionList.wqh_s_num + i.qb_order
                                                     };
+                                                    
+
+                                                    
                                                     if (YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] == "")
                                                     {
                                                         if (j == "否")
                                                         {
                                                             Console.WriteLine("NEG~~ ");
                                                             Console.WriteLine("A~~~~ ");
+                                                            //stack_ques.Children.RemoveAt(1);
+                                                            //stack_ques.Children.Insert(1, stack_check2);
+                                                            stack_ques.Children.RemoveAt(0);
+                                                            var check_box_try = new CheckBox // 產生checkbox
+                                                            {
+
+                                                                IsChecked = true,
+                                                                Margin = new Thickness(-5, 0, 0, 0),
+                                                                //Color = Color.FromHex("264653")
+                                                                Color = Color.Red,
+
+                                                            };
+                                                            stack_ques.Children.Insert(0, check_box_try);
                                                             stack_ques.Children.RemoveAt(1);
                                                             //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
                                                             //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "否";
-                                                            stack_ques.Children.Insert(1, stack_check2);
+
+                                                            var label_check_try = new Label // 選項
+                                                            {
+                                                                Text = j,
+                                                                TextColor = Color.Red,
+                                                                FontSize = 20
+                                                            };
+                                                            stack_ques.Children.Insert(1, label_check_try); // 把"是"變成綠色
+                                                            stack_ques.Children.RemoveAt(2);
+                                                            var check_box_origin_true = new CheckBox // 產生checkbox
+                                                            {
+
+
+                                                                Margin = new Thickness(-5, 0, 0, 0),
+                                                                //Color = Color.FromHex("264653")
+                                                                Color = Color.Green,
+                                                                ClassId = questionList.wqh_s_num + i.qb_order
+                                                            };
+                                                            stack_ques.Children.Insert(2, check_box_origin_true);
+                                                            stack_ques.Children.RemoveAt(3);
+
+
+                                                            //var label_stack_origin = new StackLayout
+                                                            //{
+                                                            //    Orientation = StackOrientation.Horizontal,
+                                                            //    Children = { label_check_origin_true },
+                                                            //    ClassId = questionList.wqh_s_num + i.qb_order
+                                                            //};
+                                                            var label_check_origin_true = new Label // 選項
+                                                            {
+                                                                Text = "是",
+                                                                TextColor = Color.Black,
+                                                                FontSize = 20,
+                                                                ClassId = questionList.wqh_s_num + i.qb_order
+                                                            };
+                                                            stack_ques.Children.Insert(3, label_check_origin_true);
                                                         }
                                                         else
                                                         {
                                                             Console.WriteLine("POS~~~ ");
                                                             Console.WriteLine("B~~~~ ");
+                                                            stack_ques.Children.RemoveAt(2);
+                                                            var check_box_try = new CheckBox // 產生checkbox
+                                                            {
+
+                                                                IsChecked = true,
+                                                                Margin = new Thickness(-5, 0, 0, 0),
+                                                                //Color = Color.FromHex("264653")
+                                                                Color = Color.Green,
+
+                                                            };
+                                                            stack_ques.Children.Insert(2, check_box_try);
                                                             stack_ques.Children.RemoveAt(3);
 
                                                             //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
                                                             //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "是";
                                                             stack_ques.Children.Insert(3, stack_check2);
+                                                            stack_ques.Children.RemoveAt(0);
+                                                            var check_box_try2 = new CheckBox // 產生checkbox
+                                                            {
+
+                                                                IsChecked = false,
+                                                                Margin = new Thickness(-5, 0, 0, 0),
+                                                                //Color = Color.FromHex("264653")
+                                                                Color = Color.Red,
+
+                                                            };
+                                                            stack_ques.Children.Insert(0, check_box_try2);
+                                                            stack_ques.Children.RemoveAt(1);
+                                                            //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
+                                                            //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "否";
+
+                                                            var label_check_try = new Label // 選項
+                                                            {
+                                                                Text = "否",
+                                                                TextColor = Color.Black,
+                                                                FontSize = 20
+                                                            };
+                                                            stack_ques.Children.Insert(1, label_check_try); // 把"是"變成綠色
                                                         }
                                                     }
 
@@ -3052,7 +3123,7 @@ namespace PULI.Views
                                                             stack_ques.Children.Insert(3, label_check_origin_true);
                                                         }
                                                     }
-
+                                                    
 
 
 
@@ -3077,9 +3148,9 @@ namespace PULI.Views
                                                         ResetLabelSaveToDB(questionList.wqh_s_num, i.qb_order, "是");
                                                     }
                                                 }
+                                                
 
-
-                                                // 因為+entry之前畫面已run好，所以要+entry要重run一次再把選項抓回來填進去
+                                                    // 因為+entry之前畫面已run好，所以要+entry要重run一次再把選項抓回來填進去
 
 
                                             }
@@ -3586,20 +3657,112 @@ namespace PULI.Views
                                                     {
                                                         if (j == "否")
                                                         {
+                                                            /*
                                                             Console.WriteLine("NEG~~ ");
                                                             stack_ques.Children.RemoveAt(3);
                                                             //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
                                                             //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "否";
                                                             stack_ques.Children.Insert(3, stack_check2);
+                                                            */
+                                                            stack_ques.Children.RemoveAt(2);
+                                                            var check_box_try = new CheckBox // 產生checkbox
+                                                            {
+
+                                                                IsChecked = true,
+                                                                Margin = new Thickness(-5, 0, 0, 0),
+                                                                //Color = Color.FromHex("264653")
+                                                                Color = Color.Green,
+
+                                                            };
+                                                            stack_ques.Children.Insert(2, check_box_try);
+                                                            stack_ques.Children.RemoveAt(3);
+
+                                                            //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
+                                                            //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "是";
+                                                            stack_ques.Children.Insert(3, stack_check2);
+                                                            stack_ques.Children.RemoveAt(0);
+                                                            var check_box_try2 = new CheckBox // 產生checkbox
+                                                            {
+
+                                                                IsChecked = false,
+                                                                Margin = new Thickness(-5, 0, 0, 0),
+                                                                //Color = Color.FromHex("264653")
+                                                                Color = Color.Red,
+
+                                                            };
+                                                            stack_ques.Children.Insert(0, check_box_try2);
+                                                            stack_ques.Children.RemoveAt(1);
+                                                            //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
+                                                            //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "否";
+
+                                                            var label_check_try = new Label // 選項
+                                                            {
+                                                                Text = "是",
+                                                                TextColor = Color.Black,
+                                                                FontSize = 20
+                                                            };
+                                                            stack_ques.Children.Insert(1, label_check_try); // 把"是"變成綠色
                                                         }
                                                         else
                                                         {
+                                                            /*
                                                             Console.WriteLine("POS~~~ ");
                                                             stack_ques.Children.RemoveAt(1);
 
                                                             //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
                                                             //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "是";
                                                             stack_ques.Children.Insert(1, stack_check2);
+                                                            */
+                                                            stack_ques.Children.RemoveAt(0);
+                                                            var check_box_try = new CheckBox // 產生checkbox
+                                                            {
+
+                                                                IsChecked = true,
+                                                                Margin = new Thickness(-5, 0, 0, 0),
+                                                                //Color = Color.FromHex("264653")
+                                                                Color = Color.Red,
+
+                                                            };
+                                                            stack_ques.Children.Insert(0, check_box_try);
+                                                            stack_ques.Children.RemoveAt(1);
+                                                            //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
+                                                            //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "否";
+
+                                                            var label_check_try = new Label // 選項
+                                                            {
+                                                                Text = j,
+                                                                TextColor = Color.Red,
+                                                                FontSize = 20
+                                                            };
+                                                            stack_ques.Children.Insert(1, label_check_try); // 把"是"變成綠色
+                                                            stack_ques.Children.RemoveAt(2);
+                                                            var check_box_origin_true = new CheckBox // 產生checkbox
+                                                            {
+
+
+                                                                Margin = new Thickness(-5, 0, 0, 0),
+                                                                //Color = Color.FromHex("264653")
+                                                                Color = Color.Green,
+                                                                ClassId = questionList.wqh_s_num + i.qb_order
+                                                            };
+                                                            stack_ques.Children.Insert(2, check_box_origin_true);
+                                                            stack_ques.Children.RemoveAt(3);
+
+
+                                                            //var label_stack_origin = new StackLayout
+                                                            //{
+                                                            //    Orientation = StackOrientation.Horizontal,
+                                                            //    Children = { label_check_origin_true },
+                                                            //    ClassId = questionList.wqh_s_num + i.qb_order
+                                                            //};
+                                                            var label_check_origin_true = new Label // 選項
+                                                            {
+                                                                Text = "否",
+                                                                TextColor = Color.Black,
+                                                                FontSize = 20,
+                                                                ClassId = questionList.wqh_s_num + i.qb_order
+                                                            };
+                                                            stack_ques.Children.Insert(3, label_check_origin_true);
                                                         }
                                                     }
                                                     
@@ -5757,572 +5920,499 @@ namespace PULI.Views
                 ////}
                 
             }
-            
-        
+
+            //if(RepeatOrNotList_for_second_name[questionList.ClientName + questionList.wqh_s_num] == -1)
             if (RepeatOrNotList[questionList.ClientName] == -1) // 處理同上自動填答案
             {
-                ////Console.WriteLine("reapetin~~~ ");
-                //Console.WriteLine("_QB_S_NUM@@@@222 " + questionList.qb_s_num);
-                /*
-                foreach (var a in questionList.qbs)
+                if(RepeatOrNotList_for_second_name[questionList.ClientName + questionList.wqh_s_num] == 2)
                 {
-                    YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "";
-                    YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "@@";
-                    ResetLabelSaveToDB(questionList.wqh_s_num, a.qb_order, "@@");
-                    Console.WriteLine("addwqh~~ " + questionList.wqh_s_num);
-                    Console.WriteLine("ordr~~~ " + a.qb_order);
-                }
-                */
-                
-                var same_ans = new Button // 更多題目的回饋單
-                {
-                    Text = "同上",
-                    CornerRadius = 60,
-                    BackgroundColor = Color.FromHex("ddbea9"),
-                    HorizontalOptions = LayoutOptions.FillAndExpand,
-                    WidthRequest = 100,
-                    ////Padding = new Thickness(50, 5, 50, 5),
-                    ////Margin = new Thickness(5, 0, 5, 0),
-                    FontSize = 18
-                };
-
-                //var more_form = new Button // 更多題目的回饋單
-                //{
-                //    Text = "更多",
-                //    CornerRadius = 60,
-                //    BackgroundColor = Color.FromHex("ddbea9"),
-                //    HorizontalOptions = LayoutOptions.FillAndExpand,
-                //    WidthRequest = 100,
-                //    //Padding = new Thickness(50, 5, 50, 5),
-                //    //Margin = new Thickness(5, 0, 5, 0),
-                //    FontSize = 18
-                //};
-
-                //more_form.Clicked += (object sender, EventArgs e) =>
-                //{
-                //    Navigation.PushAsync(new MoreFormView());
-                //};
-                var button_stack = new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal,
-                    HorizontalOptions = LayoutOptions.FillAndExpand,
-                    Children = { same_ans }
-                };
-                same_ans.Clicked += (object sender, EventArgs e) =>
-                {
-                    // 把同名字問卷答案抓出來，填入這題，並存入資料庫
-                    //////Console.WriteLine("Buttonname~~~" + questionList.ClientName);
-                    ////////Console.WriteLine("namecount~~~" + MapView.AccDatabase.GetItemsName(questionList.ClientName).Count());
-                    //reset();
+                    ////Console.WriteLine("reapetin~~~ ");
+                    //Console.WriteLine("_QB_S_NUM@@@@222 " + questionList.qb_s_num);
                     /*
-                    foreach (var i in questionList.qbs)
+                    foreach (var a in questionList.qbs)
                     {
-                        if (TmpAnsList_same_wqh.ContainsKey(questionList.ClientName + i.qb_order) && TmpAnsList_same_wqh[questionList.ClientName + i.qb_order] != "")
+                        YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "";
+                        YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "@@";
+                        ResetLabelSaveToDB(questionList.wqh_s_num, a.qb_order, "@@");
+                        Console.WriteLine("addwqh~~ " + questionList.wqh_s_num);
+                        Console.WriteLine("ordr~~~ " + a.qb_order);
+                    }
+                    */
+
+                    var same_ans = new Button // 更多題目的回饋單
+                    {
+                        Text = "同上",
+                        CornerRadius = 60,
+                        BackgroundColor = Color.FromHex("ddbea9"),
+                        HorizontalOptions = LayoutOptions.FillAndExpand,
+                        WidthRequest = 100,
+                        ////Padding = new Thickness(50, 5, 50, 5),
+                        ////Margin = new Thickness(5, 0, 5, 0),
+                        FontSize = 18
+                    };
+
+                    //var more_form = new Button // 更多題目的回饋單
+                    //{
+                    //    Text = "更多",
+                    //    CornerRadius = 60,
+                    //    BackgroundColor = Color.FromHex("ddbea9"),
+                    //    HorizontalOptions = LayoutOptions.FillAndExpand,
+                    //    WidthRequest = 100,
+                    //    //Padding = new Thickness(50, 5, 50, 5),
+                    //    //Margin = new Thickness(5, 0, 5, 0),
+                    //    FontSize = 18
+                    //};
+
+                    //more_form.Clicked += (object sender, EventArgs e) =>
+                    //{
+                    //    Navigation.PushAsync(new MoreFormView());
+                    //};
+                    var button_stack = new StackLayout
+                    {
+                        Orientation = StackOrientation.Horizontal,
+                        HorizontalOptions = LayoutOptions.FillAndExpand,
+                        Children = { same_ans }
+                    };
+                    same_ans.Clicked += (object sender, EventArgs e) =>
+                    {
+                        // 把同名字問卷答案抓出來，填入這題，並存入資料庫
+                        //////Console.WriteLine("Buttonname~~~" + questionList.ClientName);
+                        ////////Console.WriteLine("namecount~~~" + MapView.AccDatabase.GetItemsName(questionList.ClientName).Count());
+                        //reset();
+                        /*
+                        foreach (var i in questionList.qbs)
                         {
-                            foreach (string key in TmpAnsList_same_wqh.Keys)
+                            if (TmpAnsList_same_wqh.ContainsKey(questionList.ClientName + i.qb_order) && TmpAnsList_same_wqh[questionList.ClientName + i.qb_order] != "")
                             {
-                                if (key == questionList.ClientName + i.qb_order)
+                                foreach (string key in TmpAnsList_same_wqh.Keys)
                                 {
-                                    same_ans_coount++;
+                                    if (key == questionList.ClientName + i.qb_order)
+                                    {
+                                        same_ans_coount++;
+                                    }
                                 }
                             }
                         }
-                    }
-                    */
-                    Console.WriteLine("same_ans_count~~ " + same_ans_coount);
-                    foreach (var a in questionList.qbs)
-                    {
-                        if (TmpAnsList_same_wqh.ContainsKey(questionList.ClientName + a.qb_order) && TmpAnsList_same_wqh[questionList.ClientName + a.qb_order] != "")
+                        */
+                        Console.WriteLine("same_ans_count~~ " + same_ans_coount);
+                        foreach (var a in questionList.qbs)
                         {
-                            stack_name = questionList.wqh_s_num + a.qb_order;
-                            same_ans_copy++;
-                            //same_ans_coount = TmpAnsList_same_wqh.Sum(s => s == questionList.ClientName);
-                            //same_ans_coount = TmpAnsList_same_wqh.ContainsKey(questionList.ClientName + i.qb_order);
-                            //var total = tmp_name_list.Count(s => s == SQLlist[k].ClientName);
-                            //checkList2.RemoveAll(x => x.wqh_s_num == questionList.wqh_s_num && x.qb_order == i.qb_order);
-                            //Console.WriteLine("first~~ ");
-                            Console.WriteLine("wqh2222~~ " + questionList.wqh_s_num);
-                            //Console.WriteLine("qborder~~~ " + i.qb_order);
-                            var temp_j = "";
-                            //var wqh = "";
-                            //var _wqhsnum = questionList.wqh_s_num;
-                            //Console.WriteLine("AAA~~ " + TmpAnsList_same_wqh["林十1"]);
-                            //Console.WriteLine("name~~ " + questionList.ClientName);
-                            //Console.WriteLine("order~~ " + i.qb_order);
-                            //Console.WriteLine("qqqqqwqh~~~ " + TmpAnsList_same_wqh[questionList.ClientName + i.qb_order]);
-                            //wqh = TmpAnsList_same_wqh[questionList.ClientName + i.qb_order]; // 題號
-
-                            //Console.WriteLine("wqh~~~ " + TmpAnsList_same_wqh[questionList.ClientName + i.qb_order]);
-
-                            temp_j = TmpAnsList_same[TmpAnsList_same_wqh[questionList.ClientName + a.qb_order] + a.qb_order];
-                            //Console.WriteLine("tempj~~ " + temp_j);
-                            for (int d = 0; d < a.qb03.Count(); d++)
+                            if (TmpAnsList_same_wqh.ContainsKey(questionList.ClientName + a.qb_order) && TmpAnsList_same_wqh[questionList.ClientName + a.qb_order] != "")
                             {
-                                //Console.WriteLine("j00~~ " + j);
-                                //Console.WriteLine("w00~~~ " + i.qb03[d]);
-                                if (temp_j == a.qb03[d])
+                                stack_name = questionList.wqh_s_num + a.qb_order;
+                                same_ans_copy++;
+                                //same_ans_coount = TmpAnsList_same_wqh.Sum(s => s == questionList.ClientName);
+                                //same_ans_coount = TmpAnsList_same_wqh.ContainsKey(questionList.ClientName + i.qb_order);
+                                //var total = tmp_name_list.Count(s => s == SQLlist[k].ClientName);
+                                //checkList2.RemoveAll(x => x.wqh_s_num == questionList.wqh_s_num && x.qb_order == i.qb_order);
+                                //Console.WriteLine("first~~ ");
+                                Console.WriteLine("wqh2222~~ " + questionList.wqh_s_num);
+                                //Console.WriteLine("qborder~~~ " + i.qb_order);
+                                var temp_j = "";
+                                //var wqh = "";
+                                //var _wqhsnum = questionList.wqh_s_num;
+                                //Console.WriteLine("AAA~~ " + TmpAnsList_same_wqh["林十1"]);
+                                //Console.WriteLine("name~~ " + questionList.ClientName);
+                                //Console.WriteLine("order~~ " + i.qb_order);
+                                //Console.WriteLine("qqqqqwqh~~~ " + TmpAnsList_same_wqh[questionList.ClientName + i.qb_order]);
+                                //wqh = TmpAnsList_same_wqh[questionList.ClientName + i.qb_order]; // 題號
+
+                                //Console.WriteLine("wqh~~~ " + TmpAnsList_same_wqh[questionList.ClientName + i.qb_order]);
+
+                                temp_j = TmpAnsList_same[TmpAnsList_same_wqh[questionList.ClientName + a.qb_order] + a.qb_order];
+                                //Console.WriteLine("tempj~~ " + temp_j);
+                                for (int d = 0; d < a.qb03.Count(); d++)
                                 {
+                                    //Console.WriteLine("j00~~ " + j);
+                                    //Console.WriteLine("w00~~~ " + i.qb03[d]);
+                                    if (temp_j == a.qb03[d])
+                                    {
 
-                                    //Console.WriteLine("w~~~ " + i.qb03[d]);
-                                    //Console.WriteLine("check~~ " + checkList2[a].wqb01);
+                                        //Console.WriteLine("w~~~ " + i.qb03[d]);
+                                        //Console.WriteLine("check~~ " + checkList2[a].wqb01);
 
-                                    // Console.WriteLine("j~~ " + j);
-                                    //Console.WriteLine("w~~~ " + i.qb03[d]);
-                                    //ANS2 = Convert.ToString(qb03_count);
-                                    ANS2 = d.ToString();
-                                    //Console.WriteLine("jj~~ " + temp_j);
-                                    Console.WriteLine("ANS2_2~~ " + ANS2);
+                                        // Console.WriteLine("j~~ " + j);
+                                        //Console.WriteLine("w~~~ " + i.qb03[d]);
+                                        //ANS2 = Convert.ToString(qb03_count);
+                                        ANS2 = d.ToString();
+                                        //Console.WriteLine("jj~~ " + temp_j);
+                                        Console.WriteLine("ANS2_2~~ " + ANS2);
+                                    }
+
+                                    ////////Console.WriteLine("qb0322~~ " + qb03_count);
                                 }
-
-                                ////////Console.WriteLine("qb0322~~ " + qb03_count);
-                            }
-                            Console.WriteLine("wqh3333~~ " + questionList.wqh_s_num);
-                            Console.WriteLine("qborder~~~ " + a.qb_order);
-                            ////////Console.WriteLine("why~~ " + TmpAddList[questionList.wqh_s_num + i.qb_order]);
-                            //if (TmpAddList[questionList.wqh_s_num + i.qb_order] == false)
-                            //{
-                            var check = new checkInfo
-                            {
-                                wqh_s_num = questionList.wqh_s_num, // 問卷編號
-                                qh_s_num = questionList.qh_s_num, // 工作問卷編號
-                                qb_s_num = a.qb_s_num, // 問題編號(第幾題)
-                                wqb01 = ANS2 // 答案
-
-                            };
-                            checkList2.RemoveAll(x => x.wqh_s_num == questionList.wqh_s_num && x.qb_order == a.qb_order);
-                            var check3 = new checkInfo
-                            {
-                                wqh_s_num = questionList.wqh_s_num, // 問卷編號
-                                qh_s_num = questionList.qh_s_num, // 工作問卷編號
-                                qb_s_num = a.qb_s_num, // 問題編號(第幾題)
-                                qb_order = a.qb_order,
-                                wqb01 = ANS2 // 答案
-
-                            };
-                            ////////Console.WriteLine("count1~~ " + checkList2.Count());
-                            checkList2.Add(check3); // for save
-                            checkList.Add(check);
-                            //AddSaveToDB(questionList.wqh_s_num, i.qb_order);
-                            if (a.qb_order == "1")
-                            {
-                                if (temp_j == "否")
+                                Console.WriteLine("wqh3333~~ " + questionList.wqh_s_num);
+                                Console.WriteLine("qborder~~~ " + a.qb_order);
+                                ////////Console.WriteLine("why~~ " + TmpAddList[questionList.wqh_s_num + i.qb_order]);
+                                //if (TmpAddList[questionList.wqh_s_num + i.qb_order] == false)
+                                //{
+                                var check = new checkInfo
                                 {
-                                    color = "Red";
-                                    IsResetList[questionList.wqh_s_num + a.qb_order] = true;
-                                    IsGreenOrRed[questionList.wqh_s_num + a.qb_order] = "Red";
-                                }
-                                else
+                                    wqh_s_num = questionList.wqh_s_num, // 問卷編號
+                                    qh_s_num = questionList.qh_s_num, // 工作問卷編號
+                                    qb_s_num = a.qb_s_num, // 問題編號(第幾題)
+                                    wqb01 = ANS2 // 答案
+
+                                };
+                                checkList2.RemoveAll(x => x.wqh_s_num == questionList.wqh_s_num && x.qb_order == a.qb_order);
+                                var check3 = new checkInfo
                                 {
-                                    color = "Green";
-                                    IsResetList[questionList.wqh_s_num + a.qb_order] = true;
-                                    IsGreenOrRed[questionList.wqh_s_num + a.qb_order] = "Green";
-                                }
-                            }
-                            else
-                            {
-                                if (temp_j == "是" || temp_j == "未發")
-                                {
-                                    color = "Red";
-                                    IsResetList[questionList.wqh_s_num + a.qb_order] = true;
-                                    IsGreenOrRed[questionList.wqh_s_num + a.qb_order] = "Red";
-                                }
-                                else
-                                {
-                                    color = "Green";
-                                    IsResetList[questionList.wqh_s_num + a.qb_order] = true;
-                                    IsGreenOrRed[questionList.wqh_s_num + a.qb_order] = "Green";
-                                }
-                            }
-                            //Console.WriteLine("lasttemp_j~~~ " + temp_j);
-                            ResetSaveToDB(questionList.wqh_s_num, a.qb_order, color);
-                            //Console.WriteLine("wqh~ " + questionList.wqh_s_num);
-                            //Console.WriteLine("count~~ " + TmpAnsList.Keys.Count());
-                            TmpAnsList[questionList.wqh_s_num + questionList.ClientName + a.qb_order] = temp_j;
-                            //Console.WriteLine("count222~~ " + TmpAnsList[questionList.wqh_s_num + questionList.ClientName + i.qb_order]);
-                            TmpAnsList_same_wqh[questionList.ClientName + a.qb_order] = questionList.wqh_s_num;
-                            TmpAnsList_same[questionList.wqh_s_num + a.qb_order] = temp_j;
-                            //QuesSaveToSQLite(questionList.wqh_s_num, questionList.qh_s_num, i.qb_s_num, j, questionList.ClientName, i.qb_order);
-                            //Console.WriteLine("DBcount~~~ " + MapView.AccDatabase.GetAccountAsync2().Count());
-                            QuesSaveToSQLite(questionList.wqh_s_num, questionList.qh_s_num, a.qb_s_num, temp_j, questionList.ClientName, a.qb_order);
-                            //Console.WriteLine("DB~~　" + MapView.AccDatabase.GetAccountAsync2().Count());
+                                    wqh_s_num = questionList.wqh_s_num, // 問卷編號
+                                    qh_s_num = questionList.qh_s_num, // 工作問卷編號
+                                    qb_s_num = a.qb_s_num, // 問題編號(第幾題)
+                                    qb_order = a.qb_order,
+                                    wqb01 = ANS2 // 答案
 
-                            //Console.WriteLine("samecount~~ " + same_ans_coount);
-                            //Console.WriteLine("samecopy~~~ " + same_ans_copy);
-                            /*
-                            if (same_ans_copy == same_ans_coount)
-                            {
-                                reset();
-                                same_ans_coount = 0;
-                                same_ans_copy = 0;
-                                Console.WriteLine("samecount222~~ " + same_ans_coount);
-                                Console.WriteLine("samecopy2222~~~ " + same_ans_copy);
-                            }
-                            */
-
-
-                            
-
-                            //if ((quesStack.Children.Where(x => x.ClassId == stack_name).ToString()) != null)
-                            //{
-                            Console.WriteLine("成功sameinnnnnn~~ ");
-                            Console.WriteLine("stackname~~~~ " + stack_name);
-
-                            stack_check2 = new StackLayout // checkbox跟選項
-                            {
-                                Orientation = StackOrientation.Horizontal,
-                                Children = { label_check },
-                                ClassId = questionList.wqh_s_num + a.qb_order
-                            };
-                            if (YesOrNoAlreadyChoose_for_sameans[questionList.wqh_s_num + a.qb_order] == "")
-                            {
-                                Console.WriteLine("NEGsameinnnnn~~~ ");
-                                //stack_ques.Children.RemoveAt(0);
-                                //stack_ques.Children.Insert(0, stack_check2);
-                                //stack_ques.Children.Insert(1, stack_check2);
-                                Console.WriteLine("wqh~~ " + questionList.wqh_s_num);
-                                Console.WriteLine("qb~~~ " + a.qb_order);
-                                Console.WriteLine("stack_count~~ " + ques_stack_count);
-                                Console.WriteLine("count~~~ " + Stack_Count[questionList.wqh_s_num + a.qb_order]);
-                                quesStack.Children.RemoveAt(Stack_Count[questionList.wqh_s_num + a.qb_order] - 1);
+                                };
+                                ////////Console.WriteLine("count1~~ " + checkList2.Count());
+                                checkList2.Add(check3); // for save
+                                checkList.Add(check);
+                                //AddSaveToDB(questionList.wqh_s_num, i.qb_order);
                                 if (a.qb_order == "1")
                                 {
                                     if (temp_j == "否")
                                     {
-                                        var choose_false_stack = new StackLayout
-                                        {
-                                            Orientation = StackOrientation.Horizontal
-                                        };
-                                        var choose_false_stack_2 = new StackLayout
-                                        {
-                                            Orientation = StackOrientation.Horizontal
-                                        };
-                                        var number_label = new Label
-                                        {
-                                            Text = a.qb_order,
-                                            TextColor = Color.Black,
-                                            FontSize = 20
-                                        };
-                                        choose_false_stack_2.Children.Add(number_label);
-                                        var question_label = new Label
-                                        {
-                                            Text = a.qb01,
-                                            TextColor = Color.Black,
-                                            FontSize = 20
-                                        };
-                                        choose_false_stack_2.Children.Add(question_label);
-
-                                        var check_box_false = new CheckBox // 產生checkbox
-                                        {
-                                            IsChecked = true,
-                                            Margin = new Thickness(-5, 0, 0, 0),
-                                            //Color = Color.FromHex("264653")
-                                            Color = Color.Red,
-                                            ClassId = questionList.wqh_s_num + a.qb_order
-                                        };
-                                        choose_false_stack.Children.Add(check_box_false);
-                                        label_check = new Label // 選項
-                                        {
-                                            Text = "否",
-                                            TextColor = Color.Red,
-                                            //Margin = new Thickness(-10, 0, 0, 0),
-                                            FontSize = 20
-                                        };
-                                        choose_false_stack.Children.Add(label_check);
-                                        var check_box_origin_true = new CheckBox // 產生checkbox
-                                        {
-                                            IsChecked = false,
-                                            Margin = new Thickness(-5, 0, 0, 0),
-                                            //Color = Color.FromHex("264653")
-                                            Color = Color.Green,
-                                            ClassId = questionList.wqh_s_num + a.qb_order
-                                        };
-                                        choose_false_stack.Children.Add(check_box_origin_true);
-                                        var true_label = new Label // 選項
-                                        {
-                                            Text = "是",
-                                            TextColor = Color.Black,
-                                            //Margin = new Thickness(-10, 0, 0, 0),
-                                            FontSize = 20
-                                        };
-                                        choose_false_stack.Children.Add(true_label);
-                                        var choose_false_stack_final = new StackLayout
-                                        {
-                                            Orientation = StackOrientation.Vertical
-                                        };
-                                        choose_false_stack_final.Children.Add(choose_false_stack_2);
-                                        choose_false_stack_final.Children.Add(choose_false_stack);
-
-                                        Frame choose_false_frame = new Frame // frame包上面那個stacklayout
-                                        {
-                                            Padding = new Thickness(10, 5, 10, 5),
-                                            Margin = new Thickness(5, 0, 5, 0),
-                                            BackgroundColor = Color.FromHex("eddcd2"),
-                                            ClassId = questionList.ClientName + questionList.wqh_s_num + a.qb_order,
-                                            CornerRadius = 10,
-                                            HasShadow = false,
-                                            Content = choose_false_stack_final
-                                        };
-                                        quesStack.Children.Insert(Stack_Count[questionList.wqh_s_num + a.qb_order] - 1, choose_false_frame);
-                                        YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "";
-                                        YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "否";
-                                        ResetLabelSaveToDB(questionList.wqh_s_num, a.qb_order, "否");
+                                        color = "Red";
+                                        IsResetList[questionList.wqh_s_num + a.qb_order] = true;
+                                        IsGreenOrRed[questionList.wqh_s_num + a.qb_order] = "Red";
                                     }
                                     else
                                     {
-                                        var choose_true_stack = new StackLayout
-                                        {
-                                            Orientation = StackOrientation.Horizontal
-                                        };
-                                        var choose_true_stack_2 = new StackLayout
-                                        {
-                                            Orientation = StackOrientation.Horizontal
-                                        };
-                                        var number_label = new Label // 題號
-                                        {
-                                            Text = a.qb_order,
-                                            TextColor = Color.Black,
-                                            FontSize = 20
-                                        };
-                                        choose_true_stack_2.Children.Add(number_label);
-                                        var question_label = new Label // 題目
-                                        {
-                                            Text = a.qb01,
-                                            TextColor = Color.Black,
-                                            FontSize = 20
-                                        };
-                                        choose_true_stack_2.Children.Add(question_label);
-
-                                        var check_box_false = new CheckBox // 無勾選的紅色checkbox
-                                        {
-                                            IsChecked = false,
-                                            Margin = new Thickness(-5, 0, 0, 0),
-                                            //Color = Color.FromHex("264653")
-                                            Color = Color.Red,
-                                            ClassId = questionList.wqh_s_num + a.qb_order
-                                        };
-                                        choose_true_stack.Children.Add(check_box_false);
-                                        label_check = new Label // 選項
-                                        {
-                                            Text = "否",
-                                            TextColor = Color.Black,
-                                            //Margin = new Thickness(-10, 0, 0, 0),
-                                            FontSize = 20
-                                        };
-                                        choose_true_stack.Children.Add(label_check);
-                                        var check_box_origin_true = new CheckBox // 有勾選的綠色checkbox
-                                        {
-                                            IsChecked = true,
-                                            Margin = new Thickness(-5, 0, 0, 0),
-                                            //Color = Color.FromHex("264653")
-                                            Color = Color.Green,
-                                            ClassId = questionList.wqh_s_num + a.qb_order
-                                        };
-                                        choose_true_stack.Children.Add(check_box_origin_true);
-                                        var true_label = new Label // 選項
-                                        {
-                                            Text = "是",
-                                            TextColor = Color.Green,
-                                            //Margin = new Thickness(-10, 0, 0, 0),
-                                            FontSize = 20
-                                        };
-                                        choose_true_stack.Children.Add(true_label);
-                                        
-                                        var choose_true_stack_final = new StackLayout
-                                        {
-                                            Orientation = StackOrientation.Vertical
-                                        };
-                                        choose_true_stack_final.Children.Add(choose_true_stack_2);
-                                        choose_true_stack_final.Children.Add(choose_true_stack);
-
-                                        Frame choose_true_frame = new Frame // frame包上面那個stacklayout
-                                        {
-                                            Padding = new Thickness(10, 5, 10, 5),
-                                            Margin = new Thickness(5, 0, 5, 0),
-                                            BackgroundColor = Color.FromHex("eddcd2"),
-                                            ClassId = questionList.ClientName + questionList.wqh_s_num + a.qb_order,
-                                            CornerRadius = 10,
-                                            HasShadow = false,
-                                            Content = choose_true_stack_final
-                                        };
-                                        quesStack.Children.Insert(Stack_Count[questionList.wqh_s_num + a.qb_order] - 1, choose_true_frame);
-                                        YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "";
-                                        YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "是";
-                                        ResetLabelSaveToDB(questionList.wqh_s_num, a.qb_order, "是");
-                                    }
-
-                                }
-                                else if(a.qb_order == "2")
-                                {
-                                    if (temp_j == "否")
-                                    {
-                                        var choose_false_stack = new StackLayout
-                                        {
-                                            Orientation = StackOrientation.Horizontal
-                                        };
-                                        var choose_false_stack_2 = new StackLayout
-                                        {
-                                            Orientation = StackOrientation.Horizontal
-                                        };
-                                        var number_label = new Label
-                                        {
-                                            Text = a.qb_order,
-                                            TextColor = Color.Black,
-                                            FontSize = 20
-                                        };
-                                        choose_false_stack_2.Children.Add(number_label);
-                                        var question_label = new Label
-                                        {
-                                            Text = a.qb01,
-                                            TextColor = Color.Black,
-                                            FontSize = 20
-                                        };
-                                        choose_false_stack_2.Children.Add(question_label);
-
-                                        var check_box_false = new CheckBox // 產生checkbox
-                                        {
-                                            IsChecked = false,
-                                            Margin = new Thickness(-5, 0, 0, 0),
-                                            //Color = Color.FromHex("264653")
-                                            Color = Color.Red,
-                                            ClassId = questionList.wqh_s_num + a.qb_order
-                                        };
-                                        choose_false_stack.Children.Add(check_box_false);
-                                        var true_label = new Label // 選項
-                                        {
-                                            Text = "是",
-                                            TextColor = Color.Black,
-                                            //Margin = new Thickness(-10, 0, 0, 0),
-                                            FontSize = 20
-                                        };
-                                        choose_false_stack.Children.Add(true_label);
-                                        
-                                        var check_box_origin_true = new CheckBox // 產生checkbox
-                                        {
-                                            IsChecked = true,
-                                            Margin = new Thickness(-5, 0, 0, 0),
-                                            //Color = Color.FromHex("264653")
-                                            Color = Color.Green,
-                                            ClassId = questionList.wqh_s_num + a.qb_order
-                                        };
-                                        choose_false_stack.Children.Add(check_box_origin_true);
-                                        label_check = new Label // 選項
-                                        {
-                                            Text = "否",
-                                            TextColor = Color.Green,
-                                            //Margin = new Thickness(-10, 0, 0, 0),
-                                            FontSize = 20
-                                        };
-                                        choose_false_stack.Children.Add(label_check);
-                                        var choose_false_stack_final = new StackLayout
-                                        {
-                                            Orientation = StackOrientation.Vertical
-                                        };
-                                        choose_false_stack_final.Children.Add(choose_false_stack_2);
-                                        choose_false_stack_final.Children.Add(choose_false_stack);
-
-                                        Frame choose_false_frame = new Frame // frame包上面那個stacklayout
-                                        {
-                                            Padding = new Thickness(10, 5, 10, 5),
-                                            Margin = new Thickness(5, 0, 5, 0),
-                                            BackgroundColor = Color.FromHex("eddcd2"),
-                                            ClassId = questionList.ClientName + questionList.wqh_s_num + a.qb_order,
-                                            CornerRadius = 10,
-                                            HasShadow = false,
-                                            Content = choose_false_stack_final
-                                        };
-                                        quesStack.Children.Insert(Stack_Count[questionList.wqh_s_num + a.qb_order] - 1, choose_false_frame);
-                                        YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "";
-                                        YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "否";
-                                        ResetLabelSaveToDB(questionList.wqh_s_num, a.qb_order, "否");
-                                    }
-                                    else
-                                    {
-                                        var choose_true_stack = new StackLayout
-                                        {
-                                            Orientation = StackOrientation.Horizontal
-                                        };
-                                        var choose_true_stack_2 = new StackLayout
-                                        {
-                                            Orientation = StackOrientation.Horizontal
-                                        };
-                                        var number_label = new Label // 題號
-                                        {
-                                            Text = a.qb_order,
-                                            TextColor = Color.Black,
-                                            FontSize = 20
-                                        };
-                                        choose_true_stack_2.Children.Add(number_label);
-                                        var question_label = new Label // 題目
-                                        {
-                                            Text = a.qb01,
-                                            TextColor = Color.Black,
-                                            FontSize = 20
-                                        };
-                                        choose_true_stack_2.Children.Add(question_label);
-
-                                        var check_box_false = new CheckBox // 無勾選的紅色checkbox
-                                        {
-                                            IsChecked = true,
-                                            Margin = new Thickness(-5, 0, 0, 0),
-                                            //Color = Color.FromHex("264653")
-                                            Color = Color.Red,
-                                            ClassId = questionList.wqh_s_num + a.qb_order
-                                        };
-                                        choose_true_stack.Children.Add(check_box_false);
-                                        var true_label = new Label // 選項
-                                        {
-                                            Text = "是",
-                                            TextColor = Color.Red,
-                                            //Margin = new Thickness(-10, 0, 0, 0),
-                                            FontSize = 20
-                                        };
-                                        choose_true_stack.Children.Add(true_label);
-                                        var check_box_origin_true = new CheckBox // 有勾選的綠色checkbox
-                                        {
-                                            IsChecked = false,
-                                            Margin = new Thickness(-5, 0, 0, 0),
-                                            //Color = Color.FromHex("264653")
-                                            Color = Color.Green,
-                                            ClassId = questionList.wqh_s_num + a.qb_order
-                                        };
-                                        choose_true_stack.Children.Add(check_box_origin_true);
-                                       
-                                        label_check = new Label // 選項
-                                        {
-                                            Text = "否",
-                                            TextColor = Color.Black,
-                                            //Margin = new Thickness(-10, 0, 0, 0),
-                                            FontSize = 20
-                                        };
-                                        choose_true_stack.Children.Add(label_check);
-                                        var choose_true_stack_final = new StackLayout
-                                        {
-                                            Orientation = StackOrientation.Vertical
-                                        };
-                                        choose_true_stack_final.Children.Add(choose_true_stack_2);
-                                        choose_true_stack_final.Children.Add(choose_true_stack);
-
-                                        Frame choose_true_frame = new Frame // frame包上面那個stacklayout
-                                        {
-                                            Padding = new Thickness(10, 5, 10, 5),
-                                            Margin = new Thickness(5, 0, 5, 0),
-                                            BackgroundColor = Color.FromHex("eddcd2"),
-                                            ClassId = questionList.ClientName + questionList.wqh_s_num + a.qb_order,
-                                            CornerRadius = 10,
-                                            HasShadow = false,
-                                            Content = choose_true_stack_final
-                                        };
-                                        quesStack.Children.Insert(Stack_Count[questionList.wqh_s_num + a.qb_order] - 1, choose_true_frame);
-                                        YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "";
-                                        YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "是";
-                                        ResetLabelSaveToDB(questionList.wqh_s_num, a.qb_order, "是");
+                                        color = "Green";
+                                        IsResetList[questionList.wqh_s_num + a.qb_order] = true;
+                                        IsGreenOrRed[questionList.wqh_s_num + a.qb_order] = "Green";
                                     }
                                 }
                                 else
                                 {
-                                    if(a.qb_order == "3")
+                                    if (temp_j == "是" || temp_j == "未發")
                                     {
-                                        if(temp_j == "已發")
+                                        color = "Red";
+                                        IsResetList[questionList.wqh_s_num + a.qb_order] = true;
+                                        IsGreenOrRed[questionList.wqh_s_num + a.qb_order] = "Red";
+                                    }
+                                    else
+                                    {
+                                        color = "Green";
+                                        IsResetList[questionList.wqh_s_num + a.qb_order] = true;
+                                        IsGreenOrRed[questionList.wqh_s_num + a.qb_order] = "Green";
+                                    }
+                                }
+                                //Console.WriteLine("lasttemp_j~~~ " + temp_j);
+                                ResetSaveToDB(questionList.wqh_s_num, a.qb_order, color);
+                                //Console.WriteLine("wqh~ " + questionList.wqh_s_num);
+                                //Console.WriteLine("count~~ " + TmpAnsList.Keys.Count());
+                                TmpAnsList[questionList.wqh_s_num + questionList.ClientName + a.qb_order] = temp_j;
+                                //Console.WriteLine("count222~~ " + TmpAnsList[questionList.wqh_s_num + questionList.ClientName + i.qb_order]);
+                                TmpAnsList_same_wqh[questionList.ClientName + a.qb_order] = questionList.wqh_s_num;
+                                TmpAnsList_same[questionList.wqh_s_num + a.qb_order] = temp_j;
+                                //QuesSaveToSQLite(questionList.wqh_s_num, questionList.qh_s_num, i.qb_s_num, j, questionList.ClientName, i.qb_order);
+                                //Console.WriteLine("DBcount~~~ " + MapView.AccDatabase.GetAccountAsync2().Count());
+                                QuesSaveToSQLite(questionList.wqh_s_num, questionList.qh_s_num, a.qb_s_num, temp_j, questionList.ClientName, a.qb_order);
+                                //Console.WriteLine("DB~~　" + MapView.AccDatabase.GetAccountAsync2().Count());
+
+                                //Console.WriteLine("samecount~~ " + same_ans_coount);
+                                //Console.WriteLine("samecopy~~~ " + same_ans_copy);
+                                /*
+                                if (same_ans_copy == same_ans_coount)
+                                {
+                                    reset();
+                                    same_ans_coount = 0;
+                                    same_ans_copy = 0;
+                                    Console.WriteLine("samecount222~~ " + same_ans_coount);
+                                    Console.WriteLine("samecopy2222~~~ " + same_ans_copy);
+                                }
+                                */
+
+
+
+
+                                //if ((quesStack.Children.Where(x => x.ClassId == stack_name).ToString()) != null)
+                                //{
+                                Console.WriteLine("成功sameinnnnnn~~ ");
+                                Console.WriteLine("stackname~~~~ " + stack_name);
+
+                                stack_check2 = new StackLayout // checkbox跟選項
+                                {
+                                    Orientation = StackOrientation.Horizontal,
+                                    Children = { label_check },
+                                    ClassId = questionList.wqh_s_num + a.qb_order
+                                };
+                                if (YesOrNoAlreadyChoose_for_sameans[questionList.wqh_s_num + a.qb_order] == "")
+                                {
+                                    Console.WriteLine("NEGsameinnnnn~~~ ");
+                                    //stack_ques.Children.RemoveAt(0);
+                                    //stack_ques.Children.Insert(0, stack_check2);
+                                    //stack_ques.Children.Insert(1, stack_check2);
+                                    Console.WriteLine("wqh~~ " + questionList.wqh_s_num);
+                                    Console.WriteLine("qb~~~ " + a.qb_order);
+                                    Console.WriteLine("stack_count~~ " + ques_stack_count);
+                                    Console.WriteLine("count~~~ " + Stack_Count[questionList.wqh_s_num + a.qb_order]);
+                                    Console.WriteLine("countlaaaa~~ " + Stack_Count.Count());
+                                    //Console.WriteLine("lastcount~~ " + Stack_Count[]);
+                                    if (Stack_Count[questionList.wqh_s_num + a.qb_order] == Stack_Count.Count())
+                                    {
+                                        quesStack.Children.RemoveAt(Stack_Count[questionList.wqh_s_num + a.qb_order]);
+                                    }
+                                    else
+                                    {
+                                        quesStack.Children.RemoveAt(Stack_Count[questionList.wqh_s_num + a.qb_order] - 1);
+                                    }
+
+                                    if (a.qb_order == "1")
+                                    {
+                                        if (temp_j == "否")
+                                        {
+                                            Console.WriteLine("AA~~~ ");
+                                            var choose_false_stack = new StackLayout
+                                            {
+                                                Orientation = StackOrientation.Horizontal
+                                            };
+                                            var choose_false_stack_2 = new StackLayout
+                                            {
+                                                Orientation = StackOrientation.Horizontal
+                                            };
+                                            var number_label = new Label
+                                            {
+                                                Text = a.qb_order,
+                                                TextColor = Color.Black,
+                                                FontSize = 20
+                                            };
+                                            choose_false_stack_2.Children.Add(number_label);
+                                            var question_label = new Label
+                                            {
+                                                Text = a.qb01,
+                                                TextColor = Color.Black,
+                                                FontSize = 20
+                                            };
+                                            choose_false_stack_2.Children.Add(question_label);
+
+                                            var check_box_false = new CheckBox // 產生checkbox
+                                            {
+                                                IsChecked = true,
+                                                Margin = new Thickness(-5, 0, 0, 0),
+                                                //Color = Color.FromHex("264653")
+                                                Color = Color.Red,
+                                                ClassId = questionList.wqh_s_num + a.qb_order
+                                            };
+                                            choose_false_stack.Children.Add(check_box_false);
+                                            label_check = new Label // 選項
+                                            {
+                                                Text = "否",
+                                                TextColor = Color.Red,
+                                                //Margin = new Thickness(-10, 0, 0, 0),
+                                                FontSize = 20
+                                            };
+                                            choose_false_stack.Children.Add(label_check);
+                                            var check_box_origin_true = new CheckBox // 產生checkbox
+                                            {
+                                                IsChecked = false,
+                                                Margin = new Thickness(-5, 0, 0, 0),
+                                                //Color = Color.FromHex("264653")
+                                                Color = Color.Green,
+                                                ClassId = questionList.wqh_s_num + a.qb_order
+                                            };
+                                            choose_false_stack.Children.Add(check_box_origin_true);
+                                            var true_label = new Label // 選項
+                                            {
+                                                Text = "是",
+                                                TextColor = Color.Black,
+                                                //Margin = new Thickness(-10, 0, 0, 0),
+                                                FontSize = 20
+                                            };
+                                            choose_false_stack.Children.Add(true_label);
+                                            var choose_false_stack_final = new StackLayout
+                                            {
+                                                Orientation = StackOrientation.Vertical
+                                            };
+                                            choose_false_stack_final.Children.Add(choose_false_stack_2);
+                                            choose_false_stack_final.Children.Add(choose_false_stack);
+
+                                            Frame choose_false_frame = new Frame // frame包上面那個stacklayout
+                                            {
+                                                Padding = new Thickness(10, 5, 10, 5),
+                                                Margin = new Thickness(5, 0, 5, 0),
+                                                BackgroundColor = Color.FromHex("eddcd2"),
+                                                ClassId = questionList.ClientName + questionList.wqh_s_num + a.qb_order,
+                                                CornerRadius = 10,
+                                                HasShadow = false,
+                                                Content = choose_false_stack_final
+                                            };
+                                            quesStack.Children.Insert(Stack_Count[questionList.wqh_s_num + a.qb_order] - 1, choose_false_frame);
+                                            YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "";
+                                            YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "否";
+                                            ResetLabelSaveToDB(questionList.wqh_s_num, a.qb_order, "否");
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("BB~~~");
+                                            var choose_true_stack = new StackLayout
+                                            {
+                                                Orientation = StackOrientation.Horizontal
+                                            };
+                                            var choose_true_stack_2 = new StackLayout
+                                            {
+                                                Orientation = StackOrientation.Horizontal
+                                            };
+                                            var number_label = new Label // 題號
+                                            {
+                                                Text = a.qb_order,
+                                                TextColor = Color.Black,
+                                                FontSize = 20
+                                            };
+                                            choose_true_stack_2.Children.Add(number_label);
+                                            var question_label = new Label // 題目
+                                            {
+                                                Text = a.qb01,
+                                                TextColor = Color.Black,
+                                                FontSize = 20
+                                            };
+                                            choose_true_stack_2.Children.Add(question_label);
+
+                                            var check_box_false = new CheckBox // 無勾選的紅色checkbox
+                                            {
+                                                IsChecked = false,
+                                                Margin = new Thickness(-5, 0, 0, 0),
+                                                //Color = Color.FromHex("264653")
+                                                Color = Color.Red,
+                                                ClassId = questionList.wqh_s_num + a.qb_order
+                                            };
+                                            choose_true_stack.Children.Add(check_box_false);
+                                            label_check = new Label // 選項
+                                            {
+                                                Text = "否",
+                                                TextColor = Color.Black,
+                                                //Margin = new Thickness(-10, 0, 0, 0),
+                                                FontSize = 20
+                                            };
+                                            choose_true_stack.Children.Add(label_check);
+                                            var check_box_origin_true = new CheckBox // 有勾選的綠色checkbox
+                                            {
+                                                IsChecked = true,
+                                                Margin = new Thickness(-5, 0, 0, 0),
+                                                //Color = Color.FromHex("264653")
+                                                Color = Color.Green,
+                                                ClassId = questionList.wqh_s_num + a.qb_order
+                                            };
+                                            choose_true_stack.Children.Add(check_box_origin_true);
+                                            var true_label = new Label // 選項
+                                            {
+                                                Text = "是",
+                                                TextColor = Color.Green,
+                                                //Margin = new Thickness(-10, 0, 0, 0),
+                                                FontSize = 20
+                                            };
+                                            choose_true_stack.Children.Add(true_label);
+
+                                            var choose_true_stack_final = new StackLayout
+                                            {
+                                                Orientation = StackOrientation.Vertical
+                                            };
+                                            choose_true_stack_final.Children.Add(choose_true_stack_2);
+                                            choose_true_stack_final.Children.Add(choose_true_stack);
+
+                                            Frame choose_true_frame = new Frame // frame包上面那個stacklayout
+                                            {
+                                                Padding = new Thickness(10, 5, 10, 5),
+                                                Margin = new Thickness(5, 0, 5, 0),
+                                                BackgroundColor = Color.FromHex("eddcd2"),
+                                                ClassId = questionList.ClientName + questionList.wqh_s_num + a.qb_order,
+                                                CornerRadius = 10,
+                                                HasShadow = false,
+                                                Content = choose_true_stack_final
+                                            };
+                                            quesStack.Children.Insert(Stack_Count[questionList.wqh_s_num + a.qb_order] - 1, choose_true_frame);
+                                            YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "";
+                                            YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "是";
+                                            ResetLabelSaveToDB(questionList.wqh_s_num, a.qb_order, "是");
+                                        }
+
+                                    }
+                                    else if (a.qb_order == "2")
+                                    {
+                                        if (temp_j == "否")
+                                        {
+                                            var choose_false_stack = new StackLayout
+                                            {
+                                                Orientation = StackOrientation.Horizontal
+                                            };
+                                            var choose_false_stack_2 = new StackLayout
+                                            {
+                                                Orientation = StackOrientation.Horizontal
+                                            };
+                                            var number_label = new Label
+                                            {
+                                                Text = a.qb_order,
+                                                TextColor = Color.Black,
+                                                FontSize = 20
+                                            };
+                                            choose_false_stack_2.Children.Add(number_label);
+                                            var question_label = new Label
+                                            {
+                                                Text = a.qb01,
+                                                TextColor = Color.Black,
+                                                FontSize = 20
+                                            };
+                                            choose_false_stack_2.Children.Add(question_label);
+
+                                            var check_box_false = new CheckBox // 產生checkbox
+                                            {
+                                                IsChecked = false,
+                                                Margin = new Thickness(-5, 0, 0, 0),
+                                                //Color = Color.FromHex("264653")
+                                                Color = Color.Red,
+                                                ClassId = questionList.wqh_s_num + a.qb_order
+                                            };
+                                            choose_false_stack.Children.Add(check_box_false);
+                                            var true_label = new Label // 選項
+                                            {
+                                                Text = "是",
+                                                TextColor = Color.Black,
+                                                //Margin = new Thickness(-10, 0, 0, 0),
+                                                FontSize = 20
+                                            };
+                                            choose_false_stack.Children.Add(true_label);
+
+                                            var check_box_origin_true = new CheckBox // 產生checkbox
+                                            {
+                                                IsChecked = true,
+                                                Margin = new Thickness(-5, 0, 0, 0),
+                                                //Color = Color.FromHex("264653")
+                                                Color = Color.Green,
+                                                ClassId = questionList.wqh_s_num + a.qb_order
+                                            };
+                                            choose_false_stack.Children.Add(check_box_origin_true);
+                                            label_check = new Label // 選項
+                                            {
+                                                Text = "否",
+                                                TextColor = Color.Green,
+                                                //Margin = new Thickness(-10, 0, 0, 0),
+                                                FontSize = 20
+                                            };
+                                            choose_false_stack.Children.Add(label_check);
+                                            var choose_false_stack_final = new StackLayout
+                                            {
+                                                Orientation = StackOrientation.Vertical
+                                            };
+                                            choose_false_stack_final.Children.Add(choose_false_stack_2);
+                                            choose_false_stack_final.Children.Add(choose_false_stack);
+
+                                            Frame choose_false_frame = new Frame // frame包上面那個stacklayout
+                                            {
+                                                Padding = new Thickness(10, 5, 10, 5),
+                                                Margin = new Thickness(5, 0, 5, 0),
+                                                BackgroundColor = Color.FromHex("eddcd2"),
+                                                ClassId = questionList.ClientName + questionList.wqh_s_num + a.qb_order,
+                                                CornerRadius = 10,
+                                                HasShadow = false,
+                                                Content = choose_false_stack_final
+                                            };
+                                            quesStack.Children.Insert(Stack_Count[questionList.wqh_s_num + a.qb_order] - 1, choose_false_frame);
+                                            YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "";
+                                            YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "否";
+                                            ResetLabelSaveToDB(questionList.wqh_s_num, a.qb_order, "否");
+                                        }
+                                        else
                                         {
                                             var choose_true_stack = new StackLayout
                                             {
@@ -6352,36 +6442,36 @@ namespace PULI.Views
                                                 IsChecked = true,
                                                 Margin = new Thickness(-5, 0, 0, 0),
                                                 //Color = Color.FromHex("264653")
-                                                Color = Color.Green,
+                                                Color = Color.Red,
                                                 ClassId = questionList.wqh_s_num + a.qb_order
                                             };
                                             choose_true_stack.Children.Add(check_box_false);
-                                            label_check = new Label // 選項
+                                            var true_label = new Label // 選項
                                             {
-                                                Text = "已發",
-                                                TextColor = Color.Green,
+                                                Text = "是",
+                                                TextColor = Color.Red,
                                                 //Margin = new Thickness(-10, 0, 0, 0),
                                                 FontSize = 20
                                             };
-                                            choose_true_stack.Children.Add(label_check);
+                                            choose_true_stack.Children.Add(true_label);
                                             var check_box_origin_true = new CheckBox // 有勾選的綠色checkbox
                                             {
                                                 IsChecked = false,
                                                 Margin = new Thickness(-5, 0, 0, 0),
                                                 //Color = Color.FromHex("264653")
-                                                Color = Color.Red,
+                                                Color = Color.Green,
                                                 ClassId = questionList.wqh_s_num + a.qb_order
                                             };
                                             choose_true_stack.Children.Add(check_box_origin_true);
-                                            var true_label = new Label // 選項
+
+                                            label_check = new Label // 選項
                                             {
-                                                Text = "未發",
+                                                Text = "否",
                                                 TextColor = Color.Black,
                                                 //Margin = new Thickness(-10, 0, 0, 0),
                                                 FontSize = 20
                                             };
-                                            choose_true_stack.Children.Add(true_label);
-
+                                            choose_true_stack.Children.Add(label_check);
                                             var choose_true_stack_final = new StackLayout
                                             {
                                                 Orientation = StackOrientation.Vertical
@@ -6401,30 +6491,119 @@ namespace PULI.Views
                                             };
                                             quesStack.Children.Insert(Stack_Count[questionList.wqh_s_num + a.qb_order] - 1, choose_true_frame);
                                             YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "";
-                                            YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "已發";
-                                            ResetLabelSaveToDB(questionList.wqh_s_num, a.qb_order, "已發");
-                                        }
-                                        else
-                                        {
-                                            reset();
+                                            YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "是";
+                                            ResetLabelSaveToDB(questionList.wqh_s_num, a.qb_order, "是");
                                         }
                                     }
+                                    else
+                                    {
+                                        if (a.qb_order == "3")
+                                        {
+                                            if (temp_j == "已發")
+                                            {
+                                                var choose_true_stack = new StackLayout
+                                                {
+                                                    Orientation = StackOrientation.Horizontal
+                                                };
+                                                var choose_true_stack_2 = new StackLayout
+                                                {
+                                                    Orientation = StackOrientation.Horizontal
+                                                };
+                                                var number_label = new Label // 題號
+                                                {
+                                                    Text = a.qb_order,
+                                                    TextColor = Color.Black,
+                                                    FontSize = 20
+                                                };
+                                                choose_true_stack_2.Children.Add(number_label);
+                                                var question_label = new Label // 題目
+                                                {
+                                                    Text = a.qb01,
+                                                    TextColor = Color.Black,
+                                                    FontSize = 20
+                                                };
+                                                choose_true_stack_2.Children.Add(question_label);
+
+                                                var check_box_false = new CheckBox // 無勾選的紅色checkbox
+                                                {
+                                                    IsChecked = true,
+                                                    Margin = new Thickness(-5, 0, 0, 0),
+                                                    //Color = Color.FromHex("264653")
+                                                    Color = Color.Green,
+                                                    ClassId = questionList.wqh_s_num + a.qb_order
+                                                };
+                                                choose_true_stack.Children.Add(check_box_false);
+                                                label_check = new Label // 選項
+                                                {
+                                                    Text = "已發",
+                                                    TextColor = Color.Green,
+                                                    //Margin = new Thickness(-10, 0, 0, 0),
+                                                    FontSize = 20
+                                                };
+                                                choose_true_stack.Children.Add(label_check);
+                                                var check_box_origin_true = new CheckBox // 有勾選的綠色checkbox
+                                                {
+                                                    IsChecked = false,
+                                                    Margin = new Thickness(-5, 0, 0, 0),
+                                                    //Color = Color.FromHex("264653")
+                                                    Color = Color.Red,
+                                                    ClassId = questionList.wqh_s_num + a.qb_order
+                                                };
+                                                choose_true_stack.Children.Add(check_box_origin_true);
+                                                var true_label = new Label // 選項
+                                                {
+                                                    Text = "未發",
+                                                    TextColor = Color.Black,
+                                                    //Margin = new Thickness(-10, 0, 0, 0),
+                                                    FontSize = 20
+                                                };
+                                                choose_true_stack.Children.Add(true_label);
+
+                                                var choose_true_stack_final = new StackLayout
+                                                {
+                                                    Orientation = StackOrientation.Vertical
+                                                };
+                                                choose_true_stack_final.Children.Add(choose_true_stack_2);
+                                                choose_true_stack_final.Children.Add(choose_true_stack);
+
+                                                Frame choose_true_frame = new Frame // frame包上面那個stacklayout
+                                                {
+                                                    Padding = new Thickness(10, 5, 10, 5),
+                                                    Margin = new Thickness(5, 0, 5, 0),
+                                                    BackgroundColor = Color.FromHex("eddcd2"),
+                                                    ClassId = questionList.ClientName + questionList.wqh_s_num + a.qb_order,
+                                                    CornerRadius = 10,
+                                                    HasShadow = false,
+                                                    Content = choose_true_stack_final
+                                                };
+                                                quesStack.Children.Insert(Stack_Count[questionList.wqh_s_num + a.qb_order] - 1, choose_true_frame);
+                                                YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "";
+                                                YesOrNoAlreadyChoose[questionList.wqh_s_num + a.qb_order] = "已發";
+                                                ResetLabelSaveToDB(questionList.wqh_s_num, a.qb_order, "已發");
+                                            }
+                                            else
+                                            {
+                                                reset();
+                                            }
+                                        }
+                                    }
+
                                 }
+
+                                //}
 
                             }
 
-                            //}
-
                         }
 
-                    }
-
-                };
-                ques_stack_count++;
-                Console.WriteLine("同上~~~~ " + questionList.wqh_s_num);
-                quesStack.Children.Add(button_stack);
-                Stack_Count[questionList.wqh_s_num + "-1"] = ques_stack_count;
-                return null;
+                    };
+                    ques_stack_count++;
+                    Console.WriteLine("同上~~~~ " + questionList.wqh_s_num);
+                    quesStack.Children.Add(button_stack);
+                    Stack_Count[questionList.wqh_s_num + "-1"] = ques_stack_count;
+                    return null;
+                }
+                
             }
 
             return null;
@@ -6643,7 +6822,7 @@ namespace PULI.Views
                     //}
                     //TempAddDB.DeleteAll();
                     //TempAddDB_else.DeleteAll();
-                    
+                    ResetLabelDB.DeleteAll();
 
                     // 把dictionary清空
                     foreach (var a in questionnaireslist)
@@ -6651,7 +6830,6 @@ namespace PULI.Views
                         foreach (var i in a.qbs)
                         {
                             
-
                             IsResetList[a.wqh_s_num + i.qb_order] = false;
                             IsGreenOrRed[a.wqh_s_num + i.qb_order] = "";
                             TmpAnsList[a.wqh_s_num + a.ClientName + i.qb_order] = "";
@@ -6661,6 +6839,8 @@ namespace PULI.Views
                             YesOrNoAlreadyChoose[a.wqh_s_num + i.qb_order] = "";
                             YesOrNoAlreadyChoose_for_sameans[a.wqh_s_num + i.qb_order] = "";
                             Stack_Number[a.ClientName + a.wqh_s_num + i.qb_order] = 0;
+                            RepeatOrNotList[a.ClientName] = 0;
+                            RepeatOrNotList_for_second_name[a.ClientName + a.wqh_s_num] = 0;
                         }
                     }
                     reset();

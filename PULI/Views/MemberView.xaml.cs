@@ -110,25 +110,43 @@ namespace PULI.Views
             bool resultEnd = await DisplayAlert(param.SYSYTEM_MESSAGE, "登出需要關閉APP，確定要登出嗎?", param.DIALOG_AGREE_MESSAGE, param.DIALOG_DISAGREE_MESSAGE);
             if (resultEnd)
             {
-                fooDoggyDatabase.DeleteAll();
-                MapView.AccDatabase.DeleteAll();
-                MapView.PunchDatabase.DeleteAll();
-                MapView.PunchDatabase2.DeleteAll();
-
-                PunchDataBaseTmp ppunchTmp = new PunchDataBaseTmp();
-                ppunchTmp.DeleteAll();
-                MapView.PunchTmp2.DeleteAll();
-                TestView.ChooseDB.DeleteAll();
-                TestView.ResetDB.DeleteAll();
-                TestView.EntryDB.DeleteAll();
-                TestView.EntrytxtDB.DeleteAll();
-                TestView.ResetLabelDB.DeleteAll();
-                MapView.PunchYN.DeleteAll();
-                MapView.name_list_in.Clear();
-                MapView.name_list_out.Clear();
-                MainPage.dateDatabase.DeleteAll();
-                //TmpPunchList2.Clear();
-                MessagingCenter.Send(this, "LOGOUT", true);
+                if(MainPage.AUTH == "4") // 送餐員
+                {
+                    fooDoggyDatabase.DeleteAll();
+                    MapView.AccDatabase.DeleteAll();
+                    MapView.PunchDatabase.DeleteAll();
+                    MapView.PunchDatabase2.DeleteAll();
+                    PunchDataBaseTmp ppunchTmp = new PunchDataBaseTmp();
+                    ppunchTmp.DeleteAll();
+                    MapView.PunchTmp2.DeleteAll();
+                    MapView.PunchYN.DeleteAll();
+                    MapView.name_list_in.Clear();
+                    MapView.name_list_out.Clear();
+                    MainPage.dateDatabase.DeleteAll();
+                    TestView.ChooseDB.DeleteAll();
+                    TestView.ResetDB.DeleteAll();
+                    TestView.EntryDB.DeleteAll();
+                    TestView.EntrytxtDB.DeleteAll();
+                    TestView.ResetLabelDB.DeleteAll();
+                    //TmpPunchList2.Clear();
+                    MessagingCenter.Send(this, "LOGOUT", true);
+                }
+                else // 社工
+                {
+                    fooDoggyDatabase.DeleteAll();
+                    MapView.AccDatabase.DeleteAll();
+                    MapView.PunchDatabase.DeleteAll();
+                    MapView.PunchDatabase2.DeleteAll();
+                    PunchDataBaseTmp ppunchTmp = new PunchDataBaseTmp();
+                    ppunchTmp.DeleteAll();
+                    MapView.PunchTmp2.DeleteAll();
+                    MapView.PunchYN.DeleteAll();
+                    MapView.name_list_in.Clear();
+                    MapView.name_list_out.Clear();
+                    MainPage.dateDatabase.DeleteAll();
+                    MessagingCenter.Send(this, "LOGOUT", true);
+                }
+                
                 //TestView.TmpCheckList.Clear(); 
                 //AccDatabase.DeleteAll();
                 //var accountList = await App.Database.GetAccountAsync();
@@ -175,16 +193,16 @@ namespace PULI.Views
                     //fooDoggyDatabase.DeleteAll();
                     Console.WriteLine("failQAQ~~~" + fooDoggyDatabase.GetAccountAsync().Count());
                 }
-                if (ppunchTmp.GetAccountAsync2().Count() == 0)
-                {
-                    Console.WriteLine("punchtmpSUCESS");
-                }
-                else
-                {
-                    Console.WriteLine("punchtmpFAIL");
-                    //fooDoggyDatabase.DeleteAll();
-                    Console.WriteLine("failQAQ~~~" + ppunchTmp.GetAccountAsync2().Count());
-                }
+                //if (ppunchTmp.GetAccountAsync2().Count() == 0)
+                //{
+                //    Console.WriteLine("punchtmpSUCESS");
+                //}
+                //else
+                //{
+                //    Console.WriteLine("punchtmpFAIL");
+                //    //fooDoggyDatabase.DeleteAll();
+                //    Console.WriteLine("failQAQ~~~" + ppunchTmp.GetAccountAsync2().Count());
+                //}
                 if (MapView.PunchTmp2.GetAccountAsync2().Count() == 0)
                 {
                     Console.WriteLine("punchtmp2SUCESS");
