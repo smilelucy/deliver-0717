@@ -444,20 +444,99 @@ namespace PULI.Views
 
         private void reset()
         {
-            
+
 
             TFcount = 0;
             ques_stack_count = 0;
             quesStack.Children.Clear();
-            foreach (var value in questionnaireslist)
+            if (questionnaireslist.Count() != 0) // 防呆(防止後台沒傳資料近來)
             {
-                questionView(value);
-                //////Console.WriteLine("wqh_reset~~~ " + value.wqh_s_num);
-            }
-           
-            
-        }
+                for (int b = 0; b < questionnaireslist.Count(); b++) // 0是初始 1是正常 -1是重複
+                {
+                    if (questionnaireslist[b].ClientName != "")
+                    {
+                        RepeatOrNotList[questionnaireslist[b].ClientName] = 0;
+                    }
+                    //else
+                    //{
+                    //    await DisplayAlert("系統訊息", "後臺尚未產生資料或資料接收不齊全", "ok");
+                    //    Console.WriteLine("AAA");
+                    //}
+                }
 
+                for (int a = 0; a < questionnaireslist.Count(); a++) // 0是初始 1是正常 -1是重複
+                {
+                    if (questionnaireslist[a].ClientName != "")
+                    {
+                        //check_name_list.Add(questionnaireslist[a].ClientName);
+                        if (RepeatOrNotList.ContainsKey(questionnaireslist[a].ClientName) == true && RepeatOrNotList[questionnaireslist[a].ClientName] == 1)
+                        {
+                            RepeatOrNotList[questionnaireslist[a].ClientName] = -1;
+                            RepeatOrNotList_for_second_name[questionnaireslist[a].ClientName + questionnaireslist[a].wqh_s_num] = 2;
+                            //Console.WriteLine("同上questionnaireslist[a].wqh_s_num~AA~ " + questionnaireslist[a].wqh_s_num);
+                            //Console.WriteLine("同上questionnaireslist[a].name~~ " + questionnaireslist[a].ClientName);
+                            //////Console.WriteLine("Addrepeat~~ ");
+                            //////Console.WriteLine("Add~~~ " + questionnaireslist[a].ClientName);
+
+                        }
+                        else
+                        {
+                            RepeatOrNotList[questionnaireslist[a].ClientName] = 1;
+                            RepeatOrNotList_for_second_name[questionnaireslist[a].ClientName + questionnaireslist[a].wqh_s_num] = 1;
+                            //Console.WriteLine("同上questionnaireslist[a].wqh_s_num~BB~ " + questionnaireslist[a].wqh_s_num);
+                            //Console.WriteLine("同上questionnaireslist[a].name~~ " + questionnaireslist[a].ClientName);
+                        }
+                    }
+                    //else
+                    //{
+                    //    await DisplayAlert("系統訊息", "後臺尚未產生資料或資料接收不齊全", "ok");
+                    //}
+
+                }
+                foreach (var value in questionnaireslist)
+                {
+                    //Console.WriteLine("value.qb_s_num~~ " + value.qb_s_num);
+                    if (value.ClientName != "")
+                    {
+
+                        //Console.WriteLine("value~~ " + value.ClientName);
+                        //Console.WriteLine("wqh~~ " + value.wqh_s_num);
+
+                        //Console.WriteLine("count~~ " + value.qbs.Count());
+                        //for (int i = 0; i < value.qbs.Count; i++)
+                        //{
+                        //Console.WriteLine("qb03~~ " + value.qbs[i].qb03);
+                        //}
+                        //Console.WriteLine("qb03~~ " + value.qbs[0].qb03);
+                        //Console.WriteLine("valuename~~ " + value.ClientName);
+                        questionView(value);
+
+
+
+
+
+
+                        //////Console.WriteLine("value~~~" + value.ClientName);
+                        uploadbtn.IsVisible = true;
+                        uploadbtn.IsEnabled = true;
+                    }
+                    //else
+                    //{
+                    //    await DisplayAlert("系統訊息", "後臺尚未產生資料或資料接收不齊全", "ok");
+                    //}
+
+                }
+                /*
+                foreach (var value in questionnaireslist)
+                {
+                    questionView(value);
+                    //////Console.WriteLine("wqh_reset~~~ " + value.wqh_s_num);
+                }
+                */
+
+
+            }
+        }
         public StackLayout set_questionnaire_qborder03(string _wqh_s_num, string choice)
         {
             
@@ -5749,12 +5828,13 @@ namespace PULI.Views
                                     Content = final_stack
                                 };
 
-                                test_stack = new StackLayout
-                                {
-                                    Orientation = StackOrientation.Vertical
-                                };
-                                test_stack.Children.Add(frame);
-                                ques_stack_count++;
+                                //test_stack = new StackLayout
+                                //{
+                                //    Orientation = StackOrientation.Vertical
+                                //};
+                                //test_stack.Children.Add(frame);
+                                //ques_stack_count++;
+
                                 //Stack_Number[questionList.ClientName + questionList.wqh_s_num + i.qb_order] = ques_stack_count;
                                 int frame_count_before = quesStack.Children.Count();
                                 quesStack.Children.Add(frame);
@@ -5941,7 +6021,7 @@ namespace PULI.Views
                         {
                             ques_stack_count++;
                         }
-                        //Stack_Count[questionList.wqh_s_num + "0"] = ques_stack_count;
+                        Stack_Count[questionList.wqh_s_num + "0"] = ques_stack_count;
 
                         //quesStack.Children.Add(final_stack);
                         //quesStack.Children.Add(label_que_name);
@@ -5979,7 +6059,7 @@ namespace PULI.Views
                         Console.WriteLine("wqhhh~~ " + questionList.wqh_s_num);
                         Console.WriteLine("order~~ " + i.qb_order);
                         Console.WriteLine("count~~ " + ques_stack_count);
-                        //Stack_Count[questionList.wqh_s_num + i.qb_order] = ques_stack_count;
+                        Stack_Count[questionList.wqh_s_num + i.qb_order] = ques_stack_count;
 
 
                         //Stack_Count[questionList.wqh_s_num + i.qb_order] = ques_stack_count;
@@ -7036,9 +7116,18 @@ namespace PULI.Views
                         }
 
                     };
-                    ques_stack_count++;
+                    
+                    
+
                     Console.WriteLine("同上~~~~ " + questionList.wqh_s_num);
+                    int button_count_before = quesStack.Children.Count();
                     quesStack.Children.Add(button_stack);
+                    int button_count_after = quesStack.Children.Count();
+                    if(button_count_before != button_count_after)
+                    {
+                        ques_stack_count++;
+                    }
+                    
                     Stack_Count[questionList.wqh_s_num + "-1"] = ques_stack_count;
                     return null;
                 }
