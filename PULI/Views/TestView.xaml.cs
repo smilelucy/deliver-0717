@@ -442,6 +442,135 @@ namespace PULI.Views
            
         }
 
+        private void Deleteuploadlist(string _wqh_s_num, string _qb_order)
+        {
+            for (int a = 0; a < checkList2.Count(); a++)
+            {
+                if (checkList2[a].wqh_s_num == _wqh_s_num)
+                {
+                    if (checkList2[a].qb_order == _qb_order)
+                    {
+                        checkList2.RemoveAt(a);
+                        //checkList2.RemoveAt(a);
+                    }
+                }
+
+            }
+        }
+
+        private void DeleteEntrytxtDb(string _clname, string _wqh_s_num)
+        {
+            for (int e = 0; e < EntrytxtDB.GetAccountAsync2().Count(); e++)
+            {
+                //////Console.WriteLine("entryb~~~ ");
+                var f = EntrytxtDB.GetAccountAsync(e);
+                foreach (var TempEntrytxtList in f)
+                {
+                    if (TempEntrytxtList.ClientName == _clname)
+                    {
+                        if (TempEntrytxtList.wqh_s_num == _wqh_s_num)
+                        {
+                            //temp_value = TempEntrytxtList.entrytxt;
+                            EntrytxtDB.DeleteItem(TempEntrytxtList.ID);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void DeleteEntryDb(string _clname, string _wqh_s_num)
+        {
+            for (int e = 0; e < EntryDB.GetAccountAsync2().Count(); e++)
+            {
+                //////Console.WriteLine("entryb~~~ ");
+                var f = EntryDB.GetAccountAsync(e);
+                foreach (var TempEntryList in f)
+                {
+                    //////Console.WriteLine("temp_wqh~~ " + TempEntryList.wqh_s_num);
+                    //////Console.WriteLine("q_wqh~~ " + questionList.wqh_s_num);
+                    //////Console.WriteLine("name~~ " + questionList.ClientName);
+                    if (TempEntryList.ClientName == _clname)
+                    {
+                        if (TempEntryList.wqh_s_num == _wqh_s_num)
+                        {
+                            //////Console.WriteLine("entryc~~ ");
+                            //////Console.WriteLine("temp_qb~~ " + TempEntryList.qb_order);
+                            //////Console.WriteLine("i_qb~~~ " + i.qb_order);
+                            if (TempEntryList.qb_order == "4")
+                            {
+                                //////Console.WriteLine("entry_true~~ ");
+                                //////Console.WriteLine("qborder~~ " + i.qb_order);
+                                EntryList[_clname] = false;
+                                EntryDB.DeleteItem(TempEntryList.ID);
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
+        private void Delete(string _wqh_s_num, string _qb_s_num, string _clname, string _qborder)
+        {
+            for (int b = 0; b < MapView.AccDatabase.GetAccountAsync2().Count(); b++)
+            {
+                var w = MapView.AccDatabase.GetAccountAsync(b);
+
+                //////Console.WriteLine("2222~~~~");
+                foreach (var TempAnsList in w)
+                {
+                    ////////Console.WriteLine("3333~~~~");
+                    string who = TempAnsList.wqh_s_num + TempAnsList.qb_s_num;
+                    //////////Console.WriteLine("WHO~~" + who);
+                    //////////Console.WriteLine("WHOTF~~" + TmpCheckList[who]);
+                    ////////Console.WriteLine("temp000~~~ " + TempAnsList.wqh_s_num);
+                    ////////Console.WriteLine("ques~~~ " + questionList.wqh_s_num);
+                    if (TempAnsList.wqh_s_num == _wqh_s_num) // 判斷問卷編號
+                    {
+                        ////////Console.WriteLine("4444~~~~");
+                        if (TempAnsList.qb_s_num == _qb_s_num) // 判斷哪一提
+                        {
+                            //Console.WriteLine("ans~~ " + TempAnsList.wqb01);
+                            //Console.WriteLine("wqh~~ " + TempAnsList.wqh_s_num);
+                            //Console.WriteLine("name~~~ " + TempAnsList.ClientName);
+                            AccDatabase.DeleteItem(TempAnsList.ID);
+                            TmpAnsList[_wqh_s_num + _clname + _qborder] = "";
+                            TmpAnsList_same_wqh[_clname + _qborder] = "";
+                            //TmpAnsList_same_wqh.Add(a.ClientName + i.qb_order, a.wqh_s_num);
+                            TmpAnsList_same[_wqh_s_num + _qborder] = ""; // 給點擊同上判斷用
+                                                                         //var check2 = new checkInfo
+                                                                         //{
+                                                                         //    wqh_s_num = a.wqh_s_num, // 問卷編號
+                                                                         //    qh_s_num = a.qh_s_num, // 工作問卷編號
+                                                                         //    qb_s_num = i.qb_s_num, // 問題編號(第幾題)
+                                                                         //    wqb01 = TempAnsList.wqb01,// 答案
+
+
+                            //};
+                            //checkList.Add(check2);
+
+                            //for (int c = 0; c < checkList2.Count(); c++)
+                            //{
+                            //    if (checkList2[c].wqh_s_num == a.wqh_s_num)
+                            //    {
+                            //        if (checkList2[c].qb_s_num == i.qb_s_num)
+                            //        {
+                            //            //checkList.RemoveAt(a);
+                            //            checkList2.RemoveAt(c);
+                            //        }
+                            //    }
+
+
+                            //}
+
+                        }
+                    }
+
+
+                }
+            }
+        }
+
         private void reset()
         {
 
@@ -1444,17 +1573,30 @@ namespace PULI.Views
                                                 }
 
                                             }
-                                          
+
                                             ////////Console.WriteLine("jjj~~~ " + j);
                                             if (j == "未發")
                                             {
                                                 //IsChoose = true;
-                                                CheckboxList[questionList.ClientName + questionList.wqh_s_num] = true;
+                                                CheckboxList[questionList.ClientName] = true;
                                                 ChooseSaveToDB(questionList.ClientName, true);
                                                 ////////Console.WriteLine("LLL~~~ " + IsChoose);
                                                 ////////Console.WriteLine("checkboxList~~~ " + CheckboxList[questionList.ClientName]);
                                             }
-                                           
+                                            else
+                                            {
+                                                CheckboxList[questionList.ClientName] = false;
+                                            }
+                                            if (j == "已發")
+                                            {
+                                                TmpAnsList.Remove(questionList.wqh_s_num + questionList.ClientName + "4");
+                                                Delete(questionList.wqh_s_num, questionList.qb_s_num, questionList.ClientName, i.qb_order);
+                                                Deleteuploadlist(questionList.wqh_s_num, "4");
+                                                Deleteuploadlist(questionList.wqh_s_num, "5");
+                                                DeleteEntryDb(questionList.ClientName, questionList.wqh_s_num);
+                                                DeleteEntrytxtDb(questionList.ClientName, questionList.wqh_s_num);
+                                            }
+
                                             for (int d = 0; d < i.qb03.Count(); d++)
                                             {
                                                 ////////Console.WriteLine("j00~~ " + j);
@@ -2117,17 +2259,30 @@ namespace PULI.Views
                                                 }
 
                                             }
-                                           
+
                                             ////////Console.WriteLine("jjj~~~ " + j);
                                             if (j == "未發")
                                             {
                                                 //IsChoose = true;
-                                                CheckboxList[questionList.ClientName + questionList.wqh_s_num] = true;
+                                                CheckboxList[questionList.ClientName] = true;
                                                 ChooseSaveToDB(questionList.ClientName, true);
                                                 ////////Console.WriteLine("LLL~~~ " + IsChoose);
                                                 ////////Console.WriteLine("checkboxList~~~ " + CheckboxList[questionList.ClientName]);
                                             }
-                                           
+                                            else
+                                            {
+                                                CheckboxList[questionList.ClientName] = false;
+                                            }
+                                            if (j == "已發")
+                                            {
+                                                TmpAnsList.Remove(questionList.wqh_s_num + questionList.ClientName + "4");
+                                                Delete(questionList.wqh_s_num, questionList.qb_s_num, questionList.ClientName, i.qb_order);
+                                                Deleteuploadlist(questionList.wqh_s_num, "4");
+                                                Deleteuploadlist(questionList.wqh_s_num, "5");
+                                                DeleteEntryDb(questionList.ClientName, questionList.wqh_s_num);
+                                                DeleteEntrytxtDb(questionList.ClientName, questionList.wqh_s_num);
+                                            }
+
                                             for (int d = 0; d < i.qb03.Count(); d++)
                                             {
                                                 ////////Console.WriteLine("j00~~ " + j);
@@ -5204,11 +5359,16 @@ namespace PULI.Views
                                             //    ////Console.WriteLine("reset~other~~ ");
                                             //    reset();
                                             //}
-                                            if (j == "其他")
-                                            {
+
+
+                                            //if (j == "其他")
+                                            //{
                                                 reset();
 
-                                            }
+                                            //}
+
+
+
                                             //else
                                             //{
                                             //    if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Red" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
