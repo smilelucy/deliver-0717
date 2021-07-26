@@ -529,7 +529,7 @@ namespace PULI.Views
                             BackgroundColor = Color.White,
                             Margin = new Thickness(2, 2, 0, 2)
                         }, j, i+1);
-                       
+                        //Console.WriteLine("ctadress~~~ " + ct_address_list[i]);  
                     }
 
                     grid_other.Children.Add(new Label

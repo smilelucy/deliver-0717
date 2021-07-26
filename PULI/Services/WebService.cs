@@ -188,9 +188,13 @@ namespace Deliver.Services
             var uri = new Uri(string.Format(host + "/lt_care/api/dp/get_client"));
             //Console.WriteLine("heeeeeeeder : " + _client.DefaultRequestHeaders);
             var response = await _client.PostAsync(uri, null);
+            var content = await response.Content.ReadAsStringAsync();
+            Console.WriteLine("contentAA~~ " + content);
+            Console.WriteLine("responseAA~~~ " + response);
             if (response.IsSuccessStatusCode)
             {
-                var content = await response.Content.ReadAsStringAsync();
+                
+                
                 var list = JsonConvert.DeserializeObject<List<ClientInfo>>(content);
                 Console.WriteLine("GC22SUCESS");
                 return list;

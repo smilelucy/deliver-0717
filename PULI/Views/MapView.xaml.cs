@@ -223,11 +223,11 @@ namespace PULI.Views
                         {
                             totalList = await web.Get_Daily_Shipment_night(MainPage.token);
                         }
-                        
+                        Console.WriteLine("nnnn~~~ " + totalList.daily_shipments.Count());
                         
                       
                         clientList = await web.Get_Client(MainPage.token);
-                        //Console.WriteLine("DATA2~" + clientList.Count());
+                        Console.WriteLine("DATA2~" + clientList.Count());
                         
                         var data = await web.Get_Client2(MainPage.token); // 拿案主資料
                         Console.WriteLine("DATA~" + data.Count());

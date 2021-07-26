@@ -490,7 +490,7 @@ namespace PULI
 
 
                         token += userList.acc_token;
-                        Console.WriteLine("OOOOOAAAA " + token);
+                        Console.WriteLine("OOOOOAAAAtoken~~ " + token);
                         AUTH = userList.acc_auth;
                         NAME = userList.acc_name;
                         Content = ViewService.LoadingLogin();

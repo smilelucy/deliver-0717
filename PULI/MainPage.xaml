@@ -18,39 +18,42 @@
                     </Picker.Items>
                 </Picker>
             </StackLayout>-->
-            <StackLayout x:Name="identityStack" Orientation="Vertical">
+            <ScrollView>
+                <StackLayout>
+                    <StackLayout x:Name="identityStack" Orientation="Vertical">
 
-            </StackLayout>
-            
-            <StackLayout Orientation="Vertical" >
-                <Label Text="帳號 : " 
-                               FontSize="20"/>
-                <Frame  BorderColor="Olive" CornerRadius="20" Margin="0,0,0,0" Padding="10,5,10,5">
-                    <Entry  x:Name="account"  
-                                Placeholder = "點我輸入"
-                                HeightRequest = "50"
-                                VerticalOptions = "Center"
-                                PlaceholderColor = "#326292"
-                                TextColor = "#326292"
-                                HorizontalOptions="FillAndExpand" />
-                </Frame>
-            </StackLayout>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical" >
+                        <Label Text="帳號 : " 
+                                       FontSize="20"/>
+                        <Frame  BorderColor="Olive" CornerRadius="20" Margin="0,0,0,0" Padding="10,5,10,5">
+                            <Entry  x:Name="account"  
+                                        Placeholder = "點我輸入"
+                                        HeightRequest = "50"
+                                        VerticalOptions = "Center"
+                                        PlaceholderColor = "#326292"
+                                        TextColor = "#326292"
+                                        HorizontalOptions="FillAndExpand" />
+                        </Frame>
+                    </StackLayout>
 
 
-            <StackLayout Orientation="Vertical" >
-                <Label Text="密碼 : "  FontSize="20"/>
-                <Frame  BorderColor="Olive" CornerRadius="20" Padding="10,5,10,5" Margin="0,0,0,0">
-                    <Entry IsPassword="True" 
-                                               x:Name="pwd" 
-                                               Placeholder = "點我輸入"
-                                                HeightRequest = "50"
-                                                VerticalOptions = "Center"
-                                                PlaceholderColor = "#326292"
-                                                TextColor = "#326292"
-                                               HorizontalOptions="FillAndExpand"/>
-                </Frame>
-            </StackLayout>
-
+                    <StackLayout Orientation="Vertical" >
+                        <Label Text="密碼 : "  FontSize="20"/>
+                        <Frame  BorderColor="Olive" CornerRadius="20" Padding="10,5,10,5" Margin="0,0,0,0">
+                            <Entry IsPassword="True" 
+                                                       x:Name="pwd" 
+                                                       Placeholder = "點我輸入"
+                                                        HeightRequest = "50"
+                                                        VerticalOptions = "Center"
+                                                        PlaceholderColor = "#326292"
+                                                        TextColor = "#326292"
+                                                       HorizontalOptions="FillAndExpand"/>
+                        </Frame>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
             <Button x:Name="loginbtn" Text="登入" 
                         HorizontalOptions="Center" 
                         WidthRequest="200"  
@@ -62,9 +65,9 @@
             <Label  FontSize="Small"
                                HorizontalTextAlignment="End"
                     VerticalTextAlignment="End"
-                    Padding="0,80,0,0"
+                    Padding="0,100,0,0"
                                            TextColor="Black"
-                                           Text="Ver_1.2" />
+                                           Text="Ver_1.3" />
         </StackLayout>
         <StackLayout VerticalOptions="Center"
                              HorizontalOptions="Center"
