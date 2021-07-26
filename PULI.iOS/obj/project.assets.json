@@ -2799,11 +2799,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Downloads\\deliver-try-master\\PULI.iOS\\PULI.iOS.csproj",
+      "projectUniqueName": "D:\\xamarin_project\\deliver-try-master\\PULI.iOS\\PULI.iOS.csproj",
       "projectName": "PULI.iOS",
-      "projectPath": "C:\\Users\\User\\Downloads\\deliver-try-master\\PULI.iOS\\PULI.iOS.csproj",
+      "projectPath": "D:\\xamarin_project\\deliver-try-master\\PULI.iOS\\PULI.iOS.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Downloads\\deliver-try-master\\PULI.iOS\\obj\\",
+      "outputPath": "D:\\xamarin_project\\deliver-try-master\\PULI.iOS\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -2824,8 +2824,8 @@
       "frameworks": {
         "xamarinios10": {
           "projectReferences": {
-            "C:\\Users\\User\\Downloads\\deliver-try-master\\PULI\\PULI.csproj": {
-              "projectPath": "C:\\Users\\User\\Downloads\\deliver-try-master\\PULI\\PULI.csproj"
+            "D:\\xamarin_project\\deliver-try-master\\PULI\\PULI.csproj": {
+              "projectPath": "D:\\xamarin_project\\deliver-try-master\\PULI\\PULI.csproj"
             }
           }
         }

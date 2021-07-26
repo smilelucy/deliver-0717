@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Downloads\\deliver-try-master\\PULI.Android\\PULI.Android.csproj": {}
+    "D:\\xamarin_project\\deliver-try-master\\PULI.Android\\PULI.Android.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Downloads\\deliver-try-master\\PULI.Android\\PULI.Android.csproj": {
+    "D:\\xamarin_project\\deliver-try-master\\PULI.Android\\PULI.Android.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Downloads\\deliver-try-master\\PULI.Android\\PULI.Android.csproj",
+        "projectUniqueName": "D:\\xamarin_project\\deliver-try-master\\PULI.Android\\PULI.Android.csproj",
         "projectName": "PULI.Android",
-        "projectPath": "C:\\Users\\User\\Downloads\\deliver-try-master\\PULI.Android\\PULI.Android.csproj",
+        "projectPath": "D:\\xamarin_project\\deliver-try-master\\PULI.Android\\PULI.Android.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Downloads\\deliver-try-master\\PULI.Android\\obj\\",
+        "outputPath": "D:\\xamarin_project\\deliver-try-master\\PULI.Android\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
@@ -32,8 +32,8 @@
         "frameworks": {
           "monoandroid81": {
             "projectReferences": {
-              "C:\\Users\\User\\Downloads\\deliver-try-master\\PULI\\PULI.csproj": {
-                "projectPath": "C:\\Users\\User\\Downloads\\deliver-try-master\\PULI\\PULI.csproj"
+              "D:\\xamarin_project\\deliver-try-master\\PULI\\PULI.csproj": {
+                "projectPath": "D:\\xamarin_project\\deliver-try-master\\PULI\\PULI.csproj"
               }
             }
           }
@@ -150,14 +150,14 @@
         }
       }
     },
-    "C:\\Users\\User\\Downloads\\deliver-try-master\\PULI\\PULI.csproj": {
+    "D:\\xamarin_project\\deliver-try-master\\PULI\\PULI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Downloads\\deliver-try-master\\PULI\\PULI.csproj",
+        "projectUniqueName": "D:\\xamarin_project\\deliver-try-master\\PULI\\PULI.csproj",
         "projectName": "PULI",
-        "projectPath": "C:\\Users\\User\\Downloads\\deliver-try-master\\PULI\\PULI.csproj",
+        "projectPath": "D:\\xamarin_project\\deliver-try-master\\PULI\\PULI.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Downloads\\deliver-try-master\\PULI\\obj\\",
+        "outputPath": "D:\\xamarin_project\\deliver-try-master\\PULI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
