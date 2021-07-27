@@ -67,7 +67,7 @@
                     VerticalTextAlignment="End"
                     Padding="0,100,0,0"
                                            TextColor="Black"
-                                           Text="Ver_1.3" />
+                                           Text="Ver_1.4" />
         </StackLayout>
         <StackLayout VerticalOptions="Center"
                              HorizontalOptions="Center"

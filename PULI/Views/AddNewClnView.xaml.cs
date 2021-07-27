@@ -319,7 +319,7 @@ namespace PULI.Views
                     }
                     catch (Exception ex)
                     {
-                        await DisplayAlert(param.SYSYTEM_MESSAGE, param.LOCATION_ERROR_MESSAGE, param.DIALOG_AGREE_MESSAGE);
+                        //await DisplayAlert(param.SYSYTEM_MESSAGE, param.LOCATION_ERROR_MESSAGE, param.DIALOG_AGREE_MESSAGE);
                     }
                 }
             }
@@ -345,7 +345,7 @@ namespace PULI.Views
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.ToString());
-                    DisplayAlert(param.SYSYTEM_MESSAGE, param.LOCATION_ERROR_MESSAGE, param.DIALOG_MESSAGE);
+                    //DisplayAlert(param.SYSYTEM_MESSAGE, param.LOCATION_ERROR_MESSAGE, param.DIALOG_MESSAGE);
                 }
             });
             return true;
