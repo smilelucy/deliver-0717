@@ -28,7 +28,7 @@ namespace PULI.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             Plugin.Media.CrossMedia.Current.Initialize();
-            //global::Xamarin.Forms.Forms.Init();
+            
             CheckboxRenderer.Init();
             global::Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);

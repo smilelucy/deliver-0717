@@ -1,5 +1,6 @@
 ﻿using Deliver.Services;
 using Plugin.Media;
+using Plugin.Media.Abstractions;
 using PULI.Model;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,8 @@ namespace PULI.Views
                 var photo = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions()
                 {
                     DefaultCamera = Plugin.Media.Abstractions.CameraDevice.Rear,
-                    Directory = "Xamarin",
+                    //DefaultCamera = CameraDevice.Front,
+                    Directory = "Test",
                     CompressionQuality = 40,
                     SaveToAlbum = true
                 });
