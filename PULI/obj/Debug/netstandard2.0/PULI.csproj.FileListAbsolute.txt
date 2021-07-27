@@ -79,3 +79,4 @@ D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\XamlC.stamp
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\PULI.dll
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\ref\PULI.dll
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\PULI.pdb
+D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\wifiuploadrecord.xaml.g.cs

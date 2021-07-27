@@ -36,6 +36,17 @@
         </x:Arguments>
 
     </NavigationPage>
+    <NavigationPage Title="打卡紀錄"
+                    Style="{StaticResource NavigationPage_Style}"
+                    Icon="verify.png">
+
+        <x:Arguments>
+
+            <local:wifiuploadrecord />
+
+        </x:Arguments>
+
+    </NavigationPage>
 
     <NavigationPage Title="問卷"
                     Style="{StaticResource NavigationPage_Style}"

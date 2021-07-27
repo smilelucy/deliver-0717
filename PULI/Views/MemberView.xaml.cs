@@ -120,6 +120,8 @@ namespace PULI.Views
                     ppunchTmp.DeleteAll();
                     MapView.PunchTmp2.DeleteAll();
                     MapView.PunchYN.DeleteAll();
+                    MapView.Wifi_Punchout_DB.DeleteAll();
+                    MapView.Wifi_Punchin_DB.DeleteAll();
                     MapView.name_list_in.Clear();
                     MapView.name_list_out.Clear();
                     MainPage.dateDatabase.DeleteAll();
