@@ -274,5 +274,8 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxhdpi\verify.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\wifi.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

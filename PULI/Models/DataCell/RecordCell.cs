@@ -84,6 +84,7 @@ namespace PULI.Models.DataCell
                 Orientation = StackOrientation.Horizontal,
                 HorizontalOptions = LayoutOptions.StartAndExpand,
                 VerticalOptions = LayoutOptions.StartAndExpand,
+                //BackgroundColor = Color.FromHex("fae1dd"),
                 Children = { textlayout }
             };
 

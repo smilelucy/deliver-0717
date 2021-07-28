@@ -7467,6 +7467,9 @@ namespace PULI.Droid
 			// aapt resource value: 0x7F070157
 			public const int verify = 2131165527;
 			
+			// aapt resource value: 0x7F070158
+			public const int wifi = 2131165528;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();

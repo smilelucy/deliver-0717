@@ -1,27 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              x:Class="PULI.Views.wifiuploadrecord">
     <StackLayout  x:Name="FormInfo">
-        <Label Text="有網路打卡紀錄"
-                           Margin="10,0,10,0"
-                           TextColor="#5ABFC9"
-                           HorizontalOptions="StartAndExpand"
-                           FontSize="Large"/>
+        <StackLayout Orientation="Horizontal">
+            <yummy:PancakeView HeightRequest="30"
+                                               WidthRequest="30"
+                                          
+                                           
+                                              >
 
-        <BoxView Color="#5ABFC9"
+                <Image Source="wifi.png"
+                                    
+                          
+                                        />
+
+            </yummy:PancakeView>
+            <Label Text="有網路打卡紀錄"
+                               Margin="0,0,0,0"
+                               TextColor="#3d5a80"
+                               HorizontalTextAlignment="Center"
+                               FontSize="Large"/>
+        </StackLayout>
+        <BoxView Color="#3d5a80"
                              HeightRequest="1"
                              HorizontalOptions="FillAndExpand"
                              Margin="10,0,10,0"/>
         <StackLayout Orientation="Horizontal">
             <StackLayout x:Name="punch_in_record">
-                <Frame BackgroundColor="#e8e8e4" Padding="0,5,0,5" CornerRadius="30"  Margin="5,5,5,5">
+                <Frame BackgroundColor="#98c1d9" Padding="0,5,0,5"   Margin="5,5,5,5">
                     <Label Text="簽到" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" FontSize="18" ></Label>
                 </Frame>
                 <ListView x:Name="wifi_punchin_listview"
                                               HasUnevenRows="True"
                                               Margin="5,0,5,0"
-                                              HeightRequest="400"
+                                              
                                               SeparatorColor="#073b4c">
 
                 </ListView>
@@ -30,20 +44,20 @@
                                      HorizontalOptions="FillAndExpand"
                                      Margin="10,0,10,0"/>-->
             </StackLayout>
-            <BoxView Color="#5ABFC9"
+            <BoxView Color="#3d5a80"
                              WidthRequest="1"
-                             VerticalOptions="FillAndExpand"
+                             
                              Margin="0,0,0,0"
                              
                              />
             <StackLayout x:Name="punch_out_record">
-                <Frame BackgroundColor="#e8e8e4" Padding="0,5,0,5" CornerRadius="30"  Margin="5,5,5,5">
-                    <Label Text="簽退" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" FontSize="18" BackgroundColor="#e8e8e4"></Label>
+                <Frame BackgroundColor="#98c1d9" Padding="0,5,0,5"   Margin="5,5,5,5">
+                    <Label Text="簽退" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" FontSize="18" ></Label>
                 </Frame>
                 <ListView x:Name="wifi_punchout_listview"
                                               HasUnevenRows="True"
                                               Margin="5,0,5,0"
-                                              HeightRequest="400"
+                                              
                                               SeparatorColor="#073b4c">
 
                 </ListView>

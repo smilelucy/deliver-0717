@@ -26,7 +26,14 @@ namespace PULI.Models.DataInfo
             //_database.CreateTableAsync<Account>().Wait(); // 創造
         }
 
-        public IEnumerable<Wifi_Punchin> GetAccountAsync()
+        public IEnumerable<Wifi_Punchin> GetAccountAsync(int id)
+        {
+            lock (locker)
+            {
+                return (from i in _database_wifi_punchin.Table<Wifi_Punchin>() select i).ToList();
+            }
+        }
+        public IEnumerable<Wifi_Punchin> GetAccountAsync3()
         {
             lock (locker)
             {
@@ -115,7 +122,7 @@ namespace PULI.Models.DataInfo
 
         public void DeleteAll()
         {
-            var fooItems = GetAccountAsync().ToList();
+            var fooItems = GetAccountAsync2().ToList();
 
             foreach (var item in fooItems)
             {

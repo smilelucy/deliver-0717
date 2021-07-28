@@ -421,6 +421,70 @@ namespace PULI.Views
                                         }
                                     }
                                 }
+                                if (Wifi_Punchin_DB.GetAccountAsync2().Count() > 0) // 無網路環境下打卡的database裡面有資料
+                                {
+                                    //Console.WriteLine("WWWW~~~~");
+                                    //Console.WriteLine("pp~~" + PunchDatabase.GetAccountAsync2().Count());
+                                    for (int b = 0; b < Wifi_Punchin_DB.GetAccountAsync2().Count(); b++)
+                                    {
+                                        var c = Wifi_Punchin_DB.GetAccountAsync(b);
+
+
+                                        foreach (var TempNameList in c)
+                                        {
+                                            //Console.WriteLine("tmpname1111~~~" + TempAnsList.name);
+
+                                            if (TempNameList.name == totalList.daily_shipments[i].ct_name)
+                                            {
+                                                //punchList[totalList.daily_shipments[i].ct_name] = true;
+                                                punch_in[totalList.daily_shipments[i].ct_name] = true;
+                                                //punch_out[totalList.daily_shipments[i].ct_name] = true;
+                                            }
+                                        }
+                                        foreach (var a in punchList)
+                                        {
+                                            //Console.WriteLine("DDDD~" + a);
+                                        }
+                                        foreach (var a in punch_in)
+                                        {
+                                            //Console.WriteLine("DDDD~" + a);
+                                        }
+                                    }
+                                }
+                                if (Wifi_Punchout_DB.GetAccountAsync2().Count() > 0) // 無網路環境下打卡的database裡面有資料
+                                {
+                                    //Console.WriteLine("WWWW~~~~");
+                                    //Console.WriteLine("pp~~" + PunchDatabase.GetAccountAsync2().Count());
+                                    for (int b = 0; b < Wifi_Punchout_DB.GetAccountAsync2().Count(); b++)
+                                    {
+                                        var c = Wifi_Punchout_DB.GetAccountAsync(b);
+
+
+                                        foreach (var TempNameList in c)
+                                        {
+                                            //Console.WriteLine("tmpname1111~~~" + TempAnsList.name);
+
+                                            if (TempNameList.name == totalList.daily_shipments[i].ct_name)
+                                            {
+                                                //punchList[totalList.daily_shipments[i].ct_name] = true;
+                                                //punch_in[totalList.daily_shipments[i].ct_name] = true;
+                                                punch_out[totalList.daily_shipments[i].ct_name] = true;
+                                            }
+                                        }
+                                        foreach (var a in punchList)
+                                        {
+                                            //Console.WriteLine("DDDD~" + a);
+                                        }
+                                        foreach (var a in punch_in)
+                                        {
+                                            //Console.WriteLine("DDDD~" + a);
+                                        }
+                                    }
+                                }
+                                if(punch_out[totalList.daily_shipments[i].ct_name] == true && punch_in[totalList.daily_shipments[i].ct_name] == true)
+                                {
+                                    punchList[totalList.daily_shipments[i].ct_name] = true;
+                                }
                                 double lat = Convert.ToDouble(totalList.daily_shipments[i].ct16);
                                 ////Console.WriteLine("LAT" + lat);
                                 double lot = Convert.ToDouble(totalList.daily_shipments[i].ct17);
@@ -788,12 +852,12 @@ namespace PULI.Views
                     MessagingCenter.Send(this, "Setlist2", true);
                     //Console.WriteLine("sendsetlist333~~~");
                 }
-                if (Wifi_Punchin_DB.GetAccountAsync().Count() > 0) // 有網路簽到記錄
+                if (Wifi_Punchin_DB.GetAccountAsync3().Count() > 0) // 有網路簽到記錄
                 {
                     MessagingCenter.Send(this, "wifi_Setlist_in", true);
                     //Console.WriteLine("sendsetlist222~~~");
                 }
-                if (Wifi_Punchout_DB.GetAccountAsync().Count() > 0) // 有網路簽退紀錄
+                if (Wifi_Punchout_DB.GetAccountAsync3().Count() > 0) // 有網路簽退紀錄
                 {
                     MessagingCenter.Send(this, "wifi_Setlist_out", true);
                     //Console.WriteLine("sendsetlist333~~~");
@@ -2257,6 +2321,7 @@ namespace PULI.Views
                                                 TestView.color = "Green";
                                                 TestView.IsResetList[questionList.wqh_s_num + i.qb_order] = true;
                                                 TestView.IsGreenOrRed[questionList.wqh_s_num + i.qb_order] = "Green";
+                                                TestView.YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = j;
                                             }
                                             else
                                             {
@@ -2264,6 +2329,7 @@ namespace PULI.Views
                                                 TestView.color = "Red";
                                                 TestView.IsResetList[questionList.wqh_s_num + i.qb_order] = true;
                                                 TestView.IsGreenOrRed[questionList.wqh_s_num + i.qb_order] = "Red";
+                                                TestView.YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = j;
                                             }
                                         }
                                         else
@@ -2273,12 +2339,14 @@ namespace PULI.Views
                                                 TestView.color = "Red";
                                                 TestView.IsResetList[questionList.wqh_s_num + i.qb_order] = true;
                                                 TestView.IsGreenOrRed[questionList.wqh_s_num + i.qb_order] = "Red";
+                                                TestView.YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = j;
                                             }
                                             else
                                             {
                                                 TestView.color = "Green";
                                                 TestView.IsResetList[questionList.wqh_s_num + i.qb_order] = true;
                                                 TestView.IsGreenOrRed[questionList.wqh_s_num + i.qb_order] = "Green";
+                                                TestView.YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = j;
                                             }
                                         }
                                        
@@ -2287,7 +2355,7 @@ namespace PULI.Views
                                         TestView.TmpAnsList_same_wqh[questionList.ClientName + i.qb_order] = questionList.wqh_s_num;
                                         TestView.TmpAnsList_same[questionList.wqh_s_num + i.qb_order] = temp_j;
                                         QuesSaveToSQLite(questionList.wqh_s_num, questionList.qh_s_num, i.qb_s_num, j, questionList.ClientName);
-
+                                        ResetSaveToDB(questionList.wqh_s_num, i.qb_order, TestView.color);
                                         var check = new checkInfo
                                         {
                                             wqh_s_num = questionList.wqh_s_num, // 問卷編號
@@ -2440,6 +2508,17 @@ namespace PULI.Views
                 qb_s_num = _qb_s_num, // 問題編號
                 wqb01 = _wqb01,
                 //wqb99 = entrytxt
+            });
+        }
+
+        public void ResetSaveToDB(string _wqh_s_num, string _qb_order, string _color)
+        {
+            TestView.ResetDB.SaveAccountAsync(new Reset
+            {
+                wqh_s_num = _wqh_s_num,
+                qb_order = _qb_order,
+                color = _color
+
             });
         }
 
