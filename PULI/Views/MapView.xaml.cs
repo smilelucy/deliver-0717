@@ -176,7 +176,7 @@ namespace PULI.Views
             Messager();
             if(MainPage.AUTH == "4") // 外送員(有打卡功能)
             {
-                Device.StartTimer(TimeSpan.FromSeconds(5), OnTimerTick);
+                Device.StartTimer(TimeSpan.FromSeconds(20), OnTimerTick);
               
                 Console.WriteLine("shipment~~~");
             }
@@ -877,7 +877,7 @@ namespace PULI.Views
                     {
                         d = 0;
                         location.DesiredAccuracy = location_DesiredAccuracy;
-                        position = await location.GetPositionAsync(TimeSpan.FromSeconds(5));
+                        position = await location.GetPositionAsync(TimeSpan.FromSeconds(20));
                         NowLon = position.Longitude;
                         NowLat = position.Latitude;
 
