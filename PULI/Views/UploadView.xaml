@@ -65,8 +65,11 @@
 
                     </StackLayout>
                     <Image x:Name="img"/>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Center" Padding="10,3,10,3">
+                        
+                    </StackLayout>
+                
+                    
+                    <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Center" Padding="10,3,10,3">
                     <!--<Button BackgroundColor="#bee1e6"
                             Text="返回"
                             TextColor="White"
@@ -101,6 +104,69 @@
                     <!--<Button x:Name="back" Text="返回" Clicked="back_Clicked"  HorizontalOptions="Start"/>
                     <Button x:Name="post" Text="送出" Clicked="post_Clicked"  HorizontalOptions="EndAndExpand"/>-->
                 </StackLayout>
+                    <StackLayout>
+                        <StackLayout Orientation="Vertical" VerticalOptions="Center"  Padding="20,3,20,3">
+
+                            <!--<controls:TintedImage x:Name="buttonImage" TintColor="Blue" HeightRequest="50" WidthRequest="50" Source="fill.png"/>-->
+                            <Frame BackgroundColor="#fcd5ce" 
+                               HeightRequest="40" 
+                               WidthRequest="80" 
+                               Margin="5,0,0,0" 
+                               Padding="0,5,0,5" 
+                               CornerRadius="20" 
+                               x:Name="photo_nowifi"
+                               IsVisible="True"
+                               IsEnabled="True">
+                                <Frame.GestureRecognizers>
+
+                                    <TapGestureRecognizer Tapped="PickPhoto_Clicked" />
+
+                                </Frame.GestureRecognizers>
+                                <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand"  VerticalOptions="Center">
+                                        <controls:TintedImage x:Name="buttonImage_nowifi" TintColor="White" HeightRequest="22" WidthRequest="22" Source="camera.png"/>
+                                        <!--<Button 
+                                            Text="填寫會員資料"
+                                            TextColor="White"
+                                            FontSize="15"
+                                            IsVisible="True"
+                                            IsEnabled="True"
+                                            BorderWidth="1"
+                                            BorderRadius="20"
+                                            HorizontalOptions="End"
+                                            x:Name="user_detail_btn"
+                                            Margin="0,0,10,0"
+                                            Clicked="User_Detail_Clicked"/>-->
+                                        <Label Text="照片選擇" TextColor="White"
+                                           FontSize="18"
+                                           Padding="0,0,0,0"
+                                           VerticalTextAlignment="Center"
+                                           HorizontalTextAlignment="Center"/>
+
+
+                                    </StackLayout>
+
+                                </StackLayout>
+                            </Frame>
+
+                        </StackLayout>
+                        <Image x:Name="PhotoImage"/>
+                        <Button BackgroundColor="#a8dadc"
+                            Text="照片補上傳"
+                            TextColor="White"
+                            FontSize="18"
+                            IsVisible="True"
+                            IsEnabled="True"
+                            WidthRequest="200"
+                            BorderWidth="1"
+                            BorderRadius="20"
+                            HorizontalOptions="Center"
+                            VerticalOptions="End"
+                            x:Name="post_from_gallery"
+                            Clicked="post_from_gallery_Clicked"
+                            Margin="0,5,5,0"
+                            />
+                    </StackLayout>
             </StackLayout>
         </ScrollView>
         </Grid>

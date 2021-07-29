@@ -25,6 +25,8 @@ namespace PULI.Views
         }
 
         StreamContent img_sc;
+        MediaFile _mediafile;
+        StreamContent img_from_gallery;
         //Bitmap bmpPic;
         private async void btnCam_Clicked(object sender, EventArgs e)
         {
@@ -48,12 +50,36 @@ namespace PULI.Views
                     //Console.WriteLine($"File size: {img_sc.} bytes");
                     //bmpPic = BytesToBitmap(photo.GetStream())
                 }
+                //var selectedImageFile = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions());
+                //if (selectedImageFile != null)
+                //{
+                //    se
+                //}
 
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Errorcamera :", ex.Message.ToString(), "ok");
             }
+        }
+        
+        private async void PickPhoto_Clicked(object sender, EventArgs e)
+        {
+            await CrossMedia.Current.Initialize();
+            _mediafile = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
+            {
+                PhotoSize = PhotoSize.Small,
+            }) ;
+            if(_mediafile == null)
+            {
+                return;
+            }
+
+            PhotoImage.Source = ImageSource.FromStream(() =>
+            {
+                return _mediafile.GetStream();
+            });
+            img_from_gallery = new StreamContent(_mediafile.GetStream());
         }
 
         private async void back_Clicked(object sender, EventArgs e)
@@ -82,6 +108,65 @@ namespace PULI.Views
                         formData.Add(new StringContent(note.Text), "WorkLogNote");
                     //WorkLogPicture
                     formData.Add(img_sc, "WorkLogPicture", "WorkLogPicture");
+                    var request = new HttpRequestMessage()
+                    {
+                        RequestUri = new Uri("http://59.120.147.32:8080/lt_care/api/account/save_worklog"),
+                        Method = HttpMethod.Post,
+                        Content = formData
+                    };
+                    request.Headers.Add("Connection", "closed");
+
+                    var response = await client.SendAsync(request);
+                    Console.WriteLine("WHY ~  " + response.ToString());
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var content = await response.Content.ReadAsStringAsync();
+                        if (content == "ok")
+                        {
+                            Console.WriteLine("xxxxxxxxxxxxx : " + content);
+                            await Navigation.PopAsync();
+                            //Content = uploadlayout;
+                            await DisplayAlert("上傳結果", "上傳成功！", "ok");
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("================================ : " + content);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("WHY2~ ");
+                        Console.WriteLine("WHY ~2" + response.ToString());
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert("ErrorMA~~~", ex.Message.ToString(), "ok");
+                    Console.WriteLine("uploaderror");
+                }
+            }
+        }
+        private async void post_from_gallery_Clicked(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(note.Text))
+                await DisplayAlert("提示", "您尚有東西未填寫", "ok");
+            else
+            {
+                try
+                {
+                    Content = ViewService.Loading();
+                    //bool post = web.Post_work(MainPage.token, note.Text, img_sc);
+                    HttpClient client = new HttpClient();
+                    client.DefaultRequestHeaders.Add("AUTHORIZATION", "Token " + MainPage.token);
+                    MultipartFormDataContent formData = new MultipartFormDataContent();
+                    //img_sc.Headers.Add("Content-Type", "image/jpeg");
+
+                    if (!string.IsNullOrEmpty(note.Text))
+                        formData.Add(new StringContent(note.Text), "WorkLogNote");
+                    //WorkLogPicture
+                    formData.Add(img_from_gallery, "WorkLogPicture", "WorkLogPicture");
                     var request = new HttpRequestMessage()
                     {
                         RequestUri = new Uri("http://59.120.147.32:8080/lt_care/api/account/save_worklog"),
