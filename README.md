@@ -1,1 +1,3 @@
-"# deliver2" 
+- 嘗試修改mainpage裡面的login_clicked function看可不可以解決有些手機無法登入的bug
+  - 朝著懷疑是token沒拿到去修正
+- 把問卷改成關懷紀錄  
