@@ -410,7 +410,8 @@ namespace PULI
                 }
                 else // 無網路
                 {
-                    searchLabel.Text = param.CONNECT_SERVER_ERROR_MESSAGE;
+                    //searchLabel.Text = param.CONNECT_SERVER_ERROR_MESSAGE;
+                    DisplayAlert("系統訊息", "自動登入無網路請稍後再試", "OK");
                     Console.WriteLine("QAQAQA~~~~~");
                 }
             }
@@ -418,8 +419,9 @@ namespace PULI
             {
                 //await DisplayAlert("錯誤訊息", ex.ToString(), "重試");
 
-                AutoLogin.IsVisible = true;
-                searchLabel.Text = param.CONNECT_SERVER_ERROR_MESSAGE;
+                //AutoLogin.IsVisible = true;
+                //searchLabel.Text = param.CONNECT_SERVER_ERROR_MESSAGE;
+                DisplayAlert("系統訊息", "自動登入登入錯誤請稍後再試" + ex.ToString(), "OK");
                 Console.WriteLine("WEWEWEW~~~~");
                 Console.WriteLine("EXCEPTION~~~" + ex.ToString());
                 //if (!CrossConnectivity.Current.IsConnected)
@@ -484,116 +486,125 @@ namespace PULI
                     }
                     else
                     {
-                        fooDoggyDatabase.DeleteAll();
-                        Login.IsVisible = false;
-                        Login.IsEnabled = false;
-
 
                         token += userList.acc_token;
-                        Console.WriteLine("OOOOOAAAAtoken~~ " + token);
-                        AUTH = userList.acc_auth;
-                        NAME = userList.acc_name;
-                        Content = ViewService.LoadingLogin();
-                        _login_time = userList.login_time;
-                        Console.WriteLine("login_time~~~" + _login_time);
-                        BeaconScan scan = new BeaconScan();
-                       
-                        //if (BeaconScan.BleStatus == 0)
-                        //{
-                        //    //await DisplayAlert("提示", "藍芽未開啟", "ok");
-                        //    AutoLogin.IsVisible = true;
-                        //    searchLabel.Text = param.CONNECT_BLUETOOTH_ERROR_MESSAGE;
-                        //}
-                        Console.WriteLine("auth" + AUTH + "auth");
-                        Console.WriteLine("name~~~" + userList.acc_name);
+                        if(token != null)
+                        {
+                            fooDoggyDatabase.DeleteAll();
+                            Login.IsVisible = false;
+                            Login.IsEnabled = false;
+                            Console.WriteLine("OOOOOAAAAtoken~~ " + token);
+                            AUTH = userList.acc_auth;
+                            NAME = userList.acc_name;
+                            Content = ViewService.LoadingLogin();
+                            _login_time = userList.login_time;
+                            Console.WriteLine("login_time~~~" + _login_time);
+                            BeaconScan scan = new BeaconScan();
+
+                            //if (BeaconScan.BleStatus == 0)
+                            //{
+                            //    //await DisplayAlert("提示", "藍芽未開啟", "ok");
+                            //    AutoLogin.IsVisible = true;
+                            //    searchLabel.Text = param.CONNECT_BLUETOOTH_ERROR_MESSAGE;
+                            //}
+                            Console.WriteLine("auth" + AUTH + "auth");
+                            Console.WriteLine("name~~~" + userList.acc_name);
 
 
-                        if (AUTH == "6")
-                        {
-                            allclientList = await web.Get_All_Client(token);
-                            //Console.WriteLine("num~~~~" + userList.daily_shipment_nums);
-                            //Console.WriteLine("ALL~~~" + allclientList.Count());
-                        }
-                        //get_client();
-                        //get_dailyShipment();
-                        //Account acc = new Account()
-                        //{
-                        //    account = account.Text,
-                        //    password = pwd.Text,
-                        //};
-                       // Console.WriteLine("ACC" + token);
-
-                        fooDoggyDatabase.SaveAccountAsync(new Account
-                        {
-                            account = account.Text,
-                            password = pwd.Text,
-                            identity = _identity,
-                            login_time = _login_time,
-                            time = _time
-                        });
-                        Console.WriteLine("LALALA2222~~~~" + fooDoggyDatabase.GetAccountAsync().Count());
-                        //await App.Database.SaveAccountAsync(acc);
-                        Console.WriteLine("LOGIN2");
-                        Console.WriteLine("TOKEN2" + token);
-                        if (MainPage._time == "早上")
-                        {
-                            totalList = await web.Get_Daily_Shipment(MainPage.token);
-                        }
-                        else
-                        {
-                            totalList = await web.Get_Daily_Shipment_night(MainPage.token);
-                        }
-
-                        //Console.WriteLine("CHANGE" + totalList.abnormals.Count);
-                        //Console.WriteLine("SHIP" + totalList.daily_shipments.Count);
-                        DateTime time = DateTime.Now;
-                        string date = time.ToString("MMdd");
-                        Console.WriteLine("time~~~" + time.ToString("t"));
-                        Console.WriteLine("timeshort~~~~" + time.ToShortTimeString());
-                        Console.WriteLine("time2~~~" + time.ToString("hh tt"));
-                        Console.WriteLine("date~~~~" + time.ToString("MMdd"));
-                        Console.WriteLine("date_database_count~~" + dateDatabase.GetAccountAsync2().Count());
-                        if (dateDatabase.GetAccountAsync2().Count() != 0) // 裡面有資料，先比對
-                        {
-                            string oldday = dateDatabase.GetAccountAsync2().Last().date;
-                            Console.WriteLine("oldday~~" + oldday);
-                            Console.WriteLine("date~~~" + date);
-                            if (_login_time != oldday)
+                            if (AUTH == "6")
                             {
-                                Console.WriteLine("date_renew_save~~~");
-                                MessagingCenter.Send(this, "Deletesetnum", true);
-                                Console.WriteLine("send~~~");
-                                //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
-                                dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
-                                dateDatabase.SaveAccountAsync(new CheckDate
+                                allclientList = await web.Get_All_Client(token);
+                                //Console.WriteLine("num~~~~" + userList.daily_shipment_nums);
+                                //Console.WriteLine("ALL~~~" + allclientList.Count());
+                            }
+                            //get_client();
+                            //get_dailyShipment();
+                            //Account acc = new Account()
+                            //{
+                            //    account = account.Text,
+                            //    password = pwd.Text,
+                            //};
+                            // Console.WriteLine("ACC" + token);
+
+                            fooDoggyDatabase.SaveAccountAsync(new Account
+                            {
+                                account = account.Text,
+                                password = pwd.Text,
+                                identity = _identity,
+                                login_time = _login_time,
+                                time = _time
+                            });
+                            Console.WriteLine("LALALA2222~~~~" + fooDoggyDatabase.GetAccountAsync().Count());
+                            //await App.Database.SaveAccountAsync(acc);
+                            Console.WriteLine("LOGIN2");
+                            Console.WriteLine("TOKEN2" + token);
+                            if (MainPage._time == "早上")
+                            {
+                                totalList = await web.Get_Daily_Shipment(MainPage.token);
+                            }
+                            else
+                            {
+                                totalList = await web.Get_Daily_Shipment_night(MainPage.token);
+                            }
+
+                            //Console.WriteLine("CHANGE" + totalList.abnormals.Count);
+                            //Console.WriteLine("SHIP" + totalList.daily_shipments.Count);
+                            //DateTime time = DateTime.Now;
+                            //string date = time.ToString("MMdd");
+                            //Console.WriteLine("time~~~" + time.ToString("t"));
+                            //Console.WriteLine("timeshort~~~~" + time.ToShortTimeString());
+                            //Console.WriteLine("time2~~~" + time.ToString("hh tt"));
+                            //Console.WriteLine("date~~~~" + time.ToString("MMdd"));
+                            //Console.WriteLine("date_database_count~~" + dateDatabase.GetAccountAsync2().Count());
+                            if (dateDatabase.GetAccountAsync2().Count() != 0) // 裡面有資料，先比對
+                            {
+                                string oldday = dateDatabase.GetAccountAsync2().Last().date;
+                                Console.WriteLine("oldday~~" + oldday);
+                                // Console.WriteLine("date~~~" + date);
+                                if (_login_time != oldday)
+                                {
+                                    Console.WriteLine("date_renew_save~~~");
+                                    MessagingCenter.Send(this, "Deletesetnum", true);
+                                    Console.WriteLine("send~~~");
+                                    //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
+                                    dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
+                                    dateDatabase.SaveAccountAsync(new CheckDate
+                                    {
+                                        date = _login_time
+                                    });
+
+                                }
+                            }
+                            else // 裡面還沒有資料
+                            {
+                                dateDatabase.SaveAccountAsync(
+                                new CheckDate
                                 {
                                     date = _login_time
                                 });
-                                
+                                Console.WriteLine("date_nodata_save~~");
+                            }
+
+                            //await Navigation.PushModalAsync(new HomeView());
+                            Console.WriteLine("AAAUTH~~~ " + AUTH);
+                            if (AUTH == "4") // 純外送員 & 社工幫忙外送
+                            {
+                                await Navigation.PushModalAsync(new HomeView2());
+                                Console.WriteLine("deliver~~ ");
+                            }
+                            //else if (AUTH == "6" && userList.daily_shipment_nums > 0) // 社工mix外送員
+                            //{
+                            //    await Navigation.PushModalAsync(new HomeViewHelperAndDiliver());
+                            //}
+                            else // 純社工
+                            {
+                                await Navigation.PushModalAsync(new HomeView());
+                                Console.WriteLine("helper~~~ ");
                             }
                         }
-                        else // 裡面還沒有資料
+                        else
                         {
-                            dateDatabase.SaveAccountAsync(
-                            new CheckDate
-                            {
-                                date = _login_time
-                            });
-                            Console.WriteLine("date_nodata_save~~");
-                        }
-
-                        //await Navigation.PushModalAsync(new HomeView());
-                        if (AUTH == "4") // 純外送員 & 社工幫忙外送
-                        {
-                            await Navigation.PushModalAsync(new HomeView2());
-                        }
-                        //else if (AUTH == "6" && userList.daily_shipment_nums > 0) // 社工mix外送員
-                        //{
-                        //    await Navigation.PushModalAsync(new HomeViewHelperAndDiliver());
-                        //}
-                        else // 純社工
-                        {
-                            await Navigation.PushModalAsync(new HomeView());
+                            DisplayAlert("系統訊息", "token取得失敗，請再次點擊登入按鈕嘗試登入", "OK");
                         }
                         //await Navigation.PushAsync(new MapView());
                     }
@@ -610,49 +621,15 @@ namespace PULI
                 else // 無網路
                 {
                     Console.WriteLine("nointernet~~~");
-                    AutoLogin.IsVisible = true;
-                    searchLabel.Text = param.CONNECT_SERVER_ERROR_MESSAGE;
+                    //AutoLogin.IsVisible = true;
+                    //searchLabel.Text = param.CONNECT_SERVER_ERROR_MESSAGE;
+                    DisplayAlert("系統訊息", "輸入帳密登入無網路請稍後再試", "OK");
                 }
             }
             catch (Exception ex)
             {
-                if (!CrossConnectivity.Current.IsConnected)
-                {
-                    AutoLogin.IsVisible = true;
-                    searchLabel.Text = param.CONNECT_SERVER_ERROR_MESSAGE;
-                   
-                }
-                else
-                {
-                    AutoLogin.IsVisible = true;
-                    searchLabel.Text = param.CONNECT_PASSWORD_ERROR_MESSAGE; // 帳密錯誤
-                    Console.WriteLine("why~~~" + ex.ToString());
-                    //if (BeaconScan.BleStatus == 0)
-                    //{
-                    //    //await DisplayAlert("提示", "藍芽未開啟", "ok");
-                    //    AutoLogin.IsVisible = true;
-                    //    searchLabel.Text = param.CONNECT_BLUETOOTH_ERROR_MESSAGE; // 藍芽沒開
-                    //}
-                    //else
-                    //{
-                        
-                    //}
-                    
-                }
-                
-                //if (!CrossConnectivity.Current.IsConnected)
-                //{
-                //    searchLabel.Text = param.CONNECT_SERVER_ERROR_MESSAGE;
-                //    //await DisplayAlert("提示", "未開啟網路或目前無網路訊號", "ok");
-                //    Console.WriteLine("Enter~~未開啟網路或目前無網路訊號");
-                //}
-                //else
-                //{
-                //    searchLabel.Text = param.CONNECT_PASSWORD_ERROR_MESSAGE;
-                //    //await DisplayAlert("提示", "帳號或密碼錯誤", "ok");\
-                //    Console.WriteLine("Enter~~帳號或密碼錯誤");
-                //}
-          
+                DisplayAlert("系統訊息", "輸入帳密登入錯誤請稍後再試" + ex.ToString(), "OK");
+
 
                 Console.WriteLine("login_error", ex.ToString());
             }

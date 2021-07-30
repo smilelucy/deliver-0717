@@ -48,7 +48,7 @@
 
     </NavigationPage>
 
-    <NavigationPage Title="問卷"
+    <NavigationPage Title="關懷紀錄"
                     Style="{StaticResource NavigationPage_Style}"
                     Icon="cmp.png">
 
