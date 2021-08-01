@@ -69,41 +69,7 @@
                     </StackLayout>
                 
                     
-                    <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Center" Padding="10,3,10,3">
-                    <!--<Button BackgroundColor="#bee1e6"
-                            Text="返回"
-                            TextColor="White"
-                            FontSize="18"
-                            IsVisible="True"
-                            IsEnabled="True"
-                            BorderWidth="1"
-                            BorderRadius="20"
-                            WidthRequest="100"
-                            HorizontalOptions="Center"
-                            VerticalOptions="End"
-                            x:Name="back"
-                            Clicked="back_Clicked"
-                            Margin="0,5,5,0"
-                            />-->
-                    <Button BackgroundColor="#a8dadc"
-                            Text="送出"
-                            TextColor="White"
-                            FontSize="18"
-                            IsVisible="True"
-                            IsEnabled="True"
-                            WidthRequest="200"
-                            BorderWidth="1"
-                            BorderRadius="20"
-                            HorizontalOptions="Center"
-                            VerticalOptions="End"
-                            x:Name="post"
-                            Clicked="post_Clicked"
-                            Margin="0,5,5,0"
-                            />
-
-                    <!--<Button x:Name="back" Text="返回" Clicked="back_Clicked"  HorizontalOptions="Start"/>
-                    <Button x:Name="post" Text="送出" Clicked="post_Clicked"  HorizontalOptions="EndAndExpand"/>-->
-                </StackLayout>
+                    
                     <StackLayout>
                         <StackLayout Orientation="Vertical" VerticalOptions="Center"  Padding="20,3,20,3">
 
@@ -124,7 +90,7 @@
                                 </Frame.GestureRecognizers>
                                 <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
                                     <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand"  VerticalOptions="Center">
-                                        <controls:TintedImage x:Name="buttonImage_nowifi" TintColor="White" HeightRequest="22" WidthRequest="22" Source="camera.png"/>
+                                        <controls:TintedImage x:Name="buttonImage_nowifi" TintColor="White" HeightRequest="22" WidthRequest="22" Source="pick.png"/>
                                         <!--<Button 
                                             Text="填寫會員資料"
                                             TextColor="White"
@@ -151,7 +117,7 @@
 
                         </StackLayout>
                         <Image x:Name="PhotoImage"/>
-                        <Button BackgroundColor="#a8dadc"
+                        <!--<Button BackgroundColor="#a8dadc"
                             Text="照片補上傳"
                             TextColor="White"
                             FontSize="18"
@@ -165,9 +131,44 @@
                             x:Name="post_from_gallery"
                             Clicked="post_from_gallery_Clicked"
                             Margin="0,5,5,0"
-                            />
+                            />-->
                     </StackLayout>
-            </StackLayout>
+                    <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Center" Padding="10,3,10,3">
+                        <!--<Button BackgroundColor="#bee1e6"
+                            Text="返回"
+                            TextColor="White"
+                            FontSize="18"
+                            IsVisible="True"
+                            IsEnabled="True"
+                            BorderWidth="1"
+                            BorderRadius="20"
+                            WidthRequest="100"
+                            HorizontalOptions="Center"
+                            VerticalOptions="End"
+                            x:Name="back"
+                            Clicked="back_Clicked"
+                            Margin="0,5,5,0"
+                            />-->
+                        <Button BackgroundColor="#a8dadc"
+                            Text="送出"
+                            TextColor="White"
+                            FontSize="18"
+                            IsVisible="True"
+                            IsEnabled="True"
+                            WidthRequest="200"
+                            BorderWidth="1"
+                            BorderRadius="20"
+                            HorizontalOptions="Center"
+                            VerticalOptions="End"
+                            x:Name="post"
+                            Clicked="post_Clicked"
+                            Margin="0,5,5,0"
+                            />
+
+                        <!--<Button x:Name="back" Text="返回" Clicked="back_Clicked"  HorizontalOptions="Start"/>
+                    <Button x:Name="post" Text="送出" Clicked="post_Clicked"  HorizontalOptions="EndAndExpand"/>-->
+                    </StackLayout>
+                </StackLayout>
         </ScrollView>
         </Grid>
     </ContentPage.Content>

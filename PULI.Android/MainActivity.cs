@@ -65,6 +65,8 @@ namespace PULI.Droid
             else                                // if API <= 25
                 StartService(startIntent);
 
+
+
             //CrossBadge.Current.SetBadge(9);
             Console.WriteLine("EXECUTE");
             OpenLocationSettings();

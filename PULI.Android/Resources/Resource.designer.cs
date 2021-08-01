@@ -7444,31 +7444,37 @@ namespace PULI.Droid
 			public const int notify_panel_notification_icon_bg = 2131165519;
 			
 			// aapt resource value: 0x7F070150
-			public const int record = 2131165520;
+			public const int pick = 2131165520;
 			
 			// aapt resource value: 0x7F070151
-			public const int segmented_control_background = 2131165521;
+			public const int record = 2131165521;
 			
 			// aapt resource value: 0x7F070152
-			public const int segmented_control_first_background = 2131165522;
+			public const int segmented_control_background = 2131165522;
 			
 			// aapt resource value: 0x7F070153
-			public const int segmented_control_last_background = 2131165523;
+			public const int segmented_control_first_background = 2131165523;
 			
 			// aapt resource value: 0x7F070154
-			public const int tooltip_frame_dark = 2131165524;
+			public const int segmented_control_last_background = 2131165524;
 			
 			// aapt resource value: 0x7F070155
-			public const int tooltip_frame_light = 2131165525;
+			public const int tooltip_frame_dark = 2131165525;
 			
 			// aapt resource value: 0x7F070156
-			public const int user2 = 2131165526;
+			public const int tooltip_frame_light = 2131165526;
 			
 			// aapt resource value: 0x7F070157
-			public const int verify = 2131165527;
+			public const int touchscreen = 2131165527;
 			
 			// aapt resource value: 0x7F070158
-			public const int wifi = 2131165528;
+			public const int user2 = 2131165528;
+			
+			// aapt resource value: 0x7F070159
+			public const int verify = 2131165529;
+			
+			// aapt resource value: 0x7F07015A
+			public const int wifi = 2131165530;
 			
 			static Drawable()
 			{
