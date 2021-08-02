@@ -5255,6 +5255,7 @@ namespace PULI.Views
                                             if (j == "其他")
                                             {
                                                 reset();
+                                                //EntryList[questionList.ClientName] = true;
 
                                             }
                                             else

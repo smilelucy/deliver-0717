@@ -114,7 +114,7 @@ namespace PULI.Model
             StackLayout searchingLayout;
             Image image;
             Label space;
-            string version = "1.7";
+            string version = "1.8";
 
             Grid grid;
 

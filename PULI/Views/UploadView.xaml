@@ -52,7 +52,8 @@
                                             Margin="0,0,10,0"
                                             Clicked="User_Detail_Clicked"/>-->
                                     <Label Text="照片記錄" TextColor="White"
-                                           FontSize="18"
+                                           FontSize="20"
+                                           FontAttributes="Bold"
                                            Padding="0,0,0,0"
                                            VerticalTextAlignment="Center"
                                            HorizontalTextAlignment="Center"/>
@@ -74,7 +75,7 @@
                         <StackLayout Orientation="Vertical" VerticalOptions="Center"  Padding="20,3,20,3">
 
                             <!--<controls:TintedImage x:Name="buttonImage" TintColor="Blue" HeightRequest="50" WidthRequest="50" Source="fill.png"/>-->
-                            <Frame BackgroundColor="#fcd5ce" 
+                            <Frame BackgroundColor="#83c5be" 
                                HeightRequest="40" 
                                WidthRequest="80" 
                                Margin="5,0,0,0" 
@@ -88,7 +89,7 @@
                                     <TapGestureRecognizer Tapped="PickPhoto_Clicked" />
 
                                 </Frame.GestureRecognizers>
-                                <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <StackLayout HorizontalOptions="Center" VerticalOptions="Center" x:Name="photopick" IsVisible="true" IsEnabled="True">
                                     <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand"  VerticalOptions="Center">
                                         <controls:TintedImage x:Name="buttonImage_nowifi" TintColor="White" HeightRequest="22" WidthRequest="22" Source="pick.png"/>
                                         <!--<Button 
@@ -104,8 +105,9 @@
                                             Margin="0,0,10,0"
                                             Clicked="User_Detail_Clicked"/>-->
                                         <Label Text="照片選擇" TextColor="White"
-                                           FontSize="18"
+                                           FontSize="20"
                                            Padding="0,0,0,0"
+                                               FontAttributes="Bold"
                                            VerticalTextAlignment="Center"
                                            HorizontalTextAlignment="Center"/>
 
@@ -133,7 +135,7 @@
                             Margin="0,5,5,0"
                             />-->
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Center" Padding="10,3,10,3">
+                    <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="Center" Padding="10,3,10,3">
                         <!--<Button BackgroundColor="#bee1e6"
                             Text="返回"
                             TextColor="White"
@@ -159,7 +161,7 @@
                             BorderWidth="1"
                             BorderRadius="20"
                             HorizontalOptions="Center"
-                            VerticalOptions="End"
+                            VerticalOptions="EndAndExpand"
                             x:Name="post"
                             Clicked="post_Clicked"
                             Margin="0,5,5,0"

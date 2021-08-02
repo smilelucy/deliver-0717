@@ -35,6 +35,9 @@ namespace PULI.Views {
         private global::Xamarin.Forms.Frame photo_nowifi;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
+        private global::Xamarin.Forms.StackLayout photopick;
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private global::Plugin.CrossPlatformTintedImage.Abstractions.TintedImage buttonImage_nowifi;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
@@ -52,6 +55,7 @@ namespace PULI.Views {
             buttonImage = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Plugin.CrossPlatformTintedImage.Abstractions.TintedImage>(this, "buttonImage");
             img = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Image>(this, "img");
             photo_nowifi = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Frame>(this, "photo_nowifi");
+            photopick = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.StackLayout>(this, "photopick");
             buttonImage_nowifi = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Plugin.CrossPlatformTintedImage.Abstractions.TintedImage>(this, "buttonImage_nowifi");
             PhotoImage = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Image>(this, "PhotoImage");
             post = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Button>(this, "post");
