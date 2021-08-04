@@ -252,31 +252,31 @@ namespace Deliver.Services
             }
 
         }
-        public async Task<bool> Save_Punch_In(string token, string ct_s_num, string sec_s_num, string mlo_s_num, double lat, double lot)
+        public async Task<bool> Save_Punch_In(string token, string ct_s_num, string sec_s_num, string mlo_s_num, double lat, double lot, string time)
         {
             try
             {
                 HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Add("Authorization", "Token " + token);
-                Console.WriteLine("TOKEN>>>> " + token);
+                //Console.WriteLine("TOKEN>>>> " + token);
                 MultipartFormDataContent formData = new MultipartFormDataContent();
                 //formData.Add(tempData);
                 formData.Add(new StringContent(ct_s_num), "ct_s_num");
-                Console.WriteLine("NAME>>>> " + ct_s_num);
+                //Console.WriteLine("NAME>>>> " + ct_s_num);
                 formData.Add(new StringContent(sec_s_num), "sec_s_num");
-                Console.WriteLine("SEC_S_NUM>>>> " + sec_s_num);
+                //Console.WriteLine("SEC_S_NUM>>>> " + sec_s_num);
                 formData.Add(new StringContent(mlo_s_num), "mlo_s_num");
-                Console.WriteLine("MLO>>>> " + mlo_s_num);
+                //Console.WriteLine("MLO>>>> " + mlo_s_num);
                 
-                formData.Add(new StringContent("1"), "phl01");
+                formData.Add(new StringContent(time), "phl01");
                 formData.Add(new StringContent("1"), "phl02");
                 formData.Add(new StringContent(lot.ToString()), "phl03");
-                Console.WriteLine("LOT>>>> " + lot.ToString());
+                //Console.WriteLine("LOT>>>> " + lot.ToString());
                 formData.Add(new StringContent(lat.ToString()), "phl04");
-                Console.WriteLine("LAT>>>> " + lat.ToString());
+                //Console.WriteLine("LAT>>>> " + lat.ToString());
                 formData.Add(new StringContent("1"), "phl05");
                 formData.Add(new StringContent("1"), "phl99");
-                Console.WriteLine("NAME>>>> " + ct_s_num);
+                //Console.WriteLine("NAME>>>> " + ct_s_num);
                 var request = new HttpRequestMessage()
                 {
                     RequestUri = new Uri(host + "/lt_care/api/dp/save_punch"),
@@ -317,7 +317,7 @@ namespace Deliver.Services
             }
             
         }
-        public async Task<bool> Save_Punch_Out(string token, string ct_s_num, string sec_s_num, string mlo_s_num, double lat, double lot)
+        public async Task<bool> Save_Punch_Out(string token, string ct_s_num, string sec_s_num, string mlo_s_num, double lat, double lot, string time)
         {
             try
             {
@@ -330,7 +330,7 @@ namespace Deliver.Services
                 formData.Add(new StringContent(sec_s_num), "sec_s_num");
                 formData.Add(new StringContent(mlo_s_num), "mlo_s_num");
                
-                formData.Add(new StringContent("0"), "phl01");
+                formData.Add(new StringContent(time), "phl01");
                 formData.Add(new StringContent("2"), "phl02");
                 formData.Add(new StringContent(lot.ToString()), "phl03");
                 formData.Add(new StringContent(lat.ToString()), "phl04");

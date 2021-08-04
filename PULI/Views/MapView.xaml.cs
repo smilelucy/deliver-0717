@@ -948,12 +948,17 @@ namespace PULI.Views
                                                 if (!name_list_in.Contains(TempAnsList.name)) // 判斷還沒處理過這筆無網路打卡
                                                 {
                                                     // 自動簽到
-                                                    bool web_res2 = await web.Save_Punch_In(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.latitude, TempAnsList.longitude);
-                                                    //Console.WriteLine("web_res" + web_res2);
+                                                    bool web_res2 = await web.Save_Punch_In(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time);
+                                                    Console.WriteLine("web_resin~~~ " + web_res2);
                                                     if (web_res2 == true)
                                                     {
                                                         // 打卡成功
                                                         name_list_in.Add(TempAnsList.name);
+                                                        Wifi_Punchin_DB.SaveAccountAsync(new Wifi_Punchin // 存進有網路簽到成功的SQLite
+                                                        {
+                                                            name = TempAnsList.name, // 案主姓名
+                                                            time = TempAnsList.timeforpost  // 簽到時間
+                                                        });
                                                         //Console.WriteLine("name_list_in~~~" + name_list_in.Count);
                                                         //name_list_in2.Add(new TmpPunchList
                                                         //{
@@ -1010,12 +1015,17 @@ namespace PULI.Views
                                                 if (!name_list_out.Contains(TempAnsList.name)) // 還沒處理過這筆案主的簽退
                                                 {
                                                     // 自動簽退
-                                                    bool web_res2 = await web.Save_Punch_Out(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.latitude, TempAnsList.longitude);
-                                                    //Console.WriteLine("web_res" + web_res2);
+                                                    bool web_res2 = await web.Save_Punch_Out(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time);
+                                                    Console.WriteLine("web_res_out~~~ " + web_res2);
                                                     if (web_res2 == true)
                                                     {
                                                         // 打卡成功
                                                         name_list_out.Add(TempAnsList.name);
+                                                        Wifi_Punchout_DB.SaveAccountAsync(new Wifi_Punchout// 把簽退成功紀錄到無網路簽退的SQLite
+                                                        {
+                                                            name = TempAnsList.name, // 姓名
+                                                            time = TempAnsList.timeforpost // 時間
+                                                        });
                                                         //Console.WriteLine("name_list_out~~~" + name_list_out.Count);
                                                         //name_list_out2.Add(new TmpPunchList
                                                         //{
@@ -1227,8 +1237,11 @@ namespace PULI.Views
 
                                                     if (CrossConnectivity.Current.IsConnected) // 有連到網路
                                                     {
-                                                        // 自動簽到
-                                                        bool web_res = await web.Save_Punch_In(MainPage.token, ct_s_num, sec_s_num, mlo_s_num, position.Latitude, position.Longitude);
+                                        // 自動簽到
+                                                        DateTime myDate = DateTime.Now;
+                                                        string time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
+                                                        Console.WriteLine("time~~~ " + time);
+                                                        bool web_res = await web.Save_Punch_In(MainPage.token, ct_s_num, sec_s_num, mlo_s_num, position.Latitude, position.Longitude, time);
                                                         //Console.WriteLine("web_res" + web_res);
                                                         if (web_res == true)
                                                         {
@@ -1267,8 +1280,11 @@ namespace PULI.Views
                                                         inorout = "in"; // 簽到
                                                                         ////Console.WriteLine("");
                                                                         // 將簽到資訊存進SQLite
-                                                        //bool web_res = await web.Save_Punch_In(MainPage.token, ct_s_num, sec_s_num, mlo_s_num, position.Latitude, position.Longitude);
-                                                        PunchSaveToSQLite(MainPage.token, Clname, inorout, ct_s_num, sec_s_num, mlo_s_num, position.Latitude, position.Longitude);
+                                                                        //bool web_res = await web.Save_Punch_In(MainPage.token, ct_s_num, sec_s_num, mlo_s_num, position.Latitude, position.Longitude);
+                                                        DateTime myDate = DateTime.Now;
+                                                        string time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
+                                                        Console.WriteLine("time~~~ " + time);
+                                                        PunchSaveToSQLite(MainPage.token, Clname, inorout, ct_s_num, sec_s_num, mlo_s_num, position.Latitude, position.Longitude, time, DateTime.Now.ToShortTimeString());
                                                         punch_in[cList2[i].ct_name] = true; // 簽到成功
                                                         PunchTmp.SaveAccountAsync(new PunchTmp // 存進無網路簽到成功的SQLite
                                                         {
@@ -1353,8 +1369,11 @@ namespace PULI.Views
                                             ////Console.WriteLine("DDD" + questionnaireslist[0].qbs[0].qb01);
                                             if (CrossConnectivity.Current.IsConnected) // 有連到網路
                                             {
+                                                DateTime myDate = DateTime.Now;
+                                                string time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
+                                                Console.WriteLine("time~~~ " + time);
                                                 // 自動簽退
-                                                bool web_res2 = await web.Save_Punch_Out(MainPage.token, ct_s_num, sec_s_num, mlo_s_num, position.Latitude, position.Longitude);
+                                                bool web_res2 = await web.Save_Punch_Out(MainPage.token, ct_s_num, sec_s_num, mlo_s_num, position.Latitude, position.Longitude, time);
                                                 //Console.WriteLine("web_res2" + web_res2);
                                                 if (web_res2 == true)
                                                 {
@@ -1506,8 +1525,11 @@ namespace PULI.Views
                                                 //Console.WriteLine("bn_s_num~~" + bn_s_num);
                                                 ////Console.WriteLine("");
                                                 inorout = "out"; // 簽退
-                                                // 把要打卡的資料先存回SQLite
-                                                PunchSaveToSQLite(MainPage.token, Clname, inorout, ct_s_num, sec_s_num, mlo_s_num, position.Latitude, position.Longitude);
+                                                                 // 把要打卡的資料先存回SQLite
+                                                DateTime myDate = DateTime.Now;
+                                                string time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
+                                                Console.WriteLine("time~~~ " + time);
+                                                PunchSaveToSQLite(MainPage.token, Clname, inorout, ct_s_num, sec_s_num, mlo_s_num, position.Latitude, position.Longitude, time, DateTime.Now.ToShortTimeString());
 
                                                 punch_out[cList2[i].ct_name] = true;  // 謙退成功
                                                 punchList[cList2[i].ct_name] = true; // 打卡完成設為true
@@ -2522,7 +2544,7 @@ namespace PULI.Views
             });
         }
 
-        public void PunchSaveToSQLite(string _token, string _name, string _inorout, string _ct_s_num, string _sec_s_num, string _mlo_s_num, double _lat, double _lot)
+        public void PunchSaveToSQLite(string _token, string _name, string _inorout, string _ct_s_num, string _sec_s_num, string _mlo_s_num, double _lat, double _lot, string _time, string _timeforpost)
         {
             // MainPage.token, ct_s_num, sec_s_num, mlo_s_num, bn_s_num, position.Latitude, position.Longitude
             //Console.WriteLine("punchsave~~~");
@@ -2536,6 +2558,8 @@ namespace PULI.Views
                 mlo_s_num = _mlo_s_num,
                 latitude = _lat,
                 longitude = _lot,
+                time = _time,
+                timeforpost = _timeforpost
             });
         }
 

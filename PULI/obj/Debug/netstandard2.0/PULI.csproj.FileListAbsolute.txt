@@ -61,7 +61,6 @@ D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\MainPage.xam
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\ActivityView.xaml.g.cs
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\AddNewClnView.xaml.g.cs
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\ClnDetailView.xaml.g.cs
-D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\CompanyView.xaml.g.cs
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\HomeView.xaml.g.cs
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\HomeView2.xaml.g.cs
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\HomeViewHelperAndDiliver.xaml.g.cs

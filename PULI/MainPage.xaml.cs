@@ -496,11 +496,14 @@ namespace PULI
                             Console.WriteLine("OOOOOAAAAtoken~~ " + token);
                             AUTH = userList.acc_auth;
                             NAME = userList.acc_name;
-                            Content = ViewService.LoadingLogin();
+                            //Content = ViewService.LoadingLogin();
+                            loadingView.IsVisible = true;
                             _login_time = userList.login_time;
                             Console.WriteLine("login_time~~~" + _login_time);
                             BeaconScan scan = new BeaconScan();
-
+                            DateTime myDate = DateTime.Now;
+                            string time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
+                            Console.WriteLine("time~~ " + time);
                             //if (BeaconScan.BleStatus == 0)
                             //{
                             //    //await DisplayAlert("提示", "藍芽未開啟", "ok");
@@ -589,6 +592,7 @@ namespace PULI
                             Console.WriteLine("AAAUTH~~~ " + AUTH);
                             if (AUTH == "4") // 純外送員 & 社工幫忙外送
                             {
+                                loadingView.IsVisible = false;
                                 await Navigation.PushModalAsync(new HomeView2());
                                 Console.WriteLine("deliver~~ ");
                             }
@@ -598,6 +602,7 @@ namespace PULI
                             //}
                             else // 純社工
                             {
+                                loadingView.IsVisible = false;
                                 await Navigation.PushModalAsync(new HomeView());
                                 Console.WriteLine("helper~~~ ");
                             }

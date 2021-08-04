@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="PULI.MainPage">
-    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+    <Grid HorizontalOptions="Center" VerticalOptions="Center">
         <StackLayout HorizontalOptions="Center" VerticalOptions="Center" IsVisible="true" IsEnabled="True" x:Name="Login" Padding="0,100,0,0">
             <Label Text="請輸入帳號密碼來登入" FontSize="30" 
                        HorizontalOptions="Center"
@@ -67,7 +67,7 @@
                     VerticalTextAlignment="End"
                     Padding="0,100,0,0"
                                            TextColor="Black"
-                                           Text="Ver_1.8" />
+                                           Text="Ver_2.1" />
         </StackLayout>
         <StackLayout VerticalOptions="Center"
                              HorizontalOptions="Center"
@@ -86,6 +86,43 @@
 
             </Frame>
 
+        
+            
         </StackLayout>
-    </StackLayout>
+        <StackLayout HorizontalOptions="FillAndExpand"
+                     VerticalOptions="FillAndExpand"
+                     x:Name="loadingView"
+                     Margin="0,50,0,0"
+                     IsVisible="false">
+
+           
+
+            <StackLayout VerticalOptions="CenterAndExpand"
+                         HorizontalOptions="Center">
+
+                <ActivityIndicator IsRunning="True"
+                                   VerticalOptions="CenterAndExpand"
+                                   HorizontalOptions="Center"
+                                   Color="#457b9d"
+                                   Scale="1"/>
+
+            </StackLayout>
+            <StackLayout VerticalOptions="Start"
+                         HorizontalOptions="Center">
+
+                <Label x:Name="loadingLabel"
+                           Text="載入中...請稍後!"
+                           HorizontalOptions="Start"
+                           VerticalOptions="Start"
+                           FontSize="Medium"
+                           TextColor="Black"/>
+
+            </StackLayout>
+
+            
+
+        </StackLayout>
+
+
+    </Grid>
 </ContentPage>

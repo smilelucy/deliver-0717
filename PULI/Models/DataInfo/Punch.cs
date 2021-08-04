@@ -25,5 +25,9 @@ namespace PULI.Models.DataInfo
         public string bn_s_num { get; set; }
         public double latitude { get; set; }
         public double longitude { get; set; }
+
+        public string time { get; set; }
+
+        public string timeforpost { get; set; }
     }
 }

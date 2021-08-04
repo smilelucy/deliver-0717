@@ -74,6 +74,7 @@ namespace PULI.Views
         private static int same_ans_copy = 0; // 看他抓了幾筆同上的資料(用來判斷同上那邊的答案全部抓完之後再reset
         private static string stack_name;
         private static string stack_name_2;
+        private static string ques5_qb_s_num;
         //public static string anslist;
         //public static string p;
         public static TempDatabase AccDatabase; // 存問卷答案的SQLite
@@ -870,6 +871,11 @@ namespace PULI.Views
                 ////////Console.WriteLine("out~~ " + questionList.wqh_s_num);
                 //Console.WriteLine("name~~~ " + questionList.ClientName);
                 //Console.WriteLine("CheckboxList~~~ " + CheckboxList[questionList.ClientName + questionList.qb_s_num]);
+                if(i.qb02 == "3")
+                {
+                    ques5_qb_s_num = i.qb_s_num;
+                    Console.WriteLine("ques5_qb_s_num~~~ " + ques5_qb_s_num);
+                }
                 if(Int32.Parse(i.qb_order) < 4 ) // 還沒有觸發第四題之前
                 {
                     ////////Console.WriteLine("inA~~~~ ");
@@ -5254,9 +5260,74 @@ namespace PULI.Views
 
                                             if (j == "其他")
                                             {
-                                                reset();
-                                                //EntryList[questionList.ClientName] = true;
+                                                //reset();
+                                                
+                                                checkboxDictionary[questionList.wqh_s_num + "停餐" + i.qb_order].IsChecked = false;
+                                                checkboxDictionary[questionList.wqh_s_num + "缺少" + i.qb_order].IsChecked = false;
+                                                checkboxDictionary[questionList.wqh_s_num + "太多" + i.qb_order].IsChecked = false;
+                                                var entry_stack = new StackLayout
+                                                {
+                                                    Orientation = StackOrientation.Vertical
+                                                };
+                                                var entry_label = new Label // 問題題號+題目
+                                                {
+                                                    Text = "5 備註",
+                                                    FontSize = 20,
+                                                    TextColor = Color.Black
+                                                };
+                                                entny = new Entry // 產生Entry
+                                                {
+                                                    Placeholder = "請說明",
+                                                    Text = EntrytxtList[questionList.wqh_s_num + "5"],
 
+                                                };
+                                                entny.TextChanged += async (ss, ee) =>
+                                                {
+                                                    ////Console.WriteLine("Text11~" + ee.NewTextValue);
+                                                    if (EntrytxtList.ContainsKey(questionList.wqh_s_num + "5"))
+                                                    {
+                                                        EntrytxtList.Remove(questionList.wqh_s_num + "5");
+                                                        EntrytxtList[questionList.wqh_s_num + "5"] = ee.NewTextValue;
+                                                    }
+                                                    else
+                                                    {
+                                                        EntrytxtList[questionList.wqh_s_num + "5"] = ee.NewTextValue;
+                                                    }
+                                                    EntrytxtList[questionList.wqh_s_num + "5"] = ee.NewTextValue;
+                                                    //////Console.WriteLine("entrytxt22~~~ " + EntrytxtList[questionList.wqh_s_num + i.qb_order]);
+                                                    ////Console.WriteLine("wqh~~~ " + questionList.wqh_s_num);
+                                                    ////Console.WriteLine("order~~ " + i.qb_order);
+                                                    checkList2.RemoveAll(x => x.wqh_s_num == questionList.wqh_s_num && x.qb_order == "5");
+                                                    var check3_entry = new checkInfo
+                                                    {
+                                                        wqh_s_num = questionList.wqh_s_num, // 問卷編號
+                                                        qh_s_num = questionList.qh_s_num, // 工作問卷編號
+                                                        qb_s_num = ques5_qb_s_num, // 問題編號(第幾題)
+                                                        qb_order = "5",
+                                                        wqb01 = EntrytxtList[questionList.wqh_s_num + "5"]
+                                                    };
+                                                    //////Console.WriteLine("entrytxt33~~~ " + EntrytxtList[questionList.wqh_s_num + i.qb_order]);
+
+                                                    checkList2.Add(check3_entry); // for save
+                                                                            //checkList2.Add(check3); // for save
+                                                    EntrytxtSaveDB(questionList.ClientName, questionList.wqh_s_num, EntrytxtList[questionList.wqh_s_num + "5"]);
+
+
+                                                };
+                                                entry_stack.Children.Add(entry_label);
+                                                entry_stack.Children.Add(entny);
+                                                Frame entry_frame = new Frame // frame包上面那個stacklayout
+                                                {
+                                                    Padding = new Thickness(10, 5, 10, 5),
+                                                    Margin = new Thickness(5, 0, 5, 0),
+                                                    BackgroundColor = Color.FromHex("eddcd2"),
+                                                    ClassId = questionList.ClientName + questionList.wqh_s_num + "5",
+                                                    CornerRadius = 10,
+                                                    HasShadow = false,
+                                                    Content = entry_stack
+                                                };
+                                                quesStack.Children.Insert(Stack_Count[questionList.wqh_s_num + i.qb_order], entry_frame);
+                                                
                                             }
                                             else
                                             {
@@ -5681,19 +5752,7 @@ namespace PULI.Views
                     var temp_value = "";
                     Console.WriteLine("問答~~~~ ");
                     ////////Console.WriteLine("Entry~~~ " + EntryList[questionList.wqh_s_num + i.qb_order]);
-                    for (int a = 0; a < checkList.Count(); a++)
-                    {
-                        ////////Console.WriteLine("COUNT222~~~~" + MapView.AccDatabase.GetAccountAsync2().Count());
-                        if (checkList[a].wqh_s_num == questionList.wqh_s_num) // 判斷問卷編號
-                        {
-                            //////Console.WriteLine("IMMMM222~~~~");
-                            if (checkList[a].qb_s_num == i.qb_s_num) // 判斷哪一題
-                            {
-                                //temp_j = checkList[a].wqb01; // 答案
-                                temp_value = checkList[a].wqb99; // entry
-                            }
-                        }
-                    }
+                   
                     if (EntryDB.GetAccountAsync2().Count() > 0)
                     {
                         //////Console.WriteLine("entrya~~");
@@ -5795,10 +5854,7 @@ namespace PULI.Views
                         {
                             Placeholder = "請說明",
                             Text = EntrytxtList[questionList.wqh_s_num + i.qb_order],
-                            //IsVisible = isEntry,
-                            //IsEnabled = isEntry
-
-
+                           
                         };
                         entny.TextChanged += async (ss, ee) =>
                         {
@@ -7147,11 +7203,11 @@ namespace PULI.Views
             //Content = ViewService.Loading();
             foreach (var b in checkList2)
             {
-                //Console.WriteLine("LALALApost~~");
-                //Console.WriteLine("wqh_s_num : " + b.wqh_s_num);
-                //Console.WriteLine("qb_s_num : " + b.qb_s_num);
-                //Console.WriteLine("qb03 : " + b.wqb01);
-                //Console.WriteLine("enrty : " + b.wqb99);
+                Console.WriteLine("LALALApost~~");
+                Console.WriteLine("wqh_s_num : " + b.wqh_s_num);
+                Console.WriteLine("qb_s_num : " + b.qb_s_num);
+                Console.WriteLine("qb03 : " + b.wqb01);
+                Console.WriteLine("enrty : " + b.wqb99);
             }
             work_data resault = new work_data()
             {
