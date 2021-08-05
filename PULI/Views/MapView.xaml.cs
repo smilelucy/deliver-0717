@@ -239,7 +239,8 @@ namespace PULI.Views
                         {
 
                             cList2.Add(data[i]); // 案主資料的list
-                           
+                            
+                            
                             //Console.WriteLine("dataname~~~" + data[i].ct_name);
                             //Console.WriteLine("www~~~" + total_reserve_name.Contains(data[i].ct_name));
                             if (!total_reserve_name.Contains(data[i].ct_name)) // 過濾一個案主有兩筆資料
