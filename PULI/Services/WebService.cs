@@ -294,7 +294,7 @@ namespace Deliver.Services
                     Console.WriteLine(ct_s_num + "INN");
                     
                     Console.WriteLine("punchincontent" + content);
-                    if (content == "ok")
+                    if (content == "ok" || content == "duplicate")
                     {
                         return true;
                     }
@@ -353,7 +353,7 @@ namespace Deliver.Services
                 {
                     Console.WriteLine(ct_s_num + "OUT");
                     
-                    if (content == "ok")
+                    if (content == "ok" || content == "duplicate")
                     {
                         return true;
                     }
