@@ -176,7 +176,7 @@ namespace PULI.Views
             Messager();
             if(MainPage.AUTH == "4") // 外送員(有打卡功能)
             {
-                Device.StartTimer(TimeSpan.FromSeconds(20), OnTimerTick);
+                Device.StartTimer(TimeSpan.FromSeconds(10), OnTimerTick);
               
                 Console.WriteLine("shipment~~~");
             }
@@ -299,6 +299,17 @@ namespace PULI.Views
                                 punchyesorno[totalList.daily_shipments[i].ct_name] = false; // 判斷是否進入判斷打卡(無論打卡成功與否)
                                 //setnum = totalList.daily_shipments.Count() - 1;
                                 setnum = 0; // 送餐進度
+                                //PunchTmp.SaveAccountAsync(new PunchTmp // 把簽退成功紀錄到無網路簽退的SQLite
+                                //{
+                                //    name = "lab測試_in_2", // 姓名
+                                //    time = DateTime.Now.ToShortTimeString() // 時間
+                                //});
+                                
+                                //DateTime myDate = DateTime.Now;
+                                //string time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
+                                //Console.WriteLine("time~~~ " + time);
+                                //PunchSaveToSQLite(MainPage.token, "lab測試_in_2", "in", "1620", "2313", "1", 23.9523305, 120.9280672, time, DateTime.Now.ToShortTimeString());
+                                
                                 //Console.WriteLine("setnumCC~~" + setnum);
                                 //SetIcon(setnum); // 地圖上設案主標點(只存在下一家要送餐的)
                                 double lat = Convert.ToDouble(totalList.daily_shipments[i].ct16);
@@ -878,7 +889,7 @@ namespace PULI.Views
                     {
                         d = 0;
                         location.DesiredAccuracy = location_DesiredAccuracy;
-                        position = await location.GetPositionAsync(TimeSpan.FromSeconds(20));
+                        position = await location.GetPositionAsync(TimeSpan.FromSeconds(10));
                         NowLon = position.Longitude;
                         NowLat = position.Latitude;
 
@@ -907,8 +918,8 @@ namespace PULI.Views
                         {
                             if (PunchDatabase.GetAccountAsync2().Count() > 0) // 記錄無網路環境打卡的database裡面有資料
                             {
-                                //Console.WriteLine("RRRRRR~~~~");
-                                //Console.WriteLine("pp~~" + PunchDatabase.GetAccountAsync2().Count());
+                                Console.WriteLine("RRRRRR~~~~");
+                                Console.WriteLine("pp~~" + PunchDatabase.GetAccountAsync2().Count());
                                 for (int b = 0; b < PunchDatabase.GetAccountAsync2().Count(); b++)
                                 {
                                     var c = PunchDatabase.GetAccountAsync(b);
@@ -916,7 +927,7 @@ namespace PULI.Views
 
                                     foreach (var TempAnsList in c)
                                     {
-                                        //Console.WriteLine("tmpname2222~~~" + TempAnsList.name);
+                                        Console.WriteLine("tmpname2222~~~" + TempAnsList.name);
                                         //Console.WriteLine("token~~" + TempAnsList.token);
                                         //Console.WriteLine("name~" + TempAnsList.name);
                                         //Console.WriteLine("ct_s_num~~" + TempAnsList.ct_s_num);
@@ -955,11 +966,7 @@ namespace PULI.Views
                                                     {
                                                         // 打卡成功
                                                         name_list_in.Add(TempAnsList.name);
-                                                        Wifi_Punchin_DB.SaveAccountAsync(new Wifi_Punchin // 存進有網路簽到成功的SQLite
-                                                        {
-                                                            name = TempAnsList.name, // 案主姓名
-                                                            time = TempAnsList.timeforpost  // 簽到時間
-                                                        });
+                                                        
                                                         //Console.WriteLine("name_list_in~~~" + name_list_in.Count);
                                                         //name_list_in2.Add(new TmpPunchList
                                                         //{
@@ -978,10 +985,15 @@ namespace PULI.Views
                                                                                                     //await Task.Delay(10000); // 等待30秒
                                                                                                     //Messager2();
                                                         PunchTmp.DeleteItem(TempAnsList.ID); // 把那筆刪掉
-                                                        MessagingCenter.Send(this, "Setlist", true); // 更新主頁面的吳網路打卡紀錄
-                                                        //Console.WriteLine("deletein~~~" + TempAnsList.name);
-                                                        //Console.WriteLine("incount111~~~" + PunchDatabase.GetAccountAsync2().Count());
 
+                                                        MessagingCenter.Send(this, "Setlist", true); // 更新主頁面的吳網路打卡紀錄
+                                                                                                     //Console.WriteLine("deletein~~~" + TempAnsList.name);
+                                                                                                     //Console.WriteLine("incount111~~~" + PunchDatabase.GetAccountAsync2().Count());
+                                                        Wifi_Punchin_DB.SaveAccountAsync(new Wifi_Punchin // 存進有網路簽到成功的SQLite
+                                                        {
+                                                            name = TempAnsList.name, // 案主姓名
+                                                            time = TempAnsList.timeforpost  // 簽到時間
+                                                        });
                                                     }
                                                     else
                                                     {
@@ -1022,11 +1034,7 @@ namespace PULI.Views
                                                     {
                                                         // 打卡成功
                                                         name_list_out.Add(TempAnsList.name);
-                                                        Wifi_Punchout_DB.SaveAccountAsync(new Wifi_Punchout// 把簽退成功紀錄到無網路簽退的SQLite
-                                                        {
-                                                            name = TempAnsList.name, // 姓名
-                                                            time = TempAnsList.timeforpost // 時間
-                                                        });
+                                                        
                                                         //Console.WriteLine("name_list_out~~~" + name_list_out.Count);
                                                         //name_list_out2.Add(new TmpPunchList
                                                         //{
@@ -1045,10 +1053,15 @@ namespace PULI.Views
                                                                                                     //Messager2();
 
                                                         PunchTmp2.DeleteItem(TempAnsList.ID);
+                                                        
                                                         MessagingCenter.Send(this, "Setlist2", true); // 更新主頁面的無網路簽退紀錄
                                                         //Console.WriteLine("deleteout~~~" + TempAnsList.name);
                                                         //Console.WriteLine("outcount111~~~" + PunchDatabase.GetAccountAsync2().Count());
-
+                                                        Wifi_Punchout_DB.SaveAccountAsync(new Wifi_Punchout// 把簽退成功紀錄到無網路簽退的SQLite
+                                                        {
+                                                            name = TempAnsList.name, // 姓名
+                                                            time = TempAnsList.timeforpost // 時間
+                                                        });
 
                                                     }
                                                     else
@@ -1081,10 +1094,11 @@ namespace PULI.Views
                                     //Console.WriteLine("sendsetlist22~~~");
 
                                 }
-                                if(name_list_in.Count() == total_need_to_serve && name_list_out.Count() == total_need_to_serve) // 判斷是否送餐完畢
-                                {
-                                    DeliverOver = true;
-                                }
+                                //if(name_list_in.Count() == total_need_to_serve && name_list_out.Count() == total_need_to_serve) // 判斷是否送餐完畢
+                                //{
+                                //    DeliverOver = true;
+                                //}
+
                                 //if(PunchTmp2.GetAccountAsync().Count() == 0)
                                 //{
                                 //    //Console.WriteLine("punchtmp2SUCESS");
@@ -1398,6 +1412,8 @@ namespace PULI.Views
                                                         time = DateTime.Now.ToShortTimeString() // 時間
                                                     });
                                                     //Console.WriteLine("punchList~~~" + punchList[totalList.daily_shipments[setnum].ct_name] + "name " + totalList.daily_shipments[setnum].ct_name);
+                                                    //------------------------跳出問卷先拿掉----------------------------
+                                                    
                                                     if (isform[cList2[i].ct_name] == false)
                                                     {
                                                         try
@@ -1417,6 +1433,8 @@ namespace PULI.Views
                                                             DisplayAlert("系統訊息", "Error : deliver_mapview_questionnairelist_null", "ok");
                                                         }
                                                     }
+                                                    
+                                                    //----------------------------------------------------------------------------------
                                                     //trylist2.Add(setnum);
                                                     PunchSavesetnumToSQLite(setnum); // 把送餐進度存進SQLite
                                                     //Console.WriteLine("setnumadd111~~~" + setnum + "count " + trylist2.Count());
@@ -1531,7 +1549,7 @@ namespace PULI.Views
                                                 string time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
                                                 Console.WriteLine("time~~~ " + time);
                                                 PunchSaveToSQLite(MainPage.token, Clname, inorout, ct_s_num, sec_s_num, mlo_s_num, position.Latitude, position.Longitude, time, DateTime.Now.ToShortTimeString());
-
+                                                
                                                 punch_out[cList2[i].ct_name] = true;  // 謙退成功
                                                 punchList[cList2[i].ct_name] = true; // 打卡完成設為true
                                                 PunchTmp2.SaveAccountAsync(new PunchTmp2 // 把簽退成功紀錄到無網路簽退的SQLite
