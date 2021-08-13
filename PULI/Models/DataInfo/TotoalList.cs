@@ -87,7 +87,14 @@ namespace PULI.Models.DataInfo
         [JsonProperty("ct_mp06")]
         public string ct_mp06 { set; get; }// 代餐是否異動
 
-        
+        [JsonProperty("sec_s_num")]
+        public string sec_s_num { set; get; }// 
+
+        [JsonProperty("mlo_s_num")]
+        public string mlo_s_num { set; get; }// 
+
+        [JsonProperty("ct_s_num")]
+        public string ct_s_num { set; get; }// 
 
         //[JsonProperty("ShipmentOrder")]
         //public string ShipmentOrder { set; get; }

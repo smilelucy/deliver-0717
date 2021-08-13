@@ -64,6 +64,7 @@ namespace Deliver.Services
             }
             return null;
         }
+        
 
         public async Task<TotalList> Get_Daily_Shipment_night(string token)
         {
@@ -201,6 +202,7 @@ namespace Deliver.Services
             }
             return null;
         }
+        
         public async Task<List<AllClientInfo>> Get_All_Client(string token)
         {
 
@@ -293,7 +295,7 @@ namespace Deliver.Services
                 {
                     Console.WriteLine(ct_s_num + "INN");
                     
-                    Console.WriteLine("punchincontent" + content);
+                    Console.WriteLine("content_in~~~~~ " + content);
                     if (content == "ok" || content == "duplicate")
                     {
                         return true;
@@ -352,7 +354,7 @@ namespace Deliver.Services
                 if (response.IsSuccessStatusCode)
                 {
                     Console.WriteLine(ct_s_num + "OUT");
-                    
+                    Console.WriteLine("content_out~~~ " + content);
                     if (content == "ok" || content == "duplicate")
                     {
                         return true;
