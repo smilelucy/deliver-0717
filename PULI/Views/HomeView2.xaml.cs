@@ -39,7 +39,7 @@ namespace PULI.Views
                 }
 
             });
-            if (MainPage.AUTH == "4") 
+            if (MainPage.AUTH == "14") 
             {
                 // run 地圖
                 try

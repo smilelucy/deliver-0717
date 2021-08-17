@@ -186,7 +186,7 @@ namespace PULI
                                 Console.WriteLine("AUTH~~~" + AUTH);
                                 //DisplayAlert("提示", "[弗傳慈心基金會] 會收集位置資料，以便在應用程式關閉或未使用時，也可支援紀錄外送員gps位置以判斷打卡。", "ok");
 
-                                if (AUTH == "6")
+                                if (AUTH == "13")
                                 {
                                     allclientList = await web.Get_All_Client(token);
                                     //Console.WriteLine("num~~~~" + userList.daily_shipment_nums);
@@ -378,7 +378,7 @@ namespace PULI
                                 //Console.WriteLine("CHANGE" + totalList.abnormals.Count);
                                 //Console.WriteLine("SHIP~~" + totalList.daily_shipments.Count);
                                 //Console.WriteLine("ABNORMAL~~" + totalList.abnormals.Count);
-                                if (AUTH == "4") // 純外送員 & 社工幫忙送餐
+                                if (AUTH == "14") // 純外送員 & 社工幫忙送餐
                                 {
                                     Console.WriteLine("4~~~~");
                                     await Navigation.PushModalAsync(new HomeView2());
@@ -524,7 +524,7 @@ namespace PULI
                             Console.WriteLine("name~~~" + userList.acc_name);
 
 
-                            if (AUTH == "6")
+                            if (AUTH == "13")
                             {
                                 allclientList = await web.Get_All_Client(token);
                                 //Console.WriteLine("num~~~~" + userList.daily_shipment_nums);
@@ -600,7 +600,7 @@ namespace PULI
 
                             //await Navigation.PushModalAsync(new HomeView());
                             Console.WriteLine("AAAUTH~~~ " + AUTH);
-                            if (AUTH == "4") // 純外送員 & 社工幫忙外送
+                            if (AUTH == "14") // 純外送員 & 社工幫忙外送
                             {
                                 loadingView.IsVisible = false;
                                 await Navigation.PushModalAsync(new HomeView2());

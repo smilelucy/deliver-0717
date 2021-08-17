@@ -56,7 +56,7 @@ namespace PULI.Views
             //fooDoggyDatabase.DeleteAll();
             setView();
             Messager();
-            if(MainPage.AUTH == "6")
+            if(MainPage.AUTH == "13")
             {
                 if (MainPage.userList.daily_shipment_nums == 0)
                 {
@@ -75,7 +75,7 @@ namespace PULI.Views
         public async void setView()
         {
            // Console.WriteLine("membername~~~" + MainPage.userList.acc_name);
-            if(MainPage.AUTH == "4")
+            if(MainPage.AUTH == "14")
             {
                 auth.Text = "送餐員";
                 usrname.Text = MainPage.userList.acc_name;
@@ -110,7 +110,7 @@ namespace PULI.Views
             bool resultEnd = await DisplayAlert(param.SYSYTEM_MESSAGE, "登出需要關閉APP，確定要登出嗎?", param.DIALOG_AGREE_MESSAGE, param.DIALOG_DISAGREE_MESSAGE);
             if (resultEnd)
             {
-                if(MainPage.AUTH == "4") // 送餐員
+                if(MainPage.AUTH == "14") // 送餐員
                 {
                     fooDoggyDatabase.DeleteAll();
                     MapView.AccDatabase.DeleteAll();

@@ -55,7 +55,7 @@ namespace PULI.Views
             allclientList3 = null;
             Messager();
             Device.StartTimer(TimeSpan.FromSeconds(5), OnTimerTick);
-            if(MainPage.AUTH == "6")
+            if(MainPage.AUTH == "13")
             {
                 Console.WriteLine("addnew~~~");
                 AllForm.IsVisible = true;

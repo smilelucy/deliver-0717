@@ -26,7 +26,7 @@ namespace PULI.Views
            
 
             // run 社工地圖
-            if(MainPage.AUTH == "6")
+            if(MainPage.AUTH == "13")
             {
                 try
                 {
@@ -68,7 +68,7 @@ namespace PULI.Views
             //}
 
            
-            if(MainPage.AUTH == "6")
+            if(MainPage.AUTH == "13")
             {
                 MessagingCenter.Send(this, "SET_AddCln_FORM", true);
                 //MessagingCenter.Send(this, "SET_AddCln_FORM", true);

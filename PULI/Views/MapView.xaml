@@ -98,9 +98,9 @@
                          HeightRequest="30"
                          WidthRequest="500"
                          VerticalOptions="Center">
-                <Label Text="簽到成功" TextColor="Black" FontSize="18"></Label>
+                <!--<Label Text="簽到成功" TextColor="Black" FontSize="18"></Label>-->
                 <Label x:Name="setname" TextColor="Black" FontSize="18"></Label>
-                <Label Text="的家" TextColor="Black" FontSize="18"></Label>
+                <!--<Label Text="的家" TextColor="Black" FontSize="18"></Label>-->
             </StackLayout>
             <StackLayout x:Name="formin_2" IsVisible="False" IsEnabled="False"
                          BackgroundColor="White"
@@ -134,7 +134,7 @@
                 </StackLayout>
             </StackLayout>
         </StackLayout>
-        <StackLayout IsVisible="False" IsEnabled="False" x:Name="formout" 
+        <!--<StackLayout IsVisible="False" IsEnabled="False" x:Name="formout" 
                      BackgroundColor="White"
                      HorizontalOptions="Center"
                      Orientation="Horizontal"
@@ -144,7 +144,7 @@
             <Label Text="簽退成功" TextColor="Black" FontSize="18"></Label>
             <Label x:Name="setname2" TextColor="Black" FontSize="18"></Label>
             <Label Text="的家" TextColor="Black" FontSize="18"></Label>
-        </StackLayout>
+        </StackLayout>-->
         <StackLayout IsVisible="False" IsEnabled="False" x:Name="DeliverEnd" 
                      BackgroundColor="White"
                      HorizontalOptions="Center"
