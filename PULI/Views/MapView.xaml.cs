@@ -1274,13 +1274,17 @@ namespace PULI.Views
                                                         DateTime myDate = DateTime.Now;
                                                         string time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
                                                         Console.WriteLine("time~~~ " + time);
+                                                        
+                                                         //---------跳出訊息先註解掉-------
+                                                         
                                                         formin_1.IsVisible = true; // 跳出簽到案主家成功訊息
                                                         formin_1.IsEnabled = true;
                                                         formin_2.IsVisible = true; // 跳出案主家相關資訊
                                                         formin_2.IsEnabled = true;
                                                         //await Task.Delay(10000); // 等待30秒
-                                                        await Task.Delay(TimeSpan.FromSeconds(20));
+                                                        await Task.Delay(TimeSpan.FromSeconds(5));
                                                         Messager2(); // 訊息消失(自動關閉)
+                                                        
                                                         punch_in[totalList.daily_shipments[i].ct_name] = true; // 簽到成功
                                                         bool web_res = await web.Save_Punch_In(MainPage.token, ct_s_num, sec_s_num, mlo_s_num, position.Latitude, position.Longitude, time);
                                                         //Console.WriteLine("web_res" + web_res);
@@ -1403,14 +1407,18 @@ namespace PULI.Views
                                                 DateTime myDate = DateTime.Now;
                                                 string time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
                                                 Console.WriteLine("time~~~ " + time);
+                                                
+                                                 //------跳出訊息先註解掉---------
+                                                 
                                                 formout.IsVisible = true; // 跳出簽退成功訊息
                                                 formout.IsEnabled = true;
                                                 Form.IsVisible = true; // 跳出問卷
                                                 Form.IsEnabled = true;
                                                 //await Task.Delay(10000); // 等待30秒
-                                                await Task.Delay(TimeSpan.FromSeconds(20));
+                                                await Task.Delay(TimeSpan.FromSeconds(5));
                                                 Messager3(); // 簽退成功訊息消失(自動關閉)
                                                              // 自動簽退
+                                                
                                                 punch_out[totalList.daily_shipments[i].ct_name] = true;  // 簽退成功
                                                                                                  //PunchSavepunchnameToSQLite(totalList.daily_shipments[setnum].ct_name);
                                                                                                  //Console.WriteLine("punchout~~~gps" + punch_out[totalList.daily_shipments[setnum].ct_name] + "name " + totalList.daily_shipments[setnum].ct_name);
@@ -1436,7 +1444,7 @@ namespace PULI.Views
                                                     
                                                     //Console.WriteLine("punchList~~~" + punchList[totalList.daily_shipments[setnum].ct_name] + "name " + totalList.daily_shipments[setnum].ct_name);
                                                     //------------------------跳出問卷先拿掉----------------------------
-                                                    
+                                                    /*
                                                     if (isform[totalList.daily_shipments[i].ct_name] == false)
                                                     {
                                                         try
@@ -1456,7 +1464,7 @@ namespace PULI.Views
                                                             DisplayAlert("系統訊息", "Error : deliver_mapview_questionnairelist_null", "ok");
                                                         }
                                                     }
-                                                    
+                                                    */
                                                     //----------------------------------------------------------------------------------
                                                     //trylist2.Add(setnum);
                                                     /*
