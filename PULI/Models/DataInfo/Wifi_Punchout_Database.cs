@@ -123,7 +123,7 @@ namespace PULI.Models.DataInfo
 
         public void DeleteAll()
         {
-            var fooItems = GetAccountAsync2().ToList();
+            var fooItems = GetAccountAsync3().ToList();
 
             foreach (var item in fooItems)
             {

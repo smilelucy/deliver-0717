@@ -183,8 +183,8 @@ namespace PULI.Views
             Messager();
             if(MainPage.AUTH == "14") // 外送員(有打卡功能)
             {
-                Device.StartTimer(TimeSpan.FromSeconds(5), OnTimerTick);
-                Device.StartTimer(TimeSpan.FromSeconds(10), OnTimerTick_for_PunchInfo);
+                Device.StartTimer(TimeSpan.FromSeconds(1), OnTimerTick);
+                Device.StartTimer(TimeSpan.FromSeconds(1), OnTimerTick_for_PunchInfo);
               
                 Console.WriteLine("shipment~~~");
             }
@@ -913,7 +913,7 @@ namespace PULI.Views
                     {
                         d = 0;
                         location.DesiredAccuracy = location_DesiredAccuracy;
-                        position = await location.GetPositionAsync(TimeSpan.FromSeconds(5));
+                        position = await location.GetPositionAsync(TimeSpan.FromSeconds(1));
                         NowLon = position.Longitude;
                         NowLat = position.Latitude;
 
@@ -1250,9 +1250,9 @@ namespace PULI.Views
                                                     dys03.Text = totalList.daily_shipments[i].dys03;
                                                     dys02.Text = totalList.daily_shipments[i].dys02;
                                                     //-------------------Queue--------------------------
-                                                    /*
-                                                    AddPunchInfoToQueue("in", totalList.daily_shipments[i].ct_name, totalList.daily_shipments[i].dys05_type, totalList.daily_shipments[i].ct06_telephone, totalList.daily_shipments[i].sec06,totalList.daily_shipments[i].dys03, totalList.daily_shipments[i].dys02);
-                                                    */
+                                                    
+                                                    AddPunchInfoToQueue("in", totalList.daily_shipments[i].ct_name, totalList.daily_shipments[i].dys05_type, totalList.daily_shipments[i].ct06_telephone, totalList.daily_shipments[i].sec06,totalList.daily_shipments[i].dys03, totalList.daily_shipments[i].dys02, i);
+                                                    
                                                     //----------------------------------
                                                     //Console.WriteLine("name1~~" + setname.Text);
                                                     Clname = totalList.daily_shipments[i].ct_name;
@@ -1276,16 +1276,18 @@ namespace PULI.Views
                                                         Console.WriteLine("time~~~ " + time);
                                                         
                                                          //---------跳出訊息先註解掉-------
-                                                         
+                                                         /*
                                                         formin_1.IsVisible = true; // 跳出簽到案主家成功訊息
-                                                        formin_1.IsEnabled = true;
+                                                        //formin_1.IsEnabled = true;
                                                         formin_2.IsVisible = true; // 跳出案主家相關資訊
-                                                        formin_2.IsEnabled = true;
+                                                        //formin_2.IsEnabled = true;
                                                         //await Task.Delay(10000); // 等待30秒
                                                         await Task.Delay(TimeSpan.FromSeconds(5));
-                                                        Messager2(); // 訊息消失(自動關閉)
-                                                        
-                                                         //--------------------------------
+                                                        //Messager2(); // 訊息消失(自動關閉)
+                                                        formin_1.IsVisible = false;
+                                                        formin_2.IsVisible = false;
+                                                         */
+                                                        //--------------------------------
                                                         punch_in[totalList.daily_shipments[i].ct_name] = true; // 簽到成功
                                                         bool web_res = await web.Save_Punch_In(MainPage.token, ct_s_num, sec_s_num, mlo_s_num, position.Latitude, position.Longitude, time);
                                                         //Console.WriteLine("web_res" + web_res);
@@ -1400,7 +1402,7 @@ namespace PULI.Views
                                         ////}
                                         // //Console.WriteLine("punchin22~~~" + punch_in[totalList.daily_shipments[setnum].ct_name] + "name " + totalList.daily_shipments[setnum].ct_name);
                                         // 符合簽退距離 & 簽到成功 & 尚未簽退過
-                                        if (d > 10 && punch_in[totalList.daily_shipments[i].ct_name] == true && punch_out[totalList.daily_shipments[i].ct_name] == false)
+                                        if (d > 30 && punch_in[totalList.daily_shipments[i].ct_name] == true && punch_out[totalList.daily_shipments[i].ct_name] == false)
                                         {
                                                 
                                             if (CrossConnectivity.Current.IsConnected) // 有連到網路
@@ -1410,7 +1412,7 @@ namespace PULI.Views
                                                 Console.WriteLine("time~~~ " + time);
 
                                                 //------跳出訊息先註解掉---------
-                                                
+                                                /*
                                                setname.Text = "成功簽退" + totalList.daily_shipments[i].ct_name + "的家";
                                                formin_1.IsVisible = true; // 跳出簽退成功訊息
                                                formin_1.IsEnabled = true;
@@ -1418,16 +1420,43 @@ namespace PULI.Views
                                                Form.IsEnabled = true;
                                                //await Task.Delay(10000); // 等待30秒
                                                await Task.Delay(TimeSpan.FromSeconds(5));
-                                               Messager2(); // 簽退成功訊息消失(自動關閉)
-                                                            // 自動簽退
-                                               
-                                                //-----------------------------------
-                                                //--------------Queue--------------------
-                                                /*
-                                                AddPunchInfoToQueue("out", totalList.daily_shipments[i].ct_name, totalList.daily_shipments[i].dys05_type, totalList.daily_shipments[i].ct06_telephone, totalList.daily_shipments[i].sec06, totalList.daily_shipments[i].dys03, totalList.daily_shipments[i].dys02);
+                                                //Messager2(); // 簽退成功訊息消失(自動關閉)
+                                                // 自動簽退
+                                                formin_1.IsVisible = false; // 跳出簽退成功訊息
+                                                formin_1.IsEnabled = false;
+                                                Form.IsVisible = false; // 跳出問卷
+                                                Form.IsEnabled = false;
                                                 */
-                                                //----------------------------------------
-                                                punch_out[totalList.daily_shipments[i].ct_name] = true;  // 簽退成功
+                                        //-----------------------------------
+                                        //--------------Queue--------------------
+                                        
+                                        AddPunchInfoToQueue("out", totalList.daily_shipments[i].ct_name, totalList.daily_shipments[i].dys05_type, totalList.daily_shipments[i].ct06_telephone, totalList.daily_shipments[i].sec06, totalList.daily_shipments[i].dys03, totalList.daily_shipments[i].dys02, i);
+
+                                        //----------------------------------------
+                                        //------------------------跳出問卷先拿掉----------------------------
+                                        /*
+                                        if (isform[totalList.daily_shipments[i].ct_name] == false)
+                                        {
+                                            try
+                                            {
+                                                if (questionnaireslist != null)
+                                                {
+                                                    if (questionnaireslist.Count != 0)
+                                                    {
+                                                        setQues(i);
+                                                        isform[totalList.daily_shipments[i].ct_name] = true; // 紀錄是否跳出問卷
+                                                    }
+
+                                                }
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                DisplayAlert("系統訊息", "Error : deliver_mapview_questionnairelist_null", "ok");
+                                            }
+                                        }
+                                        */
+                                        //----------------------------------------------------------------------------------
+                                        punch_out[totalList.daily_shipments[i].ct_name] = true;  // 簽退成功
                                                                                                  //PunchSavepunchnameToSQLite(totalList.daily_shipments[setnum].ct_name);
                                                                                                  //Console.WriteLine("punchout~~~gps" + punch_out[totalList.daily_shipments[setnum].ct_name] + "name " + totalList.daily_shipments[setnum].ct_name);
                                                                                                  //punch_in[cList[i].ct_name] = false;
@@ -1438,8 +1467,6 @@ namespace PULI.Views
                                                 if (web_res2 == true)
                                                 {
                                                    
-                                                    
-                                                    
                                                     if (!WIFI_name_list_out.Contains(totalList.daily_shipments[i].ct_name))
                                                     {
                                                         Wifi_Punchout_DB.SaveAccountAsync(new Wifi_Punchout// 把簽退成功紀錄到無網路簽退的SQLite
@@ -1451,29 +1478,7 @@ namespace PULI.Views
                                                     }
                                                     
                                                     //Console.WriteLine("punchList~~~" + punchList[totalList.daily_shipments[setnum].ct_name] + "name " + totalList.daily_shipments[setnum].ct_name);
-                                                    //------------------------跳出問卷先拿掉----------------------------
-                                                    /*
-                                                    if (isform[totalList.daily_shipments[i].ct_name] == false)
-                                                    {
-                                                        try
-                                                        {
-                                                            if(questionnaireslist != null)
-                                                            {
-                                                                if(questionnaireslist.Count != 0)
-                                                                {
-                                                                    setQues(i);
-                                                                    isform[totalList.daily_shipments[i].ct_name] = true; // 紀錄是否跳出問卷
-                                                                }
-                                                                    
-                                                            }
-                                                        }
-                                                        catch(Exception ex)
-                                                        {
-                                                            DisplayAlert("系統訊息", "Error : deliver_mapview_questionnairelist_null", "ok");
-                                                        }
-                                                    }
-                                                    */
-                                                    //----------------------------------------------------------------------------------
+                                                    
                                                     //trylist2.Add(setnum);
                                                     /*
                                                     PunchSavesetnumToSQLite(setnum); // 把送餐進度存進SQLite
@@ -2362,7 +2367,7 @@ namespace PULI.Views
 
                         quesStack.Children.Add(frame);
                         //quesStack.Children.Add(more_form);
-                        Messager4();
+                        //Messager4();
 
                     }
                 }
@@ -2385,7 +2390,7 @@ namespace PULI.Views
             return null;
         }
 
-        public void AddPunchInfoToQueue(string _inorout, string _name, string _dys05_type, string _ct06_telephone, string _sec06, string _dys03, string _dys02)
+        public void AddPunchInfoToQueue(string _inorout, string _name, string _dys05_type, string _ct06_telephone, string _sec06, string _dys03, string _dys02, int _num)
         {
             PunchInfoQueue.Enqueue(new PunchInfo
             {
@@ -2395,7 +2400,8 @@ namespace PULI.Views
                 ct06_telephone = _ct06_telephone,
                 sec06 = _sec06,
                 dys03 = _dys03,
-                dys02 = _dys02
+                dys02 = _dys02,
+                num = _num
             });
         }
 
@@ -2567,11 +2573,35 @@ namespace PULI.Views
                                 formin_1.IsEnabled = true;
                                 formin_2.IsVisible = true; // 跳出案主家相關資訊
                                 formin_2.IsEnabled = true;
+                                Form.IsVisible = true;
+                                if (isform[totalList.daily_shipments[punchinfo.num].ct_name] == false)
+                                {
+                                    try
+                                    {
+                                        if (questionnaireslist != null)
+                                        {
+                                            if (questionnaireslist.Count != 0)
+                                            {
+                                                setQues(punchinfo.num);
+                                                isform[totalList.daily_shipments[punchinfo.num].ct_name] = true; // 紀錄是否跳出問卷
+                                            }
+
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        DisplayAlert("系統訊息", "Error : deliver_mapview_questionnairelist_null", "ok");
+                                    }
+                                }
                             }
                             else
                             {
                                 formin_1.IsVisible = true; // 跳出簽到案主家成功訊息
                                 formin_1.IsEnabled = true;
+                                formin_2.IsVisible = false; // 跳出案主家相關資訊
+                                formin_2.IsEnabled = false;
+                                Form.IsVisible = false;
+                                
                             }
                         }
                         else
@@ -2580,6 +2610,7 @@ namespace PULI.Views
                             formin_1.IsEnabled = false;
                             formin_2.IsVisible = false; // 跳出案主家相關資訊
                             formin_2.IsEnabled = false;
+                           
                         }
                     });
                 }
@@ -2595,14 +2626,17 @@ namespace PULI.Views
 
         bool OnTimerTick()
         {
+            // running something on another thread 
             Task.Run(() =>
             {
                 try
                 {
-                    // Run code here
+                    // execute the UI action on the UI thread
                     Device.BeginInvokeOnMainThread(async () =>
                     {
-                        // UI interaction goes here
+                        // Await 運算子可以套用至標示為 async 之方法內的工作。 它會使方法在該時間點停止執行，並等候工作完成。
+                        // 在等候工作時，不會封鎖使用者介面執行緒
+                        // 當工作完成時，方法會在程式碼中的相同位置繼續執行
                         Console.WriteLine("TIMER~~~");
                         await getLocation();
 

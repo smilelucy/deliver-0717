@@ -18,6 +18,8 @@ namespace PULI.Models.DataInfo
         //public string error { get; set; }
         public string dys03 { get; set; }
         public string dys02 { get; set; }
+
+        public int num { get; set; }
         
 
     }
