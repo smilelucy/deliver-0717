@@ -14,7 +14,7 @@ namespace Deliver.Services
 {
     class WebService
     {
-        public static string host = "http://59.120.147.32:8080";
+        public static string host = "http://59.120.147.32:8080/lt_care";
 
         public async Task<LoginInfo> Login(String acc, String pwd, String identity)
         {
@@ -24,7 +24,7 @@ namespace Deliver.Services
             formData.Add(new StringContent(identity), "identity");
 
             HttpClient _client = new HttpClient();
-            var uri = new Uri(string.Format(host + "/lt_care/api/account/login"));
+            var uri = new Uri(string.Format(host + "/api/account/login"));
 
             var response = await _client.PostAsync(uri, formData);
             Console.WriteLine("res~~ " + response.ToString());
@@ -48,7 +48,7 @@ namespace Deliver.Services
             MultipartFormDataContent formData = new MultipartFormDataContent();
             formData.Add(new StringContent("1"), "type");
             //_client.DefaultRequestHeaders.Add("AUTHORIZATION", "Token " + token);
-            var uri = new Uri(string.Format(host + "/lt_care/api/dp/get_daily_shipment"));
+            var uri = new Uri(string.Format(host + "/api/dp/get_daily_shipment"));
             //Console.WriteLine("heeeeeeeder : " + _client.DefaultRequestHeaders);
             var response = await _client.PostAsync(uri, formData);
             //Console.WriteLine("SSS~~ " + response.ToString());
@@ -74,7 +74,7 @@ namespace Deliver.Services
             MultipartFormDataContent formData = new MultipartFormDataContent();
             formData.Add(new StringContent("2"), "type");
             //_client.DefaultRequestHeaders.Add("AUTHORIZATION", "Token " + token);
-            var uri = new Uri(string.Format(host + "/lt_care/api/dp/get_daily_shipment"));
+            var uri = new Uri(string.Format(host + "/api/dp/get_daily_shipment"));
             //Console.WriteLine("heeeeeeeder : " + _client.DefaultRequestHeaders);
             var response = await _client.PostAsync(uri, formData);
             if (response.IsSuccessStatusCode)
@@ -96,7 +96,7 @@ namespace Deliver.Services
             MultipartFormDataContent formData = new MultipartFormDataContent();
             formData.Add(new StringContent("1"), "type");
             //_client.DefaultRequestHeaders.Add("AUTHORIZATION", "Token " + token);
-            var uri = new Uri(string.Format(host + "/lt_care/api/dp/get_daily_shipment"));
+            var uri = new Uri(string.Format(host + "/api/dp/get_daily_shipment"));
             //Console.WriteLine("heeeeeeeder : " + _client.DefaultRequestHeaders);
             var response = await _client.PostAsync(uri, formData);
             if (response.IsSuccessStatusCode)
@@ -117,7 +117,7 @@ namespace Deliver.Services
             MultipartFormDataContent formData = new MultipartFormDataContent();
             formData.Add(new StringContent("1"), "type");
             //_client.DefaultRequestHeaders.Add("AUTHORIZATION", "Token " + token);
-            var uri = new Uri(string.Format(host + "/lt_care/api/dp/get_daily_shipment"));
+            var uri = new Uri(string.Format(host + "/api/dp/get_daily_shipment"));
             //Console.WriteLine("heeeeeeeder : " + _client.DefaultRequestHeaders);
             var response = await _client.PostAsync(uri, formData);
             if (response.IsSuccessStatusCode)
@@ -138,7 +138,7 @@ namespace Deliver.Services
             MultipartFormDataContent formData = new MultipartFormDataContent();
             formData.Add(new StringContent("1"), "type");
             //_client.DefaultRequestHeaders.Add("AUTHORIZATION", "Token " + token);
-            var uri = new Uri(string.Format(host + "/lt_care/api/dp/get_daily_shipment"));
+            var uri = new Uri(string.Format(host + "/api/dp/get_daily_shipment"));
             //Console.WriteLine("heeeeeeeder : " + _client.DefaultRequestHeaders);
             var response = await _client.PostAsync(uri, formData);
             if (response.IsSuccessStatusCode)
@@ -166,7 +166,7 @@ namespace Deliver.Services
             MultipartFormDataContent formData = new MultipartFormDataContent();
             //formData.Add(new StringContent("1"), "type");
             //_client.DefaultRequestHeaders.Add("AUTHORIZATION", "Token " + token);
-            var uri = new Uri(string.Format(host + "/lt_care/api/dp/get_client"));
+            var uri = new Uri(string.Format(host + "/api/dp/get_client"));
             //Console.WriteLine("heeeeeeeder : " + _client.DefaultRequestHeaders);
             var response = await _client.PostAsync(uri, null);
             if (response.IsSuccessStatusCode)
@@ -186,7 +186,7 @@ namespace Deliver.Services
             MultipartFormDataContent formData = new MultipartFormDataContent();
             //formData.Add(new StringContent("1"), "type");
             //_client.DefaultRequestHeaders.Add("AUTHORIZATION", "Token " + token);
-            var uri = new Uri(string.Format(host + "/lt_care/api/dp/get_client"));
+            var uri = new Uri(string.Format(host + "/api/dp/get_client"));
             //Console.WriteLine("heeeeeeeder : " + _client.DefaultRequestHeaders);
             var response = await _client.PostAsync(uri, null);
             var content = await response.Content.ReadAsStringAsync();
@@ -211,7 +211,7 @@ namespace Deliver.Services
             MultipartFormDataContent formData = new MultipartFormDataContent();
             //formData.Add(new StringContent("1"), "type");
             //_client.DefaultRequestHeaders.Add("AUTHORIZATION", "Token " + token);
-            var uri = new Uri(string.Format(host + "/lt_care/api/sw/get_all_clients"));
+            var uri = new Uri(string.Format(host + "/api/sw/get_all_clients"));
             //Console.WriteLine("heeeeeeeder : " + _client.DefaultRequestHeaders);
             var response = await _client.PostAsync(uri, null);
             if (response.IsSuccessStatusCode)
@@ -237,7 +237,7 @@ namespace Deliver.Services
             MultipartFormDataContent formData = new MultipartFormDataContent();
             //formData.Add(new StringContent("1"), "type");
             //_client.DefaultRequestHeaders.Add("AUTHORIZATION", "Token " + token);
-            var uri = new Uri(string.Format(host + "/lt_care/api/sw/get_all_clients"));
+            var uri = new Uri(string.Format(host + "/api/sw/get_all_clients"));
             //Console.WriteLine("heeeeeeeder : " + _client.DefaultRequestHeaders);
             var response = await _client.PostAsync(uri, null);
             if (response.IsSuccessStatusCode)
@@ -281,7 +281,7 @@ namespace Deliver.Services
                 //Console.WriteLine("NAME>>>> " + ct_s_num);
                 var request = new HttpRequestMessage()
                 {
-                    RequestUri = new Uri(host + "/lt_care/api/dp/save_punch"),
+                    RequestUri = new Uri(host + "/api/dp/save_punch"),
                     Method = HttpMethod.Post,
                     Content = formData
                 };
@@ -341,7 +341,7 @@ namespace Deliver.Services
 
                 var request = new HttpRequestMessage()
                 {
-                    RequestUri = new Uri(host + "/lt_care/api/dp/save_punch"),
+                    RequestUri = new Uri(host + "/api/dp/save_punch"),
                     Method = HttpMethod.Post,
                     Content = formData
                 };
@@ -394,7 +394,7 @@ namespace Deliver.Services
 
                 var request = new HttpRequestMessage()
                 {
-                    RequestUri = new Uri(host + "/lt_care/api/dp/save_beacon"),
+                    RequestUri = new Uri(host + "/api/dp/save_beacon"),
                     Method = HttpMethod.Post,
                     Content = formData
                 };
@@ -436,7 +436,7 @@ namespace Deliver.Services
             HttpClient _client = new HttpClient();
             _client.DefaultRequestHeaders.Add("AUTHORIZATION", "Token " + token);
 
-            var uri = new Uri(string.Format(host + "/lt_care/api/dp/get_work_q"));
+            var uri = new Uri(string.Format(host + "/api/dp/get_work_q"));
             var response = await _client.PostAsync(uri, null);
             //var content2 = await response.Content.ReadAsStringAsync();
             Console.WriteLine("RES~~ " + response.ToString());
@@ -463,7 +463,7 @@ namespace Deliver.Services
             HttpClient _client = new HttpClient();
             _client.DefaultRequestHeaders.Add("AUTHORIZATION", "Token " + token);
 
-            var uri = new Uri(string.Format(host + "/lt_care/api/dp/get_work_q"));
+            var uri = new Uri(string.Format(host + "/api/dp/get_work_q"));
             var response = await _client.PostAsync(uri, null);
             //var content2 = await response.Content.ReadAsStringAsync();
             //Console.WriteLine("RES" + response);
@@ -491,7 +491,7 @@ namespace Deliver.Services
                 HttpContent content = new StringContent(jsonString);
                 Console.WriteLine("content~" + content);
                 //string url = "http://59.120.147.32:8080/lt_care/api/dp/save_work_q";
-                var url = new Uri(string.Format(host + "/lt_care/api/dp/save_work_q"));
+                var url = new Uri(string.Format(host + "/api/dp/save_work_q"));
                 content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                
                 var response = await client.PostAsync(url, content);
@@ -544,7 +544,7 @@ namespace Deliver.Services
                 formData.Add(img_sc, "WorkLogPicture", "WorkLogPicture");
                 var request = new HttpRequestMessage()
                 {
-                    RequestUri = new Uri(host + "/lt_care/api/account/save_worklog"),
+                    RequestUri = new Uri(host + "/api/account/save_worklog"),
                     Method = HttpMethod.Post,
                     Content = formData
                 };
@@ -605,7 +605,7 @@ namespace Deliver.Services
 
                 var request = new HttpRequestMessage()
                 {
-                    RequestUri = new Uri(host + "/lt_care/api/sw/save_clients"),
+                    RequestUri = new Uri(host + "/api/sw/save_clients"),
                     Method = HttpMethod.Post,
                     Content = formData
                 };
@@ -666,7 +666,7 @@ namespace Deliver.Services
 
                 var request = new HttpRequestMessage()
                 {
-                    RequestUri = new Uri(host + "/lt_care/api/sw/upd_clients"),
+                    RequestUri = new Uri(host + "/api/sw/upd_clients"),
                     Method = HttpMethod.Post,
                     Content = formData
                 };
@@ -721,7 +721,7 @@ namespace Deliver.Services
                 Console.WriteLine("xxxxxxxxxxxxxxxx緯度 : " + lot);
                 var request = new HttpRequestMessage()
                 {
-                    RequestUri = new Uri(host + "/lt_care/api/account/save_gps"),
+                    RequestUri = new Uri(host + "/api/account/save_gps"),
                     Method = HttpMethod.Post,
                     Content = formData
                 };
