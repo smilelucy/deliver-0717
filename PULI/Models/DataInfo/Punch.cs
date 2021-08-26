@@ -23,6 +23,7 @@ namespace PULI.Models.DataInfo
         public string sec_s_num { get; set; }
         public string mlo_s_num { get; set; }
         public string bn_s_num { get; set; }
+        public string reh_s_num { get; set; }
         public double latitude { get; set; }
         public double longitude { get; set; }
 

@@ -96,6 +96,9 @@ namespace PULI.Models.DataInfo
         [JsonProperty("ct_s_num")]
         public string ct_s_num { set; get; }// 
 
+        [JsonProperty("reh_s_num")]
+        public string reh_s_num { set; get; }// 
+
         //[JsonProperty("ShipmentOrder")]
         //public string ShipmentOrder { set; get; }
 

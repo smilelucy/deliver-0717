@@ -254,7 +254,7 @@ namespace Deliver.Services
             }
 
         }
-        public async Task<bool> Save_Punch_In(string token, string ct_s_num, string sec_s_num, string mlo_s_num, double lat, double lot, string time)
+        public async Task<bool> Save_Punch_In(string token, string ct_s_num, string sec_s_num, string mlo_s_num, string reh_s_num, double lat, double lot, string time)
         {
             try
             {
@@ -269,7 +269,7 @@ namespace Deliver.Services
                 //Console.WriteLine("SEC_S_NUM>>>> " + sec_s_num);
                 formData.Add(new StringContent(mlo_s_num), "mlo_s_num");
                 //Console.WriteLine("MLO>>>> " + mlo_s_num);
-                
+                formData.Add(new StringContent(reh_s_num), "reh_s_num");
                 formData.Add(new StringContent(time), "phl01");
                 formData.Add(new StringContent("1"), "phl02");
                 formData.Add(new StringContent(lot.ToString()), "phl03");
@@ -319,7 +319,7 @@ namespace Deliver.Services
             }
             
         }
-        public async Task<bool> Save_Punch_Out(string token, string ct_s_num, string sec_s_num, string mlo_s_num, double lat, double lot, string time)
+        public async Task<bool> Save_Punch_Out(string token, string ct_s_num, string sec_s_num, string reh_s_num, string mlo_s_num, double lat, double lot, string time)
         {
             try
             {
@@ -331,7 +331,7 @@ namespace Deliver.Services
                 formData.Add(new StringContent(ct_s_num), "ct_s_num");
                 formData.Add(new StringContent(sec_s_num), "sec_s_num");
                 formData.Add(new StringContent(mlo_s_num), "mlo_s_num");
-               
+                formData.Add(new StringContent(reh_s_num), "reh_s_num");
                 formData.Add(new StringContent(time), "phl01");
                 formData.Add(new StringContent("2"), "phl02");
                 formData.Add(new StringContent(lot.ToString()), "phl03");

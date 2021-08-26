@@ -175,7 +175,7 @@ namespace PULI
                             }
                             else
                             {
-                                BeaconScan scan = new BeaconScan();
+                                //BeaconScan scan = new BeaconScan();
                                 //if (BeaconScan.BleStatus == 0)
                                 //{
                                 //    //await DisplayAlert("提示", "藍芽未開啟", "ok");
@@ -554,6 +554,14 @@ namespace PULI
                             if (MainPage._time == "早上")
                             {
                                 totalList = await web.Get_Daily_Shipment(MainPage.token);
+                                if(totalList.daily_shipments != null)
+                                {
+                                    Console.WriteLine("count~~~ " + totalList.daily_shipments.Count());
+                                }
+                                else
+                                {
+                                    Console.WriteLine("daily_null~~~ ");
+                                }
                             }
                             else
                             {

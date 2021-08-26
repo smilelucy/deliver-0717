@@ -68,6 +68,8 @@ namespace PULI.Views
                 catch (Exception ex)
                 {
                     DisplayAlert("系統訊息", "Error : deliver_homeview2_totalList_daily_shipment_SET_FORM", "ok");
+                    Console.WriteLine("exception1~~ " + ex.ToString());
+                    //Console.WriteLine("count~~ " + MainPage.totalList.daily_shipments.Count());
                 }
 
                 // run總表
@@ -82,6 +84,7 @@ namespace PULI.Views
                 catch (Exception ex)
                 {
                     DisplayAlert("系統訊息", "Error : deliver_homeview2_totalList_daily_shipment_SET_SHIPMENT_FORM", "ok");
+                    Console.WriteLine("exception2~~ " + ex.ToString());
                 }
 
             }

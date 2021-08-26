@@ -60,6 +60,7 @@ namespace PULI.Views
         public string phone;
         public string cellphone;
         public string gender;
+        private int mapcount = 0;
         public static int n = 0;
         public static int m = 0;
         private static int daily_shipment_client_num;
@@ -77,6 +78,7 @@ namespace PULI.Views
         string ct_s_num = "";
         string sec_s_num = "";
         string mlo_s_num = "";
+        private string reh_s_num = "";
         string setbeacon_s_num = "";
         string bn_s_num = "";
         public static string name;
@@ -185,6 +187,7 @@ namespace PULI.Views
             {
                 Device.StartTimer(TimeSpan.FromSeconds(1), OnTimerTick);
                 Device.StartTimer(TimeSpan.FromSeconds(1), OnTimerTick_for_PunchInfo);
+                //Device.StartTimer(TimeSpan.FromSeconds(10), OnTimerTick_for_movemap);
               
                 Console.WriteLine("shipment~~~");
             }
@@ -912,6 +915,7 @@ namespace PULI.Views
                     try
                     {
                         d = 0;
+                        mapcount = mapcount + 1;
                         location.DesiredAccuracy = location_DesiredAccuracy;
                         position = await location.GetPositionAsync(TimeSpan.FromSeconds(1));
                         NowLon = position.Longitude;
@@ -919,20 +923,16 @@ namespace PULI.Views
 
                         Console.WriteLine("nowlat" + position.Latitude);
                         Console.WriteLine("nowlot" + position.Longitude);
-                        //Console.WriteLine("NoewLon~~~" + NowLon);
-                        //Console.WriteLine("NoewLat~~~" + NowLat);
-                        CameraPosition cameraPosition = new CameraPosition(new Xamarin.Forms.GoogleMaps.Position(position.Latitude, position.Longitude), map_Zoom);
-                        await MyMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition)); // 地圖上抓取目前位置
-                        await DeliverMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition));
-                        //latitude.Text = "Lat" + position.Latitude.ToString();
-                        // //Console.WriteLine("@@LAT@@ " + latitude.Text);
-                        //longitude.Text = "Lon" + position.Longitude.ToString();
-                        ////Console.WriteLine("@@LON@@ " + longitude.Text);
-                        //Console.WriteLine("punchdatabase~~~" + PunchDatabase.GetAccountAsync2().Count());
-                        //Console.WriteLine("punchdatabase22~~~" + PunchDatabase2.GetAccountAsync2().Count());
-                        //isSetView = true;
-                        ////Console.WriteLine("CC" + cList.Count);
-                        ////Console.WriteLine("CC2" + cList2.Count);
+                        if(mapcount == 0 || mapcount % 20 == 0)
+                        {
+                            //Console.WriteLine("mapcountin~~~" + mapcount);
+                            CameraPosition cameraPosition = new CameraPosition(new Xamarin.Forms.GoogleMaps.Position(position.Latitude, position.Longitude), map_Zoom);
+                            await MyMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition)); // 地圖上抓取目前位置
+                            await DeliverMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition));
+                        }
+                        
+
+
                         // for無網路環境(不會及時跳出打卡成功訊息)
                         // 偵測到網路
                         // 先判斷SQLite有無資料
@@ -984,7 +984,7 @@ namespace PULI.Views
                                                 if (!name_list_in.Contains(TempAnsList.name)) // 判斷還沒處理過這筆無網路打卡
                                                 {
                                                     // 自動簽到
-                                                    bool web_res2 = await web.Save_Punch_In(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time);
+                                                    bool web_res2 = await web.Save_Punch_In(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.reh_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time);
                                                     Console.WriteLine("web_resin~~~ " + web_res2);
                                                     if (web_res2 == true)
                                                     {
@@ -1057,7 +1057,7 @@ namespace PULI.Views
                                                 if (!name_list_out.Contains(TempAnsList.name)) // 還沒處理過這筆案主的簽退
                                                 {
                                                     // 自動簽退
-                                                    bool web_res2 = await web.Save_Punch_Out(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time);
+                                                    bool web_res2 = await web.Save_Punch_Out(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.reh_s_num, TempAnsList.mlo_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time);
                                                     Console.WriteLine("web_res_out~~~ " + web_res2);
                                                     if (web_res2 == true)
                                                     {
@@ -1264,7 +1264,7 @@ namespace PULI.Views
                                                     sec_s_num = totalList.daily_shipments[i].sec_s_num;
                                                    
                                                     mlo_s_num = totalList.daily_shipments[i].mlo_s_num;  // 訂單s_num(
-
+                                                    reh_s_num = totalList.daily_shipments[i].reh_s_num;
                                                     //bn_s_num = cList2[i].bn_s_num; //  打卡鄰近的beancon_s_num(beacon id)
                                                     bn_s_num = "0";
                                                     
@@ -1289,7 +1289,7 @@ namespace PULI.Views
                                                          */
                                                         //--------------------------------
                                                         punch_in[totalList.daily_shipments[i].ct_name] = true; // 簽到成功
-                                                        bool web_res = await web.Save_Punch_In(MainPage.token, ct_s_num, sec_s_num, mlo_s_num, position.Latitude, position.Longitude, time);
+                                                        bool web_res = await web.Save_Punch_In(MainPage.token, ct_s_num, sec_s_num, mlo_s_num, reh_s_num, position.Latitude, position.Longitude, time);
                                                         //Console.WriteLine("web_res" + web_res);
                                                         if (web_res == true)
                                                         {
@@ -1333,7 +1333,7 @@ namespace PULI.Views
                                                         DateTime myDate = DateTime.Now;
                                                         string time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
                                                         Console.WriteLine("time~~~ " + time);
-                                                        PunchSaveToSQLite(MainPage.token, Clname, inorout, ct_s_num, sec_s_num, mlo_s_num, position.Latitude, position.Longitude, time, DateTime.Now.ToShortTimeString());
+                                                        PunchSaveToSQLite(MainPage.token, Clname, inorout, ct_s_num, sec_s_num, mlo_s_num, reh_s_num, position.Latitude, position.Longitude, time, DateTime.Now.ToShortTimeString());
                                                         punch_in[totalList.daily_shipments[i].ct_name] = true; // 簽到成功
                                                         PunchTmp.SaveAccountAsync(new PunchTmp // 存進無網路簽到成功的SQLite
                                                         {
@@ -1462,7 +1462,7 @@ namespace PULI.Views
                                                                                                  //punch_in[cList[i].ct_name] = false;
                                                                                                  //which = 0;
                                                 punchList[totalList.daily_shipments[i].ct_name] = true; // 打卡完成設為true(簽到+簽退成功)
-                                                bool web_res2 = await web.Save_Punch_Out(MainPage.token, ct_s_num, sec_s_num, mlo_s_num, position.Latitude, position.Longitude, time);
+                                                bool web_res2 = await web.Save_Punch_Out(MainPage.token, ct_s_num, sec_s_num, reh_s_num, mlo_s_num, position.Latitude, position.Longitude, time);
                                                 //Console.WriteLine("web_res2" + web_res2);
                                                 if (web_res2 == true)
                                                 {
@@ -1568,7 +1568,7 @@ namespace PULI.Views
                                                 DateTime myDate = DateTime.Now;
                                                 string time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
                                                 Console.WriteLine("time~~~ " + time);
-                                                PunchSaveToSQLite(MainPage.token, Clname, inorout, ct_s_num, sec_s_num, mlo_s_num, position.Latitude, position.Longitude, time, DateTime.Now.ToShortTimeString());
+                                                PunchSaveToSQLite(MainPage.token, Clname, inorout, ct_s_num, sec_s_num, mlo_s_num, reh_s_num, position.Latitude, position.Longitude, time, DateTime.Now.ToShortTimeString());
                                                 
                                                 punch_out[totalList.daily_shipments[i].ct_name] = true;  // 謙退成功
                                                 punchList[totalList.daily_shipments[i].ct_name] = true; // 打卡完成設為true
@@ -2429,7 +2429,7 @@ namespace PULI.Views
             });
         }
 
-        public void PunchSaveToSQLite(string _token, string _name, string _inorout, string _ct_s_num, string _sec_s_num, string _mlo_s_num, double _lat, double _lot, string _time, string _timeforpost)
+        public void PunchSaveToSQLite(string _token, string _name, string _inorout, string _ct_s_num, string _sec_s_num, string _reh_s_num, string _mlo_s_num, double _lat, double _lot, string _time, string _timeforpost)
         {
             // MainPage.token, ct_s_num, sec_s_num, mlo_s_num, bn_s_num, position.Latitude, position.Longitude
             //Console.WriteLine("punchsave~~~");
@@ -2441,6 +2441,7 @@ namespace PULI.Views
                 ct_s_num = _ct_s_num,
                 sec_s_num = _sec_s_num,
                 mlo_s_num = _mlo_s_num,
+                reh_s_num = _reh_s_num,
                 latitude = _lat,
                 longitude = _lot,
                 time = _time,
@@ -2574,6 +2575,7 @@ namespace PULI.Views
                                 formin_2.IsVisible = true; // 跳出案主家相關資訊
                                 formin_2.IsEnabled = true;
                                 Form.IsVisible = true;
+                                Form.IsEnabled = true;
                                 if (isform[totalList.daily_shipments[punchinfo.num].ct_name] == false)
                                 {
                                     try
@@ -2601,7 +2603,7 @@ namespace PULI.Views
                                 formin_2.IsVisible = false; // 跳出案主家相關資訊
                                 formin_2.IsEnabled = false;
                                 Form.IsVisible = false;
-                                
+                                Form.IsEnabled = false;
                             }
                         }
                         else
@@ -2676,6 +2678,8 @@ namespace PULI.Views
             });
             return true;
         }
+
+        
 
         //private double Distance(double lat1, double lon1, double lat2, double lon2, char unit)
         //{
