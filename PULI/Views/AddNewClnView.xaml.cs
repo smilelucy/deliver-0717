@@ -24,30 +24,30 @@ namespace PULI.Views
 
         ParamInfo param = new ParamInfo();
         WebService web = new WebService();
-        public static List<AllClientInfo> allclientList2 = new List<AllClientInfo>(); // for auth = 6 社工
-        public static List<AllClientInfo2> allclientList3 = new List<AllClientInfo2>();
+        private List<AllClientInfo> allclientList2 = new List<AllClientInfo>(); // for auth = 6 社工
+        private List<AllClientInfo2> allclientList3 = new List<AllClientInfo2>();
         IGeolocator location;
         Plugin.Geolocator.Abstractions.Position position;
         int location_DesiredAccuracy = 20;
-        bool is_user_name = true, is_user_phone = true;
+        
         string[] genderArray = new string[] { "男", "女" };
         int Age;
         //string _usrName = "", _usrPhone = "", _usrAge = "", _usrGender = "";
         bool isPrivacy = false;
-        public static double _nowLon;
-        public static double _nowLat;
-        public static string _usrBirthday;
-        string ct01 = "";
-        string ct02 = "";
-        string ct03 = "";
-        string ct04 = "";
-        string ct05 = "";
-        string ct06_homephone = "";
-        string ct06_telephone = "";
-        double ct16_actual;
-        double ct17_actual;
-        public static string gender;
-        public static StreamContent img_sc;
+        private double _nowLon;
+        private double _nowLat;
+        private string _usrBirthday;
+        private string ct01 = "";
+        private string ct02 = "";
+        private string ct03 = "";
+        private string ct04 = "";
+        private string ct05 = "";
+        private string ct06_homephone = "";
+        private string ct06_telephone = "";
+        private double ct16_actual;
+        private double ct17_actual;
+        private string gender;
+        private StreamContent img_sc;
         public AddNewClnView()
         {
             InitializeComponent();

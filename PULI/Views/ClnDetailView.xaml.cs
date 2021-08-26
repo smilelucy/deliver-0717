@@ -20,25 +20,19 @@ namespace PULI.Views
         WebService web = new WebService();
 
         AllClientInfo _clnList = null;
-        //string _usrNamea = "", _usrNameb = "", _usrCard = "", _usrGender = "", _usrPhone = "", _usrBirthday = "";
-        //double _usrLat, _usrLon;
-        string _s_num = "";
-        string s_num = "";
-        string ct01 = "";
-        string ct02 = "";
-        string ct03 = "";
-        string ct04 = "";
-        string ct05 = "";
-        string ct06_homephone = "";
-        string ct06_telephone = "";
-        string bday = "";
-        string bday2 = "";
-        public static string _usrBirthday;
-        DateTimeOffset dtOffset;
-        DateTime myDate;
-        DateTime dt;
-        DateTime NewDate;
-        string format = "yyyy-MM-dd";
+        
+        private string _s_num = "";
+        private string s_num = "";
+        private string ct01 = "";
+        private string ct02 = "";
+        private string ct03 = "";
+        private string ct04 = "";
+        private string ct05 = "";
+        private string ct06_homephone = "";
+        private string ct06_telephone = "";
+        private string bday = "";
+       
+    
         public ClnDetailView(AllClientInfo clnList)
         {
             InitializeComponent();

@@ -15,26 +15,22 @@ namespace PULI.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ActivityView : ContentPage
     {
-        public static TotalList totalList = new TotalList();
-        public static stopname stopList = new stopname();
-        public static List<string> dys08_list = new List<string>();
-        public static List<string> ct_name_list = new List<string>();
-        public static List<string> dys02_list = new List<string>();
-        public static List<string> dys03_list = new List<string>();
-        public static List<string> dys04_list = new List<string>();
-        public static List<string> dys05_type_list = new List<string>();
-        public static List<string> ct06_telephone_list = new List<string>();
-        public static List<string> dys13_list = new List<string>();
-        public static List<string> ct_address_list = new List<string>();
-        public static List<string> ct_mp06_list = new List<string>();
-        public static List<string> ct_mp04_list = new List<string>(); // 代餐是否送達
-        public static List<string> stop_list = new List<string>();
-        public static List<string> restore_list = new List<string>();
-        //public static List<string> ct_mp06_list = new List<string>();
-        public static List<string> num_sort_list = new List<string>();
-        public static restorename restoreList = new restorename();
+        private TotalList totalList = new TotalList();
+        private stopname stopList = new stopname();
+        private List<string> dys08_list = new List<string>();
+        private List<string> ct_name_list = new List<string>();
+        private List<string> dys02_list = new List<string>();
+        private List<string> dys03_list = new List<string>();
+        private List<string> dys04_list = new List<string>();
+        private List<string> dys05_type_list = new List<string>();
+        private List<string> ct06_telephone_list = new List<string>();
+        private List<string> dys13_list = new List<string>();
+        private List<string> ct_address_list = new List<string>();
+        private List<string> ct_mp06_list = new List<string>();
+        private List<string> ct_mp04_list = new List<string>(); // 代餐是否送達
+        private restorename restoreList = new restorename();
         WebService web = new WebService();
-        public static bool cansee;
+        
 
         public ActivityView()
         {

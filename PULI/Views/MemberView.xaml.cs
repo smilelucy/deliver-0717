@@ -124,6 +124,8 @@ namespace PULI.Views
                     MapView.Wifi_Punchin_DB.DeleteAll();
                     MapView.name_list_in.Clear();
                     MapView.name_list_out.Clear();
+                    MapView.WIFI_name_list_in.Clear();
+                    MapView.WIFI_name_list_out.Clear();
                     MainPage.dateDatabase.DeleteAll();
                     TestView.ChooseDB.DeleteAll();
                     TestView.ResetDB.DeleteAll();

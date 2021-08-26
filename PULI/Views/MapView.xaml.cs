@@ -29,72 +29,37 @@ namespace PULI.Views
         Plugin.Geolocator.Abstractions.Position position;
         bool isSetView = false, isAlert = false;
         int location_DesiredAccuracy = 20, map_Zoom = 14;
-
-        //IEnumerable<ClientInfo> clientList = null;
-        //IEnumerable<AllInfo> AllInfoList = null;
-        //public static List<ClientInfo> cList = new List<ClientInfo>();
-        //public static List<ClientInfo> cList2 = new List<ClientInfo>();
-        public static List<AllInfo> ClientAllList = new List<AllInfo>();
-        public static List<AllInfo> DailyshipmentAllList = new List<AllInfo>();
-        //public static List<daily_shipment> totalList2 = new List<daily_shipment>();
         public static TotalList totalList = new TotalList();
-        public static TotalList totalListforhelp = new TotalList();
-        public static TotalList totalList2 = new TotalList();
-        // public static daily_shipment totalListDone= new daily_shipment();
-        public static int[] totalListTmp;
-        public static int[] trylist;
+
         // public static daily_shipment shipList = new daily_shipment();
         public static List<AllClientInfo> allclientList = new List<AllClientInfo>(); // for auth = 6 社工
-        public static List<AllClientInfo> help_client_list = new List<AllClientInfo>(); // for auth = 6 社工
         public static List<questionnaire> questionnaireslist = new List<questionnaire>();
 
         WebService web = new WebService();
         ParamInfo param = new ParamInfo();
-        public static double lat = 0;
-        public static double lot = 0;
-        public string home;
-        public string Address;
-        public string gps;
-        public string gps2;
-        public string bday;
-        public string phone;
-        public string cellphone;
-        public string gender;
+        private double lat = 0;
+        private double lot = 0;
+        private string home;
+        
+        private string gps;
+        private string gps2;
+        private string bday;
+        private string phone;
+        private string cellphone;
+        private string gender;
         private int mapcount = 0;
-        public static int n = 0;
-        public static int m = 0;
-        private static int daily_shipment_client_num;
-        //bool punch_in = false;
-        public static string setName = "";
-        public static string setBirthday = "";
-        public static string setAddress = "";
-        public static string setMealName = "";
-        public static string setMobilePhone = "";
-        public static string setContact = "";
-        public static string setOldLon = "";
-        public static string setOldLat = "";
-        public static string set_s_num = "";
-        public static string set_beacon_s_num = "";
         string ct_s_num = "";
         string sec_s_num = "";
         string mlo_s_num = "";
         private string reh_s_num = "";
-        string setbeacon_s_num = "";
-        string bn_s_num = "";
-        public static string name;
-        // Dictionary<string, bool> yesnoList2 = new Dictionary<string, bool>();
-        public static string punchinmsg;
-        public static string punchoutmsg;
-        public static List<checkInfo> checkList2 = new List<checkInfo>();
-        public static List<TempAccount> checkList3 = new List<TempAccount>();
-        Entry entny = new Entry();
-        public string Clname;
-        public static int which;
-        public string NAME;
-        public static int FINAL;
+        private string bn_s_num = "";
+        private string name;
+        private List<checkInfo> checkList2 = new List<checkInfo>();
+        private string Clname;
+        private int which;
+        private int FINAL;
         //public static bool isform = false;
         //static string[] punchList;
-        public static string[] sortList;
         Dictionary<string, bool> punchList = new Dictionary<string, bool>(); // 判斷簽到+簽退都成功的
         Dictionary<string, bool> punch_in = new Dictionary<string, bool>(); // 判斷簽到成功的
        // Dictionary<string, bool> tmp_punch_in = new Dictionary<string, bool>(); // 
@@ -114,7 +79,7 @@ namespace PULI.Views
         public static PunchYesOrNo PunchYN; // 紀錄是否進入判斷打卡(無論打卡成功與否)
        // public static string entrytxt;
         //public static int number;
-        public static bool isSet = false;
+        private bool isSet = false;
         //public static int TmpID;
         //public static string TmpNum;
         //Dictionary<string, int> Temp = new Dictionary<string, int>();
@@ -127,12 +92,11 @@ namespace PULI.Views
         private double dx;
         private double dy;
         private double d;
-        public static int num = 0;
-        public static int setnum;
+        private int setnum;
         public static double NowLon;
         public static double NowLat;
-        public static string inorout; // 判斷SQLite為簽到還是簽退
-        public static string gendertxt; // for社工地圖?!
+        private string inorout; // 判斷SQLite為簽到還是簽退
+        private string gendertxt; // for社工地圖?!
         public static List<string> name_list_in = new List<string>(); // 紀錄處理無網路簽到成功
         public static List<string> WIFI_name_list_in = new List<string>(); // 紀錄處理有網路簽到成功
         //public static List<TmpPunchList> name_list_in2 = new List<TmpPunchList>();
@@ -142,10 +106,22 @@ namespace PULI.Views
         //public static List<TmpPunchList> name_list_out2 = new List<TmpPunchList>();
         //public static List<int> trylist2;
         //public static bool TmpPunch;
-        public string btnGPS;
-        public static int total_need_to_serve;
-        public static List<string> total_reserve_name = new List<string>();
-        public static bool DeliverOver = false; // for判斷是否顯示送餐完畢
+        private string btnGPS;
+        //public static List<string> total_reserve_name = new List<string>();
+        //public static bool DeliverOver = false; // for判斷是否顯示送餐完畢
+        private Label label_name = new Label();
+        private Label label_wqh = new Label();
+        private Label label_qh = new Label();
+        private StackLayout stack = new StackLayout();
+        private Label label_que_name = new Label();
+        private StackLayout stack_ques = new StackLayout();
+        private checkInfo check3 = new checkInfo();
+        private CheckBox check_box = new CheckBox();
+        private Label label_check = new Label();
+        private StackLayout stack_check = new StackLayout();
+        private StackLayout final_stack = new StackLayout();
+        private Frame frame = new Frame();
+        
 
         public MapView()
         {
@@ -1907,23 +1883,23 @@ namespace PULI.Views
             //    Children = { }
             //};
 
-            var label_name = new Label
+            label_name = new Label
             {
                 Text = questionList.ClientName,
                 TextColor = Color.DarkBlue,
                 FontSize = 20
             };
 
-            var label_wqh = new Label
+            label_wqh = new Label
             {
                 Text = questionList.wqh_s_num
             };
-            var label_qh = new Label
+            label_qh = new Label
             {
                 Text = questionList.qh_s_num
             };
 
-            var stack = new StackLayout
+            stack = new StackLayout
             {
                 Orientation = StackOrientation.Horizontal,
                 
@@ -1938,14 +1914,14 @@ namespace PULI.Views
                 {
                     if (i.qb02 == "1")
                     {
-                        var label_que_name = new Label // 問題題號+題目
+                        label_que_name = new Label // 問題題號+題目
                         {
                             Text = i.qb_order + " " + i.qb01,
                             FontSize = 20,
                             TextColor = Color.Black
                         };
 
-                        var stack_ques = new StackLayout
+                        stack_ques = new StackLayout
                         {
                             Orientation = StackOrientation.Horizontal
                         };
@@ -1988,7 +1964,7 @@ namespace PULI.Views
                                 //////Console.WriteLine("qborder~~~ " + i.qb_order);
                                 //////Console.WriteLine("why~~ " + TmpAdd_elseList[questionList.wqh_s_num + i.qb_order]);
                                 checkList2.RemoveAll(x => x.wqh_s_num == questionList.wqh_s_num && x.qb_order == i.qb_order);
-                                var check3 = new checkInfo
+                                check3 = new checkInfo
                                 {
                                     wqh_s_num = questionList.wqh_s_num, // 問卷編號
                                     qh_s_num = questionList.qh_s_num, // 工作問卷編號
@@ -2049,7 +2025,7 @@ namespace PULI.Views
                             bool ischeck = (temp_j == j) ? true : false; // 再把剛剛的答案抓回來判斷(如果是就把他勾起來)
 
 
-                            var check_box = new CheckBox // 產生checkbox
+                            check_box = new CheckBox // 產生checkbox
                             {
                                 IsChecked = ischeck,
                                 Color = Color.FromHex("264653")
@@ -2259,7 +2235,7 @@ namespace PULI.Views
 
                                         };
                                         checkList2.RemoveAll(x => x.wqh_s_num == questionList.wqh_s_num && x.qb_order == i.qb_order);
-                                        var check3 = new checkInfo
+                                        check3 = new checkInfo
                                         {
                                             wqh_s_num = questionList.wqh_s_num, // 問卷編號
                                             qh_s_num = questionList.qh_s_num, // 工作問卷編號
@@ -2303,7 +2279,7 @@ namespace PULI.Views
                                 }
                             };
 
-                            var label_check = new Label // 選項
+                            label_check = new Label // 選項
                             {
                                 Text = j,
                                 TextColor = Color.Black,
@@ -2312,7 +2288,7 @@ namespace PULI.Views
 
 
 
-                            var stack_check = new StackLayout // checkbox跟選項
+                            stack_check = new StackLayout // checkbox跟選項
                             {
                                 Orientation = StackOrientation.Horizontal,
                                 Children = { check_box, label_check }
@@ -2343,7 +2319,7 @@ namespace PULI.Views
                         //quesStack.Children.Add(stack_ques);
 
 
-                        var final_stack = new StackLayout
+                        final_stack = new StackLayout
                         {
                             Orientation = StackOrientation.Horizontal,
                             Children = { label_que_name, stack_ques }
@@ -2355,7 +2331,7 @@ namespace PULI.Views
                         //    Children = { final_stack, more_form }
                         //};
 
-                        Frame frame = new Frame // frame包上面那個stacklayout
+                        frame = new Frame // frame包上面那個stacklayout
                         {
                             Padding = new Thickness(15, 5, 10, 5),
 
