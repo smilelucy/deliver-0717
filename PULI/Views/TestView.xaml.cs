@@ -16,68 +16,55 @@ namespace PULI.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TestView : ContentPage
     {
-        public static List<questionnaire> questionnaireslist = new List<questionnaire>();
+        private List<questionnaire> questionnaireslist = new List<questionnaire>();
         WebService web = new WebService();
         public static List<checkInfo> checkList = new List<checkInfo>(); // for reset抓回來判斷
-        public static List<checkInfo> checkList2 = new List<checkInfo>(); // for上傳
-        checkInfo check = new checkInfo();
-        Entry entny = new Entry();
-        CheckBox check_box = new CheckBox();
-        CheckBox check_box1 = new CheckBox();
-        CheckBox check_box2 = new CheckBox();
-        List<CheckBox> checkboxList = new List<CheckBox>();
-        StackLayout stack_check2 = new StackLayout();
-        StackLayout stack_check = new StackLayout();
-        StackLayout total_stack_qborder04 = new StackLayout();
-        StackLayout total_stack_qborder04_final = new StackLayout();
-        StackLayout final_stack_qborder04 = new StackLayout();
-        StackLayout test_stack = new StackLayout();
-        StackLayout stack_ques = new StackLayout();
-        Label label_check = new Label();
-        Label label_check_for_sameans = new Label();
-        Label label_check_reset = new Label();
-        
-        private static bool label_add_count = false;
-        private static bool frame_add_count = false;
-        private static questionnaire questionList_qborder03;
-        
-        string ans;
-        public static bool ischeck;
+        private List<checkInfo> checkList2 = new List<checkInfo>(); // for上傳
+        private checkInfo check = new checkInfo();
+        private Entry entny = new Entry();
+        private CheckBox check_box = new CheckBox();
+        private StackLayout stack_check = new StackLayout();
+        //StackLayout total_stack_qborder04 = new StackLayout();
+        //StackLayout total_stack_qborder04_final = new StackLayout();
+        //StackLayout final_stack_qborder04 = new StackLayout();
+        private StackLayout test_stack = new StackLayout();
+        private StackLayout stack_ques = new StackLayout();
+        private Label label_check = new Label();
+        //private static questionnaire questionList_qborder03;
+        private bool ischeck;
         //public Dictionary<string, bool> TmpCheckList = new Dictionary<string, bool>();
         public static Dictionary<string, string> TmpAnsList = new Dictionary<string, string>(); // for 一般情況判斷SQLite裡面的答案
         public static Dictionary<string, string> TmpAnsList_same = new Dictionary<string, string>(); // for同上情況，判斷SQLite裡面的答案
         public static Dictionary<string, string> TmpAnsList_same_wqh = new Dictionary<string, string>(); // for同上情況，判斷問卷編號
         //public Dictionary<string, bool> TmpAdd_elseList = new Dictionary<string, bool>();
         //public Dictionary<string, bool> TmpAddList = new Dictionary<string, bool>();
-        public Dictionary<string, bool> CheckboxList = new Dictionary<string, bool>(); // for判斷有沒有點未發(觸發第四題題目)
+        private Dictionary<string, bool> CheckboxList = new Dictionary<string, bool>(); // for判斷有沒有點未發(觸發第四題題目)
         public static Dictionary<string, bool> IsResetList = new Dictionary<string, bool>(); // 點選checkbox後判斷label顏色
-        public Dictionary<string, int> RepeatOrNotList = new Dictionary<string, int>(); // for判斷是否有兩筆訂單的情況(觸發同上按鈕)
-        public Dictionary<string, int> RepeatOrNotList_for_second_name = new Dictionary<string, int>(); // for判斷是否有兩筆訂單的情況(觸發同上按鈕)
-        public Dictionary<string, bool> EntryList = new Dictionary<string, bool>(); // for判斷觸發問答題(第五題)
+        private Dictionary<string, int> RepeatOrNotList = new Dictionary<string, int>(); // for判斷是否有兩筆訂單的情況(觸發同上按鈕)
+        private Dictionary<string, int> RepeatOrNotList_for_second_name = new Dictionary<string, int>(); // for判斷是否有兩筆訂單的情況(觸發同上按鈕)
+        private Dictionary<string, bool> EntryList = new Dictionary<string, bool>(); // for判斷觸發問答題(第五題)
         public static Dictionary<string, string> IsGreenOrRed = new Dictionary<string, string>(); // 點選checkbox後判斷label顏色
-        public Dictionary<string, string> EntrytxtList = new Dictionary<string, string>(); // for存SQLite裡面抓出來的entry text
+        private Dictionary<string, string> EntrytxtList = new Dictionary<string, string>(); // for存SQLite裡面抓出來的entry text
         public static Dictionary<string, string> YesOrNoAlreadyChoose = new Dictionary<string, string>();
-        public static Dictionary<string, string> YesOrNoAlreadyChoose_for_sameans = new Dictionary<string, string>();
-        public static Dictionary<string, int> Stack_Number = new Dictionary<string, int>();
-        public static Dictionary<string, int> Stack_Count = new Dictionary<string, int>();
-        public static Dictionary<string, CheckBox> checkboxDictionary = new Dictionary<string, CheckBox>();
+        private Dictionary<string, string> YesOrNoAlreadyChoose_for_sameans = new Dictionary<string, string>();
+        private Dictionary<string, int> Stack_Number = new Dictionary<string, int>();
+        private Dictionary<string, int> Stack_Count = new Dictionary<string, int>();
+        private Dictionary<string, CheckBox> checkboxDictionary = new Dictionary<string, CheckBox>();
         //public Dictionary<string, bool> IsResetList = new Dictionary<string, bool>();
-        public static int[] ansList;
+        private int[] ansList;
         //public static TempDatabase AccDatabase;
-        public static int num = 0;
-        public static int ANS;
+        //public static int ANS;
         public static string ANS2;
-        public static string ANS3;
-        public static string Qtype;
-        public static int ques_stack_count = 0;
-        private static int same_ans_coount = 0; // 看同上的那筆問卷題目有幾筆
-        private static int same_ans_copy = 0; // 看他抓了幾筆同上的資料(用來判斷同上那邊的答案全部抓完之後再reset
-        private static string stack_name;
-        private static string stack_name_2;
-        private static string ques5_qb_s_num;
+        private string Qtype;
+        private int ques_stack_count = 0;
+        private int same_ans_coount = 0; // 看同上的那筆問卷題目有幾筆
+        private int same_ans_copy = 0; // 看他抓了幾筆同上的資料(用來判斷同上那邊的答案全部抓完之後再reset
+        private string stack_name;
+        private string stack_name_2;
+        private string ques5_qb_s_num;
         //public static string anslist;
         //public static string p;
-        public static TempDatabase AccDatabase; // 存問卷答案的SQLite
+        private TempDatabase AccDatabase; // 存問卷答案的SQLite
         //public static TempAddDatabase TempAddDB;
         //public static TempAddDatabase_else TempAddDB_else;
         public static ChooseDatabase ChooseDB; // 存是否觸發第四題的SQLite
@@ -85,12 +72,11 @@ namespace PULI.Views
         public static EntryDatabase EntryDB; // 存是否觸法第五題(問答題)
         public static EntrytxtDatabase EntrytxtDB; // 存entry text
         public static ResetLabelDatabase ResetLabelDB; // 存是否已經選過答案(for要改答案的判1斷)
-        public static int TFcount = 0; // for判斷checkbox綠色還是紅色
-        public static string result = ""; // for判斷星期幾
-        public static int result_num; // for 存星期幾轉為數字
-       
-        public static bool isReset = false; // for判斷是否進入label顏色判斷
-        public static bool isDB = false; // for判斷是否進入label顏色判斷
+        private int TFcount = 0; // for判斷checkbox綠色還是紅色
+        private string result = ""; // for判斷星期幾
+        private int result_num; // for 存星期幾轉為數字
+        private bool isReset = false; // for判斷是否進入label顏色判斷
+        private bool isDB = false; // for判斷是否進入label顏色判斷
         public static string color; // for存紅色還是綠色
         
 
@@ -681,121 +667,121 @@ namespace PULI.Views
 
             }
         }
-        public StackLayout set_questionnaire_qborder03(string _wqh_s_num, string choice)
-        {
+        //public StackLayout set_questionnaire_qborder03(string _wqh_s_num, string choice)
+        //{
             
-            var stack_ques_qborder04 = new StackLayout
-            {
-                Orientation = StackOrientation.Horizontal
-            };
+        //    var stack_ques_qborder04 = new StackLayout
+        //    {
+        //        Orientation = StackOrientation.Horizontal
+        //    };
             
-            //for(int i = 0; i < qborder4list.Count(); i++)
-            //{
-                if (choice == "停餐")
-                {
-                    check_box = new CheckBox // 產生checkbox
-                    {
+        //    //for(int i = 0; i < qborder4list.Count(); i++)
+        //    //{
+        //        if (choice == "停餐")
+        //        {
+        //            check_box = new CheckBox // 產生checkbox
+        //            {
 
-                        Margin = new Thickness(-5, 0, 0, 0),
-                        //Color = Color.FromHex("264653")
-                        Color = Color.Green
-                    };
-                }
-                else
-                {
-                    check_box = new CheckBox // 產生checkbox
-                    {
+        //                Margin = new Thickness(-5, 0, 0, 0),
+        //                //Color = Color.FromHex("264653")
+        //                Color = Color.Green
+        //            };
+        //        }
+        //        else
+        //        {
+        //            check_box = new CheckBox // 產生checkbox
+        //            {
 
 
-                        Margin = new Thickness(-5, 0, 0, 0),
-                        //Color = Color.FromHex("264653")
-                        Color = Color.Red
-                    };
-                }
-                var label_check_qb04 = new Label // 選項
-                {
-                    Text = choice,
-                    TextColor = Color.Black,
-                    FontSize = 20
-                };
-                var stack_check_qb04 = new StackLayout // checkbox跟選項
-                {
-                    Orientation = StackOrientation.Horizontal,
-                    Children = { check_box },
-                    ClassId = _wqh_s_num + "4"
-                };
+        //                Margin = new Thickness(-5, 0, 0, 0),
+        //                //Color = Color.FromHex("264653")
+        //                Color = Color.Red
+        //            };
+        //        }
+        //        var label_check_qb04 = new Label // 選項
+        //        {
+        //            Text = choice,
+        //            TextColor = Color.Black,
+        //            FontSize = 20
+        //        };
+        //        var stack_check_qb04 = new StackLayout // checkbox跟選項
+        //        {
+        //            Orientation = StackOrientation.Horizontal,
+        //            Children = { check_box },
+        //            ClassId = _wqh_s_num + "4"
+        //        };
                 
-                var label_stack = new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal,
-                    Children = { label_check_qb04 },
-                    ClassId = _wqh_s_num + "4"
-                };
-                stack_ques_qborder04.Children.Add(stack_check_qb04);
-                stack_ques_qborder04.Children.Add(label_stack);
+        //        var label_stack = new StackLayout
+        //        {
+        //            Orientation = StackOrientation.Horizontal,
+        //            Children = { label_check_qb04 },
+        //            ClassId = _wqh_s_num + "4"
+        //        };
+        //        stack_ques_qborder04.Children.Add(stack_check_qb04);
+        //        stack_ques_qborder04.Children.Add(label_stack);
 
 
 
-                //quesStack.Children.Add(final_stack);
-                //quesStack.Children.Add(label_que_name);
-                //quesStack.Children.Add(stack_ques);
-                //if(choice == "停餐")
-                //{
-                //    final_stack_qborder04 = new StackLayout
-                //    {
+        //        //quesStack.Children.Add(final_stack);
+        //        //quesStack.Children.Add(label_que_name);
+        //        //quesStack.Children.Add(stack_ques);
+        //        //if(choice == "停餐")
+        //        //{
+        //        //    final_stack_qborder04 = new StackLayout
+        //        //    {
 
-                //        Orientation = StackOrientation.Vertical,
-                //        // stack_ques checkbox跟選項
-                //        Children = { label_que_name_qborder04, stack_ques_qborder04 } // label_que_name 問題題號+題目
-                //    };
-                //}
-                //else
-                //{
+        //        //        Orientation = StackOrientation.Vertical,
+        //        //        // stack_ques checkbox跟選項
+        //        //        Children = { label_que_name_qborder04, stack_ques_qborder04 } // label_que_name 問題題號+題目
+        //        //    };
+        //        //}
+        //        //else
+        //        //{
                     
-                //}
-                final_stack_qborder04 = new StackLayout
-                {
+        //        //}
+        //        final_stack_qborder04 = new StackLayout
+        //        {
 
-                    Orientation = StackOrientation.Vertical,
-                    // stack_ques checkbox跟選項
-                    Children = { stack_ques_qborder04 } // label_que_name 問題題號+題目
-                };
-                total_stack_qborder04 = new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal
-                };
-                total_stack_qborder04.Children.Add(final_stack_qborder04);
+        //            Orientation = StackOrientation.Vertical,
+        //            // stack_ques checkbox跟選項
+        //            Children = { stack_ques_qborder04 } // label_que_name 問題題號+題目
+        //        };
+        //        total_stack_qborder04 = new StackLayout
+        //        {
+        //            Orientation = StackOrientation.Horizontal
+        //        };
+        //        total_stack_qborder04.Children.Add(final_stack_qborder04);
 
                 
-                Console.WriteLine("stackcount~~　" + total_stack_qborder04.Children.Count());
-                //if(total_stack_qborder04.Children.Count() == 4)
-                //{
+        //        Console.WriteLine("stackcount~~　" + total_stack_qborder04.Children.Count());
+        //        //if(total_stack_qborder04.Children.Count() == 4)
+        //        //{
 
-                //}
-                //return null;
-            //}
-            //Frame frame_qborder04 = new Frame // frame包上面那個stacklayout
-            //{
-            //    Padding = new Thickness(10, 5, 10, 5),
-            //    Margin = new Thickness(5, 0, 5, 0),
-            //    BackgroundColor = Color.FromHex("eddcd2"),
+        //        //}
+        //        //return null;
+        //    //}
+        //    //Frame frame_qborder04 = new Frame // frame包上面那個stacklayout
+        //    //{
+        //    //    Padding = new Thickness(10, 5, 10, 5),
+        //    //    Margin = new Thickness(5, 0, 5, 0),
+        //    //    BackgroundColor = Color.FromHex("eddcd2"),
 
-            //    CornerRadius = 10,
-            //    HasShadow = false,
-            //    Content = final_stack_qborder04
-            //};
-            //total_stack_qborder04_final = new StackLayout
-            //{
-            //    Orientation = StackOrientation.Horizontal
-            //};
+        //    //    CornerRadius = 10,
+        //    //    HasShadow = false,
+        //    //    Content = final_stack_qborder04
+        //    //};
+        //    //total_stack_qborder04_final = new StackLayout
+        //    //{
+        //    //    Orientation = StackOrientation.Horizontal
+        //    //};
 
-            //total_stack_qborder04_final.Children.Add(frame_qborder04);
+        //    //total_stack_qborder04_final.Children.Add(frame_qborder04);
 
-            return total_stack_qborder04;
+        //    return total_stack_qborder04;
 
 
 
-        }
+        //}
 
         
 

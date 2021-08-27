@@ -25,7 +25,7 @@ namespace PULI
         // public static LoginInfo loginList = null;
         public static string token = "";
         //public static List<ClientInfo> clientList = new List<ClientInfo>(); 
-        public static IEnumerable<ClientInfo> clientList = null; // for auth = 4 送餐員 
+        //public static IEnumerable<ClientInfo> clientList = null; // for auth = 4 送餐員 
                                                                  //public static IEnumerable<TotalList> totalList = null;
                                                                  // public static AllClientInfo allclientList = new AllClientInfo();
         public static TotalList totalList = new TotalList();
@@ -40,22 +40,22 @@ namespace PULI
         public static Date dateDatabase;
         WebService web = new WebService();
         ParamInfo param = new ParamInfo();
-        static string[] loginData = new string[4];
-        public string Account;
-        public string Password;
-        public static string LoginTime;
-        public static string logacc;
-        public static string logpwd;
+        private string[] loginData = new string[4];
+        private string Account;
+        private string Password;
+        private string LoginTime;
+        private string logacc;
+        private string logpwd;
         public static string Loginway;
         public static string oldday2;
         public static string _login_time;
-        public static string _identity;
+        private string _identity;
         public static string _time = "";
-        public static string time;
+        private string time;
         public static bool checkdate = false;
-        string _resIdentity = "";
-        string[] identityArray = new string[] { "社工", "送餐員" };
-        string[] timeArray = new string[] { "早上", "下午"};
+        private string _resIdentity = "";
+        private string[] identityArray = new string[] { "社工", "送餐員" };
+        private string[] timeArray = new string[] { "早上", "下午"};
 
         public MainPage()
         {

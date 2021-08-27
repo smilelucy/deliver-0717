@@ -15,8 +15,8 @@ namespace PULI.Views
     public partial class wifiuploadrecord : ContentPage
     {
         ParamInfo param = new ParamInfo();
-        public static List<Wifi_Punchin> Wifi_Punchin_List = new List<Wifi_Punchin>();
-        public static List<Wifi_Punchout> Wifi_Punchout_List = new List<Wifi_Punchout>();
+        private List<Wifi_Punchin> Wifi_Punchin_List = new List<Wifi_Punchin>();
+        private List<Wifi_Punchout> Wifi_Punchout_List = new List<Wifi_Punchout>();
         public wifiuploadrecord()
         {
             InitializeComponent();
