@@ -121,7 +121,14 @@ namespace PULI.Views
         private StackLayout stack_check = new StackLayout();
         private StackLayout final_stack = new StackLayout();
         private Frame frame = new Frame();
-        
+        private CameraPosition cameraPosition;
+        private IEnumerable<Punch> punchdatatable;
+        bool no_wifi_punch_in;
+        bool no_wifi_punch_out;
+        string d2;
+        string time;
+        bool wifi_punch_in;
+        bool wifi_punch_out;
 
         public MapView()
         {
@@ -850,7 +857,7 @@ namespace PULI.Views
             try
             {
                 //var current = Connectivity.NetworkAccess;
-                Console.WriteLine("LOCATION~~~~");
+                //Console.WriteLine("LOCATION~~~~");
                 //Console.WriteLine("INTERNET~~~~" + CrossConnectivity.Current.IsConnected);
                 //Console.WriteLine("setnum3333~~~~" + setnum);
                 //Console.WriteLine("tmpcount~~" + PunchTmp.GetAccountAsync2().Count());
@@ -884,10 +891,10 @@ namespace PULI.Views
                 //if (!isSetView) // 還沒setview
                 //{
                 location = CrossGeolocator.Current;
-                Console.WriteLine("location~~ " + location);
+                //Console.WriteLine("location~~ " + location);
                 if (location != null)
                 {
-                    Console.WriteLine("location_in~~~ ");
+                    //Console.WriteLine("location_in~~~ ");
                     try
                     {
                         d = 0;
@@ -897,12 +904,12 @@ namespace PULI.Views
                         NowLon = position.Longitude;
                         NowLat = position.Latitude;
 
-                        Console.WriteLine("nowlat" + position.Latitude);
-                        Console.WriteLine("nowlot" + position.Longitude);
+                        //Console.WriteLine("nowlat" + position.Latitude);
+                        //Console.WriteLine("nowlot" + position.Longitude);
                         if(mapcount == 0 || mapcount % 20 == 0)
                         {
                             //Console.WriteLine("mapcountin~~~" + mapcount);
-                            CameraPosition cameraPosition = new CameraPosition(new Xamarin.Forms.GoogleMaps.Position(position.Latitude, position.Longitude), map_Zoom);
+                            cameraPosition = new CameraPosition(new Xamarin.Forms.GoogleMaps.Position(position.Latitude, position.Longitude), map_Zoom);
                             await MyMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition)); // 地圖上抓取目前位置
                             await DeliverMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition));
                         }
@@ -918,16 +925,16 @@ namespace PULI.Views
                         {
                             if (PunchDatabase.GetAccountAsync2().Count() > 0) // 記錄無網路環境打卡的database裡面有資料
                             {
-                                Console.WriteLine("RRRRRR~~~~");
-                                Console.WriteLine("pp~~" + PunchDatabase.GetAccountAsync2().Count());
+                                //Console.WriteLine("RRRRRR~~~~");
+                                //Console.WriteLine("pp~~" + PunchDatabase.GetAccountAsync2().Count());
                                 for (int b = 0; b < PunchDatabase.GetAccountAsync2().Count(); b++)
                                 {
-                                    var c = PunchDatabase.GetAccountAsync(b);
+                                    punchdatatable = PunchDatabase.GetAccountAsync(b);
 
 
-                                    foreach (var TempAnsList in c)
+                                    foreach (var TempAnsList in punchdatatable)
                                     {
-                                        Console.WriteLine("tmpname2222~~~" + TempAnsList.name);
+                                        //Console.WriteLine("tmpname2222~~~" + TempAnsList.name);
                                         //Console.WriteLine("token~~" + TempAnsList.token);
                                         //Console.WriteLine("name~" + TempAnsList.name);
                                         //Console.WriteLine("ct_s_num~~" + TempAnsList.ct_s_num);
@@ -960,9 +967,9 @@ namespace PULI.Views
                                                 if (!name_list_in.Contains(TempAnsList.name)) // 判斷還沒處理過這筆無網路打卡
                                                 {
                                                     // 自動簽到
-                                                    bool web_res2 = await web.Save_Punch_In(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.reh_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time);
-                                                    Console.WriteLine("web_resin~~~ " + web_res2);
-                                                    if (web_res2 == true)
+                                                    no_wifi_punch_in  = await web.Save_Punch_In(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.reh_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time);
+                                                    //Console.WriteLine("web_resin~~~ " + web_res2);
+                                                    if (no_wifi_punch_in == true)
                                                     {
                                                         // 打卡成功
                                                         name_list_in.Add(TempAnsList.name);
@@ -1033,9 +1040,9 @@ namespace PULI.Views
                                                 if (!name_list_out.Contains(TempAnsList.name)) // 還沒處理過這筆案主的簽退
                                                 {
                                                     // 自動簽退
-                                                    bool web_res2 = await web.Save_Punch_Out(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.reh_s_num, TempAnsList.mlo_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time);
-                                                    Console.WriteLine("web_res_out~~~ " + web_res2);
-                                                    if (web_res2 == true)
+                                                    no_wifi_punch_out  = await web.Save_Punch_Out(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.reh_s_num, TempAnsList.mlo_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time);
+                                                    //Console.WriteLine("web_res_out~~~ " + web_res2);
+                                                    if (no_wifi_punch_out == true)
                                                     {
                                                         // 打卡成功
                                                         name_list_out.Add(TempAnsList.name);
@@ -1135,7 +1142,7 @@ namespace PULI.Views
                                     //if (homename == cList2[i].ct_name)
                                     //{
 
-                                    int which = 0;
+                                    which = 0;
                                         
                                     //Console.WriteLine("who1" + cList2[i].ct_name);
                                     ////Console.WriteLine("punch1" + punchList[cList[i].ct_name]);
@@ -1152,7 +1159,7 @@ namespace PULI.Views
                                     dy = position.Longitude - py > 0 ? position.Longitude - py : py - position.Longitude;
                                     d = Math.Sqrt(dx * 110000 * dx * 110000 + dy * 100000 * dy * 100000);
                                     //Console.WriteLine("d2" + d);
-                                    string d2 = d.ToString();
+                                    d2 = d.ToString();
                                     //Console.WriteLine("@@@@@   " + d2);
                                     distance.Text = d2;
                                     Latitude.Text = position.Latitude.ToString();
@@ -1248,8 +1255,8 @@ namespace PULI.Views
                                                     {
                                         // 自動簽到
                                                         DateTime myDate = DateTime.Now;
-                                                        string time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
-                                                        Console.WriteLine("time~~~ " + time);
+                                                        time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
+                                                        //Console.WriteLine("time~~~ " + time);
                                                         
                                                          //---------跳出訊息先註解掉-------
                                                          /*
@@ -1265,9 +1272,9 @@ namespace PULI.Views
                                                          */
                                                         //--------------------------------
                                                         punch_in[totalList.daily_shipments[i].ct_name] = true; // 簽到成功
-                                                        bool web_res = await web.Save_Punch_In(MainPage.token, ct_s_num, sec_s_num, mlo_s_num, reh_s_num, position.Latitude, position.Longitude, time);
+                                                        wifi_punch_in = await web.Save_Punch_In(MainPage.token, ct_s_num, sec_s_num, mlo_s_num, reh_s_num, position.Latitude, position.Longitude, time);
                                                         //Console.WriteLine("web_res" + web_res);
-                                                        if (web_res == true)
+                                                        if (wifi_punch_in == true)
                                                         {
                                                             // 打卡成功
                                                             //Console.WriteLine("name~~~~" + totalList.daily_shipments[setnum].ct_name + punch_in[totalList.daily_shipments[setnum].ct_name]);
@@ -1307,8 +1314,8 @@ namespace PULI.Views
                                                                         // 將簽到資訊存進SQLite
                                                                         //bool web_res = await web.Save_Punch_In(MainPage.token, ct_s_num, sec_s_num, mlo_s_num, position.Latitude, position.Longitude);
                                                         DateTime myDate = DateTime.Now;
-                                                        string time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
-                                                        Console.WriteLine("time~~~ " + time);
+                                                        time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
+                                                        //Console.WriteLine("time~~~ " + time);
                                                         PunchSaveToSQLite(MainPage.token, Clname, inorout, ct_s_num, sec_s_num, mlo_s_num, reh_s_num, position.Latitude, position.Longitude, time, DateTime.Now.ToShortTimeString());
                                                         punch_in[totalList.daily_shipments[i].ct_name] = true; // 簽到成功
                                                         PunchTmp.SaveAccountAsync(new PunchTmp // 存進無網路簽到成功的SQLite
@@ -1384,8 +1391,8 @@ namespace PULI.Views
                                             if (CrossConnectivity.Current.IsConnected) // 有連到網路
                                             {
                                                 DateTime myDate = DateTime.Now;
-                                                string time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
-                                                Console.WriteLine("time~~~ " + time);
+                                                time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
+                                                //Console.WriteLine("time~~~ " + time);
 
                                                 //------跳出訊息先註解掉---------
                                                 /*
@@ -1438,9 +1445,9 @@ namespace PULI.Views
                                                                                                  //punch_in[cList[i].ct_name] = false;
                                                                                                  //which = 0;
                                                 punchList[totalList.daily_shipments[i].ct_name] = true; // 打卡完成設為true(簽到+簽退成功)
-                                                bool web_res2 = await web.Save_Punch_Out(MainPage.token, ct_s_num, sec_s_num, reh_s_num, mlo_s_num, position.Latitude, position.Longitude, time);
+                                                wifi_punch_out  = await web.Save_Punch_Out(MainPage.token, ct_s_num, sec_s_num, reh_s_num, mlo_s_num, position.Latitude, position.Longitude, time);
                                                 //Console.WriteLine("web_res2" + web_res2);
-                                                if (web_res2 == true)
+                                                if (wifi_punch_out == true)
                                                 {
                                                    
                                                     if (!WIFI_name_list_out.Contains(totalList.daily_shipments[i].ct_name))
@@ -1542,8 +1549,8 @@ namespace PULI.Views
                                                 inorout = "out"; // 簽退
                                                                  // 把要打卡的資料先存回SQLite
                                                 DateTime myDate = DateTime.Now;
-                                                string time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
-                                                Console.WriteLine("time~~~ " + time);
+                                                time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
+                                                //Console.WriteLine("time~~~ " + time);
                                                 PunchSaveToSQLite(MainPage.token, Clname, inorout, ct_s_num, sec_s_num, mlo_s_num, reh_s_num, position.Latitude, position.Longitude, time, DateTime.Now.ToShortTimeString());
                                                 
                                                 punch_out[totalList.daily_shipments[i].ct_name] = true;  // 謙退成功
@@ -2482,9 +2489,9 @@ namespace PULI.Views
         {
             try
             {
-                Console.WriteLine("postGPS~~~");
-                Console.WriteLine("lat~~ " + position.Latitude.ToString());
-                Console.WriteLine("lot~~~ " + position.Longitude.ToString());
+                //Console.WriteLine("postGPS~~~");
+                //Console.WriteLine("lat~~ " + position.Latitude.ToString());
+                //Console.WriteLine("lot~~~ " + position.Longitude.ToString());
                 web.post_gps(MainPage.token, position.Latitude.ToString(), position.Longitude.ToString());
                 
             }
@@ -2615,7 +2622,7 @@ namespace PULI.Views
                         // Await 運算子可以套用至標示為 async 之方法內的工作。 它會使方法在該時間點停止執行，並等候工作完成。
                         // 在等候工作時，不會封鎖使用者介面執行緒
                         // 當工作完成時，方法會在程式碼中的相同位置繼續執行
-                        Console.WriteLine("TIMER~~~");
+                        //Console.WriteLine("TIMER~~~");
                         await getLocation();
 
                         post_gps();
@@ -3073,20 +3080,7 @@ namespace PULI.Views
                         setView();
                     }
                 });
-                MessagingCenter.Subscribe<HomeViewHelperAndDiliver, bool>(this, "SET_MAP", (sender, arg) =>
-                {
-                    // do something when the msg "UPDATE_BONUS" is recieved
-                    if (arg)
-                    {
-                        //Console.WriteLine("MAPPPPPPP");
-
-                        buttonhelp.IsVisible = false;
-                        buttonhelp.IsEnabled = false;
-                        buttondeliver.IsEnabled = false;
-                        buttondeliver.IsVisible = false;
-                        setView();
-                    }
-                });
+               
                 
                 MessagingCenter.Subscribe<MapView, bool>(this, "CLOSE_INFORM", (sender, arg) =>
                 {

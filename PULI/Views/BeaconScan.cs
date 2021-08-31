@@ -7,9 +7,11 @@ using System.Linq;
 using System.Text;
 
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace PULI.Views
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public class BeaconScan 
     {
         public INavigation Navigation { get; set; }
