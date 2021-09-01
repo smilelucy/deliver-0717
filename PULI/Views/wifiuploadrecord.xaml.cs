@@ -34,7 +34,7 @@ namespace PULI.Views
             //listview.Items.Clear();
             //listview.ItemTemplate = new DataTemplate(typeof(RecordCell)); // 把模式設為activitycell
             wifi_punchin_listview.SelectedItem = null; // 
-            Wifi_Punchin_List = MapView.Wifi_Punchin_DB.GetAccountAsync2();
+            Wifi_Punchin_List = MapView.AccDatabase.GetAccountAsync2_Wifi_Punchin();
             Console.WriteLine("wifi_punchin_tmpnum~~~" + Wifi_Punchin_List.Count());
             wifi_punchin_listview.ItemsSource = Wifi_Punchin_List; // itemtemplate的資料來源
                                                   //listview.ItemsSource = MapView.name_list_in2; // itemtemplate的資料來源
@@ -47,7 +47,7 @@ namespace PULI.Views
             //TmpPunchList3.Clear();
             //listview2.ItemTemplate = new DataTemplate(typeof(RecordCell)); // 把模式設為activitycell
             wifi_punchout_listview.SelectedItem = null; // 
-            Wifi_Punchout_List = MapView.Wifi_Punchout_DB.GetAccountAsync2();
+            Wifi_Punchout_List = MapView.AccDatabase.GetAccountAsync2_Wifi_Punchout();
             Console.WriteLine("wifi_punchout_tmpnum2~~~" + Wifi_Punchout_List.Count());
             wifi_punchout_listview.ItemsSource = Wifi_Punchout_List; // itemtemplate的資料來源
                                                    //listview.ItemsSource = MapView.name_list_in2; // itemtemplate的資料來源

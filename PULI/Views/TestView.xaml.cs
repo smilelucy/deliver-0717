@@ -7274,7 +7274,7 @@ namespace PULI.Views
                     //tmp_name_list.Clear();
                     //tmp_num_list.Clear();
                     //name_list.Clear();
-                    MapView.AccDatabase.DeleteAll();
+                    MapView.AccDatabase.DeleteAll_TempAccount();
                     ChooseDB.DeleteAll();
                     //if (ChooseDB.GetAccountAsync2().Count() == 0)
                     //{
@@ -7391,18 +7391,7 @@ namespace PULI.Views
                         setView();
                     }
                 });
-                MessagingCenter.Subscribe<HomeViewHelperAndDiliver, bool>(this, "SET_FORM", (sender, arg) =>
-                {
-                    // do something when the msg "UPDATE_BONUS" is recieved
-                    if (arg)
-                    {
-                       
-
-                        entny = new Entry();
-                      
-                        setView();
-                    }
-                });
+               
                 MessagingCenter.Subscribe<MapView, bool>(this, "SET_TMP_FORM", (sender, arg) =>
                 {
                     // do something when the msg "UPDATE_BONUS" is recieved

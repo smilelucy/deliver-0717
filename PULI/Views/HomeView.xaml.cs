@@ -80,7 +80,7 @@ namespace PULI.Views
                 if (arg)
                 {
                     Console.WriteLine("Deletesetnum~~hinmeview~~~");
-                    MapView.PunchDatabase2.DeleteAll();
+                    MapView.AccDatabase.DeleteAll_Punch2();
                 }
             });
             MessagingCenter.Subscribe<MemberView, bool>(this, "OUT", (sender, arg) =>

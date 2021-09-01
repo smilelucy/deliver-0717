@@ -28,12 +28,12 @@ namespace PULI.Views
                 if (arg)
                 {
                     Console.WriteLine("newdayrecieve~homeview2~");
-                    MapView.AccDatabase.DeleteAll();
-                    MapView.PunchDatabase.DeleteAll();
-                    MapView.PunchDatabase2.DeleteAll();
-                    MapView.PunchTmp.DeleteAll();
-                    MapView.PunchTmp2.DeleteAll();
-                    MapView.PunchYN.DeleteAll();
+                    MapView.AccDatabase.DeleteAll_TempAccount();
+                    MapView.AccDatabase.DeleteAll_Punch();
+                    MapView.AccDatabase.DeleteAll_Punch2();
+                    MapView.AccDatabase.DeleteAll_PunchTmp();
+                    MapView.AccDatabase.DeleteAll_PunchTmp2();
+                    //MapView.PunchYN.DeleteAll();
                     MapView.name_list_in.Clear();
                     MapView.name_list_out.Clear();
                 }
@@ -120,7 +120,7 @@ namespace PULI.Views
                 if (arg)
                 {
                     Console.WriteLine("Deletesetnum~~homeview2~~~");
-                    MapView.PunchDatabase2.DeleteAll();
+                    MapView.AccDatabase.DeleteAll_Punch2();
                 }
             });
             MessagingCenter.Subscribe<MemberView, bool>(this, "OUT", (sender, arg) =>

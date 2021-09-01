@@ -113,15 +113,16 @@ namespace PULI.Views
                 if(MainPage.AUTH == "14") // 送餐員
                 {
                     fooDoggyDatabase.DeleteAll();
-                    MapView.AccDatabase.DeleteAll();
-                    MapView.PunchDatabase.DeleteAll();
-                    MapView.PunchDatabase2.DeleteAll();
-                    PunchDataBaseTmp ppunchTmp = new PunchDataBaseTmp();
-                    ppunchTmp.DeleteAll();
-                    MapView.PunchTmp2.DeleteAll();
-                    MapView.PunchYN.DeleteAll();
-                    MapView.Wifi_Punchout_DB.DeleteAll();
-                    MapView.Wifi_Punchin_DB.DeleteAll();
+                    MapView.AccDatabase.DeleteAll_TempAccount();
+                    MapView.AccDatabase.DeleteAll_Punch();
+                    MapView.AccDatabase.DeleteAll_Punch2();
+                    //PunchDataBaseTmp ppunchTmp = new PunchDataBaseTmp();
+                    //ppunchTmp.DeleteAll();
+                    MapView.AccDatabase.DeleteAll_PunchTmp();
+                    MapView.AccDatabase.DeleteAll_PunchTmp2();
+                    //MapView.PunchYN.DeleteAll();
+                    MapView.AccDatabase.DeleteAll_Wifi_Punchout();
+                    MapView.AccDatabase.DeleteAll_Wifi_Punchin();
                     MapView.name_list_in.Clear();
                     MapView.name_list_out.Clear();
                     MapView.WIFI_name_list_in.Clear();
@@ -138,13 +139,14 @@ namespace PULI.Views
                 else // 社工
                 {
                     fooDoggyDatabase.DeleteAll();
-                    MapView.AccDatabase.DeleteAll();
-                    MapView.PunchDatabase.DeleteAll();
-                    MapView.PunchDatabase2.DeleteAll();
-                    PunchDataBaseTmp ppunchTmp = new PunchDataBaseTmp();
-                    ppunchTmp.DeleteAll();
-                    MapView.PunchTmp2.DeleteAll();
-                    MapView.PunchYN.DeleteAll();
+                    MapView.AccDatabase.DeleteAll_TempAccount();
+                    MapView.AccDatabase.DeleteAll_Punch();
+                    MapView.AccDatabase.DeleteAll_Punch2();
+                    //PunchDataBaseTmp ppunchTmp = new PunchDataBaseTmp();
+                    //ppunchTmp.DeleteAll();
+                    MapView.AccDatabase.DeleteAll_PunchTmp();
+                    MapView.AccDatabase.DeleteAll_PunchTmp2();
+                   // MapView.PunchYN.DeleteAll();
                     MapView.name_list_in.Clear();
                     MapView.name_list_out.Clear();
                     MainPage.dateDatabase.DeleteAll();
@@ -177,7 +179,7 @@ namespace PULI.Views
                     //fooDoggyDatabase.DeleteAll();
                     Console.WriteLine("failQAQ~~~" + fooDoggyDatabase.GetAccountAsync().Count());
                 }
-                if (MapView.PunchDatabase.GetAccountAsync2().Count() == 0)
+                if (MapView.AccDatabase.GetAccountAsync2_Punch().Count() == 0)
                 {
                     Console.WriteLine("punchSUCESS");
                 }
@@ -187,7 +189,7 @@ namespace PULI.Views
                     //fooDoggyDatabase.DeleteAll();
                     Console.WriteLine("failQAQ~~~" + fooDoggyDatabase.GetAccountAsync().Count());
                 }
-                if (MapView.PunchDatabase2.GetAccountAsync2().Count() == 0)
+                if (MapView.AccDatabase.GetAccountAsync2_Punch2().Count() == 0)
                 {
                     Console.WriteLine("punch2SUCESS");
                 }
@@ -207,26 +209,28 @@ namespace PULI.Views
                 //    //fooDoggyDatabase.DeleteAll();
                 //    Console.WriteLine("failQAQ~~~" + ppunchTmp.GetAccountAsync2().Count());
                 //}
-                if (MapView.PunchTmp2.GetAccountAsync2().Count() == 0)
-                {
-                    Console.WriteLine("punchtmp2SUCESS");
-                }
-                else
-                {
-                    Console.WriteLine("punchtmp2FAIL");
-                    //fooDoggyDatabase.DeleteAll();
-                    Console.WriteLine("failQAQ~~~" + fooDoggyDatabase.GetAccountAsync().Count());
-                }
-                if (MapView.PunchYN.GetAccountAsync2().Count() == 0)
-                {
-                    Console.WriteLine("punchYNSUCESS");
-                }
-                else
-                {
-                    Console.WriteLine("punchYNFAIL");
-                    //fooDoggyDatabase.DeleteAll();
-                    Console.WriteLine("failQAQ~~~" + fooDoggyDatabase.GetAccountAsync().Count());
-                }
+
+                //if (MapView.PunchTmp2.GetAccountAsync2().Count() == 0)
+                //{
+                //    Console.WriteLine("punchtmp2SUCESS");
+                //}
+                //else
+                //{
+                //    Console.WriteLine("punchtmp2FAIL");
+                //    //fooDoggyDatabase.DeleteAll();
+                //    Console.WriteLine("failQAQ~~~" + fooDoggyDatabase.GetAccountAsync().Count());
+                //}
+
+                //if (MapView.PunchYN.GetAccountAsync2().Count() == 0)
+                //{
+                //    Console.WriteLine("punchYNSUCESS");
+                //}
+                //else
+                //{
+                //    Console.WriteLine("punchYNFAIL");
+                //    //fooDoggyDatabase.DeleteAll();
+                //    Console.WriteLine("failQAQ~~~" + fooDoggyDatabase.GetAccountAsync().Count());
+                //}
                 //Console.WriteLine("ACCLIST" + accountList[0].account);
                 //Console.WriteLine("ACCLIST" + accountList[0].password);
 
@@ -331,7 +335,7 @@ namespace PULI.Views
             //listview.Items.Clear();
             //listview.ItemTemplate = new DataTemplate(typeof(RecordCell)); // 把模式設為activitycell
             listview.SelectedItem = null; // 
-            TmpPunchList2 = MapView.PunchTmp.GetAccountAsync2();
+            TmpPunchList2 = MapView.AccDatabase.GetAccountAsync2_PunchTmp();
             Console.WriteLine("tmpnum~~~" + TmpPunchList2.Count());
             listview.ItemsSource = TmpPunchList2; // itemtemplate的資料來源
                                          //listview.ItemsSource = MapView.name_list_in2; // itemtemplate的資料來源
@@ -344,7 +348,7 @@ namespace PULI.Views
             //TmpPunchList3.Clear();
             //listview2.ItemTemplate = new DataTemplate(typeof(RecordCell)); // 把模式設為activitycell
             listview2.SelectedItem = null; // 
-            TmpPunchList3 = MapView.PunchTmp2.GetAccountAsync2();
+            TmpPunchList3 = MapView.AccDatabase.GetAccountAsync2_PunchTmp2();
             Console.WriteLine("tmpnum2~~~" + TmpPunchList3.Count());
             listview2.ItemsSource = TmpPunchList3; // itemtemplate的資料來源
                                                   //listview.ItemsSource = MapView.name_list_in2; // itemtemplate的資料來源

@@ -802,17 +802,7 @@ namespace PULI.Views
                         Console.WriteLine("setshipform1~~~~");
                     }
                 });
-                MessagingCenter.Subscribe<HomeViewHelperAndDiliver, bool>(this, "SET_SHIPMENT_FORM", (sender, arg) =>
-                {
-                    // do something when the msg "UPDATE_BONUS" is recieved
-                    if (arg)
-                    {
-                        //totalList = new TotalList();
-                        totalList = null;
-                        setView();
-                        Console.WriteLine("setshipform2~~~~");
-                    }
-                });
+                
                 //MessagingCenter.Subscribe<HomeView, bool>(this, "SET_CHANGE_FORM", (sender, arg) =>
                 //{
                 //    // do something when the msg "UPDATE_BONUS" is recieved

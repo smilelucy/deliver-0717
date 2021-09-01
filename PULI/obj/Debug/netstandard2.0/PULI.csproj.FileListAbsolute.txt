@@ -63,11 +63,8 @@ D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\AddNew
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\ClnDetailView.xaml.g.cs
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\HomeView.xaml.g.cs
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\HomeView2.xaml.g.cs
-D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\HomeViewHelperAndDiliver.xaml.g.cs
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\MapView.xaml.g.cs
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\MemberView.xaml.g.cs
-D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\MoreFormView.xaml.g.cs
-D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\NavigateView.xaml.g.cs
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\TestView.xaml.g.cs
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\UploadView.xaml.g.cs
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\Views\wifiuploadrecord.xaml.g.cs
