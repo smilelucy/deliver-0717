@@ -39,6 +39,11 @@ namespace PULI.Models.DataInfo
             _database2.CreateTable<PunchTmp2>(); // type 5
             _database2.CreateTable<Wifi_Punchout>(); // type 6
             _database2.CreateTable<Wifi_Punchin>(); // type 7
+            //_database2.CreateTable<Choose>();
+            _database2.CreateTable<Reset>();
+            _database2.CreateTable<Entry_DB>();
+            _database2.CreateTable<Entry_txt>();
+            _database2.CreateTable<ResetLabel>();
             // create the tables
             //_database.CreateTableAsync<Account>().Wait(); // 創造
         }
@@ -138,7 +143,7 @@ namespace PULI.Models.DataInfo
 
         }
 
-        // PunchDatabase
+        // Punch
         public IEnumerable<Punch> GetAccountAsync_Punch(int id)
         {
             lock (locker)
@@ -181,7 +186,7 @@ namespace PULI.Models.DataInfo
         }
 
 
-        // PunchDatabase2
+        // Punch2
 
         public IEnumerable<Punch2> GetAccountAsync_Punch2(int id)
         {
@@ -417,5 +422,215 @@ namespace PULI.Models.DataInfo
             }
         }
 
+
+        // Choose
+        //public IEnumerable<Choose> GetAccountAsync2_Choose()
+        //{
+        //    lock (locker)
+        //    {
+        //        return (from i in _database2.Table<Choose>() select i).ToList();
+        //    }
+        //}
+
+        //public IEnumerable<Choose> GetAccountAsync_Choose(int id)
+        //{
+        //    lock (locker)
+        //    {
+        //        return (from i in _database2.Table<Choose>() select i).ToList();
+        //        //return (from i in _database2.Table<TempAccount>() orderby id descending select i).ToList();
+        //    }
+        //}
+
+        //public int SaveAccountAsync_Choose(Choose tmp)
+        //{
+        //    lock (locker)
+        //    {
+        //        return _database2.Insert(tmp);
+
+        //    }
+        //}
+
+        //public int DeleteItem_Choose(int id)
+        //{
+        //    lock (locker)
+        //    {
+        //        return _database2.Delete<Choose>(id);
+        //    }
+        //}
+
+        //public void DeleteAll_Choose()
+        //{
+        //    var fooItems = GetAccountAsync2_Choose().ToList();
+        //    foreach (var item in fooItems)
+        //    {
+        //        DeleteItem_Choose(item.ID);
+        //        //Console.WriteLine("KLKLKL " + item.account);
+        //    }
+        //}
+
+        // Reset
+        //public IEnumerable<Reset> GetAccountAsync2_Reset()
+        //{
+        //    lock (locker)
+        //    {
+        //        return (from i in _database2.Table<Reset>() select i).ToList();
+        //    }
+        //}
+
+        //public IEnumerable<Reset> GetAccountAsync_Reset(int id)
+        //{
+        //    lock (locker)
+        //    {
+        //        return (from i in _database2.Table<Reset>() select i).ToList();
+        //        //return (from i in _database2.Table<TempAccount>() orderby id descending select i).ToList();
+        //    }
+        //}
+        //public int SaveAccountAsync_Reset(Reset tmp)
+        //{
+        //    lock (locker)
+        //    {
+        //        return _database2.Insert(tmp);
+
+        //    }
+        //}
+        //public int DeleteItem_Reset(int id)
+        //{
+        //    lock (locker)
+        //    {
+        //        return _database2.Delete<Reset>(id);
+        //    }
+        //}
+        //public void DeleteAll_Reset()
+        //{
+        //    var fooItems = GetAccountAsync2_Reset().ToList();
+        //    foreach (var item in fooItems)
+        //    {
+        //        DeleteItem_Reset(item.ID);
+        //        //Console.WriteLine("KLKLKL " + item.account);
+        //    }
+        //}
+
+        //// Entry_DB
+        //public IEnumerable<Entry_DB> GetAccountAsync2_Entry_DB()
+        //{
+        //    lock (locker)
+        //    {
+        //        return (from i in _database2.Table<Entry_DB>() select i).ToList();
+        //    }
+        //}
+        //public IEnumerable<Entry_DB> GetAccountAsync_Entry_DB(int id)
+        //{
+        //    lock (locker)
+        //    {
+        //        return (from i in _database2.Table<Entry_DB>() select i).ToList();
+        //        //return (from i in _database2.Table<TempAccount>() orderby id descending select i).ToList();
+        //    }
+        //}
+        //public int DeleteItem_Entry_DB(int id)
+        //{
+        //    lock (locker)
+        //    {
+        //        return _database2.Delete<Entry_DB>(id);
+        //    }
+        //}
+        //public int SaveAccountAsync_Entry_DB(Entry_DB tmp)
+        //{
+        //    lock (locker)
+        //    {
+        //        return _database2.Insert(tmp);
+
+        //    }
+        //}
+        //public void DeleteAll_Entry_DB()
+        //{
+        //    var fooItems = GetAccountAsync2_Entry_DB().ToList();
+        //    foreach (var item in fooItems)
+        //    {
+        //        DeleteItem_Entry_DB(item.ID);
+        //        //Console.WriteLine("KLKLKL " + item.account);
+        //    }
+        //}
+
+        //// Entry_txt
+        //public IEnumerable<Entry_txt> GetAccountAsync2_Entry_txt()
+        //{
+        //    lock (locker)
+        //    {
+        //        return (from i in _database2.Table<Entry_txt>() select i).ToList();
+        //    }
+        //}
+        //public IEnumerable<Entry_txt> GetAccountAsync_Entry_txt(int id)
+        //{
+        //    lock (locker)
+        //    {
+        //        return (from i in _database2.Table<Entry_txt>() select i).ToList();
+        //        //return (from i in _database2.Table<TempAccount>() orderby id descending select i).ToList();
+        //    }
+        //}
+        //public int DeleteItem_Entry_txt(int id)
+        //{
+        //    lock (locker)
+        //    {
+        //        return _database2.Delete<Entry_txt>(id);
+        //    }
+        //}
+        //public int SaveAccountAsync_Entry_txt(Entry_txt tmp)
+        //{
+        //    lock (locker)
+        //    {
+        //        return _database2.Insert(tmp);
+
+        //    }
+        //}
+        //public void DeleteAll_Entry_txt()
+        //{
+        //    var fooItems = GetAccountAsync2_Entry_txt().ToList();
+        //    foreach (var item in fooItems)
+        //    {
+        //        DeleteItem_Entry_txt(item.ID);
+        //        //Console.WriteLine("KLKLKL " + item.account);
+        //    }
+        //}
+
+        //// ResetLabel
+        //public IEnumerable<ResetLabel> GetAccountAsync2_ResetLabel()
+        //{
+        //    lock (locker)
+        //    {
+        //        return (from i in _database2.Table<ResetLabel>() select i).ToList();
+        //    }
+        //}
+        //public IEnumerable<ResetLabel> GetAccountAsync_ResetLabel(int id)
+        //{
+        //    lock (locker)
+        //    {
+        //        return (from i in _database2.Table<ResetLabel>() select i).ToList();
+        //        //return (from i in _database2.Table<TempAccount>() orderby id descending select i).ToList();
+        //    }
+        //}
+        //public int SaveAccountAsync_ResetLabel(ResetLabel tmp)
+        //{
+        //    lock (locker)
+        //    {
+        //        return _database2.Insert(tmp);
+               
+        //    }
+        //}
+        //public int DeleteItem_ResetLabel(int id)
+        //{
+        //    lock (locker)
+        //    {
+        //        return _database2.Delete<ResetLabel>(id);
+        //    }
+        //}
+        //public void DeleteAll_ResetLabel()
+        //{
+        //    var fooItems = GetAccountAsync2_ResetLabel().ToList();
+        //    foreach (var item in fooItems)
+        //    {
+        //        DeleteItem_ResetLabel(item.ID);
+        //        //Console.WriteLine("KLKLKL " + item.account);
+        //    }
+        //}
     }
 }

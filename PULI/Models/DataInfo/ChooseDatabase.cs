@@ -28,10 +28,6 @@ namespace PULI.Models.DataInfo
             //_database.CreateTableAsync<Account>().Wait(); // 創造
         }
 
-        //public Task<List<Account>> GetAccountAsync()
-        //{
-        //    return _database.Table<Account>().ToListAsync();
-        //}
 
         public IEnumerable<Choose> GetAccountAsync(int id)
         {
@@ -75,25 +71,13 @@ namespace PULI.Models.DataInfo
             }
         }
 
-        //public Task<int> SaveAccountAsync(Account acc)
-        //{
-        //    return _database.InsertAsync(acc);
-        //}
 
         public int SaveAccountAsync(Choose tmp)
         {
             lock (locker)
             {
                 return _database22.Insert(tmp);
-                //if (tmp.ID != 0)
-                //{
-                //    _database2.Update(tmp);
-                //    return tmp.ID;
-                //}
-                //else
-                //{
-                //    return _database2.Insert(tmp);
-                //}
+                
             }
         }
 
@@ -110,13 +94,7 @@ namespace PULI.Models.DataInfo
                 //return tmp.ID;
             }
         }
-        //public Task<int> DeleteAllAccountAsync(Account acc)
-        //{
-        //    return _database.DeleteAsync(acc);
-        //    //_database.DropTableAsync<Account>().Wait(acc); // 清空
-        //    //_database.CreateTableAsync<Account>().Wait(); // 創造
-        //}
-
+     
 
 
         public int DeleteItem(int id)

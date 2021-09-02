@@ -724,7 +724,7 @@ namespace PULI.Views
             //Console.WriteLine("GPS" + gps);
             //Address = allclientList[i].ClientAddress;
             //Console.WriteLine("Address" + Address);
-            Console.WriteLine("NAMEEEE~~" + totalList.daily_shipments[setnum].ct_name);
+            //Console.WriteLine("NAMEEEE~~" + totalList.daily_shipments[setnum].ct_name);
 
             MyMap.Pins.Clear(); // 要加下一個點之前先把之前的點清掉
             PinMarker3(param.PNG_MAP_HOME_ICON, new Xamarin.Forms.GoogleMaps.Position(lat, lot), home, gps);
@@ -2014,7 +2014,7 @@ namespace PULI.Views
                                                 //////Console.WriteLine("w~~~ " + i.qb03[d]);
                                                 //ANS2 = Convert.ToString(qb03_count);
                                                 temp_j = i.qb03[d]; // 答案
-                                                Console.WriteLine("YYYYYY_jj~~ " + temp_j);
+                                                //Console.WriteLine("YYYYYY_jj~~ " + temp_j);
                                             }
 
                                             //////Console.WriteLine("qb0322~~ " + qb03_count);

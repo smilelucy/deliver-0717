@@ -78,7 +78,7 @@ namespace PULI.Views
         private bool isReset = false; // for判斷是否進入label顏色判斷
         private bool isDB = false; // for判斷是否進入label顏色判斷
         public static string color; // for存紅色還是綠色
-        
+
 
         public TestView()
         {
@@ -91,16 +91,16 @@ namespace PULI.Views
             //TempAddDB = new TempAddDatabase();
             //TempAddDB_else = new TempAddDatabase_else();
             //////Console.WriteLine("way~~ " + MainPage.Loginway);
-            
-            
+
+
             Messager();
-            
+
         }
-        
+
 
         private async void setView()
         {
-            Console.WriteLine("WAY~~~" + MainPage.Loginway);
+            //Console.WriteLine("WAY~~~" + MainPage.Loginway);
             //name_list.Clear();
             //repeat_list.Clear();
             //tmp_name_list.Clear();
@@ -110,7 +110,7 @@ namespace PULI.Views
             questionnaireslist = await web.Get_Questionaire(MainPage.token);
             try
             {
-                if(questionnaireslist != null)
+                if (questionnaireslist != null)
                 {
                     DateTime today = DateTime.Now;
                     string[] Day = new string[] { "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日" };
@@ -153,10 +153,10 @@ namespace PULI.Views
                     }
                     ////Console.WriteLine("result_num~~~ " + result_num);
                     ////Console.WriteLine("result~~ " + result);
-                    Console.WriteLine("COUNT~~~" + questionnaireslist.Count());
+                    //Console.WriteLine("COUNT~~~" + questionnaireslist.Count());
                     foreach (var a in questionnaireslist)
                     {
-                        
+
                         foreach (var i in a.qbs)
                         {
                             IsResetList[a.wqh_s_num + i.qb_order] = false;
@@ -291,13 +291,13 @@ namespace PULI.Views
                                                 TmpAnsList_same_wqh[a.ClientName + i.qb_order] = a.wqh_s_num;
                                                 //TmpAnsList_same_wqh.Add(a.ClientName + i.qb_order, a.wqh_s_num);
                                                 TmpAnsList_same[a.wqh_s_num + i.qb_order] = TempAnsList.wqb01; // 給點擊同上判斷用
-                                                //var check2 = new checkInfo
-                                                //{
-                                                //    wqh_s_num = a.wqh_s_num, // 問卷編號
-                                                //    qh_s_num = a.qh_s_num, // 工作問卷編號
-                                                //    qb_s_num = i.qb_s_num, // 問題編號(第幾題)
-                                                //    wqb01 = TempAnsList.wqb01,// 答案
-                                                    
+                                                                                                               //var check2 = new checkInfo
+                                                                                                               //{
+                                                                                                               //    wqh_s_num = a.wqh_s_num, // 問卷編號
+                                                                                                               //    qh_s_num = a.qh_s_num, // 工作問卷編號
+                                                                                                               //    qb_s_num = i.qb_s_num, // 問題編號(第幾題)
+                                                                                                               //    wqb01 = TempAnsList.wqb01,// 答案
+
 
                                                 //};
                                                 //checkList.Add(check2);
@@ -342,7 +342,7 @@ namespace PULI.Views
                         else
                         {
                             await DisplayAlert("系統訊息", "後臺尚未產生資料或資料接收不齊全", "ok");
-                            Console.WriteLine("AAA");
+                            //Console.WriteLine("AAA");
                         }
                     }
 
@@ -356,7 +356,7 @@ namespace PULI.Views
                                 RepeatOrNotList[questionnaireslist[a].ClientName] = -1;
                                 RepeatOrNotList_for_second_name[questionnaireslist[a].ClientName + questionnaireslist[a].wqh_s_num] = 2;
                                 //Console.WriteLine("同上questionnaireslist[a].wqh_s_num~AA~ " + questionnaireslist[a].wqh_s_num);
-                               //Console.WriteLine("同上questionnaireslist[a].name~~ " + questionnaireslist[a].ClientName);
+                                //Console.WriteLine("同上questionnaireslist[a].name~~ " + questionnaireslist[a].ClientName);
                                 //////Console.WriteLine("Addrepeat~~ ");
                                 //////Console.WriteLine("Add~~~ " + questionnaireslist[a].ClientName);
 
@@ -392,7 +392,7 @@ namespace PULI.Views
                             //Console.WriteLine("qb03~~ " + value.qbs[0].qb03);
                             //Console.WriteLine("valuename~~ " + value.ClientName);
                             questionView(value);
-                            
+
 
 
 
@@ -410,7 +410,7 @@ namespace PULI.Views
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 DisplayAlert("系統訊息", "Error : deliver_testview_questionairelist", "ok");
                 Console.WriteLine("ex~~~ " + ex.ToString());
@@ -421,7 +421,7 @@ namespace PULI.Views
             //}
             //else
             //{
-                
+
             ////Console.WriteLine("counttttt~~ " + questionnaireslist.Count());
             ////foreach (var value in questionnaireslist)
             ////{
@@ -432,13 +432,13 @@ namespace PULI.Views
             ////    Console.WriteLine("qb03~~ " + value.qbs.Count());
             ////}
 
-            
+
             //}
 
 
-            
-            
-           
+
+
+
         }
 
         private void Deleteuploadlist(string _wqh_s_num, string _qb_order)
@@ -577,55 +577,55 @@ namespace PULI.Views
             TFcount = 0;
             ques_stack_count = 0;
             quesStack.Children.Clear();
-            
+
             if (questionnaireslist.Count() != 0) // 防呆(防止後台沒傳資料近來)
             {
-                //for (int b = 0; b < questionnaireslist.Count(); b++) // 0是初始 1是正常 -1是重複
-                //{
-                //    if (questionnaireslist[b].ClientName != "")
-                //    {
-                //        RepeatOrNotList[questionnaireslist[b].ClientName] = 0;
-                //    }
-                //    //else
-                //    //{
-                //    //    await DisplayAlert("系統訊息", "後臺尚未產生資料或資料接收不齊全", "ok");
-                //    //    Console.WriteLine("AAA");
-                //    //}
-                //}
+                for (int b = 0; b < questionnaireslist.Count(); b++) // 0是初始 1是正常 -1是重複
+                {
+                    if (questionnaireslist[b].ClientName != "")
+                    {
+                        RepeatOrNotList[questionnaireslist[b].ClientName] = 0;
+                    }
+                    //else
+                    //{
+                    //    await DisplayAlert("系統訊息", "後臺尚未產生資料或資料接收不齊全", "ok");
+                    //    Console.WriteLine("AAA");
+                    //}
+                }
 
-                //for (int a = 0; a < questionnaireslist.Count(); a++) // 0是初始 1是正常 -1是重複
-                //{
-                //    if (questionnaireslist[a].ClientName != "")
-                //    {
-                //        //check_name_list.Add(questionnaireslist[a].ClientName);
-                //        if (RepeatOrNotList.ContainsKey(questionnaireslist[a].ClientName) == true && RepeatOrNotList[questionnaireslist[a].ClientName] == 1)
-                //        {
-                //            RepeatOrNotList[questionnaireslist[a].ClientName] = -1;
-                //            RepeatOrNotList_for_second_name[questionnaireslist[a].ClientName + questionnaireslist[a].wqh_s_num] = 2;
-                //            //Console.WriteLine("同上questionnaireslist[a].wqh_s_num~AA~ " + questionnaireslist[a].wqh_s_num);
-                //            //Console.WriteLine("同上questionnaireslist[a].name~~ " + questionnaireslist[a].ClientName);
-                //            //////Console.WriteLine("Addrepeat~~ ");
-                //            //////Console.WriteLine("Add~~~ " + questionnaireslist[a].ClientName);
+                for (int a = 0; a < questionnaireslist.Count(); a++) // 0是初始 1是正常 -1是重複
+                {
+                    if (questionnaireslist[a].ClientName != "")
+                    {
+                        //check_name_list.Add(questionnaireslist[a].ClientName);
+                        if (RepeatOrNotList.ContainsKey(questionnaireslist[a].ClientName) == true && RepeatOrNotList[questionnaireslist[a].ClientName] == 1)
+                        {
+                            RepeatOrNotList[questionnaireslist[a].ClientName] = -1;
+                            RepeatOrNotList_for_second_name[questionnaireslist[a].ClientName + questionnaireslist[a].wqh_s_num] = 2;
+                            //Console.WriteLine("同上questionnaireslist[a].wqh_s_num~AA~ " + questionnaireslist[a].wqh_s_num);
+                            //Console.WriteLine("同上questionnaireslist[a].name~~ " + questionnaireslist[a].ClientName);
+                            //////Console.WriteLine("Addrepeat~~ ");
+                            //////Console.WriteLine("Add~~~ " + questionnaireslist[a].ClientName);
 
-                //        }
-                //        else
-                //        {
-                //            RepeatOrNotList[questionnaireslist[a].ClientName] = 1;
-                //            RepeatOrNotList_for_second_name[questionnaireslist[a].ClientName + questionnaireslist[a].wqh_s_num] = 1;
-                //            //Console.WriteLine("同上questionnaireslist[a].wqh_s_num~BB~ " + questionnaireslist[a].wqh_s_num);
-                //            //Console.WriteLine("同上questionnaireslist[a].name~~ " + questionnaireslist[a].ClientName);
-                //        }
-                //    }
-                //    //else
-                //    //{
-                //    //    await DisplayAlert("系統訊息", "後臺尚未產生資料或資料接收不齊全", "ok");
-                //    //}
+                        }
+                        else
+                        {
+                            RepeatOrNotList[questionnaireslist[a].ClientName] = 1;
+                            RepeatOrNotList_for_second_name[questionnaireslist[a].ClientName + questionnaireslist[a].wqh_s_num] = 1;
+                            //Console.WriteLine("同上questionnaireslist[a].wqh_s_num~BB~ " + questionnaireslist[a].wqh_s_num);
+                            //Console.WriteLine("同上questionnaireslist[a].name~~ " + questionnaireslist[a].ClientName);
+                        }
+                    }
+                    //else
+                    //{
+                    //    await DisplayAlert("系統訊息", "後臺尚未產生資料或資料接收不齊全", "ok");
+                    //}
 
-                //}
+                }
                 foreach (var value in questionnaireslist)
                 {
                     //Console.WriteLine("value.qb_s_num~~ " + value.qb_s_num);
-                    Console.WriteLine("clname~~~ " + value.ClientName);
+                    //Console.WriteLine("clname~~~ " + value.ClientName);
                     if (value.ClientName != "")
                     {
 
@@ -661,7 +661,7 @@ namespace PULI.Views
                     //}
 
                 }
-                
+
                 /*
                  * 
                 foreach (var value in questionnaireslist)
@@ -676,12 +676,12 @@ namespace PULI.Views
         }
         //public StackLayout set_questionnaire_qborder03(string _wqh_s_num, string choice)
         //{
-            
+
         //    var stack_ques_qborder04 = new StackLayout
         //    {
         //        Orientation = StackOrientation.Horizontal
         //    };
-            
+
         //    //for(int i = 0; i < qborder4list.Count(); i++)
         //    //{
         //        if (choice == "停餐")
@@ -717,7 +717,7 @@ namespace PULI.Views
         //            Children = { check_box },
         //            ClassId = _wqh_s_num + "4"
         //        };
-                
+
         //        var label_stack = new StackLayout
         //        {
         //            Orientation = StackOrientation.Horizontal,
@@ -744,7 +744,7 @@ namespace PULI.Views
         //        //}
         //        //else
         //        //{
-                    
+
         //        //}
         //        final_stack_qborder04 = new StackLayout
         //        {
@@ -759,7 +759,7 @@ namespace PULI.Views
         //        };
         //        total_stack_qborder04.Children.Add(final_stack_qborder04);
 
-                
+
         //        Console.WriteLine("stackcount~~　" + total_stack_qborder04.Children.Count());
         //        //if(total_stack_qborder04.Children.Count() == 4)
         //        //{
@@ -790,16 +790,16 @@ namespace PULI.Views
 
         //}
 
-        
+
 
         public StackLayout questionView(questionnaire questionList)
         {
-            Console.WriteLine("aa");
+            //Console.WriteLine("aa");
             //StackLayout stack2 = new StackLayout // stacklayout看裡面包什麼寫在children
             //{
             //    Children = { }
             //};
-            Console.WriteLine("AAAAname~ " + questionList.ClientName);
+            //Console.WriteLine("AAAAname~ " + questionList.ClientName);
             ////////Console.WriteLine("qb_s_num~~ " + questionList.qbs[0].qb_s_num);
             //Console.WriteLine("AAA~~ " + TmpAnsList_same_wqh["林十1"]);
             //string value;
@@ -831,14 +831,14 @@ namespace PULI.Views
 
                 Children = { label_name, label_wqh, label_qh } // 標題(人名 + 問卷編號 +)
             };
-            
-           
 
 
-            
+
+
+
             foreach (var i in questionList.qbs) // 看問題有幾個就跑幾次
             {
-                
+
                 //////Console.WriteLine("qqq~~ " + i.qb03[0]);
                 //////Console.WriteLine("qb03~~~" + i.qb03.Count());
                 //Console.WriteLine("qborderIN~~~ " + i.qb_order);
@@ -847,14 +847,14 @@ namespace PULI.Views
                 //_QB_S_NUM = i.qb_s_num;
                 //Console.WriteLine("_QB_S_NUM@@@@ " + _QB_S_NUM);
                 //Console.WriteLine("qbssss~~ " + questionList.qb_s_num);
-                
+
 
                 EntrytxtList[questionList.wqh_s_num + i.qb_order] = "";
-                
+
                 EntryList[questionList.ClientName] = false;
-                
-                
-              
+
+
+
                 //////////Console.WriteLine("ischoose~~~ " + IsChoose);
                 ////////Console.WriteLine("order~~~ " + i.qb_order);
                 ////////Console.WriteLine("AAA~~~ " + CheckboxList[questionList.ClientName]);
@@ -864,12 +864,12 @@ namespace PULI.Views
                 ////////Console.WriteLine("out~~ " + questionList.wqh_s_num);
                 //Console.WriteLine("name~~~ " + questionList.ClientName);
                 //Console.WriteLine("CheckboxList~~~ " + CheckboxList[questionList.ClientName + questionList.qb_s_num]);
-                if(i.qb02 == "3")
+                if (i.qb02 == "3")
                 {
                     ques5_qb_s_num = i.qb_s_num;
-                    Console.WriteLine("ques5_qb_s_num~~~ " + ques5_qb_s_num);
+                    //Console.WriteLine("ques5_qb_s_num~~~ " + ques5_qb_s_num);
                 }
-                if(Int32.Parse(i.qb_order) < 4 ) // 還沒有觸發第四題之前
+                if (Int32.Parse(i.qb_order) < 4) // 還沒有觸發第四題之前
                 {
                     ////////Console.WriteLine("inA~~~~ ");
                     if (i.qb02 == "1") // 問題類型(假設1是是否題 / 單選)(沒有entry版本)
@@ -896,9 +896,9 @@ namespace PULI.Views
 
                         ////////Console.WriteLine("value~~ " + questionList.wqh_s_num);
                         ////////Console.WriteLine("checklist2~count0~ " + checkList2.Count());
-                        Console.WriteLine("name~~~ " + questionList.ClientName);
-                        Console.WriteLine("count!!!~~ " + questionList.qbs.Count());
-                        if(i.qb_order == "3" && questionList.qbs.Count() == 5 && result_num < 3) // 星期一 ~ 三的第三題只有已發選項
+                        //Console.WriteLine("name~~~ " + questionList.ClientName);
+                        //Console.WriteLine("count!!!~~ " + questionList.qbs.Count());
+                        if (i.qb_order == "3" && questionList.qbs.Count() == 5 && result_num < 3) // 星期一 ~ 三的第三題只有已發選項
                         {
                             ////Console.WriteLine("nameBB~~~ " + questionList.ClientName);
                             ////Console.WriteLine("countBB~~~ " + questionList.qbs.Count());
@@ -946,7 +946,7 @@ namespace PULI.Views
 
                                         ////////Console.WriteLine("qb0322~~ " + qb03_count);
                                     }
-                                   
+
                                     checkList2.RemoveAll(x => x.wqh_s_num == questionList.wqh_s_num && x.qb_order == i.qb_order);
                                     var check3 = new checkInfo
                                     {
@@ -959,13 +959,13 @@ namespace PULI.Views
                                     };
                                     ////////Console.WriteLine("count1~~ " + checkList2.Count());
                                     checkList2.Add(check3); // for save
-                                    //AddSaveToDB(questionList.wqh_s_num, i.qb_order);
-                                    //TmpAddList[questionList.wqh_s_num + i.qb_order] = true;
-                                    ////////Console.WriteLine("checkList2Add2~~~ ");
-                                   
+                                                            //AddSaveToDB(questionList.wqh_s_num, i.qb_order);
+                                                            //TmpAddList[questionList.wqh_s_num + i.qb_order] = true;
+                                                            ////////Console.WriteLine("checkList2Add2~~~ ");
+
                                 }
                                 // 跑選是的reset把checkList抓回來判斷
-                                
+
                                 for (int a = 0; a < checkList.Count(); a++)
                                 {
                                     ////////Console.WriteLine("check11~~ " + checkList[a].wqh_s_num);
@@ -974,7 +974,7 @@ namespace PULI.Views
                                     if (checkList[a].wqh_s_num == questionList.wqh_s_num) // 判斷問卷編號
                                     {
                                         ////////Console.WriteLine("IMMMM222~~~~");
-                                        Console.WriteLine("RRR_AAQ~~~ " + questionList.wqh_s_num);
+                                        //Console.WriteLine("RRR_AAQ~~~ " + questionList.wqh_s_num);
                                         if (checkList[a].qb_s_num == i.qb_s_num) // 判斷哪一題
                                         {
                                             //////Console.WriteLine("BBQ~~~~ " + i.qb_s_num);
@@ -1011,7 +1011,7 @@ namespace PULI.Views
 
                                 bool ischeck = (temp_j == j) ? true : false; // 再把剛剛的答案抓回來判斷(如果是就把他勾起來)
                                                                              //IsChoose = (temp_j == "未發") ? true : false; // 如果答案是 是 -> entry顯示
-                                
+
 
 
                                 //////Console.WriteLine("TFcount~~~" + TFcount);
@@ -1101,7 +1101,7 @@ namespace PULI.Views
 
                                             //////Console.WriteLine("qb0322~~ " + qb03_count);
                                         }
-                                        
+
                                         if (j == "是" || j == "已發")
                                         {
                                             color = "Red";
@@ -1146,7 +1146,7 @@ namespace PULI.Views
                                                               ////////Console.WriteLine("CHECK" + checkList[0]);
                                         isReset = true;
                                         //reset();
-                                        
+
                                         if ((stack_ques.Children.Where(x => x.ClassId == stack_name).ToString()) != null)
                                         {
                                             Console.WriteLine("成功~~ ");
@@ -1169,7 +1169,7 @@ namespace PULI.Views
 
                                         }
 
-                                       
+
                                     }
                                     else // 選否則不用reset
                                     {
@@ -1184,50 +1184,50 @@ namespace PULI.Views
                                         }
                                     }
 
-                                    
+
                                 };
 
                                 //if (isReset == true || isDB == true)
                                 //{
-                                    if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Red" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
-                                    {
-                                        //////Console.WriteLine("JKL1~~~ " + j);
-                                        if (j == "是" || j == "已發")
-                                        {
-                                            label_check = new Label // 選項
-                                            {
-                                                Text = j,
-                                                TextColor = Color.Red,
-                                                FontSize = 20
-                                            };
-                                            ////isRed = false;
-                                        }
-
-                                    }
-                                    else if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Green" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
-                                    {
-                                        //////Console.WriteLine("JKL2~~~ " + j);
-                                        if (j == "未發" || j == "否")
-                                        {
-                                            label_check = new Label // 選項
-                                            {
-                                                Text = j,
-                                                TextColor = Color.Green,
-                                                FontSize = 20
-                                            };
-                                            //isGreen = false;
-                                        }
-
-                                    }
-                                    else
+                                if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Red" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
+                                {
+                                    //////Console.WriteLine("JKL1~~~ " + j);
+                                    if (j == "是" || j == "已發")
                                     {
                                         label_check = new Label // 選項
                                         {
                                             Text = j,
-                                            TextColor = Color.Black,
+                                            TextColor = Color.Red,
                                             FontSize = 20
                                         };
+                                        ////isRed = false;
                                     }
+
+                                }
+                                else if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Green" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
+                                {
+                                    //////Console.WriteLine("JKL2~~~ " + j);
+                                    if (j == "未發" || j == "否")
+                                    {
+                                        label_check = new Label // 選項
+                                        {
+                                            Text = j,
+                                            TextColor = Color.Green,
+                                            FontSize = 20
+                                        };
+                                        //isGreen = false;
+                                    }
+
+                                }
+                                else
+                                {
+                                    label_check = new Label // 選項
+                                    {
+                                        Text = j,
+                                        TextColor = Color.Black,
+                                        FontSize = 20
+                                    };
+                                }
                                 //}
                                 //else
                                 //{
@@ -1316,7 +1316,7 @@ namespace PULI.Views
 
                                             ////////Console.WriteLine("qb0322~~ " + qb03_count);
                                         }
-                                       
+
                                         checkList2.RemoveAll(x => x.wqh_s_num == questionList.wqh_s_num && x.qb_order == i.qb_order);
                                         var check3 = new checkInfo
                                         {
@@ -1329,7 +1329,7 @@ namespace PULI.Views
                                         };
                                         ////////Console.WriteLine("count1~~ " + checkList2.Count());
                                         checkList2.Add(check3); // for save
-                                      
+
 
                                         //};
                                     }
@@ -1375,11 +1375,11 @@ namespace PULI.Views
                                             }
                                         }
                                     }
-                                    
+
 
                                     bool ischeck = (temp_j == j) ? true : false; // 再把剛剛的答案抓回來判斷(如果是就把他勾起來)
                                                                                  //bool isMoreCheckbox = (temp_j == "未發") ? true : false; // 如果答案是 未發 -> 第四題顯示
-                                    
+
                                     ////////Console.WriteLine("j1~~~ " + j);
                                     ////////Console.WriteLine("isckeck1~~~~ " + ischeck);
                                     ////////Console.WriteLine("isRed1~~~ " + //isRed);
@@ -1478,7 +1478,7 @@ namespace PULI.Views
 
                                                 ////////Console.WriteLine("qb0322~~ " + qb03_count);
                                             }
-                                           
+
                                             // 把問題選項存進資料庫
                                             //////////Console.WriteLine("questionList.wqh_s_num~~" + questionList.wqh_s_num);
                                             ////////Console.WriteLine("qh~s~num~~~ " + questionList.qh_s_num);
@@ -1504,7 +1504,7 @@ namespace PULI.Views
                                             TmpAnsList_same_wqh[questionList.ClientName + i.qb_order] = questionList.wqh_s_num;
                                             TmpAnsList_same[questionList.wqh_s_num + i.qb_order] = j;
                                             QuesSaveToSQLite(questionList.wqh_s_num, questionList.qh_s_num, i.qb_s_num, j, questionList.ClientName, i.qb_order);
-                                            
+
                                             ////////Console.WriteLine("j_HERE~~~ " + j);
                                             var check = new checkInfo
                                             {
@@ -1549,7 +1549,7 @@ namespace PULI.Views
                                             //if (j == "未發")
                                             //{
                                             //    ////Console.WriteLine("reset~friday~~ ");
-                                                
+
                                             //}
                                             //else
                                             //{
@@ -1627,7 +1627,7 @@ namespace PULI.Views
                                             //        //    Children = { label_check },
                                             //        //    ClassId = questionList.wqh_s_num + i.qb_order
                                             //        //};
-                                                    
+
                                             //        if (YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] == "")
                                             //        {
                                             //            if (j == "已發")
@@ -1862,71 +1862,71 @@ namespace PULI.Views
                                     ////Console.WriteLine("isRest~~ " + isReset);
                                     //if (isReset == true || isDB == true)
                                     //{
-                                        if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Red" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
+                                    if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Red" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
+                                    {
+                                        ////Console.WriteLine("A~~~ " + j);
+                                        if (j == "是" || j == "未發")
                                         {
-                                            ////Console.WriteLine("A~~~ " + j);
-                                            if (j == "是" || j == "未發")
+                                            ////Console.WriteLine("A-1~~~ ");
+                                            label_check = new Label // 選項
                                             {
-                                                ////Console.WriteLine("A-1~~~ ");
-                                                label_check = new Label // 選項
-                                                {
-                                                    Text = j,
-                                                    TextColor = Color.Red,
-                                                    FontSize = 20
-                                                };
-                                                ////isRed = false;
-                                            }
-                                            else
-                                            {
-                                                ////Console.WriteLine("A-2~~~ ");
-                                                ////////Console.WriteLine("JKL1+1~~~ " + j);
-                                                label_check = new Label // 選項
-                                                {
-                                                    Text = j,
-                                                    TextColor = Color.Black,
-                                                    FontSize = 20
-                                                };
-                                            }
-                                        }
-                                        else if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Green" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
-                                        {
-                                            ////Console.WriteLine("B~~~~ " + j);
-                                            if (j == "已發" || j == "否")
-                                            {
-                                                ////Console.WriteLine("B-1~~~ ");
-                                                label_check = new Label // 選項
-                                                {
-                                                    Text = j,
-                                                    TextColor = Color.Green,
-                                                    FontSize = 20
-                                                };
-                                                //isGreen = false;
-                                            }
-                                            else
-                                            {
-                                                ////Console.WriteLine("B-2~~~ ");
-                                                ////////Console.WriteLine("JKL2-1~~~ " + j);
-                                                label_check = new Label // 選項
-                                                {
-                                                    Text = j,
-                                                    TextColor = Color.Black,
-                                                    FontSize = 20
-                                                };
-                                            }
+                                                Text = j,
+                                                TextColor = Color.Red,
+                                                FontSize = 20
+                                            };
+                                            ////isRed = false;
                                         }
                                         else
                                         {
-                                            ////Console.WriteLine("C~~~ " + j);
-                                            ////Console.WriteLine("ques~~ " + questionList.qbs[2].qb03[0]);
-                                            ////Console.WriteLine("j~~~ " + j);
+                                            ////Console.WriteLine("A-2~~~ ");
+                                            ////////Console.WriteLine("JKL1+1~~~ " + j);
                                             label_check = new Label // 選項
                                             {
                                                 Text = j,
                                                 TextColor = Color.Black,
                                                 FontSize = 20
                                             };
-
                                         }
+                                    }
+                                    else if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Green" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
+                                    {
+                                        ////Console.WriteLine("B~~~~ " + j);
+                                        if (j == "已發" || j == "否")
+                                        {
+                                            ////Console.WriteLine("B-1~~~ ");
+                                            label_check = new Label // 選項
+                                            {
+                                                Text = j,
+                                                TextColor = Color.Green,
+                                                FontSize = 20
+                                            };
+                                            //isGreen = false;
+                                        }
+                                        else
+                                        {
+                                            ////Console.WriteLine("B-2~~~ ");
+                                            ////////Console.WriteLine("JKL2-1~~~ " + j);
+                                            label_check = new Label // 選項
+                                            {
+                                                Text = j,
+                                                TextColor = Color.Black,
+                                                FontSize = 20
+                                            };
+                                        }
+                                    }
+                                    else
+                                    {
+                                        ////Console.WriteLine("C~~~ " + j);
+                                        ////Console.WriteLine("ques~~ " + questionList.qbs[2].qb03[0]);
+                                        ////Console.WriteLine("j~~~ " + j);
+                                        label_check = new Label // 選項
+                                        {
+                                            Text = j,
+                                            TextColor = Color.Black,
+                                            FontSize = 20
+                                        };
+
+                                    }
                                     //}
                                     //else
                                     //{
@@ -1966,14 +1966,14 @@ namespace PULI.Views
                                 }
                                 else if (i.qb_order == "3" && questionList.qbs.Count() == 5 && result.Equals("星期四") == true) // 星期四的第三題
                                 {
-                                    
+
                                     TFcount = TFcount + 1;
                                     var temp_j = "";
                                     var temp_value = "";
                                     //var temp_j_map = "";
                                     //var temp_value_map = "";
                                     ////////Console.WriteLine("checklist2~count1~ " + checkList2.Count());
-                                    
+
                                     if (TmpAnsList.ContainsKey(questionList.wqh_s_num + questionList.ClientName + i.qb_order) && TmpAnsList[questionList.wqh_s_num + questionList.ClientName + i.qb_order] != "")
                                     {
                                         ////////Console.WriteLine("first~~ ");
@@ -2002,7 +2002,7 @@ namespace PULI.Views
 
                                             ////////Console.WriteLine("qb0322~~ " + qb03_count);
                                         }
-                                      
+
                                         checkList2.RemoveAll(x => x.wqh_s_num == questionList.wqh_s_num && x.qb_order == i.qb_order);
                                         var check3 = new checkInfo
                                         {
@@ -2015,7 +2015,7 @@ namespace PULI.Views
                                         };
                                         ////////Console.WriteLine("count1~~ " + checkList2.Count());
                                         checkList2.Add(check3); // for save
-                                      
+
                                     }
                                     // 跑選是的reset把checkList抓回來判斷
                                     ////////Console.WriteLine("checklist2~count3~ " + checkList2.Count());
@@ -2059,14 +2059,14 @@ namespace PULI.Views
                                             }
                                         }
                                     }
-                                   
+
                                     //~~~~~~~~~~~~~~~~~~~~`
                                     ////////Console.WriteLine("tempj~~LA~~ " + temp_j);
                                     ////////Console.WriteLine("j~~ " + j);
 
                                     bool ischeck = (temp_j == j) ? true : false; // 再把剛剛的答案抓回來判斷(如果是就把他勾起來)
                                                                                  //bool isMoreCheckbox = (temp_j == "未發") ? true : false; // 如果答案是 未發 -> 第四題顯示
-                                    
+
                                     ////////Console.WriteLine("j1~~~ " + j);
                                     ////////Console.WriteLine("isckeck1~~~~ " + ischeck);
                                     ////////Console.WriteLine("isRed1~~~ " + //isRed);
@@ -2166,7 +2166,7 @@ namespace PULI.Views
 
                                                 ////////Console.WriteLine("qb0322~~ " + qb03_count);
                                             }
-                                            
+
                                             // 把問題選項存進資料庫
                                             //////////Console.WriteLine("questionList.wqh_s_num~~" + questionList.wqh_s_num);
                                             ////////Console.WriteLine("qh~s~num~~~ " + questionList.qh_s_num);
@@ -2308,7 +2308,7 @@ namespace PULI.Views
                                             //        //    Children = { label_check },
                                             //        //    ClassId = questionList.wqh_s_num + i.qb_order
                                             //        //};
-                                                    
+
                                             //        if (YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] == "")
                                             //        {
                                             //            if (j == "已發")
@@ -2408,7 +2408,7 @@ namespace PULI.Views
                                             //                YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
                                             //                YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "已發";
                                             //                ResetLabelSaveToDB(questionList.wqh_s_num, i.qb_order, "已發");
-                                                           
+
                                             //            }
                                             //            else
                                             //            {
@@ -2515,7 +2515,7 @@ namespace PULI.Views
                                             //        }
                                             //    }
                                             //}
-                                            
+
 
 
                                         }
@@ -2548,71 +2548,71 @@ namespace PULI.Views
                                     //Console.WriteLine("color22~~~ " + IsGreenOrRed[questionList.wqh_s_num + i.qb_order]);
                                     //if (isReset == true || isDB == true)
                                     //{
-                                        if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Red" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
+                                    if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Red" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
+                                    {
+                                        //Console.WriteLine("A~~~ " + j);
+                                        if (j == "是" || j == "未發")
                                         {
-                                            //Console.WriteLine("A~~~ " + j);
-                                            if (j == "是" || j == "未發")
+                                            ////Console.WriteLine("A-1~~~ ");
+                                            label_check = new Label // 選項
                                             {
-                                                ////Console.WriteLine("A-1~~~ ");
-                                                label_check = new Label // 選項
-                                                {
-                                                    Text = j,
-                                                    TextColor = Color.Red,
-                                                    FontSize = 20
-                                                };
-                                                ////isRed = false;
-                                            }
-                                            else
-                                            {
-                                                ////Console.WriteLine("A-2~~~ ");
-                                                ////////Console.WriteLine("JKL1+1~~~ " + j);
-                                                label_check = new Label // 選項
-                                                {
-                                                    Text = j,
-                                                    TextColor = Color.Black,
-                                                    FontSize = 20
-                                                };
-                                            }
-                                        }
-                                        else if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Green" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
-                                        {
-                                            //Console.WriteLine("B~~~~ " + j);
-                                            if (j == "已發" || j == "否")
-                                            {
-                                                //Console.WriteLine("B-1~~~ ");
-                                                label_check = new Label // 選項
-                                                {
-                                                    Text = j,
-                                                    TextColor = Color.Green,
-                                                    FontSize = 20
-                                                };
-                                                //isGreen = false;
-                                            }
-                                            else
-                                            {
-                                                ////Console.WriteLine("B-2~~~ ");
-                                                ////////Console.WriteLine("JKL2-1~~~ " + j);
-                                                label_check = new Label // 選項
-                                                {
-                                                    Text = j,
-                                                    TextColor = Color.Black,
-                                                    FontSize = 20
-                                                };
-                                            }
+                                                Text = j,
+                                                TextColor = Color.Red,
+                                                FontSize = 20
+                                            };
+                                            ////isRed = false;
                                         }
                                         else
                                         {
-                                            ////Console.WriteLine("C~~~ " + j);
-                                            ////Console.WriteLine("ques~~ " + questionList.qbs[2].qb03[0]);
-                                            ////Console.WriteLine("j~~~ " + j);
+                                            ////Console.WriteLine("A-2~~~ ");
+                                            ////////Console.WriteLine("JKL1+1~~~ " + j);
                                             label_check = new Label // 選項
                                             {
                                                 Text = j,
                                                 TextColor = Color.Black,
                                                 FontSize = 20
                                             };
-
                                         }
+                                    }
+                                    else if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Green" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
+                                    {
+                                        //Console.WriteLine("B~~~~ " + j);
+                                        if (j == "已發" || j == "否")
+                                        {
+                                            //Console.WriteLine("B-1~~~ ");
+                                            label_check = new Label // 選項
+                                            {
+                                                Text = j,
+                                                TextColor = Color.Green,
+                                                FontSize = 20
+                                            };
+                                            //isGreen = false;
+                                        }
+                                        else
+                                        {
+                                            ////Console.WriteLine("B-2~~~ ");
+                                            ////////Console.WriteLine("JKL2-1~~~ " + j);
+                                            label_check = new Label // 選項
+                                            {
+                                                Text = j,
+                                                TextColor = Color.Black,
+                                                FontSize = 20
+                                            };
+                                        }
+                                    }
+                                    else
+                                    {
+                                        ////Console.WriteLine("C~~~ " + j);
+                                        ////Console.WriteLine("ques~~ " + questionList.qbs[2].qb03[0]);
+                                        ////Console.WriteLine("j~~~ " + j);
+                                        label_check = new Label // 選項
+                                        {
+                                            Text = j,
+                                            TextColor = Color.Black,
+                                            FontSize = 20
+                                        };
+
+                                    }
                                     //}
                                     //else
                                     //{
@@ -2665,7 +2665,7 @@ namespace PULI.Views
                                 }
                                 else // 其他
                                 {
-                                    if(i.qb_order == "1")
+                                    if (i.qb_order == "1")
                                     {
                                         //Console.WriteLine("qborder1~~in~~~");
                                         //Console.WriteLine("qborder~~~ " + i.qb_order);
@@ -2728,7 +2728,7 @@ namespace PULI.Views
                                             };
                                             ////////Console.WriteLine("count1~~ " + checkList2.Count());
                                             checkList2.Add(check3); // for save
-                                                                   
+
                                         }
                                         // 跑選是的reset把checkList抓回來判斷
                                         //////Console.WriteLine("checklist2~count3~ " + checkList2.Count());
@@ -2756,7 +2756,7 @@ namespace PULI.Views
                                                             //////Console.WriteLine("w~~~ " + i.qb03[d]);
                                                             //////Console.WriteLine("check~~ " + checkList[a].wqb01);
                                                             //////Console.WriteLine("qb0311~~ " + qb03_count);
-                                                           // Console.WriteLine("AAAA_j~~ " + j);
+                                                            // Console.WriteLine("AAAA_j~~ " + j);
                                                             //////Console.WriteLine("w~~~ " + i.qb03[d]);
                                                             //ANS2 = Convert.ToString(qb03_count);
                                                             temp_j = i.qb03[d]; // 答案
@@ -2777,7 +2777,7 @@ namespace PULI.Views
                                         //Console.WriteLine("YYYYYY_jj~~ " + temp_j);
                                         bool ischeck = (temp_j == j) ? true : false; // 再把剛剛的答案抓回來判斷(如果是就把他勾起來)
                                                                                      //bool isMoreCheckbox = (temp_j == "未發") ? true : false; // 如果答案是 未發 -> 第四題顯示
-                                        
+
                                         //////Console.WriteLine("j3~~~ " + j);
                                         //////Console.WriteLine("isckeck3~~~~ " + ischeck);
                                         //////Console.WriteLine("isRed3~~~ " + //isRed);
@@ -2830,7 +2830,7 @@ namespace PULI.Views
                                                     }
 
                                                 }
-                                              
+
                                                 //////Console.WriteLine("jjj~~~ " + j);
                                                 if (j == "未發")
                                                 {
@@ -2839,7 +2839,7 @@ namespace PULI.Views
                                                     ChooseSaveToDB(questionList.ClientName, true);
                                                     //////Console.WriteLine("LLL~~~ " + IsChoose);
                                                 }
-                                                
+
                                                 for (int d = 0; d < i.qb03.Count(); d++)
                                                 {
                                                     //Console.WriteLine("j00~~ " + j);
@@ -2916,8 +2916,8 @@ namespace PULI.Views
                                                                       ////////Console.WriteLine("CHECK" + checkList[0]);
                                                 ///
                                                 //reset();
-                                                
-                                                
+
+
                                                 if ((stack_ques.Children.Where(x => x.ClassId == stack_name).ToString()) != null)
                                                 {
                                                     Console.WriteLine("成功~~ ");
@@ -2927,7 +2927,7 @@ namespace PULI.Views
                                                     //    Children = { label_check },
                                                     //    ClassId = questionList.wqh_s_num + i.qb_order
                                                     //};
-                                                    
+
                                                     if (YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] == "")
                                                     {
                                                         if (j == "否")
@@ -2992,7 +2992,7 @@ namespace PULI.Views
                                                             };
                                                             stack_ques.Children.Insert(3, label_check_test);
                                                             // 處理checkbox
-                                                            
+
                                                             checkboxDictionary[questionList.wqh_s_num + "否" + i.qb_order].IsChecked = false;
 
                                                             //stack_ques.Children.RemoveAt(0); // 把"否"綠色的checkbox刪掉
@@ -3091,16 +3091,16 @@ namespace PULI.Views
                                                         ResetLabelSaveToDB(questionList.wqh_s_num, i.qb_order, "是");
                                                     }
                                                 }
-                                                
-
-                                                
-                                                
 
 
-                                                    
 
-                                                
-                                                
+
+
+
+
+
+
+
 
                                                 // 因為+entry之前畫面已run好，所以要+entry要重run一次再把選項抓回來填進去
 
@@ -3136,63 +3136,24 @@ namespace PULI.Views
                                         ////////Console.WriteLine("WWW~~~ " + IsResetList[questionList.wqh_s_num + i.qb_order]);
                                         //if (isReset == true || isDB == true)
                                         //{
-                                            if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Green" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
+                                        if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Green" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
+                                        {
+                                            //Console.WriteLine("JKL1~~~ " + j);
+                                            if (j == "是")
                                             {
-                                                //Console.WriteLine("JKL1~~~ " + j);
-                                                if (j == "是")
+                                                label_check = new Label // 選項
                                                 {
-                                                    label_check = new Label // 選項
-                                                    {
-                                                        Text = j,
-                                                        TextColor = Color.Green,
-                                                        //Margin = new Thickness(-10,0,0,0),
-                                                        FontSize = 20
-                                                    };
-                                                    ////isRed = false;
-                                                    //isReset = false;
-                                                }
-                                                else
-                                                {
-                                                    //////Console.WriteLine("JKL1-1~~~ " + j);
-                                                    label_check = new Label // 選項
-                                                    {
-                                                        Text = j,
-                                                        TextColor = Color.Black,
-                                                        FontSize = 20
-                                                    };
-                                                }
-
-                                            }
-                                            else if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Red" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
-                                            {
-                                                //////Console.WriteLine("JKL2~~~ " + j);
-                                                if (j == "否")
-                                                {
-                                                    label_check = new Label // 選項
-                                                    {
-                                                        Text = j,
-                                                        TextColor = Color.Red,
-                                                        //Margin = new Thickness(-10, 0, 0, 0),
-                                                        FontSize = 20
-                                                    };
-                                                    //isGreen = false;
-                                                    //isReset = false;
-                                                }
-                                                else
-                                                {
-                                                    //////Console.WriteLine("JKL2-1~~~ " + j);
-                                                    label_check = new Label // 選項
-                                                    {
-                                                        Text = j,
-                                                        TextColor = Color.Black,
-                                                        FontSize = 20
-                                                    };
-                                                }
-
+                                                    Text = j,
+                                                    TextColor = Color.Green,
+                                                    //Margin = new Thickness(-10,0,0,0),
+                                                    FontSize = 20
+                                                };
+                                                ////isRed = false;
+                                                //isReset = false;
                                             }
                                             else
                                             {
-                                                //////Console.WriteLine("JKL3~~~ " + j);
+                                                //////Console.WriteLine("JKL1-1~~~ " + j);
                                                 label_check = new Label // 選項
                                                 {
                                                     Text = j,
@@ -3200,6 +3161,45 @@ namespace PULI.Views
                                                     FontSize = 20
                                                 };
                                             }
+
+                                        }
+                                        else if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Red" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
+                                        {
+                                            //////Console.WriteLine("JKL2~~~ " + j);
+                                            if (j == "否")
+                                            {
+                                                label_check = new Label // 選項
+                                                {
+                                                    Text = j,
+                                                    TextColor = Color.Red,
+                                                    //Margin = new Thickness(-10, 0, 0, 0),
+                                                    FontSize = 20
+                                                };
+                                                //isGreen = false;
+                                                //isReset = false;
+                                            }
+                                            else
+                                            {
+                                                //////Console.WriteLine("JKL2-1~~~ " + j);
+                                                label_check = new Label // 選項
+                                                {
+                                                    Text = j,
+                                                    TextColor = Color.Black,
+                                                    FontSize = 20
+                                                };
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            //////Console.WriteLine("JKL3~~~ " + j);
+                                            label_check = new Label // 選項
+                                            {
+                                                Text = j,
+                                                TextColor = Color.Black,
+                                                FontSize = 20
+                                            };
+                                        }
                                         //}
                                         //else
                                         //{
@@ -3230,7 +3230,7 @@ namespace PULI.Views
                                         var key = questionList.wqh_s_num + j + i.qb_order;
                                         Console.WriteLine("wqh~~ " + questionList.wqh_s_num);
                                         Console.WriteLine("j~~ " + j);
-                                        if(checkboxDictionary.ContainsKey(key) == false)
+                                        if (checkboxDictionary.ContainsKey(key) == false)
                                         {
                                             checkboxDictionary.Add(key, check_box);
                                         }
@@ -3248,7 +3248,7 @@ namespace PULI.Views
                                         stack_ques.Children.Add(stack_check);
                                         stack_ques.Children.Add(label_stack);
                                     }
-                                    else if(i.qb_order == "2")
+                                    else if (i.qb_order == "2")
                                     {
                                         //Console.WriteLine("qborder_2_in~~~ ");
                                         //Console.WriteLine("qborder~~~ " + i.qb_order);
@@ -3272,7 +3272,7 @@ namespace PULI.Views
                                         if (TmpAnsList.ContainsKey(questionList.wqh_s_num + questionList.ClientName + i.qb_order) && TmpAnsList[questionList.wqh_s_num + questionList.ClientName + i.qb_order] != "")
                                         {
                                             //////Console.WriteLine("third~~ ");
-                                           // Console.WriteLine("wqh2222~~ " + questionList.wqh_s_num);
+                                            // Console.WriteLine("wqh2222~~ " + questionList.wqh_s_num);
                                             //Console.WriteLine("qborder~~~ " + i.qb_order);
                                             var _wqhsnum = questionList.wqh_s_num;
                                             temp_j = TmpAnsList[questionList.wqh_s_num + questionList.ClientName + i.qb_order];
@@ -3312,20 +3312,20 @@ namespace PULI.Views
                                             };
                                             ////////Console.WriteLine("count1~~ " + checkList2.Count());
                                             checkList2.Add(check3); // for save
-                                           // Console.WriteLine("ch~~ " + checkList.Count());
+                                                                    // Console.WriteLine("ch~~ " + checkList.Count());
                                             checkList.Add(check3);
-                                           // Console.WriteLine("ch2~~~ " + checkList.Count());
+                                            // Console.WriteLine("ch2~~~ " + checkList.Count());
                                         }
                                         // 跑選是的reset把checkList抓回來判斷
                                         //////Console.WriteLine("checklist2~count3~ " + checkList2.Count());
                                         for (int a = 0; a < checkList.Count(); a++)
                                         {
-                                           // Console.WriteLine("check11~~ " + checkList[a].wqh_s_num);
+                                            // Console.WriteLine("check11~~ " + checkList[a].wqh_s_num);
                                             //Console.WriteLine("ques11~~~ " + questionList.wqh_s_num);
                                             ////////Console.WriteLine("COUNT222~~~~" + MapView.AccDatabase.GetAccountAsync2().Count());
                                             if (checkList[a].wqh_s_num == questionList.wqh_s_num) // 判斷問卷編號
                                             {
-                                               // Console.WriteLine("IMMMM222~~~~");
+                                                // Console.WriteLine("IMMMM222~~~~");
                                                 //Console.WriteLine("AAQ~~~ " + questionList.wqh_s_num);
                                                 if (checkList[a].qb_s_num == i.qb_s_num) // 判斷哪一題
                                                 {
@@ -3358,7 +3358,7 @@ namespace PULI.Views
                                                 }
                                             }
                                         }
-                                       // Console.WriteLine("temp_j~~~ " + questionList.wqh_s_num + temp_j);
+                                        // Console.WriteLine("temp_j~~~ " + questionList.wqh_s_num + temp_j);
                                         //Console.WriteLine("j~~~ " + questionList.wqh_s_num + j);
 
 
@@ -3389,8 +3389,8 @@ namespace PULI.Views
                                         else
                                         {
                                             //RadioButton rbtn1 = new RadioButton();
-                                            
-                                            
+
+
                                             check_box = new CheckBox // 產生checkbox
                                             {
 
@@ -3427,7 +3427,7 @@ namespace PULI.Views
                                                     }
 
                                                 }
-                                                
+
 
                                                 //////Console.WriteLine("jjj~~~ " + j);
                                                 if (j == "未發")
@@ -3533,7 +3533,7 @@ namespace PULI.Views
                                                 //reset();
 
 
-                                                
+
                                                 // 第一次點checkbox
                                                 if ((stack_ques.Children.Where(x => x.ClassId == stack_name).ToString()) != null)
                                                 {
@@ -3544,7 +3544,7 @@ namespace PULI.Views
                                                     //    Children = { label_check },
                                                     //    ClassId = questionList.wqh_s_num + i.qb_order
                                                     //};
-                                                    
+
                                                     if (YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] == "")
                                                     {
                                                         if (j == "否")
@@ -3681,7 +3681,7 @@ namespace PULI.Views
                                                             //    ClassId = questionList.wqh_s_num + i.qb_order
                                                             //};
                                                             //stack_ques.Children.Insert(2, check_box); // 把"否"沒有顏色的checkbox加回來
-                                                            
+
                                                             stack_ques.Children.RemoveAt(3);
                                                             //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "";
                                                             //YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] = "否";
@@ -4085,7 +4085,7 @@ namespace PULI.Views
                                             //else // 選否則不用reset
                                             //{
                                             //    Console.WriteLine("false~~ ");
-                                               
+
                                             //    for (int a = 0; a < checkList.Count(); a++)
                                             //    {
                                             //        if (checkList[a].qb_s_num == i.qb_s_num)
@@ -4106,63 +4106,24 @@ namespace PULI.Views
                                         //if (isReset == true || isDB == true)
                                         //{
                                         //Console.WriteLine("WWW~~~~ " + IsGreenOrRed[questionList.wqh_s_num + i.qb_order]); 
-                                            if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Red" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
+                                        if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Red" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
+                                        {
+                                            //////Console.WriteLine("JKL1~~~ " + j);
+                                            if (j == "是" || j == "已發")
                                             {
-                                                //////Console.WriteLine("JKL1~~~ " + j);
-                                                if (j == "是" || j == "已發")
+                                                label_check = new Label // 選項
                                                 {
-                                                    label_check = new Label // 選項
-                                                    {
-                                                        Text = j,
-                                                        TextColor = Color.Red,
-                                                        //Margin = new Thickness(-10,0,0,0),
-                                                        FontSize = 20
-                                                    };
-                                                    ////isRed = false;
-                                                    //isReset = false;
-                                                }
-                                                else
-                                                {
-                                                    //////Console.WriteLine("JKL1-1~~~ " + j);
-                                                    label_check = new Label // 選項
-                                                    {
-                                                        Text = j,
-                                                        TextColor = Color.Black,
-                                                        FontSize = 20
-                                                    };
-                                                }
-
-                                            }
-                                            else if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Green" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
-                                            {
-                                                Console.WriteLine("JKL2~~~ " + j);
-                                                if (j == "未發" || j == "否")
-                                                {
-                                                    label_check = new Label // 選項
-                                                    {
-                                                        Text = j,
-                                                        TextColor = Color.Green,
-                                                        //Margin = new Thickness(-10, 0, 0, 0),
-                                                        FontSize = 20
-                                                    };
-                                                    //isGreen = false;
-                                                    //isReset = false;
-                                                }
-                                                else
-                                                {
-                                                    //////Console.WriteLine("JKL2-1~~~ " + j);
-                                                    label_check = new Label // 選項
-                                                    {
-                                                        Text = j,
-                                                        TextColor = Color.Black,
-                                                        FontSize = 20
-                                                    };
-                                                }
-
+                                                    Text = j,
+                                                    TextColor = Color.Red,
+                                                    //Margin = new Thickness(-10,0,0,0),
+                                                    FontSize = 20
+                                                };
+                                                ////isRed = false;
+                                                //isReset = false;
                                             }
                                             else
                                             {
-                                                //////Console.WriteLine("JKL3~~~ " + j);
+                                                //////Console.WriteLine("JKL1-1~~~ " + j);
                                                 label_check = new Label // 選項
                                                 {
                                                     Text = j,
@@ -4170,6 +4131,45 @@ namespace PULI.Views
                                                     FontSize = 20
                                                 };
                                             }
+
+                                        }
+                                        else if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Green" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
+                                        {
+                                            Console.WriteLine("JKL2~~~ " + j);
+                                            if (j == "未發" || j == "否")
+                                            {
+                                                label_check = new Label // 選項
+                                                {
+                                                    Text = j,
+                                                    TextColor = Color.Green,
+                                                    //Margin = new Thickness(-10, 0, 0, 0),
+                                                    FontSize = 20
+                                                };
+                                                //isGreen = false;
+                                                //isReset = false;
+                                            }
+                                            else
+                                            {
+                                                //////Console.WriteLine("JKL2-1~~~ " + j);
+                                                label_check = new Label // 選項
+                                                {
+                                                    Text = j,
+                                                    TextColor = Color.Black,
+                                                    FontSize = 20
+                                                };
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            //////Console.WriteLine("JKL3~~~ " + j);
+                                            label_check = new Label // 選項
+                                            {
+                                                Text = j,
+                                                TextColor = Color.Black,
+                                                FontSize = 20
+                                            };
+                                        }
                                         //}
                                         //else
                                         //{
@@ -4222,7 +4222,7 @@ namespace PULI.Views
 
                                         //stack_ques.remove
                                     }
-                                    else 
+                                    else
                                     {
                                         //Console.WriteLine("qborder_2_in~~~ ");
                                         //Console.WriteLine("qborder~~~ " + i.qb_order);
@@ -4286,7 +4286,7 @@ namespace PULI.Views
                                             };
                                             ////////Console.WriteLine("count1~~ " + checkList2.Count());
                                             checkList2.Add(check3); // for save
-                                                                   
+
                                         }
                                         // 跑選是的reset把checkList抓回來判斷
                                         //////Console.WriteLine("checklist2~count3~ " + checkList2.Count());
@@ -4335,7 +4335,7 @@ namespace PULI.Views
 
                                         bool ischeck = (temp_j == j) ? true : false; // 再把剛剛的答案抓回來判斷(如果是就把他勾起來)
                                                                                      //bool isMoreCheckbox = (temp_j == "未發") ? true : false; // 如果答案是 未發 -> 第四題顯示
-                                       
+
                                         //////Console.WriteLine("j3~~~ " + j);
                                         //////Console.WriteLine("isckeck3~~~~ " + ischeck);
                                         //////Console.WriteLine("isRed3~~~ " + //isRed);
@@ -4388,7 +4388,7 @@ namespace PULI.Views
                                                     }
 
                                                 }
-                                                
+
                                                 //////Console.WriteLine("jjj~~~ " + j);
                                                 if (j == "未發")
                                                 {
@@ -4456,7 +4456,7 @@ namespace PULI.Views
                                                 TmpAnsList[questionList.wqh_s_num + questionList.ClientName + i.qb_order] = j;
                                                 TmpAnsList_same_wqh[questionList.ClientName + i.qb_order] = questionList.wqh_s_num;
                                                 TmpAnsList_same[questionList.wqh_s_num + i.qb_order] = j;
-                                                
+
                                                 QuesSaveToSQLite(questionList.wqh_s_num, questionList.qh_s_num, i.qb_s_num, j, questionList.ClientName, i.qb_order);
                                                 ResetSaveToDB(questionList.wqh_s_num, i.qb_order, color);
                                                 var check = new checkInfo
@@ -4485,7 +4485,7 @@ namespace PULI.Views
                                                                       ////////Console.WriteLine("CHECK" + checkList[0]);
                                                 ///
                                                 //reset();
-                                                
+
 
                                                 if ((stack_ques.Children.Where(x => x.ClassId == stack_name).ToString()) != null)
                                                 {
@@ -4496,7 +4496,7 @@ namespace PULI.Views
                                                     //    Children = { label_check },
                                                     //    ClassId = questionList.wqh_s_num + i.qb_order
                                                     //};
-                                                   
+
                                                     if (YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] == "")
                                                     {
                                                         if (j == "否")
@@ -4789,7 +4789,7 @@ namespace PULI.Views
                                                 }
                                             }
 
-                                           
+
                                         };
                                         //////Console.WriteLine("isReset~~~~ " + isReset);
                                         //////Console.WriteLine("AAA3~~~ " + questionList.wqh_s_num);
@@ -4799,63 +4799,24 @@ namespace PULI.Views
                                         ////////Console.WriteLine("WWW~~~ " + IsResetList[questionList.wqh_s_num + i.qb_order]);
                                         //if (isReset == true || isDB == true)
                                         //{
-                                            if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Red" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
+                                        if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Red" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
+                                        {
+                                            //////Console.WriteLine("JKL1~~~ " + j);
+                                            if (j == "是" || j == "已發")
                                             {
-                                                //////Console.WriteLine("JKL1~~~ " + j);
-                                                if (j == "是" || j == "已發")
+                                                label_check = new Label // 選項
                                                 {
-                                                    label_check = new Label // 選項
-                                                    {
-                                                        Text = j,
-                                                        TextColor = Color.Red,
-                                                        //Margin = new Thickness(-10,0,0,0),
-                                                        FontSize = 20
-                                                    };
-                                                    ////isRed = false;
-                                                    //isReset = false;
-                                                }
-                                                else
-                                                {
-                                                    //////Console.WriteLine("JKL1-1~~~ " + j);
-                                                    label_check = new Label // 選項
-                                                    {
-                                                        Text = j,
-                                                        TextColor = Color.Black,
-                                                        FontSize = 20
-                                                    };
-                                                }
-
-                                            }
-                                            else if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Green" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
-                                            {
-                                                //////Console.WriteLine("JKL2~~~ " + j);
-                                                if (j == "未發" || j == "否")
-                                                {
-                                                    label_check = new Label // 選項
-                                                    {
-                                                        Text = j,
-                                                        TextColor = Color.Green,
-                                                        //Margin = new Thickness(-10, 0, 0, 0),
-                                                        FontSize = 20
-                                                    };
-                                                    //isGreen = false;
-                                                    //isReset = false;
-                                                }
-                                                else
-                                                {
-                                                    //////Console.WriteLine("JKL2-1~~~ " + j);
-                                                    label_check = new Label // 選項
-                                                    {
-                                                        Text = j,
-                                                        TextColor = Color.Black,
-                                                        FontSize = 20
-                                                    };
-                                                }
-
+                                                    Text = j,
+                                                    TextColor = Color.Red,
+                                                    //Margin = new Thickness(-10,0,0,0),
+                                                    FontSize = 20
+                                                };
+                                                ////isRed = false;
+                                                //isReset = false;
                                             }
                                             else
                                             {
-                                                //////Console.WriteLine("JKL3~~~ " + j);
+                                                //////Console.WriteLine("JKL1-1~~~ " + j);
                                                 label_check = new Label // 選項
                                                 {
                                                     Text = j,
@@ -4863,6 +4824,45 @@ namespace PULI.Views
                                                     FontSize = 20
                                                 };
                                             }
+
+                                        }
+                                        else if (IsGreenOrRed[questionList.wqh_s_num + i.qb_order] == "Green" && IsResetList[questionList.wqh_s_num + i.qb_order] == true)
+                                        {
+                                            //////Console.WriteLine("JKL2~~~ " + j);
+                                            if (j == "未發" || j == "否")
+                                            {
+                                                label_check = new Label // 選項
+                                                {
+                                                    Text = j,
+                                                    TextColor = Color.Green,
+                                                    //Margin = new Thickness(-10, 0, 0, 0),
+                                                    FontSize = 20
+                                                };
+                                                //isGreen = false;
+                                                //isReset = false;
+                                            }
+                                            else
+                                            {
+                                                //////Console.WriteLine("JKL2-1~~~ " + j);
+                                                label_check = new Label // 選項
+                                                {
+                                                    Text = j,
+                                                    TextColor = Color.Black,
+                                                    FontSize = 20
+                                                };
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            //////Console.WriteLine("JKL3~~~ " + j);
+                                            label_check = new Label // 選項
+                                            {
+                                                Text = j,
+                                                TextColor = Color.Black,
+                                                FontSize = 20
+                                            };
+                                        }
                                         //}
                                         //else
                                         //{
@@ -4911,18 +4911,18 @@ namespace PULI.Views
                                         stack_ques.Children.Add(stack_check);
                                         stack_ques.Children.Add(label_stack);
                                     }
-                                   
+
                                 }
                             }
                         }
 
 
 
-                        
+
                         int label_count_before = quesStack.Children.Count();
                         quesStack.Children.Add(stack); // 標題(人名 + 問卷編號 +)
                         int label_count_after = quesStack.Children.Count();
-                        if(label_count_after != label_count_before)
+                        if (label_count_after != label_count_before)
                         {
                             ques_stack_count++;
                         }
@@ -4932,7 +4932,7 @@ namespace PULI.Views
                         //quesStack.Children.Add(stack_ques);
                         var final_stack = new StackLayout
                         {
-                            
+
                             Orientation = StackOrientation.Vertical,
                             // stack_ques checkbox跟選項
                             Children = { label_que_name, stack_ques } // label_que_name 問題題號+題目
@@ -4942,7 +4942,7 @@ namespace PULI.Views
                         Frame frame = new Frame // frame包上面那個stacklayout
                         {
                             Padding = new Thickness(10, 5, 10, 5),
-                           Margin= new Thickness(5, 0, 5, 0),
+                            Margin = new Thickness(5, 0, 5, 0),
                             BackgroundColor = Color.FromHex("eddcd2"),
                             ClassId = questionList.ClientName + questionList.wqh_s_num + i.qb_order,
                             CornerRadius = 10,
@@ -4954,10 +4954,10 @@ namespace PULI.Views
                         {
                             Orientation = StackOrientation.Vertical
                         };
-                        
+
                         test_stack.Children.Add(frame);
-                       
-                        
+
+
 
                         //Stack_Number[questionList.ClientName + questionList.wqh_s_num + i.qb_order] = ques_stack_count;
                         int frame_count_before = quesStack.Children.Count();
@@ -4974,7 +4974,7 @@ namespace PULI.Views
 
                         Stack_Count[questionList.wqh_s_num + i.qb_order] = ques_stack_count;
                     }
-                    
+
                 }
                 else // CheckboxList[questionList.ClientName] == true，判斷是否選擇未發，觸發第四題
                 {
@@ -4990,7 +4990,7 @@ namespace PULI.Views
                             Qtype = "1";
                             //string set = questionList.wqh_s_num + i.qb_s_num;
                             //TmpCheckList[set] = false;
-                            if(i.qb_order == "4")
+                            if (i.qb_order == "4")
                             {
                                 Console.WriteLine("inD~~~~ ");
                                 var label_que_name = new Label // 問題題號+題目
@@ -5254,7 +5254,7 @@ namespace PULI.Views
                                             if (j == "其他")
                                             {
                                                 //reset();
-                                                
+
                                                 checkboxDictionary[questionList.wqh_s_num + "停餐" + i.qb_order].IsChecked = false;
                                                 checkboxDictionary[questionList.wqh_s_num + "缺少" + i.qb_order].IsChecked = false;
                                                 checkboxDictionary[questionList.wqh_s_num + "太多" + i.qb_order].IsChecked = false;
@@ -5302,7 +5302,7 @@ namespace PULI.Views
                                                     //////Console.WriteLine("entrytxt33~~~ " + EntrytxtList[questionList.wqh_s_num + i.qb_order]);
 
                                                     checkList2.Add(check3_entry); // for save
-                                                                            //checkList2.Add(check3); // for save
+                                                                                  //checkList2.Add(check3); // for save
                                                     EntrytxtSaveDB(questionList.ClientName, questionList.wqh_s_num, EntrytxtList[questionList.wqh_s_num + "5"]);
 
 
@@ -5320,16 +5320,16 @@ namespace PULI.Views
                                                     Content = entry_stack
                                                 };
                                                 quesStack.Children.Insert(Stack_Count[questionList.wqh_s_num + i.qb_order], entry_frame);
-                                                
+
                                             }
                                             else
                                             {
-                                                if(j == "停餐")
+                                                if (j == "停餐")
                                                 {
                                                     checkboxDictionary[questionList.wqh_s_num + "缺少" + i.qb_order].IsChecked = false;
                                                     checkboxDictionary[questionList.wqh_s_num + "太多" + i.qb_order].IsChecked = false;
                                                 }
-                                                else if(j == "缺少")
+                                                else if (j == "缺少")
                                                 {
                                                     checkboxDictionary[questionList.wqh_s_num + "停餐" + i.qb_order].IsChecked = false;
                                                     checkboxDictionary[questionList.wqh_s_num + "太多" + i.qb_order].IsChecked = false;
@@ -5734,7 +5734,7 @@ namespace PULI.Views
                                 //Stack_Count[questionList.wqh_s_num + i.qb_order] = ques_stack_count;
                                 Stack_Count[questionList.wqh_s_num + i.qb_order] = ques_stack_count;
                             }
-                            
+
 
                         }
 
@@ -5745,7 +5745,7 @@ namespace PULI.Views
                     var temp_value = "";
                     Console.WriteLine("問答~~~~ ");
                     ////////Console.WriteLine("Entry~~~ " + EntryList[questionList.wqh_s_num + i.qb_order]);
-                   
+
                     if (EntryDB.GetAccountAsync2().Count() > 0)
                     {
                         //////Console.WriteLine("entrya~~");
@@ -5847,7 +5847,7 @@ namespace PULI.Views
                         {
                             Placeholder = "請說明",
                             Text = EntrytxtList[questionList.wqh_s_num + i.qb_order],
-                           
+
                         };
                         entny.TextChanged += async (ss, ee) =>
                         {
@@ -5879,7 +5879,7 @@ namespace PULI.Views
                             checkList2.Add(check3); // for save
                             //checkList2.Add(check3); // for save
                             EntrytxtSaveDB(questionList.ClientName, questionList.wqh_s_num, EntrytxtList[questionList.wqh_s_num + i.qb_order]);
-                           
+
 
                         };
 
@@ -6302,13 +6302,13 @@ namespace PULI.Views
 
 
                 ////}
-                
+
             }
 
             //if(RepeatOrNotList_for_second_name[questionList.ClientName + questionList.wqh_s_num] == -1)
             if (RepeatOrNotList[questionList.ClientName] == -1) // 處理同上自動填答案
             {
-                if(RepeatOrNotList_for_second_name[questionList.ClientName + questionList.wqh_s_num] == 2)
+                if (RepeatOrNotList_for_second_name[questionList.ClientName + questionList.wqh_s_num] == 2)
                 {
                     ////Console.WriteLine("reapetin~~~ ");
                     //Console.WriteLine("_QB_S_NUM@@@@222 " + questionList.qb_s_num);
@@ -6641,7 +6641,7 @@ namespace PULI.Views
                                             //    Console.WriteLine("oldwqh~~ " + one_wqh);
                                             //    Console.WriteLine("oldans~~~ " + checkboxDictionary[one_wqh + "否" + a.qb_order].IsChecked);
                                             //    Console.WriteLine("newwqh~~~ " + questionList.wqh_s_num);
-                                                
+
                                             //    //checkboxDictionary[questionList.wqh_s_num + "是" + a.qb_order].IsChecked = false;
                                             //    //stack_ques.Children.RemoveAt(2);
                                             //    //var check_box_origin_true = new CheckBox // 產生checkbox
@@ -7024,7 +7024,7 @@ namespace PULI.Views
 
                                     }
                                 }
-                                
+
 
                                 //}
 
@@ -7033,27 +7033,27 @@ namespace PULI.Views
                         }
 
                     };
-                    
-                    
+
+
 
                     Console.WriteLine("同上~~~~ " + questionList.wqh_s_num);
                     int button_count_before = quesStack.Children.Count();
                     quesStack.Children.Add(button_stack);
                     int button_count_after = quesStack.Children.Count();
-                    if(button_count_before != button_count_after)
+                    if (button_count_before != button_count_after)
                     {
                         ques_stack_count++;
                     }
-                    
+
                     Stack_Count[questionList.wqh_s_num + "-1"] = ques_stack_count;
                     return null;
                 }
-                
+
             }
 
             return null;
         }
-        
+
 
         public void ChooseSaveToDB(string _clnName, bool _isChoose)
         {
@@ -7061,7 +7061,7 @@ namespace PULI.Views
             {
                 ClientName = _clnName,
                 ischoose = _isChoose,
-               
+
             });
         }
 
@@ -7108,11 +7108,11 @@ namespace PULI.Views
                 qb_order = _qb_order,
                 qb_s_num = _qb_s_num, // 問題編號
                 wqb01 = _wqb01,
-                
+
                 //wqb99 = entrytxt
             });
         }
-        public void EntrySaveToSQLite(string _wqh_s_num, string _qh_s_num, string _qb_s_num, string _clnName, string _qb_order,string _wqb01, string _entry)
+        public void EntrySaveToSQLite(string _wqh_s_num, string _qh_s_num, string _qb_s_num, string _clnName, string _qb_order, string _wqb01, string _entry)
         {
             //////Console.WriteLine("QUESADD~~~~");
             MapView.AccDatabase.SaveAccountAsync(new TempAccount
@@ -7158,7 +7158,7 @@ namespace PULI.Views
         //}
 
         // 重新整理button
-         private void reset2(object sender, EventArgs e)
+        private void reset2(object sender, EventArgs e)
         {
             //Console.WriteLine("isvisible11~~~ " + loadingLabel_2.IsVisible);
 
@@ -7167,14 +7167,14 @@ namespace PULI.Views
             //loadingLabel_2.SetValue(IsVisibleProperty, true);
             //DisplayAlert("系統訊息", "載入中，請稍後", "Ok");
             //Console.WriteLine("isvisible22~~~ " + loadingLabel_2.IsVisible);
-           
+
             quesStack.Children.Clear();
-           
+
             foreach (var value in questionnaireslist)
             {
                 //Console.WriteLine("value.qb_s_num~~ " + value.qb_s_num);
                 Console.WriteLine("clname~~~ " + value.ClientName);
-               
+
                 if (value.ClientName != "")
                 {
 
@@ -7196,7 +7196,7 @@ namespace PULI.Views
 
 
                     //////Console.WriteLine("value~~~" + value.ClientName);
-                    
+
                 }
                 else
                 {
@@ -7265,7 +7265,7 @@ namespace PULI.Views
             //////Console.WriteLine("WEBBBB" + web_res1);
             try
             {
-                
+
                 if (web_res1 == true)
                 {
                     //yesnoList.Clear();
@@ -7278,35 +7278,35 @@ namespace PULI.Views
                     ChooseDB.DeleteAll();
                     //if (ChooseDB.GetAccountAsync2().Count() == 0)
                     //{
-                        //////Console.WriteLine("chooseSUCESS");
+                    //////Console.WriteLine("chooseSUCESS");
                     //}
                     //else
                     //{
-                        //////Console.WriteLine("chooseFAIL");
-                        //fooDoggyDatabase.DeleteAll();
-                        //////Console.WriteLine("failQAQ~~~" + ChooseDB.GetAccountAsync2().Count());
+                    //////Console.WriteLine("chooseFAIL");
+                    //fooDoggyDatabase.DeleteAll();
+                    //////Console.WriteLine("failQAQ~~~" + ChooseDB.GetAccountAsync2().Count());
                     //}
                     ResetDB.DeleteAll();
                     //if (ResetDB.GetAccountAsync2().Count() == 0)
                     //{
-                        //////Console.WriteLine("resetSUCESS");
+                    //////Console.WriteLine("resetSUCESS");
                     //}
                     //else
                     //{
-                        //////Console.WriteLine("resetFAIL");
-                        //fooDoggyDatabase.DeleteAll();
-                        //////Console.WriteLine("failQAQ~~~" + ResetDB.GetAccountAsync2().Count());
+                    //////Console.WriteLine("resetFAIL");
+                    //fooDoggyDatabase.DeleteAll();
+                    //////Console.WriteLine("failQAQ~~~" + ResetDB.GetAccountAsync2().Count());
                     //}
                     EntryDB.DeleteAll();
                     //if (EntryDB.GetAccountAsync2().Count() == 0)
                     //{
-                        //////Console.WriteLine("entrySUCESS");
+                    //////Console.WriteLine("entrySUCESS");
                     //}
                     //else
                     //{
-                        //////Console.WriteLine("entryFAIL");
-                        //fooDoggyDatabase.DeleteAll();
-                        //////Console.WriteLine("failQAQ~~~" + EntryDB.GetAccountAsync2().Count());
+                    //////Console.WriteLine("entryFAIL");
+                    //fooDoggyDatabase.DeleteAll();
+                    //////Console.WriteLine("failQAQ~~~" + EntryDB.GetAccountAsync2().Count());
                     //}
                     EntrytxtDB.DeleteAll();
                     //if (EntrytxtDB.GetAccountAsync2().Count() == 0)
@@ -7328,7 +7328,7 @@ namespace PULI.Views
                     {
                         foreach (var i in a.qbs)
                         {
-                            
+
                             IsResetList[a.wqh_s_num + i.qb_order] = false;
                             IsGreenOrRed[a.wqh_s_num + i.qb_order] = "";
                             TmpAnsList[a.wqh_s_num + a.ClientName + i.qb_order] = "";
@@ -7346,36 +7346,36 @@ namespace PULI.Views
                     //////Console.WriteLine("testviewaccdatabasedeletesuccess~~");
                     //await Navigation.PopAsync();
                     await DisplayAlert("上傳結果", "上傳成功！", "ok");
-                   
-                    
+
+
                     ////////Console.WriteLine("Single~~~~");
                 }
-            } 
+            }
             catch (Exception ex)
             {
                 await DisplayAlert("提示", "上傳失敗！", "ok");
                 //////Console.WriteLine("Error_upload~~~ " + ex.ToString());
             }
 
-            
+
 
         }
 
-        
+
 
         private void Messager()
         {
             try
             {
-               
+
                 MessagingCenter.Subscribe<HomeView, bool>(this, "SET_FORM", (sender, arg) =>
                 {
                     // do something when the msg "UPDATE_BONUS" is recieved
                     if (arg)
                     {
-                       
+
                         entny = new Entry();
-                        
+
                         setView();
                     }
                 });
@@ -7384,21 +7384,21 @@ namespace PULI.Views
                     // do something when the msg "UPDATE_BONUS" is recieved
                     if (arg)
                     {
-                        
+
 
                         entny = new Entry();
-                        
+
                         setView();
                     }
                 });
-               
+
                 MessagingCenter.Subscribe<MapView, bool>(this, "SET_TMP_FORM", (sender, arg) =>
                 {
                     // do something when the msg "UPDATE_BONUS" is recieved
                     if (arg)
                     {
                         reset();
-                       
+
                     }
                 });
                 MessagingCenter.Subscribe<MemberView, bool>(this, "OUT", (sender, arg) =>
@@ -7420,7 +7420,7 @@ namespace PULI.Views
                         quesStack.Children.Clear();
                     }
                 });
-                
+
             }
             catch (Exception ex)
             {
@@ -7430,7 +7430,7 @@ namespace PULI.Views
 
         protected override void OnAppearing()
         {
-            
+
         }
 
 
