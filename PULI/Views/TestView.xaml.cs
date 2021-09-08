@@ -146,13 +146,23 @@ namespace PULI.Views
                     //////Console.WriteLine("result~~~ " + result);
                     for (int e = 0; e < Day.Count(); e++)
                     {
-                        if (result == Day[e])
+                        if(result == "星期六")
                         {
-                            result_num = e;
+                            result_num = 4;
+                            result = "星期五";
+                            //Console.WriteLine("day~~~ " + Day[4]);
+                        }
+                        else
+                        {
+                            if (result == Day[e])
+                            {
+                                result_num = e;
+                            }
                         }
                     }
-                    ////Console.WriteLine("result_num~~~ " + result_num);
-                    ////Console.WriteLine("result~~ " + result);
+                    Console.WriteLine("result_num~~~ " + result_num);
+                    
+                    Console.WriteLine("result~~ " + result);
                     //Console.WriteLine("COUNT~~~" + questionnaireslist.Count());
                     foreach (var a in questionnaireslist)
                     {
