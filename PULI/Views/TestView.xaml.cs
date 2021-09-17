@@ -160,9 +160,9 @@ namespace PULI.Views
                             }
                         }
                     }
-                    Console.WriteLine("result_num~~~ " + result_num);
+                    //Console.WriteLine("result_num~~~ " + result_num);
                     
-                    Console.WriteLine("result~~ " + result);
+                    //Console.WriteLine("result~~ " + result);
                     //Console.WriteLine("COUNT~~~" + questionnaireslist.Count());
                     foreach (var a in questionnaireslist)
                     {
@@ -182,7 +182,7 @@ namespace PULI.Views
                             RepeatOrNotList_for_second_name[a.ClientName + a.wqh_s_num] = 0;
                             //checkboxDictionary[a.wqh_s_num + "是"] = null;
                             //checkboxDictionary[a.wqh_s_num + "否"] = null;
-                            Console.WriteLine("name~~~ " + a.ClientName);
+                            //Console.WriteLine("name~~~ " + a.ClientName);
                             //Stack_Count[]
                         }
                     }

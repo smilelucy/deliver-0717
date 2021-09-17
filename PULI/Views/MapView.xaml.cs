@@ -40,7 +40,7 @@ namespace PULI.Views
         private double lat = 0;
         private double lot = 0;
         private string home;
-        
+        private string s_num;
         private string gps;
         private string gps2;
         private string bday;
@@ -321,6 +321,7 @@ namespace PULI.Views
                                     double lot = Convert.ToDouble(totalList.daily_shipments[i].ct17);
                                     Console.WriteLine("LOT" + lot);
                                     home = totalList.daily_shipments[i].ct_name + " 的家";
+                                    s_num = totalList.daily_shipments[i].s_num;
                                     ////Console.WriteLine("HOME" + home);
                                     gps = lat + "," + lot;
                                     //gender = allclientList[i].ct04; // 性別
@@ -509,8 +510,9 @@ namespace PULI.Views
                                     double lot = Convert.ToDouble(totalList.daily_shipments[i].ct17);
                                     ////Console.WriteLine("LOT" + lot);
                                     home = totalList.daily_shipments[i].ct_name + " 的家";
-                                    ////Console.WriteLine("HOME" + home);
-                                    gps = lat + "," + lot;
+                                s_num = totalList.daily_shipments[i].s_num;
+                                ////Console.WriteLine("HOME" + home);
+                                gps = lat + "," + lot;
                                     //gender = allclientList[i].ct04; // 性別
                                     //bday = allclientList[i].ct05; // 生日
                                     //phone = allclientList[i].ct06_homephone; // 家裡電話
@@ -1440,10 +1442,6 @@ namespace PULI.Views
                                         */
                                         //----------------------------------------------------------------------------------
                                         punch_out[totalList.daily_shipments[i].ct_name] = true;  // 簽退成功
-                                                                                                 //PunchSavepunchnameToSQLite(totalList.daily_shipments[setnum].ct_name);
-                                                                                                 //Console.WriteLine("punchout~~~gps" + punch_out[totalList.daily_shipments[setnum].ct_name] + "name " + totalList.daily_shipments[setnum].ct_name);
-                                                                                                 //punch_in[cList[i].ct_name] = false;
-                                                                                                 //which = 0;
                                                 punchList[totalList.daily_shipments[i].ct_name] = true; // 打卡完成設為true(簽到+簽退成功)
                                                 wifi_punch_out  = await web.Save_Punch_Out(MainPage.token, ct_s_num, sec_s_num, reh_s_num, mlo_s_num, position.Latitude, position.Longitude, time);
                                                 //Console.WriteLine("web_res2" + web_res2);
@@ -2886,6 +2884,9 @@ namespace PULI.Views
                         if (await Launcher.CanOpenAsync(uri))
                         {
                             await Launcher.OpenAsync(uri);
+                            UpdateWindow.IsVisible = true;
+                            update_closebtn.IsVisible = true; // 關閉按鈕
+                            updatebtn.IsVisible = true; // 校正按鈕
                         }
                         else
                         {
@@ -2910,24 +2911,14 @@ namespace PULI.Views
         {
             InfoWindow.IsVisible = false;
         }
+        private void update_closebtn_Clicked(object sender, EventArgs e)
+        {
+            UpdateWindow.IsVisible = false;
+        }
         private  async void navigatebtn_Clicked(object sender, EventArgs e)
         {
             try
             {
-                //var button = (Button)sender;
-                //var classId = button.ClassId;
-                ////Console.WriteLine("text~~~" + button.Text);
-                ////Console.WriteLine("classId~~~" + classId);
-                //for (int i = 0; i < allclientList.Count; i++) // 社工map
-                //{
-                //    if(classId == allclientList[i].ct01 + allclientList[i].ct02)
-                //    {
-                //        gps = allclientList[i].ct16 + "," + allclientList[i].ct17;
-                //    }
-                //}
-
-                //Console.WriteLine("CLICK");
-                //Console.WriteLine("PINGPD~~gps~~" + btnGPS);
                 string uri = "https://www.google.com.tw/maps/place/" + btnGPS;
                 //Console.WriteLine("URI" + uri);
                 if (await Launcher.CanOpenAsync(uri))
@@ -2942,6 +2933,18 @@ namespace PULI.Views
             catch (Exception ex)
             {
                 //Console.WriteLine(ex.ToString());
+            }
+        }
+        private async void updatebtn_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                web.update_gps(MainPage.token, s_num, position.Latitude.ToString(), position.Longitude.ToString());
+                Console.WriteLine("snum~~ " + s_num);
+            }
+            catch(Exception ex)
+            {
+
             }
         }
         //private void PinMarker2(string resource, Xamarin.Forms.GoogleMaps.Position position, string label, string gps, string gender, string bday, string phone)

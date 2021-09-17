@@ -205,6 +205,35 @@
                                                     Clicked="closebtn_Clicked"/>
             </StackLayout>
         </StackLayout>
+        <StackLayout x:Name="UpdateWindow" IsVisible="false" HorizontalOptions="Center" VerticalOptions="Center" >
+            <StackLayout Orientation="Horizontal" ClassId="{Binding ct01}">
+                <Button BackgroundColor="#f1ab86" IsVisible="false"
+                                                    Text="校正座標"
+                                                    TextColor="White"
+                                                    FontSize="20"
+                                                    BorderWidth="1"
+                                                   BorderRadius="30" 
+                                                    WidthRequest="120"
+                                                    HeightRequest="45" 
+                                                    HorizontalOptions="Center"
+                                                     
+                                                    x:Name="updatebtn"
+                                                    Margin="0,5,0,5"
+                                                    Clicked="updatebtn_Clicked"/>
+                <Button BackgroundColor="#f08080" IsVisible="false"
+                                                    Text="關閉"
+                                                    TextColor="White"
+                                                    FontSize="20"
+                                                    BorderWidth="1"
+                                                   BorderRadius="30" 
+                                                    WidthRequest="120"
+                                                    HeightRequest="45" 
+                                                    HorizontalOptions="Center"
+                                                    x:Name="update_closebtn"
+                                                    Margin="0,5,0,5"
+                                                    Clicked="update_closebtn_Clicked"/>
+            </StackLayout>
+        </StackLayout>
         
       
     </StackLayout>

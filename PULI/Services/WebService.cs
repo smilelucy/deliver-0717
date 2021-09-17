@@ -709,7 +709,7 @@ namespace Deliver.Services
         {
             try
             {
-                Console.WriteLine("postGPS~~~");
+                //Console.WriteLine("postGPS~~~");
                 HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Add("AUTHORIZATION", "Token " + token);
 
@@ -717,8 +717,8 @@ namespace Deliver.Services
                 //formData.Add(tempData);
                 formData.Add(new StringContent(lat), "gsl01");//打卡經度
                 formData.Add(new StringContent(lot), "gsl02");//打卡緯度
-                Console.WriteLine("yyyyyyyyyyyyyyy經度 : " + lat);
-                Console.WriteLine("xxxxxxxxxxxxxxxx緯度 : " + lot);
+                //Console.WriteLine("yyyyyyyyyyyyyyy經度 : " + lat);
+                //Console.WriteLine("xxxxxxxxxxxxxxxx緯度 : " + lot);
                 var request = new HttpRequestMessage()
                 {
                     RequestUri = new Uri(host + "/api/account/save_gps"),
@@ -728,17 +728,37 @@ namespace Deliver.Services
                 request.Headers.Add("Connection", "closed");
 
                 await client.SendAsync(request);//no response
-                //var response = await client.SendAsync(request);
-                //var content = await response.Content.ReadAsStringAsync();
-                ////Console.WriteLine("content" + content);
-                //if (response.IsSuccessStatusCode)
-                //{
-                //    //Console.WriteLine("uploadGPSsuccess~~~");
-                //}
-                //else
-                //{
-                //    //Console.WriteLine("uploadGPSfail~~~");
-                //}
+               
+            }
+            catch (Exception ex)
+            {
+                ;
+            }
+        }
+        public async void update_gps(string token, string s_num, string lat, string lot)
+        {
+            try
+            {
+                //Console.WriteLine("postGPS~~~");
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Add("AUTHORIZATION", "Token " + token);
+
+                MultipartFormDataContent formData = new MultipartFormDataContent();
+                //formData.Add(tempData);
+                formData.Add(new StringContent(s_num), "s_num");
+                formData.Add(new StringContent(lat), "dp17");//打卡經度
+                formData.Add(new StringContent(lot), "dp16");//打卡緯度
+                //Console.WriteLine("yyyyyyyyyyyyyyy經度 : " + lat);
+                //Console.WriteLine("xxxxxxxxxxxxxxxx緯度 : " + lot);
+                var request = new HttpRequestMessage()
+                {
+                    RequestUri = new Uri(host + "/api/dp/upd_client_gps"),
+                    Method = HttpMethod.Post,
+                    Content = formData
+                };
+                request.Headers.Add("Connection", "closed");
+
+                await client.SendAsync(request);//no response
 
             }
             catch (Exception ex)
@@ -746,7 +766,6 @@ namespace Deliver.Services
                 ;
             }
         }
-
         //public async Task<bool> Save_New_Client_Info2(string token, AllClientInfo insertList)
         //{
 
