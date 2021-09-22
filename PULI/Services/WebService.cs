@@ -735,7 +735,7 @@ namespace Deliver.Services
                 ;
             }
         }
-        public async void update_gps(string token, string s_num, string lat, string lot)
+        public async Task<bool> update_gps(string token, string s_num, string lat, string lot)
         {
             try
             {
@@ -746,8 +746,8 @@ namespace Deliver.Services
                 MultipartFormDataContent formData = new MultipartFormDataContent();
                 //formData.Add(tempData);
                 formData.Add(new StringContent(s_num), "s_num");
-                formData.Add(new StringContent(lat), "dp17");//打卡經度
-                formData.Add(new StringContent(lot), "dp16");//打卡緯度
+                formData.Add(new StringContent(lot), "ct17");//打卡經度
+                formData.Add(new StringContent(lat), "ct16");//打卡緯度
                 //Console.WriteLine("yyyyyyyyyyyyyyy經度 : " + lat);
                 //Console.WriteLine("xxxxxxxxxxxxxxxx緯度 : " + lot);
                 var request = new HttpRequestMessage()
@@ -758,12 +758,34 @@ namespace Deliver.Services
                 };
                 request.Headers.Add("Connection", "closed");
 
-                await client.SendAsync(request);//no response
+                var response = await client.SendAsync(request);
+                var content = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("content" + content);
+                if (response.IsSuccessStatusCode)
+                {
+                   
+
+                    //Console.WriteLine("punchincontent" + content);
+                    if (content == "ok")
+                    {
+                        return true;
+                    }
+                    else
+                    {
+
+                        return false;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Error Message111 : " + response.ToString());
+                    return false;
+                }
 
             }
             catch (Exception ex)
             {
-                ;
+                return false;
             }
         }
         //public async Task<bool> Save_New_Client_Info2(string token, AllClientInfo insertList)

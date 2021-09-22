@@ -107,6 +107,7 @@ namespace PULI.Views
         //public static List<int> trylist2;
         //public static bool TmpPunch;
         private string btnGPS;
+        private string num;
         //public static List<string> total_reserve_name = new List<string>();
         //public static bool DeliverOver = false; // for判斷是否顯示送餐完畢
         private Label label_name = new Label();
@@ -321,7 +322,8 @@ namespace PULI.Views
                                     double lot = Convert.ToDouble(totalList.daily_shipments[i].ct17);
                                     Console.WriteLine("LOT" + lot);
                                     home = totalList.daily_shipments[i].ct_name + " 的家";
-                                    s_num = totalList.daily_shipments[i].s_num;
+                                    s_num = totalList.daily_shipments[i].ct_s_num;
+                                Console.WriteLine("@@@@ " + s_num);
                                     ////Console.WriteLine("HOME" + home);
                                     gps = lat + "," + lot;
                                     //gender = allclientList[i].ct04; // 性別
@@ -331,7 +333,7 @@ namespace PULI.Views
 
                                     // 全部ICON都在map上
                                     //PinMarker(param.PNG_MAP_HOME_ICON, new Xamarin.Forms.GoogleMaps.Position(lat, lot), home, gps);
-                                    PinMarker3(param.PNG_MAP_HOME_ICON, new Xamarin.Forms.GoogleMaps.Position(lat, lot), home, gps);
+                                    PinMarker3(param.PNG_MAP_HOME_ICON, new Xamarin.Forms.GoogleMaps.Position(lat, lot), home, gps, s_num);
                                 }
                                 /*
                                 location = CrossGeolocator.Current;
@@ -510,7 +512,8 @@ namespace PULI.Views
                                     double lot = Convert.ToDouble(totalList.daily_shipments[i].ct17);
                                     ////Console.WriteLine("LOT" + lot);
                                     home = totalList.daily_shipments[i].ct_name + " 的家";
-                                s_num = totalList.daily_shipments[i].s_num;
+                                s_num = totalList.daily_shipments[i].ct_s_num;
+                                Console.WriteLine("@@@@ " + s_num);
                                 ////Console.WriteLine("HOME" + home);
                                 gps = lat + "," + lot;
                                     //gender = allclientList[i].ct04; // 性別
@@ -520,7 +523,7 @@ namespace PULI.Views
 
                                     // 全部ICON都在map上
                                     //PinMarker(param.PNG_MAP_HOME_ICON, new Xamarin.Forms.GoogleMaps.Position(lat, lot), home, gps);
-                                    PinMarker3(param.PNG_MAP_HOME_ICON, new Xamarin.Forms.GoogleMaps.Position(lat, lot), home, gps);
+                                    PinMarker3(param.PNG_MAP_HOME_ICON, new Xamarin.Forms.GoogleMaps.Position(lat, lot), home, gps, s_num);
                                 }
                                 /*
                                 location = CrossGeolocator.Current;
@@ -729,7 +732,7 @@ namespace PULI.Views
             //Console.WriteLine("NAMEEEE~~" + totalList.daily_shipments[setnum].ct_name);
 
             MyMap.Pins.Clear(); // 要加下一個點之前先把之前的點清掉
-            PinMarker3(param.PNG_MAP_HOME_ICON, new Xamarin.Forms.GoogleMaps.Position(lat, lot), home, gps);
+            PinMarker3(param.PNG_MAP_HOME_ICON, new Xamarin.Forms.GoogleMaps.Position(lat, lot), home, gps, s_num);
 
         }
         public async void SetIcon3(int setnum) 
@@ -2857,7 +2860,7 @@ namespace PULI.Views
         }
 
         // for外送員的地圖
-        private void PinMarker3(string resource, Xamarin.Forms.GoogleMaps.Position position, string label, string gps)
+        private void PinMarker3(string resource, Xamarin.Forms.GoogleMaps.Position position, string label, string gps, string s_num)
         {
             try
             {
@@ -2879,19 +2882,25 @@ namespace PULI.Views
                     {
                         //Console.WriteLine("CLICK");
                         //Console.WriteLine("PINGPD" + gps);
-                        string uri = "https://www.google.com.tw/maps/place/" + gps;
+                        //string uri = "https://www.google.com.tw/maps/place/" + gps;
                         //Console.WriteLine("URI" + uri);
-                        if (await Launcher.CanOpenAsync(uri))
-                        {
-                            await Launcher.OpenAsync(uri);
-                            UpdateWindow.IsVisible = true;
-                            update_closebtn.IsVisible = true; // 關閉按鈕
-                            updatebtn.IsVisible = true; // 校正按鈕
-                        }
-                        else
-                        {
-                            await DisplayAlert(param.SYSYTEM_MESSAGE, param.BROWSER_ERROR_MESSAGE, param.DIALOG_MESSAGE);
-                        }
+                        //if (await Launcher.CanOpenAsync(uri))
+                        //{
+                        //    //await Launcher.OpenAsync(uri);
+
+                        //}
+                        //else
+                        //{
+                        //    await DisplayAlert(param.SYSYTEM_MESSAGE, param.BROWSER_ERROR_MESSAGE, param.DIALOG_MESSAGE);
+                        //}
+                        Console.WriteLine("who~~ " + sender.ToString());
+                        Console.WriteLine("who2~~~ " + e.ToString());
+                        num = s_num;
+                        btnGPS = gps;
+                        UpdateWindow.IsVisible = true;
+                        navigatebtn_deliver.IsVisible = true; // 導航按鈕
+                        update_closebtn.IsVisible = true; // 關閉按鈕
+                        updatebtn.IsVisible = true; // 校正按鈕
                     }
                     catch (Exception ex)
                     {
@@ -2935,12 +2944,38 @@ namespace PULI.Views
                 //Console.WriteLine(ex.ToString());
             }
         }
+        private async void navigatebtn_deliver_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                string uri = "https://www.google.com.tw/maps/place/" + btnGPS;
+                //Console.WriteLine("URI" + uri);
+                if (await Launcher.CanOpenAsync(uri))
+                {
+                    await Launcher.OpenAsync(uri);
+                }
+                else
+                {
+                    await DisplayAlert(param.SYSYTEM_MESSAGE, param.BROWSER_ERROR_MESSAGE, param.DIALOG_MESSAGE);
+                }
+            }
+            catch (Exception ex)
+            {
+                //Console.WriteLine(ex.ToString());
+            }
+        }
         private async void updatebtn_Clicked(object sender, EventArgs e)
         {
             try
             {
-                web.update_gps(MainPage.token, s_num, position.Latitude.ToString(), position.Longitude.ToString());
-                Console.WriteLine("snum~~ " + s_num);
+                bool response = await web.update_gps(MainPage.token, num, position.Latitude.ToString(), position.Longitude.ToString());
+                if(response == true)
+                {
+                    DisplayAlert("系統訊息","校正成功","ok");
+                }
+                Console.WriteLine("snum~~ " + num);
+                Console.WriteLine("lat~~~ " + position.Latitude.ToString());
+                Console.WriteLine("lon~~~" + position.Longitude.ToString());
             }
             catch(Exception ex)
             {

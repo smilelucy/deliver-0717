@@ -35,7 +35,7 @@ namespace PULI.Views
             //listview.ItemTemplate = new DataTemplate(typeof(RecordCell)); // 把模式設為activitycell
             wifi_punchin_listview.SelectedItem = null; // 
             Wifi_Punchin_List = MapView.AccDatabase.GetAccountAsync2_Wifi_Punchin();
-            Console.WriteLine("wifi_punchin_tmpnum~~~" + Wifi_Punchin_List.Count());
+            //Console.WriteLine("wifi_punchin_tmpnum~~~" + Wifi_Punchin_List.Count());
             wifi_punchin_listview.ItemsSource = Wifi_Punchin_List; // itemtemplate的資料來源
                                                   //listview.ItemsSource = MapView.name_list_in2; // itemtemplate的資料來源
         }
@@ -48,7 +48,7 @@ namespace PULI.Views
             //listview2.ItemTemplate = new DataTemplate(typeof(RecordCell)); // 把模式設為activitycell
             wifi_punchout_listview.SelectedItem = null; // 
             Wifi_Punchout_List = MapView.AccDatabase.GetAccountAsync2_Wifi_Punchout();
-            Console.WriteLine("wifi_punchout_tmpnum2~~~" + Wifi_Punchout_List.Count());
+            //Console.WriteLine("wifi_punchout_tmpnum2~~~" + Wifi_Punchout_List.Count());
             wifi_punchout_listview.ItemsSource = Wifi_Punchout_List; // itemtemplate的資料來源
                                                    //listview.ItemsSource = MapView.name_list_in2; // itemtemplate的資料來源
         }
@@ -64,15 +64,15 @@ namespace PULI.Views
                     {
                         try
                         {
-                            Console.WriteLine("setlist~~~");
+                            //Console.WriteLine("setlist~~~");
 
                             wifi_punchin_setlist();
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine("wifi_setlistviewerror~~~");
+                            //Console.WriteLine("wifi_setlistviewerror~~~");
                             DisplayAlert(param.SYSYTEM_MESSAGE, ex.ToString(), param.DIALOG_AGREE_MESSAGE);
-                            Console.WriteLine(ex.ToString());
+                            //Console.WriteLine(ex.ToString());
                         }
                         //totalList = new TotalList();
 
@@ -86,15 +86,15 @@ namespace PULI.Views
                         //totalList = new TotalList();
                         try
                         {
-                            Console.WriteLine("setlist2~~~");
+                            //Console.WriteLine("setlist2~~~");
 
                             wifi_punchout_setlist2();
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine("wifi_setlistview2error~~~");
+                            //Console.WriteLine("wifi_setlistview2error~~~");
                             DisplayAlert(param.SYSYTEM_MESSAGE, ex.ToString(), param.DIALOG_AGREE_MESSAGE);
-                            Console.WriteLine(ex.ToString());
+                            //Console.WriteLine(ex.ToString());
                         }
                     }
                 });
