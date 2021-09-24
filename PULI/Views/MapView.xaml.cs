@@ -134,19 +134,7 @@ namespace PULI.Views
         public MapView()
         {
             InitializeComponent();
-            //Console.WriteLine("here~~11~");
-            
-            //Console.WriteLine("here~22~~");
             AccDatabase = new TempDatabase();
-            //PunchDatabase = new PunchDatabase();
-            //PunchDatabase2 = new PunchDatabase2();
-            //PunchTmp = new PunchDataBaseTmp();
-            //PunchTmp2 = new PunchDataBaseTmp2();
-            //Wifi_Punchin_DB = new Wifi_Punchin_Database();
-            //Wifi_Punchout_DB = new Wifi_Punchout_Database();
-            //PunchYN = new PunchYesOrNo();
-            //trylist2 = new List<int>();
-            //AccDatabase.DeleteAll();
             MapUiSetting();
             //setView(); 
             //if(MainPage.checkdate == true)
@@ -170,6 +158,7 @@ namespace PULI.Views
             if(MainPage.AUTH == "14") // 外送員(有打卡功能)
             {
                 Device.StartTimer(TimeSpan.FromSeconds(1), OnTimerTick);
+                Device.StartTimer(TimeSpan.FromSeconds(5), OnTimerTick2);
                 Device.StartTimer(TimeSpan.FromSeconds(3), OnTimerTick_for_PunchInfo);
                 //Device.StartTimer(TimeSpan.FromSeconds(10), OnTimerTick_for_movemap);
               
@@ -213,7 +202,7 @@ namespace PULI.Views
                         MyMap.IsVisible = true;
                         MyMap.IsEnabled = true;
                         //Console.WriteLine("AUTH " + MainPage.AUTH);
-                        Console.WriteLine("timemap~~~ " + MainPage._time);
+                        //Console.WriteLine("timemap~~~ " + MainPage._time);
                         if(MainPage._time == "早上") // 早上跟下午用不同api
                         {
                             totalList = await web.Get_Daily_Shipment(MainPage.token);
@@ -223,7 +212,7 @@ namespace PULI.Views
                         {
                             totalList = await web.Get_Daily_Shipment_night(MainPage.token);
                         }
-                        Console.WriteLine("nnnn~~~ " + totalList.daily_shipments.Count());
+                        //Console.WriteLine("nnnn~~~ " + totalList.daily_shipments.Count());
                         
                         
                         //clientList = await web.Get_Client(MainPage.token);
@@ -318,12 +307,12 @@ namespace PULI.Views
                                     gomap[totalList.daily_shipments[i].ct_name] = false; // 判斷導航的
                                     punchyesorno[totalList.daily_shipments[i].ct_name] = false; // 判斷是否進入判斷打卡(無論打卡成功與否)
                                     double lat = Convert.ToDouble(totalList.daily_shipments[i].ct16);
-                                    Console.WriteLine("LAT" + lat);
+                                    //Console.WriteLine("LAT" + lat);
                                     double lot = Convert.ToDouble(totalList.daily_shipments[i].ct17);
-                                    Console.WriteLine("LOT" + lot);
+                                    //Console.WriteLine("LOT" + lot);
                                     home = totalList.daily_shipments[i].ct_name + " 的家";
                                     s_num = totalList.daily_shipments[i].ct_s_num;
-                                Console.WriteLine("@@@@ " + s_num);
+                                //Console.WriteLine("@@@@ " + s_num);
                                     ////Console.WriteLine("HOME" + home);
                                     gps = lat + "," + lot;
                                     //gender = allclientList[i].ct04; // 性別
@@ -355,14 +344,14 @@ namespace PULI.Views
                                 //Console.WriteLine("Auto~~~");
                                 if (MainPage.dateDatabase.GetAccountAsync2().Count() != 0) // 如果紀錄登入日期的SQLite裡面有資料，先比對
                                 {
-                                    Console.WriteLine("old~~ " + MainPage.oldday2);
-                                    Console.WriteLine("new~~~ " + MainPage._login_time);
+                                    //Console.WriteLine("old~~ " + MainPage.oldday2);
+                                    //Console.WriteLine("new~~~ " + MainPage._login_time);
                                     // 判斷上次登入日期跟這次登入日期
                                     // 若不同則刪除SQLite裡面的資料
                                     if (MainPage._login_time != MainPage.oldday2)
                                     {
 
-                                        Console.WriteLine("newdayrecieve~~Mapview~~22~");
+                                        //Console.WriteLine("newdayrecieve~~Mapview~~22~");
                                         AccDatabase.DeleteAll_TempAccount();  // 紀錄問卷的
                                         AccDatabase.DeleteAll_Punch(); // 記錄無網路環境打卡的
                                         AccDatabase.DeleteAll_Punch2(); // 紀錄案主家打卡進度的(setnum)
@@ -513,7 +502,7 @@ namespace PULI.Views
                                     ////Console.WriteLine("LOT" + lot);
                                     home = totalList.daily_shipments[i].ct_name + " 的家";
                                 s_num = totalList.daily_shipments[i].ct_s_num;
-                                Console.WriteLine("@@@@ " + s_num);
+                                //Console.WriteLine("@@@@ " + s_num);
                                 ////Console.WriteLine("HOME" + home);
                                 gps = lat + "," + lot;
                                     //gender = allclientList[i].ct04; // 性別
@@ -706,7 +695,7 @@ namespace PULI.Views
             }
             catch (Exception ex)
             {
-                Console.WriteLine("MAPA");
+                //Console.WriteLine("MAPA");
                 Console.WriteLine(ex.ToString());
             }
 
@@ -2627,7 +2616,7 @@ namespace PULI.Views
                         //Console.WriteLine("TIMER~~~");
                         await getLocation();
 
-                        post_gps();
+                        //post_gps();
                         //checknowifi();
                     });
                 }
@@ -2973,9 +2962,9 @@ namespace PULI.Views
                 {
                     DisplayAlert("系統訊息","校正成功","ok");
                 }
-                Console.WriteLine("snum~~ " + num);
-                Console.WriteLine("lat~~~ " + position.Latitude.ToString());
-                Console.WriteLine("lon~~~" + position.Longitude.ToString());
+                //Console.WriteLine("snum~~ " + num);
+                //Console.WriteLine("lat~~~ " + position.Latitude.ToString());
+                //Console.WriteLine("lon~~~" + position.Longitude.ToString());
             }
             catch(Exception ex)
             {
