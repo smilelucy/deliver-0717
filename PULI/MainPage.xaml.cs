@@ -1,6 +1,12 @@
 ﻿using Deliver.Models;
 using Deliver.Models.DataInfo;
 using Deliver.Services;
+using MQTTnet;
+using MQTTnet.Client;
+using MQTTnet.Client.Connecting;
+using MQTTnet.Client.Disconnecting;
+using MQTTnet.Client.Options;
+using MQTTnet.Client.Receiving;
 using Plugin.Connectivity;
 using PULI.Model;
 using PULI.Models.DataInfo;
@@ -11,8 +17,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+
 
 namespace PULI
 {
@@ -21,7 +29,12 @@ namespace PULI
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
-
+        //public IMqttClient mqttClient;
+        //public IMqttClientOptions options;
+        private static MqttClient mqttClient = null;
+        private static IMqttClientOptions options = null;
+        private static bool runState = false;
+        private static bool running = false;
         // public static LoginInfo loginList = null;
         public static string token = "";
         //public static List<ClientInfo> clientList = new List<ClientInfo>(); 
@@ -278,91 +291,16 @@ namespace PULI
                                     });
                                     Console.WriteLine("date_nodata_save~~");
                                 }
-                                //~~~~~~~~~~~~~`test3~~~~~~~~~~~~~~~~~~~
-                                //if (dateDatabase.GetAccountAsync2().Count() != 0) // 裡面有資料，先比對
-                                //{
-                                //    string oldday = dateDatabase.GetAccountAsync2().Last().date;
-                                //    string oldday2 = fooDoggyDatabase.GetAccountAsync().Last().login_time;
-                                //    Console.WriteLine("oldday2~~~" + oldday2);
-                                //    Console.WriteLine("oldday~~~main~~~2~~~" + oldday);
-                                //    Console.WriteLine("_login_time~~main~~~2~~" + _login_time);
-                                //    Console.WriteLine("LoginTime~~~" + LoginTime);
-                                //    // Console.WriteLine("date~~~" + date);
-                                //    if (_login_time.Equals(LoginTime) == false)
-                                //    {
-                                //        Console.WriteLine("test~~3~~~");
-                                //        if (MapView.AccDatabase.GetAccountAsync2().Count() != 0)
-                                //        {
-                                //            MapView.AccDatabase.DeleteAll();
-                                //        }
-                                //        if (MapView.PunchDatabase.GetAccountAsync2().Count() != 0)
-                                //        {
-                                //            MapView.PunchDatabase.DeleteAll();
-                                //        }
-                                //        if (MapView.PunchDatabase2.GetAccountAsync2().Count() != 0)
-                                //        {
-                                //            MapView.PunchDatabase2.DeleteAll();
-                                //        }
-                                //        if (MapView.PunchTmp.GetAccountAsync2().Count() != 0)
-                                //        {
-                                //            MapView.PunchTmp.DeleteAll();
-                                //        }
-                                //        if (MapView.PunchTmp2.GetAccountAsync2().Count() != 0)
-                                //        {
-                                //            MapView.PunchTmp2.DeleteAll();
-                                //        }
-                                //        if (MapView.PunchYN.GetAccountAsync2().Count() != 0)
-                                //        {
-                                //            MapView.PunchYN.DeleteAll();
-                                //        }
-                                //        if(MapView.name_list_in.Count() != 0)
-                                //        {
-                                //            MapView.name_list_in.Clear();
-                                //        }
-                                //        if(MapView.name_list_out.Count() != 0)
-                                //        {
-                                //            MapView.name_list_out.Clear();
-                                //        }
-
-
-
-                                //        checkdate = true;
-                                //        //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
-                                //        dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
-                                //        dateDatabase.SaveAccountAsync(new CheckDate
-                                //        {
-                                //            date = _login_time
-                                //        });
-
-                                //    }
-                                //}
-                                //else // 裡面還沒有資料
-                                //{
-                                //    dateDatabase.SaveAccountAsync(
-                                //    new CheckDate
-                                //    {
-                                //        date = _login_time
-                                //    });
-                                //    Console.WriteLine("date_nodata_save~~");
-                                //}
-
-
-
-                                //get_client();
-                                //get_dailyShipment();
-                                //Account acc = new Account()
-                                //{
-                                //    account = account.Text,
-                                //    password = pwd.Text,
-                                //};
+                                
                                 Console.WriteLine("ACC" + token);
                                 //dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
                                 //dateDatabase.SaveAccountAsync(new CheckDate
                                 //{
                                 //    date = _login_time
                                 //});
-
-
+                                //InitMqttClient();
+                                //ConnectMqttServer();
+                                
                                 fooDoggyDatabase.SaveAccountAsync(new Account
                                 {
                                     account = acc,
@@ -380,6 +318,7 @@ namespace PULI
                                 //Console.WriteLine("ABNORMAL~~" + totalList.abnormals.Count);
                                 if (AUTH == "14") // 純外送員 & 社工幫忙送餐
                                 {
+                                    Start();
                                     Console.WriteLine("4~~~~");
                                     await Navigation.PushModalAsync(new HomeView2());
 
@@ -444,6 +383,8 @@ namespace PULI
                 //}
             }
         }
+
+
 
         private async void login_Clicked(object sender, EventArgs e)
         {
@@ -802,6 +743,158 @@ namespace PULI
                 Console.WriteLine(ex.ToString());
             }
         }
+        public static void Start()
+        {
+            try
+            {
+                //runState = true;
+                System.Threading.Thread thread = new System.Threading.Thread(new System.Threading.ThreadStart(Work));
+                //Thread thread = new ThreadStart(InitMqttClient);　　　　//原帖中是這樣寫的 Thread thread = new Thread(new ThreadStart( Work));
+                thread.IsBackground = true;
+                thread.Start();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("啟動客戶端出現問題:" + ex.ToString());
+            }
+        }
+        private static void Work()
+        {
+            running = true;
+            Console.WriteLine("Work >>Begin");
+            try
+            {
+                var factory = new MqttFactory();　　　　　　　　//聲明一個MQTT客戶端的標準步驟 的第一步
+                mqttClient = factory.CreateMqttClient() as MqttClient;  //factory.CreateMqttClient()實際是一個介面類型（IMqttClient）,這裡是把他的類型變了一下
+                options = new MqttClientOptionsBuilder()　　　　//實例化一個MqttClientOptionsBulider
+                    .WithTcpServer("192.168.50.163", 1883)
+                    .WithClientId("XMan")
+                    .Build();
+                mqttClient.ConnectAsync(options);      //連接伺服器
+                Console.WriteLine("MQTTconnected");
+                //下麵這些東西是什麼，為什麼要這麼寫，直到剛纔我還是不懂，不過在GitHub的網址我發現了出處.
+                mqttClient.ConnectedHandler = new MqttClientConnectedHandlerDelegate(new Func<MqttClientConnectedEventArgs, Task>(Connected));
+                mqttClient.DisconnectedHandler = new MqttClientDisconnectedHandlerDelegate(new Func<MqttClientDisconnectedEventArgs, Task>(Disconnected));
+                mqttClient.ApplicationMessageReceivedHandler = new MqttApplicationMessageReceivedHandlerDelegate(new Action<MqttApplicationMessageReceivedEventArgs>(MqttApplicationMessageReceived));
+                while (runState)
+                {
+
+                    Thread.Sleep(100);
+
+                }
+            }
+            catch (Exception exp)
+            {
+
+                Console.WriteLine(exp);
+            }
+            Console.WriteLine("Work >>End");
+
+            running = false;
+
+            runState = false;
+        }
+        private static async Task Connected(MqttClientConnectedEventArgs e)
+        {
+            try
+            {
+                List<TopicFilter> listTopic = new List<TopicFilter>();
+                if (listTopic.Count() <= 0)
+                {
+                    //var topicFilterBulder = new TopicFilterBuilder().WithTopic("sensor/TestView/room1").Build();
+                    //listTopic.Add(topicFilterBulder);
+                    Console.WriteLine("Connected >>Subscribe + Topic");
+                }
+                await mqttClient.SubscribeAsync(listTopic.ToArray());
+                Console.WriteLine("Connected >>Subscribe Success");
+            }
+            catch (Exception exp)
+            {
+                Console.WriteLine(exp.Message);
+            }
+        }
+        private static async Task Disconnected(MqttClientDisconnectedEventArgs e)
+        {
+            try
+            {
+                Console.WriteLine("Disconnected >>Disconnected Server");
+                await Task.Delay(TimeSpan.FromSeconds(5));
+                try
+                {
+                    await mqttClient.ConnectAsync(options);
+                }
+                catch (Exception exp)
+                {
+                    Console.WriteLine("Disconnected >>Exception " + exp.Message);
+                }
+            }
+            catch (Exception exp)
+            {
+                Console.WriteLine(exp.Message);
+            }
+        }
+        private static void MqttApplicationMessageReceived(MqttApplicationMessageReceivedEventArgs e)
+        {
+            try
+            {
+                string text = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
+                string Topic = e.ApplicationMessage.Topic; string QoS = e.ApplicationMessage.QualityOfServiceLevel.ToString();
+                string Retained = e.ApplicationMessage.Retain.ToString();
+                Console.WriteLine("MessageReceived >>Topic:" + Topic + "; QoS: " + QoS + "; Retained: " + Retained + ";");
+                Console.WriteLine("MessageReceived >>Msg: " + text);
+            }
+            catch (Exception exp)
+            {
+                Console.WriteLine(exp.Message);
+            }
+        }
+        //public async void InitMqttClient()
+        //  {
+        //      // Create a new MQTT client.
+        //      var factory = new MqttFactory();
+        //      mqttClient = factory.CreateMqttClient();
+
+
+
+        //      // Create TCP based options using the builder.
+        //      options = new MqttClientOptionsBuilder()
+        //          .WithClientId("Client4")
+        //          .WithTcpServer("192.168.50.163", 1883) // Use TCP connection, Port is opptinal
+        //                                               //.WithWebSocketServer("broker.hivemq.com:8000/mqtt") // Use WebSocket connection.
+        //                                               //.WithCredentials("bud", "%spencer%")
+        //                                               //.WithTls()
+        //                                               //.WithTls(new MqttClientOptionsBuilderTlsParameters
+        //                                               //{
+        //                                               //    UseTls = true,
+        //                                               //    CertificateValidationCallback = (X509Certificate x, X509Chain y, SslPolicyErrors z, IMqttClientOptions o) =>
+        //                                               //    {
+        //                                               //        // TODO: Check conditions of certificate by using above parameters.
+        //                                               //        return true;
+        //                                               //    }
+        //                                               //})
+        //          .WithCleanSession()
+        //          .Build();
+        //    await mqttClient.ConnectAsync(options, CancellationToken.None); // Since 3.0.5 with CancellationToken
+        //    var message = new MqttApplicationMessageBuilder()
+        //        .WithTopic("hello/world")
+        //        .WithPayload("hey")
+        //        .WithAtLeastOnceQoS()
+        //        .Build();
+        //    await mqttClient.PublishAsync(message, CancellationToken.None);
+
+        //}
+
+
+
+        public async void ConnectMqttServer()
+        {
+              
+ 
+        }
+
+        
+        
+
 
         protected override void OnAppearing()
         {

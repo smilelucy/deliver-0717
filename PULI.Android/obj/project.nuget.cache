@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "cpNVx5IDjH6MYzcV7XDsu3UkN0LrKudgzTWK71duT5kXHyJu5B+nUt2pcHzRzpLuxBaDa0b9QCX5af3CU+Tdog==",
+  "dgSpecHash": "24BbvTqDgzXfqbWm0fRAKEi6NcV5IDVM145rc3oBPUf9xscnAMhjzfX9az2Z668f+per5qh7j1qI3BLj1UVjIA==",
   "success": true,
   "projectFilePath": "D:\\xamarin_project\\deliver-try-master\\PULI.Android\\PULI.Android.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\User\\.nuget\\packages\\messier16.forms.controls\\2.2.0\\messier16.forms.controls.2.2.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\mqttnet\\3.0.16\\mqttnet.3.0.16.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\plugin.ble\\2.1.1\\plugin.ble.2.1.1.nupkg.sha512",
