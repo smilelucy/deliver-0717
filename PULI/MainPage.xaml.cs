@@ -31,7 +31,7 @@ namespace PULI
     {
         //public IMqttClient mqttClient;
         //public IMqttClientOptions options;
-        private static MqttClient mqttClient = null;
+        public static MqttClient mqttClient = null;
         private static IMqttClientOptions options = null;
         private static bool runState = false;
         private static bool running = false;
@@ -758,7 +758,7 @@ namespace PULI
                 Console.WriteLine("啟動客戶端出現問題:" + ex.ToString());
             }
         }
-        private static void Work()
+        private async static void Work()
         {
             running = true;
             Console.WriteLine("Work >>Begin");
@@ -768,14 +768,32 @@ namespace PULI
                 mqttClient = factory.CreateMqttClient() as MqttClient;  //factory.CreateMqttClient()實際是一個介面類型（IMqttClient）,這裡是把他的類型變了一下
                 options = new MqttClientOptionsBuilder()　　　　//實例化一個MqttClientOptionsBulider
                     .WithTcpServer("192.168.50.163", 1883)
-                    .WithClientId("XMan")
                     .Build();
+                        
                 mqttClient.ConnectAsync(options);      //連接伺服器
+                if (!mqttClient.IsConnected)
+                {
+                    Console.WriteLine("isconnect? " + mqttClient.IsConnected);
+                    Console.WriteLine("Not connected, connecting from CheckMqttConnection");
+                    try
+                    {
+
+                        mqttClient.ConnectAsync(options);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                }
                 Console.WriteLine("MQTTconnected");
-                //下麵這些東西是什麼，為什麼要這麼寫，直到剛纔我還是不懂，不過在GitHub的網址我發現了出處.
-                mqttClient.ConnectedHandler = new MqttClientConnectedHandlerDelegate(new Func<MqttClientConnectedEventArgs, Task>(Connected));
-                mqttClient.DisconnectedHandler = new MqttClientDisconnectedHandlerDelegate(new Func<MqttClientDisconnectedEventArgs, Task>(Disconnected));
-                mqttClient.ApplicationMessageReceivedHandler = new MqttApplicationMessageReceivedHandlerDelegate(new Action<MqttApplicationMessageReceivedEventArgs>(MqttApplicationMessageReceived));
+                await mqttClient.SubscribeAsync(new TopicFilterBuilder()
+                  .WithTopic("sensor/Test/room1")
+                  //.WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
+                  .Build());
+                Console.WriteLine("Connected >>Subscribe Success");
+                //mqttClient.ConnectedHandler = new MqttClientConnectedHandlerDelegate(new Func<MqttClientConnectedEventArgs, Task>(Connected));
+                //mqttClient.DisconnectedHandler = new MqttClientDisconnectedHandlerDelegate(new Func<MqttClientDisconnectedEventArgs, Task>(Disconnected));
+                //mqttClient.ApplicationMessageReceivedHandler = new MqttApplicationMessageReceivedHandlerDelegate(new Action<MqttApplicationMessageReceivedEventArgs>(MqttApplicationMessageReceived));
                 while (runState)
                 {
 
@@ -794,25 +812,7 @@ namespace PULI
 
             runState = false;
         }
-        private static async Task Connected(MqttClientConnectedEventArgs e)
-        {
-            try
-            {
-                List<TopicFilter> listTopic = new List<TopicFilter>();
-                if (listTopic.Count() <= 0)
-                {
-                    //var topicFilterBulder = new TopicFilterBuilder().WithTopic("sensor/TestView/room1").Build();
-                    //listTopic.Add(topicFilterBulder);
-                    Console.WriteLine("Connected >>Subscribe + Topic");
-                }
-                await mqttClient.SubscribeAsync(listTopic.ToArray());
-                Console.WriteLine("Connected >>Subscribe Success");
-            }
-            catch (Exception exp)
-            {
-                Console.WriteLine(exp.Message);
-            }
-        }
+        
         private static async Task Disconnected(MqttClientDisconnectedEventArgs e)
         {
             try

@@ -1,6 +1,9 @@
 ﻿using Deliver.Models;
 using Deliver.Models.DataInfo;
 using Deliver.Services;
+using MQTTnet;
+using MQTTnet.Client;
+using MQTTnet.Client.Connecting;
 using Plugin.Connectivity;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
@@ -2629,6 +2632,33 @@ namespace PULI.Views
             });
             return true;
         }
+        private static async Task Connected(string lat, string lon, string name)
+        {
+            try
+            {
+                //List<TopicFilter> listTopic = new List<TopicFilter>();
+                //if (listTopic.Count() <= 0)
+                //{
+                //    var topicFilterBulder = new TopicFilterBuilder().WithTopic("sensor/TestView/room1").Build();
+                //    //listTopic.Add(topicFilterBulder);
+                //    Console.WriteLine("Connected >>Subscribe + Topic");
+                //}
+
+                var message = new MqttApplicationMessageBuilder()
+                 .WithTopic("sensor/Test/room1")
+                 .WithPayload(lat + "," + lon+ "," + name)
+                 .WithExactlyOnceQoS()
+                 .WithRetainFlag()
+                 .Build();
+
+                await MainPage.mqttClient.PublishAsync(message);
+                //Console.WriteLine("Connected >>publish msg Success");
+            }
+            catch (Exception exp)
+            {
+                Console.WriteLine(exp.Message);
+            }
+        }
         bool OnTimerTick2()
         {
             Task.Run(() =>
@@ -2641,6 +2671,9 @@ namespace PULI.Views
                         // UI interaction goes here
                         await getLocation2();
                         post_gps();
+                        var lat = position.Latitude.ToString();
+                        var lon = position.Longitude.ToString();
+                        Connected(lat,lon,MainPage.NAME);
                     });
                 }
                 catch (Exception ex)
