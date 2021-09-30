@@ -2632,6 +2632,7 @@ namespace PULI.Views
             });
             return true;
         }
+        
         private static async Task Connected(string lat, string lon, string name)
         {
             try

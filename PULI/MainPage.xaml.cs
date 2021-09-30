@@ -551,6 +551,7 @@ namespace PULI
                             Console.WriteLine("AAAUTH~~~ " + AUTH);
                             if (AUTH == "14") // 純外送員 & 社工幫忙外送
                             {
+                                Start();
                                 loadingView.IsVisible = false;
                                 await Navigation.PushModalAsync(new HomeView2());
                                 Console.WriteLine("deliver~~ ");
