@@ -161,7 +161,7 @@ namespace PULI.Views
             if(MainPage.AUTH == "14") // 外送員(有打卡功能)
             {
                 Device.StartTimer(TimeSpan.FromSeconds(1), OnTimerTick);
-                Device.StartTimer(TimeSpan.FromSeconds(5), OnTimerTick2);
+                //Device.StartTimer(TimeSpan.FromSeconds(5), OnTimerTick2);
                 Device.StartTimer(TimeSpan.FromSeconds(3), OnTimerTick_for_PunchInfo);
                 //Device.StartTimer(TimeSpan.FromSeconds(10), OnTimerTick_for_movemap);
               
