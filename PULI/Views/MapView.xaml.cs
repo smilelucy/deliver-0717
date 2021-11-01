@@ -2618,7 +2618,24 @@ namespace PULI.Views
                         // 當工作完成時，方法會在程式碼中的相同位置繼續執行
                         //Console.WriteLine("TIMER~~~");
                         await getLocation();
-
+                        //post_gps();
+                        //-----------------MQTT-----------------------
+                        //var lat = position.Latitude.ToString();
+                        //var lon = position.Longitude.ToString();
+                        //Console.WriteLine("TF~~ " + MainPage.mqttClient.IsConnected);
+                        //Console.WriteLine("lat~~ " + lat);
+                        //Console.WriteLine("lon~~~" + lon);
+                       
+                        //if (MainPage.mqttClient.IsConnected == true)
+                        //{ // 有連線的話就傳送資料
+                            //Connected(lat, lon, MainPage.NAME);
+                        //}
+                        //else
+                        //{ // 沒有連線的話就重新連線再傳送資料 
+                            //MainPage.Start();
+                            //Connected(lat, lon, MainPage.NAME);
+                        //}
+                        //--------------------------------------------
                         //post_gps();
                         //checknowifi();
                     });
@@ -2671,10 +2688,8 @@ namespace PULI.Views
                     {
                         // UI interaction goes here
                         await getLocation2();
-                        post_gps();
-                        var lat = position.Latitude.ToString();
-                        var lon = position.Longitude.ToString();
-                        Connected(lat,lon,MainPage.NAME);
+                        ///post_gps();
+                        
                     });
                 }
                 catch (Exception ex)

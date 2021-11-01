@@ -143,7 +143,7 @@ namespace PULI.Views
                     {
                         result = "星期日";
                     }
-                    //////Console.WriteLine("result~~~ " + result);
+                    //Console.WriteLine("resultAAA~~~ " + result);
                     for (int e = 0; e < Day.Count(); e++)
                     {
                         if(result == "星期六")
@@ -162,7 +162,7 @@ namespace PULI.Views
                     }
                     //Console.WriteLine("result_num~~~ " + result_num);
                     
-                    //Console.WriteLine("result~~ " + result);
+                    //Console.WriteLine("resultBBB~~ " + result);
                     //Console.WriteLine("COUNT~~~" + questionnaireslist.Count());
                     foreach (var a in questionnaireslist)
                     {
@@ -858,7 +858,8 @@ namespace PULI.Views
                 //Console.WriteLine("_QB_S_NUM@@@@ " + _QB_S_NUM);
                 //Console.WriteLine("qbssss~~ " + questionList.qb_s_num);
 
-
+               // Console.WriteLine("ZZ~~ " + questionList.wqh_s_num);
+                //Console.WriteLine("XX~~ " + questionList.qbs.Count());
                 EntrytxtList[questionList.wqh_s_num + i.qb_order] = "";
 
                 EntryList[questionList.ClientName] = false;
@@ -1004,7 +1005,7 @@ namespace PULI.Views
                                                     //////Console.WriteLine("w~~~ " + i.qb03[d]);
                                                     //ANS2 = Convert.ToString(qb03_count);
                                                     temp_j = i.qb03[d]; // 答案
-                                                    Console.WriteLine("RRRRR_jj~~ " + temp_j);
+                                                    //Console.WriteLine("RRRRR_jj~~ " + temp_j);
                                                 }
 
                                                 //////Console.WriteLine("qb0322~~ " + qb03_count);
@@ -4499,7 +4500,10 @@ namespace PULI.Views
 
                                                 if ((stack_ques.Children.Where(x => x.ClassId == stack_name).ToString()) != null)
                                                 {
-                                                    Console.WriteLine("成功~~ ");
+                                                    //Console.WriteLine("成功QAQ~~ ");
+                                                    //Console.WriteLine("AA~ " + i.qb_order);
+                                                    //Console.WriteLine("BB~ " + questionList.qbs.Count());
+                                                    //Console.WriteLine("CC~ " + result.Equals("星期四"));
                                                     //stack_check2 = new StackLayout // checkbox跟選項
                                                     //{
                                                     //    Orientation = StackOrientation.Horizontal,
@@ -4511,7 +4515,7 @@ namespace PULI.Views
                                                     {
                                                         if (j == "否")
                                                         {
-                                                            Console.WriteLine("NEG~~ ");
+                                                           // Console.WriteLine("NEG~~ ");
                                                             var label_check_test = new Label // 選項
                                                             {
                                                                 Text = "否",
@@ -4523,7 +4527,7 @@ namespace PULI.Views
                                                         }
                                                         else
                                                         {
-                                                            Console.WriteLine("POS~~~ ");
+                                                           // Console.WriteLine("POS~~~ ");
                                                             var label_check_test = new Label // 選項
                                                             {
                                                                 Text = "是",
@@ -4538,7 +4542,7 @@ namespace PULI.Views
 
                                                     if (YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] != "")
                                                     {
-                                                        Console.WriteLine("in~~~ ");
+                                                        //Console.WriteLine("in~~~ ");
                                                         // for 後來改選項
                                                         if (j == "否")
                                                         {
@@ -4630,7 +4634,7 @@ namespace PULI.Views
                                                         //}
                                                         if (YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] == "是")
                                                         {
-                                                            Console.WriteLine("yesin~~~ ");
+                                                           // Console.WriteLine("yesin~~~ ");
                                                             //stack_ques.Children.RemoveAt(0);
                                                             //check_box = new CheckBox // 產生checkbox
                                                             //{
@@ -4702,7 +4706,7 @@ namespace PULI.Views
                                                         }
                                                         else
                                                         {
-                                                            Console.WriteLine("noin~~~ ");
+                                                            //Console.WriteLine("noin~~~ ");
                                                             //stack_ques.Children.RemoveAt(2);
                                                             //check_box = new CheckBox // 產生checkbox
                                                             //{
@@ -4767,7 +4771,7 @@ namespace PULI.Views
                                                 }
 
                                                 // for 第一次選
-                                                Console.WriteLine("YorN~~~ " + YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order]);
+                                              //  Console.WriteLine("YorN~~~ " + YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order]);
                                                 if (YesOrNoAlreadyChoose[questionList.wqh_s_num + i.qb_order] == "")
                                                 {
                                                     if (j == "否")
@@ -4901,8 +4905,8 @@ namespace PULI.Views
                                             ClassId = questionList.wqh_s_num + i.qb_order
                                         };
                                         var key = questionList.wqh_s_num + j + i.qb_order;
-                                        Console.WriteLine("wqh~~ " + questionList.wqh_s_num);
-                                        Console.WriteLine("j~~ " + j);
+                                       // Console.WriteLine("wqh~~ " + questionList.wqh_s_num);
+                                       // Console.WriteLine("j~~ " + j);
                                         if (checkboxDictionary.ContainsKey(key) == false)
                                         {
                                             checkboxDictionary.Add(key, check_box);
@@ -4977,10 +4981,10 @@ namespace PULI.Views
                         {
                             ques_stack_count++;
                         }
-                        Console.WriteLine("clname~~~ " + questionList.ClientName);
-                        Console.WriteLine("wqhhh~~ " + questionList.wqh_s_num);
-                        Console.WriteLine("order~~ " + i.qb_order);
-                        Console.WriteLine("count~~ " + ques_stack_count);
+                       // Console.WriteLine("clname~~~ " + questionList.ClientName);
+                       // Console.WriteLine("wqhhh~~ " + questionList.wqh_s_num);
+                       // Console.WriteLine("order~~ " + i.qb_order);
+                       // Console.WriteLine("count~~ " + ques_stack_count);
 
                         Stack_Count[questionList.wqh_s_num + i.qb_order] = ques_stack_count;
                     }
@@ -4988,13 +4992,13 @@ namespace PULI.Views
                 }
                 else // CheckboxList[questionList.ClientName] == true，判斷是否選擇未發，觸發第四題
                 {
-                    Console.WriteLine("inB~~~~ ");
-                    Console.WriteLine("name~~~ " + questionList.ClientName);
-                    Console.WriteLine("wqh~~~ " + questionList.wqh_s_num);
-                    Console.WriteLine("checkbox~~~ " + CheckboxList[questionList.ClientName + questionList.wqh_s_num]);
+                  //  Console.WriteLine("inB~~~~ ");
+                   // Console.WriteLine("name~~~ " + questionList.ClientName);
+                   // Console.WriteLine("wqh~~~ " + questionList.wqh_s_num);
+                   // Console.WriteLine("checkbox~~~ " + CheckboxList[questionList.ClientName + questionList.wqh_s_num]);
                     if (CheckboxList[questionList.ClientName + questionList.wqh_s_num] == true) // if第三題選未發，then進入判斷是否點選"其他"checkbox(觸發第五題問答題)
                     {
-                        Console.WriteLine("inC~~~~ ");
+                       // Console.WriteLine("inC~~~~ ");
                         if (i.qb02 == "1") // 問題類型(假設1是是否題 / 單選)(沒有entry版本)
                         {
                             Qtype = "1";
@@ -5002,7 +5006,7 @@ namespace PULI.Views
                             //TmpCheckList[set] = false;
                             if (i.qb_order == "4")
                             {
-                                Console.WriteLine("inD~~~~ ");
+                             //   Console.WriteLine("inD~~~~ ");
                                 var label_que_name = new Label // 問題題號+題目
                                 {
                                     Text = i.qb_order + " " + i.qb01,

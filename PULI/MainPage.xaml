@@ -7,6 +7,9 @@
              x:Class="PULI.MainPage">
     <Grid HorizontalOptions="Center" VerticalOptions="Center">
         <StackLayout HorizontalOptions="Center" VerticalOptions="Center" IsVisible="true" IsEnabled="True" x:Name="Login" Padding="0,100,0,0">
+            <StackLayout x:Name="welcome" IsVisible="false">
+                <Label x:Name="deliver_name"></Label>
+            </StackLayout>
             <Label Text="請輸入帳號密碼來登入" FontSize="30" 
                        HorizontalOptions="Center"
                        VerticalOptions="Center"  />
@@ -21,9 +24,9 @@
             <ScrollView>
                 <StackLayout>
                     <StackLayout x:Name="identityStack" Orientation="Vertical">
-
+                       
                     </StackLayout>
-
+                    
                     <StackLayout Orientation="Vertical" >
                         <Label Text="帳號 : " 
                                        FontSize="20"/>
@@ -67,7 +70,7 @@
                     VerticalTextAlignment="End"
                     Padding="0,100,0,0"
                                            TextColor="Black"
-                                           Text="Ver_2.6" />
+                                           Text="Ver_2.8" />
         </StackLayout>
         <StackLayout VerticalOptions="Center"
                              HorizontalOptions="Center"

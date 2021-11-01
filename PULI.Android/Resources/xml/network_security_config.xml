@@ -3,5 +3,7 @@
   <domain-config cleartextTrafficPermitted="true">
     <domain includeSubdomains="true">10.1.1.14</domain>
     <domain includeSubdomains="true">59.120.147.32</domain>
+    <domain includeSubdomains="true">http://S1.fcts.org.tw</domain>
   </domain-config>
+  <base-config cleartextTrafficPermitted="true" />
 </network-security-config>

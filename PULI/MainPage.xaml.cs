@@ -93,30 +93,33 @@ namespace PULI
             Console.WriteLine("LALALA~~~~" + fooDoggyDatabase.GetAccountAsync().Count());
             if (fooDoggyDatabase.GetAccountAsync().Count() > 0)
             {
-                Console.WriteLine("LOGIN~~~");
-
+                //Console.WriteLine("LOGIN~~~");
+                welcome.IsVisible = true;
+                
                 Account accountList = fooDoggyDatabase.GetAccountAsync().FirstOrDefault();
                 loginData[0] = accountList.account;
+                
                 //logacc = loginData[0]; // 紀錄登入帳號
-                Console.WriteLine("0000~~~" + loginData[0]);
+                //Console.WriteLine("0000~~~" + loginData[0]);
                 Account = loginData[0];
-                Console.WriteLine("0000!!!!" + Account);
+                deliver_name.Text = "你好" + Account;
+                //Console.WriteLine("0000!!!!" + Account);
                 loginData[1] = accountList.password;
                 //logpwd = loginData[1]; // 紀錄登入密碼
-                Console.WriteLine("1111~~~" + loginData[1]);
+               // Console.WriteLine("1111~~~" + loginData[1]);
                 loginData[2] = accountList.identity;
                 loginData[3] = accountList.time;
                 Password = loginData[1];
                 LoginTime = accountList.login_time;
-                Console.WriteLine("login_time@@~~~" + LoginTime);
-                Console.WriteLine("1111!!!!" + Password);
+                //Console.WriteLine("login_time@@~~~" + LoginTime);
+                //Console.WriteLine("1111!!!!" + Password);
                 DateTime time = DateTime.Now;
                 string date = time.ToString("MMdd");
-                Console.WriteLine("time~~~" + time.ToString("t"));
-                Console.WriteLine("timeshort~~~~" + time.ToShortTimeString());
-                Console.WriteLine("time2~~~" + time.ToString("hh tt"));
-                Console.WriteLine("date~~~~" + time.ToString("MMdd"));
-                Console.WriteLine("date_database_count~~" + dateDatabase.GetAccountAsync2().Count());
+                //Console.WriteLine("time~~~" + time.ToString("t"));
+                //Console.WriteLine("timeshort~~~~" + time.ToShortTimeString());
+                //Console.WriteLine("time2~~~" + time.ToString("hh tt"));
+                //Console.WriteLine("date~~~~" + time.ToString("MMdd"));
+                //Console.WriteLine("date_database_count~~" + dateDatabase.GetAccountAsync2().Count());
                 
                 login(loginData[0], loginData[1], loginData[2], loginData[3]);
             }
@@ -195,8 +198,8 @@ namespace PULI
                                 //    AutoLogin.IsVisible = true;
                                 //    searchLabel.Text = param.CONNECT_BLUETOOTH_ERROR_MESSAGE;
                                 //}
-                                Console.WriteLine("auth" + AUTH + "auth");
-                                Console.WriteLine("AUTH~~~" + AUTH);
+                                //Console.WriteLine("auth" + AUTH + "auth");
+                                //Console.WriteLine("AUTH~~~" + AUTH);
                                 //DisplayAlert("提示", "[弗傳慈心基金會] 會收集位置資料，以便在應用程式關閉或未使用時，也可支援紀錄外送員gps位置以判斷打卡。", "ok");
 
                                 if (AUTH == "13")
@@ -209,14 +212,14 @@ namespace PULI
                                 {
                                     string oldday = dateDatabase.GetAccountAsync2().Last().date;
                                     oldday2 = fooDoggyDatabase.GetAccountAsync().Last().login_time;
-                                    Console.WriteLine("oldday~~" + oldday);
-                                    Console.WriteLine("oldday2~~~" + oldday2);
-                                    Console.WriteLine("LoginTime~~~" + LoginTime);
+                                    //Console.WriteLine("oldday~~" + oldday);
+                                    //Console.WriteLine("oldday2~~~" + oldday2);
+                                    //Console.WriteLine("LoginTime~~~" + LoginTime);
                                     // Console.WriteLine("date~~~" + date);
                                     if (_login_time != oldday2)
                                     {
-                                        Console.WriteLine("mainpage~~~1~~~");
-                                        Console.WriteLine("date_renew_save~~~");
+                                        //Console.WriteLine("mainpage~~~1~~~");
+                                        //Console.WriteLine("date_renew_save~~~");
                                         try
                                         {
                                             MessagingCenter.Send(this, "NewDayDelete", true);
@@ -252,15 +255,15 @@ namespace PULI
                                 {
                                     string oldday = dateDatabase.GetAccountAsync2().Last().date;
                                     oldday2 = fooDoggyDatabase.GetAccountAsync().Last().login_time;
-                                    Console.WriteLine("oldday~~~main~~~" + oldday);
-                                    Console.WriteLine("oldday2~~~main~~~" + oldday2);
-                                    Console.WriteLine("_login_time~~main~~" + _login_time);
-                                    Console.WriteLine("LoginTime~~~" + LoginTime);
+                                    //Console.WriteLine("oldday~~~main~~~" + oldday);
+                                    //Console.WriteLine("oldday2~~~main~~~" + oldday2);
+                                    //Console.WriteLine("_login_time~~main~~" + _login_time);
+                                    ////Console.WriteLine("LoginTime~~~" + LoginTime);
                                     // Console.WriteLine("date~~~" + date);
                                     if (_login_time.Equals(oldday2) == false)
                                     {
-                                        Console.WriteLine("test~~~~2~~~");
-                                        Console.WriteLine("date_renew_save~~~");
+                                        //Console.WriteLine("test~~~~2~~~");
+                                        //Console.WriteLine("date_renew_save~~~");
                                         try
                                         {
                                             MessagingCenter.Send(this, "NewDayDelete", true);
@@ -318,7 +321,9 @@ namespace PULI
                                 //Console.WriteLine("ABNORMAL~~" + totalList.abnormals.Count);
                                 if (AUTH == "14") // 純外送員 & 社工幫忙送餐
                                 {
-                                    Start();
+                                    //------------------MQTT-------------------
+                                    //Start();
+                                    //--------------------------------------------
                                     Console.WriteLine("4~~~~");
                                     await Navigation.PushModalAsync(new HomeView2());
 
@@ -551,7 +556,9 @@ namespace PULI
                             Console.WriteLine("AAAUTH~~~ " + AUTH);
                             if (AUTH == "14") // 純外送員 & 社工幫忙外送
                             {
-                                Start();
+                                //--------------------MQTT--------------------------
+                                //Start();
+                                //-------------------------------------------------
                                 loadingView.IsVisible = false;
                                 await Navigation.PushModalAsync(new HomeView2());
                                 Console.WriteLine("deliver~~ ");
@@ -775,7 +782,7 @@ namespace PULI
                 if (!mqttClient.IsConnected)
                 {
                     Console.WriteLine("isconnect? " + mqttClient.IsConnected);
-                    Console.WriteLine("Not connected, connecting from CheckMqttConnection");
+                    //Console.WriteLine("Not connected, connecting from CheckMqttConnection");
                     try
                     {
 
@@ -795,12 +802,12 @@ namespace PULI
                 //mqttClient.ConnectedHandler = new MqttClientConnectedHandlerDelegate(new Func<MqttClientConnectedEventArgs, Task>(Connected));
                 //mqttClient.DisconnectedHandler = new MqttClientDisconnectedHandlerDelegate(new Func<MqttClientDisconnectedEventArgs, Task>(Disconnected));
                 //mqttClient.ApplicationMessageReceivedHandler = new MqttApplicationMessageReceivedHandlerDelegate(new Action<MqttApplicationMessageReceivedEventArgs>(MqttApplicationMessageReceived));
-                while (runState)
-                {
+                //while (runState)
+                //{
 
-                    Thread.Sleep(100);
+                  //  Thread.Sleep(100);
 
-                }
+                //}
             }
             catch (Exception exp)
             {

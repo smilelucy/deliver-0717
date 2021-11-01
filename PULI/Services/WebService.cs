@@ -15,6 +15,7 @@ namespace Deliver.Services
     class WebService
     {
         public static string host = "http://59.120.147.32:8080/lt_care";
+        //public static string host = "http://s1.fcts.org.tw";
 
         public async Task<LoginInfo> Login(String acc, String pwd, String identity)
         {
@@ -24,8 +25,9 @@ namespace Deliver.Services
             formData.Add(new StringContent(identity), "identity");
 
             HttpClient _client = new HttpClient();
+            Console.WriteLine("login1~~ ");
             var uri = new Uri(string.Format(host + "/api/account/login"));
-
+            Console.WriteLine("login2~~ ");
             var response = await _client.PostAsync(uri, formData);
             Console.WriteLine("res~~ " + response.ToString());
             var content = await response.Content.ReadAsStringAsync();
