@@ -133,6 +133,8 @@ namespace PULI.Views
         string time;
         bool wifi_punch_in;
         bool wifi_punch_out;
+        bool successIn;
+        bool successOut;
 
         public MapView()
         {
@@ -405,36 +407,38 @@ namespace PULI.Views
                                     isform[totalList.daily_shipments[i].ct_name] = false; // 判斷跳出問卷的
                                     gomap[totalList.daily_shipments[i].ct_name] = false; // 判斷導航的
                                     punchyesorno[totalList.daily_shipments[i].ct_name] = false; // 判斷是否進入判斷打卡(無論打卡成功與否)
-                                    if (AccDatabase.GetAccountAsync2_Punch().Count() > 0) // 無網路環境下打卡的database裡面有資料
+                                if (AccDatabase.GetAccountAsync2_Punch().Count() > 0) // 無網路環境下打卡的database裡面有資料
+                                {
+                                    //Console.WriteLine("WWWW~~~~");
+                                    //Console.WriteLine("pp~~" + PunchDatabase.GetAccountAsync2().Count());
+                                    for (int b = 0; b < AccDatabase.GetAccountAsync2_Punch().Count(); b++)
                                     {
-                                        //Console.WriteLine("WWWW~~~~");
-                                        //Console.WriteLine("pp~~" + PunchDatabase.GetAccountAsync2().Count());
-                                        for (int b = 0; b < AccDatabase.GetAccountAsync2_Punch().Count(); b++)
+                                        var c = AccDatabase.GetAccountAsync_Punch(b);
+
+
+                                        foreach (var TempAnsList in c)
                                         {
-                                            var c = AccDatabase.GetAccountAsync_Punch(b);
+                                            //Console.WriteLine("tmpname1111~~~" + TempAnsList.name);
 
-
-                                            foreach (var TempAnsList in c)
+                                            if (TempAnsList.name == totalList.daily_shipments[i].ct_name)
                                             {
-                                                //Console.WriteLine("tmpname1111~~~" + TempAnsList.name);
-
-                                                if (TempAnsList.name == totalList.daily_shipments[i].ct_name)
-                                                {
-                                                    punchList[totalList.daily_shipments[i].ct_name] = true;
-                                                    punch_in[totalList.daily_shipments[i].ct_name] = true;
-                                                    punch_out[totalList.daily_shipments[i].ct_name] = true;
-                                                }
-                                            }
-                                            foreach (var a in punchList)
-                                            {
-                                                //Console.WriteLine("DDDD~" + a);
-                                            }
-                                            foreach (var a in punch_in)
-                                            {
-                                                //Console.WriteLine("DDDD~" + a);
+                                                punchList[totalList.daily_shipments[i].ct_name] = true;
+                                                punch_in[totalList.daily_shipments[i].ct_name] = true;
+                                                punch_out[totalList.daily_shipments[i].ct_name] = true;
                                             }
                                         }
+                                        foreach (var a in punchList)
+                                        {
+                                            //Console.WriteLine("DDDD~" + a);
+                                        }
+                                        foreach (var a in punch_in)
+                                        {
+                                            //Console.WriteLine("DDDD~" + a);
+                                        }
                                     }
+                                }
+                                    Console.WriteLine("wifi_punch_in");
+                                    Console.WriteLine(AccDatabase.GetAccountAsync2_Wifi_Punchin().Count());
                                     if (AccDatabase.GetAccountAsync2_Wifi_Punchin().Count() > 0) // 無網路環境下打卡的database裡面有資料
                                     {
                                         //Console.WriteLine("WWWW~~~~");
@@ -446,8 +450,16 @@ namespace PULI.Views
 
                                             foreach (var TempNameList in c)
                                             {
-                                                //Console.WriteLine("tmpname1111~~~" + TempAnsList.name);
-
+                                                Console.WriteLine("tmpname1111~~~" + TempNameList.name);
+                                                if (!name_list_in.Contains(TempNameList.name))
+                                                {
+                                                    // 把判斷無網路打卡的紀錄寫回去
+                                                    name_list_in.Add(TempNameList.name);
+                                                }
+                                                if(!WIFI_name_list_in.Contains(TempNameList.name))
+                                                {
+                                                    WIFI_name_list_in.Add(TempNameList.name);
+                                                }
                                                 if (TempNameList.name == totalList.daily_shipments[i].ct_name)
                                                 {
                                                     //punchList[totalList.daily_shipments[i].ct_name] = true;
@@ -455,16 +467,12 @@ namespace PULI.Views
                                                     //punch_out[totalList.daily_shipments[i].ct_name] = true;
                                                 }
                                             }
-                                            foreach (var a in punchList)
-                                            {
-                                                //Console.WriteLine("DDDD~" + a);
-                                            }
-                                            foreach (var a in punch_in)
-                                            {
-                                                //Console.WriteLine("DDDD~" + a);
-                                            }
                                         }
                                     }
+                                    Console.WriteLine("in_length");
+                                    Console.WriteLine(name_list_in.Count());
+                                    Console.WriteLine("wifi_punch_out");
+                                    Console.WriteLine(AccDatabase.GetAccountAsync2_Wifi_Punchout().Count());
                                     if (AccDatabase.GetAccountAsync2_Wifi_Punchout().Count() > 0) // 無網路環境下打卡的database裡面有資料
                                     {
                                         //Console.WriteLine("WWWW~~~~");
@@ -476,9 +484,16 @@ namespace PULI.Views
 
                                             foreach (var TempNameList in c)
                                             {
-                                                //Console.WriteLine("tmpname1111~~~" + TempAnsList.name);
-
-                                                if (TempNameList.name == totalList.daily_shipments[i].ct_name)
+                                                Console.WriteLine("tmpname2222~~~" + TempNameList.name);
+                                            if (!name_list_out.Contains(TempNameList.name))
+                                            {
+                                                name_list_out.Add(TempNameList.name);
+                                            }
+                                            if (!WIFI_name_list_out.Contains(TempNameList.name))
+                                            {
+                                                WIFI_name_list_out.Add(TempNameList.name);
+                                            }
+                                            if (TempNameList.name == totalList.daily_shipments[i].ct_name)
                                                 {
                                                     //punchList[totalList.daily_shipments[i].ct_name] = true;
                                                     //punch_in[totalList.daily_shipments[i].ct_name] = true;
@@ -495,6 +510,8 @@ namespace PULI.Views
                                             }
                                         }
                                     }
+                                Console.WriteLine("out_length");
+                                Console.WriteLine(name_list_out.Count());
                                     if (punch_out[totalList.daily_shipments[i].ct_name] == true && punch_in[totalList.daily_shipments[i].ct_name] == true)
                                     {
                                         punchList[totalList.daily_shipments[i].ct_name] = true;
@@ -922,8 +939,8 @@ namespace PULI.Views
                         {
                             if (AccDatabase.GetAccountAsync2_Punch().Count() > 0) // 記錄無網路環境打卡的database裡面有資料
                             {
-                                //Console.WriteLine("RRRRRR~~~~");
-                                //Console.WriteLine("pp~~" + PunchDatabase.GetAccountAsync2().Count());
+                                Console.WriteLine("RRRRRR~~~~");
+                                Console.WriteLine("pp~~" + AccDatabase.GetAccountAsync2_Punch().Count());
                                 for (int b = 0; b < AccDatabase.GetAccountAsync2_Punch().Count(); b++)
                                 {
                                     punchdatatable = AccDatabase.GetAccountAsync_Punch(b);
@@ -931,15 +948,17 @@ namespace PULI.Views
 
                                     foreach (var TempAnsList in punchdatatable)
                                     {
-                                        //Console.WriteLine("tmpname2222~~~" + TempAnsList.name);
-                                        //Console.WriteLine("token~~" + TempAnsList.token);
-                                        //Console.WriteLine("name~" + TempAnsList.name);
-                                        //Console.WriteLine("ct_s_num~~" + TempAnsList.ct_s_num);
-                                        //Console.WriteLine("sec_s_num~~" + TempAnsList.sec_s_num);
-                                        //Console.WriteLine("mlo_s_num~~" + TempAnsList.mlo_s_num);
-                                        //Console.WriteLine("bn_s_num~~" + TempAnsList.bn_s_num);
-                                        //Console.WriteLine("lat~~" + TempAnsList.latitude);
-                                        //Console.WriteLine("lon~~" + TempAnsList.longitude);
+                                        Console.WriteLine("hihi~~ ");
+                                        Console.WriteLine(b);
+                                        Console.WriteLine("tmpname2222~~~" + TempAnsList.name);
+                                        Console.WriteLine("token~~" + TempAnsList.token);
+                                        Console.WriteLine("name~" + TempAnsList.name);
+                                        Console.WriteLine("ct_s_num~~" + TempAnsList.ct_s_num);
+                                        Console.WriteLine("sec_s_num~~" + TempAnsList.sec_s_num);
+                                        Console.WriteLine("mlo_s_num~~" + TempAnsList.mlo_s_num);
+                                        Console.WriteLine("bn_s_num~~" + TempAnsList.bn_s_num);
+                                        Console.WriteLine("lat~~" + TempAnsList.latitude);
+                                        Console.WriteLine("lon~~" + TempAnsList.longitude);
                                             
                                         if (TempAnsList.inorout == "in") // 處理簽到
                                         {
@@ -964,7 +983,15 @@ namespace PULI.Views
                                                 if (!name_list_in.Contains(TempAnsList.name)) // 判斷還沒處理過這筆無網路打卡
                                                 {
                                                     // 自動簽到
-                                                    no_wifi_punch_in  = await web.Save_Punch_In(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.reh_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time);
+                                                    Console.WriteLine(TempAnsList.token);
+                                                    Console.WriteLine(TempAnsList.ct_s_num);
+                                                    Console.WriteLine(TempAnsList.sec_s_num);
+                                                    Console.WriteLine(TempAnsList.mlo_s_num);
+                                                    Console.WriteLine(TempAnsList.reh_s_num);
+                                                    Console.WriteLine(TempAnsList.latitude);
+                                                    Console.WriteLine(TempAnsList.longitude);
+                                                    Console.WriteLine(TempAnsList.time);
+                                                    no_wifi_punch_in  = await web.Save_Punch_In(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.reh_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time, "2");
                                                     //Console.WriteLine("web_resin~~~ " + web_res2);
                                                     if (no_wifi_punch_in == true)
                                                     {
@@ -983,7 +1010,7 @@ namespace PULI.Views
                                                         //Console.WriteLine("name_in~~" + name_list_in.Count());
                                                         //  tmp_punch_in[TempAnsList.name] = true; // 簽到成功
                                                         // //Console.WriteLine("SQLitepunchin~~~" + tmp_punch_in[TempAnsList.name] + "name " + TempAnsList.name);
-                                                        AccDatabase.DeleteItem_Punch2(TempAnsList.ID); // 把那筆刪掉
+                                                        AccDatabase.DeleteItem_Punch(TempAnsList.ID); // 把那筆刪掉
                                                                                                     //formin.IsVisible = true;
                                                                                                     //formin.IsEnabled = true;
                                                                                                     //await Task.Delay(10000); // 等待30秒
@@ -1002,7 +1029,12 @@ namespace PULI.Views
                                                             });
                                                             WIFI_name_list_in.Add(TempAnsList.name);
                                                         }
-                                                        
+                                                        //if (name_list_in.Count() == WIFI_name_list_in.Count())
+                                                        //{
+                                                        //    AccDatabase.DeleteAll_Punch2();
+                                                        //    AccDatabase.DeleteAll_PunchTmp();
+                                                        //}
+                                                        //MessagingCenter.Send(this, "Setlist", true);
                                                     }
                                                     else
                                                     {
@@ -1010,12 +1042,19 @@ namespace PULI.Views
                                                         //Console.WriteLine("ASQLite簽到失敗");
                                                     }
                                                 }
-                                                else
-                                                {
-                                                    // 已經處理過的話就直接刪除SQLite中這筆紀錄
-                                                    AccDatabase.DeleteItem_Punch2(TempAnsList.ID);
-                                                    AccDatabase.DeleteItem_PunchTmp(TempAnsList.ID);
-                                                }
+                                                //else
+                                                //{
+                                                //    // 已經處理過的話就直接刪除SQLite中這筆紀錄
+                                                //    AccDatabase.DeleteItem_Punch2(TempAnsList.ID);
+                                                //    AccDatabase.DeleteItem_PunchTmp(TempAnsList.ID);
+                                                //    if(name_list_in.Count() == WIFI_name_list_in.Count())
+                                                //    {
+                                                //        AccDatabase.DeleteAll_Punch2();
+                                                //        AccDatabase.DeleteAll_PunchTmp();
+                                                //    }
+                                                //    MessagingCenter.Send(this, "Setlist", true); 
+                                                //}
+
                                             }
                                                
                                         }
@@ -1032,18 +1071,42 @@ namespace PULI.Views
                                             //    MessagingCenter.Send(this, "Setlist2", true);
                                             //}
                                             //Console.WriteLine("nameLA~~out~" + TempAnsList, name);
-                                            if(TempAnsList.name != null)
+                                      
+                                            for(int z = 0; z < name_list_out.Count(); z++)
+                                            {
+                                                Console.WriteLine(name_list_out.Count());
+                                                Console.WriteLine(name_list_out[z]);
+                                            }
+                                            if (TempAnsList.name != null)
                                             {
                                                 if (!name_list_out.Contains(TempAnsList.name)) // 還沒處理過這筆案主的簽退
                                                 {
                                                     // 自動簽退
-                                                    no_wifi_punch_out  = await web.Save_Punch_Out(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.reh_s_num, TempAnsList.mlo_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time);
-                                                    //Console.WriteLine("web_res_out~~~ " + web_res2);
+                                                    Console.WriteLine("count~");
+                                                    Console.WriteLine(name_list_out.Count());
+                                                    for(int a = 0; a > name_list_out.Count(); a++)
+                                                    {
+                                                        Console.WriteLine("name_list_out");
+                                                        Console.WriteLine(name_list_out[a]);
+                                                    }
+                                                    
+                                                    Console.WriteLine(TempAnsList.name);
+                                                    Console.WriteLine(TempAnsList.token);
+                                                    Console.WriteLine(TempAnsList.ct_s_num);
+                                                    Console.WriteLine(TempAnsList.sec_s_num);
+                                                    Console.WriteLine(TempAnsList.mlo_s_num);
+                                                    Console.WriteLine(TempAnsList.reh_s_num);
+                                                    Console.WriteLine(TempAnsList.latitude);
+                                                    Console.WriteLine(TempAnsList.longitude);
+                                                    Console.WriteLine(TempAnsList.time);
+                                                    no_wifi_punch_out  = await web.Save_Punch_Out(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.reh_s_num, TempAnsList.mlo_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time, "2");
+                                                    Console.WriteLine("no_wifi_punch_out~~~ " + no_wifi_punch_out);
                                                     if (no_wifi_punch_out == true)
                                                     {
+                                                        Console.WriteLine("no_wifi_in~~~");
                                                         // 打卡成功
                                                         name_list_out.Add(TempAnsList.name);
-                                                        
+
                                                         //Console.WriteLine("name_list_out~~~" + name_list_out.Count);
                                                         //name_list_out2.Add(new TmpPunchList
                                                         //{
@@ -1055,12 +1118,17 @@ namespace PULI.Views
                                                         //Console.WriteLine("name_out~~" + name_list_out.Count());
                                                         //  tmp_punch_out[TempAnsList.name] = true; // 簽到成功
                                                         // //Console.WriteLine("SQLitepunchout~~~" + tmp_punch_in[TempAnsList.name] + "name " + TempAnsList.name);
-                                                        AccDatabase.DeleteItem_Punch2(TempAnsList.ID); // 把那筆刪掉
-                                                                                                    //formin.IsVisible = true;
-                                                                                                    //formin.IsEnabled = true;
-                                                                                                    //await Task.Delay(10000); // 等待30秒
-                                                                                                    //Messager2();
-
+                                                        Console.WriteLine("RRRR");
+                                                        Console.WriteLine(AccDatabase.GetAccountAsync2_Punch().Count());
+                                                        AccDatabase.DeleteItem_Punch(TempAnsList.ID); // 把那筆刪掉
+                                                        Console.WriteLine("TTTT");
+                                                        Console.WriteLine(AccDatabase.GetAccountAsync2_Punch().Count());
+                                                                                                       //formin.IsVisible = true;
+                                                                                                       //formin.IsEnabled = true;
+                                                                                                       //await Task.Delay(10000); // 等待30秒
+                                                                                                       //Messager2();
+                                                        Console.WriteLine("id~~ ");
+                                                        Console.WriteLine(TempAnsList.ID);
                                                         AccDatabase.DeleteItem_PunchTmp2(TempAnsList.ID);
                                                         
                                                         MessagingCenter.Send(this, "Setlist2", true); // 更新主頁面的無網路簽退紀錄
@@ -1075,7 +1143,15 @@ namespace PULI.Views
                                                             });
                                                             WIFI_name_list_out.Add(TempAnsList.name);
                                                         }
-                                                        
+                                                        //if (name_list_out.Count() == WIFI_name_list_out.Count() && name_list_in.Count() != 0)
+                                                        //{
+                                                        //    AccDatabase.DeleteAll_Punch2();
+                                                        //    AccDatabase.DeleteAll_PunchTmp2();
+                                                        //}
+                                                        //Console.WriteLine("XXXX");
+                                                        //Console.WriteLine(name_list_out.Count());
+                                                        //Console.WriteLine(WIFI_name_list_out.Count());
+                                                        //MessagingCenter.Send(this, "Setlist2", true);
                                                     }
                                                     else
                                                     {
@@ -1083,30 +1159,66 @@ namespace PULI.Views
                                                         //Console.WriteLine("ASQLite簽退失敗");
                                                     }
                                                 }
-                                                else
-                                                {
-                                                    // 已經處理過這筆簽退，直接刪除這筆紀錄
-                                                    AccDatabase.DeleteItem_Punch2(TempAnsList.ID);
-                                                    AccDatabase.DeleteItem_PunchTmp2(TempAnsList.ID);
-                                                }
+                                                //else
+                                                //{
+                                                //    // 已經處理過這筆簽退，直接刪除這筆紀錄
+                                                //    AccDatabase.DeleteItem_Punch2(TempAnsList.ID);
+                                                //    AccDatabase.DeleteItem_PunchTmp2(TempAnsList.ID);
+                                                //    if (name_list_out.Count() == WIFI_name_list_out.Count() && name_list_in.Count() != 0)
+                                                //    {
+                                                //        AccDatabase.DeleteAll_Punch2();
+                                                //        AccDatabase.DeleteAll_PunchTmp2();
+                                                //    }
+                                                //    Console.WriteLine("QQQQ");
+                                                //    Console.WriteLine(name_list_out.Count());
+                                                //    Console.WriteLine(WIFI_name_list_out.Count());
+                                                //    MessagingCenter.Send(this, "Setlist2", true); // 更新主頁面的無網路簽退紀錄
+                                                //}
                                             }
                                                
                                         }
+
                                     }
                                 }
-                                //Console.WriteLine("number~~ " + PunchDatabase.GetAccountAsync2().Count());
-                                if (AccDatabase.GetAccountAsync2_Punch2().Count() == 0) // 判斷是否還有未處理的無網路打卡
-                                {
-                                    //Console.WriteLine("punchtmpSUCESS");
-                                    // 全部刪除，且更新主頁面上的紀錄
-                                    AccDatabase.DeleteAll_PunchTmp();
-                                    AccDatabase.DeleteAll_PunchTmp2();
-                                    MessagingCenter.Send(this, "Setlist", true);
-                                    //Console.WriteLine("sendsetlist~~~");
-                                    MessagingCenter.Send(this, "Setlist2", true);
-                                    //Console.WriteLine("sendsetlist22~~~");
+                                Console.WriteLine("GGG");
+                                Console.WriteLine(AccDatabase.GetAccountAsync2_Wifi_Punchin().Count());
+                                Console.WriteLine(AccDatabase.GetAccountAsync2_Wifi_Punchout().Count());
+                                //if(AccDatabase.GetAccountAsync2_Wifi_Punchin().Count() == WIFI_name_list_in.Count())
+                                //{
+                                //    AccDatabase.DeleteAll_PunchTmp();
+                                //    successIn = true;
+                                //}
+                                //if (AccDatabase.GetAccountAsync2_Wifi_Punchout().Count() == WIFI_name_list_out.Count())
+                                //{
+                                //    AccDatabase.DeleteAll_PunchTmp2();
+                                //    successOut = true;
+                                //}
+                                //if(successIn == true && successOut == true)
+                                //{
+                                //    AccDatabase.DeleteAll_Punch();
+                                //    successIn = false;
+                                //    successOut = false;
+                                //}
 
-                                }
+
+
+
+                                //Console.WriteLine("number~~ " + PunchDatabase.GetAccountAsync2().Count());
+                                //if (AccDatabase.GetAccountAsync2_Punch2().Count() == 0) // 判斷是否還有未處理的無網路打卡
+                                //{
+                                //    //Console.WriteLine("punchtmpSUCESS");
+                                //    // 全部刪除，且更新主頁面上的紀錄
+                                //    AccDatabase.DeleteAll_PunchTmp();
+                                //    AccDatabase.DeleteAll_PunchTmp2();
+                                //    MessagingCenter.Send(this, "Setlist", true);
+                                //    //Console.WriteLine("sendsetlist~~~");
+                                //    MessagingCenter.Send(this, "Setlist2", true);
+                                //    //Console.WriteLine("sendsetlist22~~~");
+
+                                //}
+
+
+                                //---------------------------------------------------------------------
                                 //if(name_list_in.Count() == total_need_to_serve && name_list_out.Count() == total_need_to_serve) // 判斷是否送餐完畢
                                 //{
                                 //    DeliverOver = true;
@@ -1269,7 +1381,7 @@ namespace PULI.Views
                                                          */
                                                         //--------------------------------
                                                         punch_in[totalList.daily_shipments[i].ct_name] = true; // 簽到成功
-                                                        wifi_punch_in = await web.Save_Punch_In(MainPage.token, ct_s_num, sec_s_num, mlo_s_num, reh_s_num, position.Latitude, position.Longitude, time);
+                                                        wifi_punch_in = await web.Save_Punch_In(MainPage.token, ct_s_num, sec_s_num, mlo_s_num, reh_s_num, position.Latitude, position.Longitude, time, "1");
                                                         //Console.WriteLine("web_res" + web_res);
                                                         if (wifi_punch_in == true)
                                                         {
@@ -1313,7 +1425,7 @@ namespace PULI.Views
                                                         DateTime myDate = DateTime.Now;
                                                         time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
                                                         //Console.WriteLine("time~~~ " + time);
-                                                        PunchSaveToSQLite(MainPage.token, Clname, inorout, ct_s_num, sec_s_num, mlo_s_num, reh_s_num, position.Latitude, position.Longitude, time, DateTime.Now.ToShortTimeString());
+                                                        PunchSaveToSQLite(MainPage.token, Clname, inorout, ct_s_num, sec_s_num, reh_s_num, mlo_s_num, position.Latitude, position.Longitude, time, DateTime.Now.ToShortTimeString());
                                                         punch_in[totalList.daily_shipments[i].ct_name] = true; // 簽到成功
                                                         AccDatabase.SaveAccountAsync_PunchTmp(new PunchTmp // 存進無網路簽到成功的SQLite
                                                         {
@@ -1389,6 +1501,7 @@ namespace PULI.Views
                                             {
                                                 DateTime myDate = DateTime.Now;
                                                 time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
+
                                                 //Console.WriteLine("time~~~ " + time);
 
                                                 //------跳出訊息先註解掉---------
@@ -1436,9 +1549,24 @@ namespace PULI.Views
                                         }
                                         */
                                         //----------------------------------------------------------------------------------
+                                        ct_s_num = totalList.daily_shipments[i].ct_s_num;
+
+                                        sec_s_num = totalList.daily_shipments[i].sec_s_num;
+
+                                        mlo_s_num = totalList.daily_shipments[i].mlo_s_num;  // 訂單s_num(
+                                        reh_s_num = totalList.daily_shipments[i].reh_s_num;
                                         punch_out[totalList.daily_shipments[i].ct_name] = true;  // 簽退成功
                                                 punchList[totalList.daily_shipments[i].ct_name] = true; // 打卡完成設為true(簽到+簽退成功)
-                                                wifi_punch_out  = await web.Save_Punch_Out(MainPage.token, ct_s_num, sec_s_num, reh_s_num, mlo_s_num, position.Latitude, position.Longitude, time);
+                                        Console.WriteLine("wifi puch out");
+                                        Console.WriteLine("token~~" + MainPage.token);
+                                        Console.WriteLine("name~" + Clname);
+                                        Console.WriteLine("ct_s_num~~" + ct_s_num);
+                                        Console.WriteLine("sec_s_num~~" + sec_s_num);
+                                        Console.WriteLine("mlo_s_num~~" + mlo_s_num);
+                                        Console.WriteLine("bn_s_num~~" + bn_s_num);
+                                        Console.WriteLine("lat~~" + position.Latitude);
+                                        Console.WriteLine("lon~~" + position.Longitude);
+                                        wifi_punch_out = await web.Save_Punch_Out(MainPage.token, ct_s_num, sec_s_num, reh_s_num, mlo_s_num, position.Latitude, position.Longitude, time, "1");
                                                 //Console.WriteLine("web_res2" + web_res2);
                                                 if (wifi_punch_out == true)
                                                 {
@@ -1543,10 +1671,14 @@ namespace PULI.Views
                                                                  // 把要打卡的資料先存回SQLite
                                                 DateTime myDate = DateTime.Now;
                                                 time = myDate.ToString("yyyy-MM-dd HH:mm:ss");
-                                                //Console.WriteLine("time~~~ " + time);
-                                                PunchSaveToSQLite(MainPage.token, Clname, inorout, ct_s_num, sec_s_num, mlo_s_num, reh_s_num, position.Latitude, position.Longitude, time, DateTime.Now.ToShortTimeString());
-                                                
-                                                punch_out[totalList.daily_shipments[i].ct_name] = true;  // 謙退成功
+                                        //Console.WriteLine("time~~~ " + time);
+                                        Console.WriteLine("save_out_count11~~~ ");
+                                        Console.WriteLine(AccDatabase.GetAccountAsync2_Punch().Count());
+                                                PunchSaveToSQLite(MainPage.token, Clname, inorout, ct_s_num, sec_s_num, reh_s_num, mlo_s_num, position.Latitude, position.Longitude, time, DateTime.Now.ToShortTimeString());
+                                        DisplayAlert("msg","save nowifi out", "ok");
+                                        Console.WriteLine("save_out_count22~~~ ");
+                                        Console.WriteLine(AccDatabase.GetAccountAsync2_Punch().Count());
+                                        punch_out[totalList.daily_shipments[i].ct_name] = true;  // 謙退成功
                                                 punchList[totalList.daily_shipments[i].ct_name] = true; // 打卡完成設為true
                                                 AccDatabase.SaveAccountAsync_PunchTmp2(new PunchTmp2 // 把簽退成功紀錄到無網路簽退的SQLite
                                                 {
@@ -2408,7 +2540,7 @@ namespace PULI.Views
         public void PunchSaveToSQLite(string _token, string _name, string _inorout, string _ct_s_num, string _sec_s_num, string _reh_s_num, string _mlo_s_num, double _lat, double _lot, string _time, string _timeforpost)
         {
             // MainPage.token, ct_s_num, sec_s_num, mlo_s_num, bn_s_num, position.Latitude, position.Longitude
-            //Console.WriteLine("punchsave~~~");
+            Console.WriteLine("punchsave~~~");
             AccDatabase.SaveAccountAsync_Punch(new Punch
             {
                 token = _token,

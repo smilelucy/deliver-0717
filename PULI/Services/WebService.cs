@@ -14,8 +14,8 @@ namespace Deliver.Services
 {
     class WebService
     {
-        //public static string host = "http://59.120.147.32:8080/lt_care";
-        public static string host = "https://s1.fcts.org.tw";
+        public static string host = "http://59.120.147.32:8080/lt_care";
+        //public static string host = "https://s1.fcts.org.tw";
 
         public async Task<LoginInfo> Login(String acc, String pwd, String identity)
         {
@@ -256,7 +256,7 @@ namespace Deliver.Services
             }
 
         }
-        public async Task<bool> Save_Punch_In(string token, string ct_s_num, string sec_s_num, string mlo_s_num, string reh_s_num, double lat, double lot, string time)
+        public async Task<bool> Save_Punch_In(string token, string ct_s_num, string sec_s_num, string mlo_s_num, string reh_s_num, double lat, double lot, string time, string phl50)
         {
             try
             {
@@ -273,6 +273,7 @@ namespace Deliver.Services
                 //Console.WriteLine("MLO>>>> " + mlo_s_num);
                 formData.Add(new StringContent(reh_s_num), "reh_s_num");
                 formData.Add(new StringContent(time), "phl01");
+                formData.Add(new StringContent(phl50), "phl50");
                 formData.Add(new StringContent("1"), "phl02");
                 formData.Add(new StringContent(lot.ToString()), "phl03");
                 //Console.WriteLine("LOT>>>> " + lot.ToString());
@@ -321,7 +322,7 @@ namespace Deliver.Services
             }
             
         }
-        public async Task<bool> Save_Punch_Out(string token, string ct_s_num, string sec_s_num, string reh_s_num, string mlo_s_num, double lat, double lot, string time)
+        public async Task<bool> Save_Punch_Out(string token, string ct_s_num, string sec_s_num, string reh_s_num, string mlo_s_num, double lat, double lot, string time, string phl50)
         {
             try
             {
@@ -335,6 +336,7 @@ namespace Deliver.Services
                 formData.Add(new StringContent(mlo_s_num), "mlo_s_num");
                 formData.Add(new StringContent(reh_s_num), "reh_s_num");
                 formData.Add(new StringContent(time), "phl01");
+                formData.Add(new StringContent(phl50), "phl50");
                 formData.Add(new StringContent("2"), "phl02");
                 formData.Add(new StringContent(lot.ToString()), "phl03");
                 formData.Add(new StringContent(lat.ToString()), "phl04");

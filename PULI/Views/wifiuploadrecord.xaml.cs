@@ -20,9 +20,7 @@ namespace PULI.Views
         public wifiuploadrecord()
         {
             InitializeComponent();
-            Messager();
-            wifi_punchin_listview.ItemTemplate = new DataTemplate(typeof(RecordCell));
-            wifi_punchout_listview.ItemTemplate = new DataTemplate(typeof(RecordCell));
+            
         }
 
         private async void wifi_punchin_setlist()
@@ -103,6 +101,13 @@ namespace PULI.Views
             {
                 Console.WriteLine(ex.ToString());
             }
+        }
+        protected override void OnAppearing()
+        {
+            Messager();
+            wifi_punchin_listview.ItemTemplate = new DataTemplate(typeof(RecordCell));
+            wifi_punchout_listview.ItemTemplate = new DataTemplate(typeof(RecordCell));
+            base.OnAppearing();
         }
     }
 }

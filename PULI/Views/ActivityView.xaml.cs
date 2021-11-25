@@ -36,7 +36,7 @@ namespace PULI.Views
         {
             InitializeComponent();
             //_totalList = totalList;
-            Messager();
+            
             //setView();
             //_totalList = totalList;
             //total_table.ItemsSource = MapView.totalList.daily_shipments;
@@ -44,6 +44,10 @@ namespace PULI.Views
         public async void setView() // 總表
         {
             Console.WriteLine("SETVIEW");
+            loadingView.IsVisible = true;
+            loadingView.IsEnabled = true;
+            activityView.IsVisible = false;
+            activityView.IsEnabled = false;
             //Console.WriteLine("timeactivity~~~ " + MainPage._time);
             if (MainPage._time == "早上")
             {
@@ -699,6 +703,10 @@ namespace PULI.Views
                     
                     TotalStack.Children.Add(grid);
                     TotalStack_other.Children.Add(grid_other);
+                    loadingView.IsVisible = false;
+                    loadingView.IsEnabled = false;
+                    activityView.IsVisible = true;
+                    activityView.IsEnabled = true;
 
 
                     resComStack.IsVisible = true;
@@ -917,6 +925,10 @@ namespace PULI.Views
         protected override void OnAppearing()
         {
             //setView();
+            //Messager();
+            TotalStack.Children.Clear();
+            TotalStack_other.Children.Clear();
+            setView();
             base.OnAppearing();
             //totalList = new TotalList();
             

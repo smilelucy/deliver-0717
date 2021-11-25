@@ -5,19 +5,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="PULI.Views.ActivityView">
-    <StackLayout Orientation="Vertical">
-        <Frame BackgroundColor="#5ABFC9"
+    <Grid HorizontalOptions="Center" VerticalOptions="Center">
+        <StackLayout Orientation="Vertical" x:Name="activityView">
+            <Frame BackgroundColor="#5ABFC9"
                            
                            Padding="0,0,0,0"
                            Margin="2,5,2,2"
                            CornerRadius="30">
-            <StackLayout Orientation="Horizontal"
+                <StackLayout Orientation="Horizontal"
                                      WidthRequest="280"
                                      HorizontalOptions="FillAndExpand"
                                      Margin="2,0,2,0"
                                      >
 
-                <Button BackgroundColor="White"
+                    <Button BackgroundColor="White"
                                                 Text="總表"
                                                 TextColor="#5ABFC9"
                                                 FontSize="20"
@@ -34,7 +35,7 @@
                                                 
                                                 Clicked="buttonres_Clicked"/>
 
-                <!--<Button BackgroundColor= "#5ABFC9"
+                    <!--<Button BackgroundColor= "#5ABFC9"
                                             Text="異動表"
                                             TextColor="White"
                                             FontSize="20"
@@ -49,19 +50,19 @@
                                             x:Name="buttoncheck"
                                             Margin="0,5,5,5"
                                             Clicked="buttoncheck_Clicked"/>-->
-            </StackLayout>
-        </Frame>
-       
-        <StackLayout x:Name="resComStack"
+                </StackLayout>
+            </Frame>
+
+            <StackLayout x:Name="resComStack"
                      IsVisible="false"
                      IsEnabled="False"
                                  Margin="5,5,5,5">
-            <ScrollView Orientation="Both" HeightRequest="400">
-                <StackLayout x:Name="TotalStack" >
+                <ScrollView Orientation="Both" HeightRequest="400">
+                    <StackLayout x:Name="TotalStack" >
 
 
-                </StackLayout>
-                <!--<ListView x:Name="listview" 
+                    </StackLayout>
+                    <!--<ListView x:Name="listview" 
                       HorizontalOptions="Center"
                       VerticalOptions="Center"
                            SeparatorColor="#073b4c"
@@ -69,13 +70,13 @@
                         HasUnevenRows="True"
                         />-->
 
-            </ScrollView>
-            <ScrollView Orientation="Both" HeightRequest="200">
-                <StackLayout x:Name="TotalStack_other" >
+                </ScrollView>
+                <ScrollView Orientation="Both" HeightRequest="200">
+                    <StackLayout x:Name="TotalStack_other" >
 
 
-                </StackLayout>
-                <!--<ListView x:Name="listview" 
+                    </StackLayout>
+                    <!--<ListView x:Name="listview" 
                       HorizontalOptions="Center"
                       VerticalOptions="Center"
                            SeparatorColor="#073b4c"
@@ -83,8 +84,8 @@
                         HasUnevenRows="True"
                         />-->
 
-            </ScrollView>
-            <!--<Frame BorderColor="#f1ab86"
+                </ScrollView>
+                <!--<Frame BorderColor="#f1ab86"
                                BackgroundColor="#FBE6DA"
                                 CornerRadius="20"
                                Margin="2,-10,2,0">
@@ -92,9 +93,9 @@
             </Frame>-->
 
 
-        </StackLayout>
-        
-        <!--<StackLayout >
+            </StackLayout>
+
+            <!--<StackLayout >
             <ListView x:Name="listview_stop" 
                       HorizontalOptions="Center"
                       VerticalOptions="Center"
@@ -105,7 +106,7 @@
 
 
         </StackLayout>-->
-        <!--<StackLayout Margin="5,0,5,0">
+            <!--<StackLayout Margin="5,0,5,0">
 
             <Label Text="停餐名單 : "
                                        TextColor="Black"
@@ -130,48 +131,48 @@
 
         </StackLayout>-->
 
-        <StackLayout x:Name="resSucStack"
+            <StackLayout x:Name="resSucStack"
                                  IsVisible="False"
                                  IsEnabled="False"
                                  Margin="5,5,5,100">
-            <Frame BorderColor="#f1ab86"
+                <Frame BorderColor="#f1ab86"
                                BackgroundColor="#FBE6DA"
                                 CornerRadius="20"
                                Margin="2,-18,2,0">
-                <ListView x:Name="listview2" 
+                    <ListView x:Name="listview2" 
                           HorizontalOptions="Center"
                       VerticalOptions="Center"
                           
                           SeparatorColor="#073b4c"
                          
                           HasUnevenRows="True"/>
-            </Frame>
-        </StackLayout>
-        
-        
-        <StackLayout x:Name="resSucStack2"
+                </Frame>
+            </StackLayout>
+
+
+            <StackLayout x:Name="resSucStack2"
                                  IsVisible="False"
                                  IsEnabled="False"
                      HorizontalOptions="FillAndExpand"
                      VerticalOptions="FillAndExpand"
                                  Margin="5,5,5,0"
                      Padding="0,0,0,0">
-            <Label Text="暫無異動資訊"
+                <Label Text="暫無異動資訊"
                        HorizontalOptions="Center"
                       VerticalOptions="Center"
                      
                        FontSize="20"
                        ></Label>
-            <!--<Frame BorderColor="#f1ab86"
+                <!--<Frame BorderColor="#f1ab86"
                                BackgroundColor="#FBE6DA"
                                 CornerRadius="20"
                                Margin="2,-18,2,0">
                 
             </Frame>-->
-        </StackLayout>
+            </StackLayout>
 
 
-        <!--<StackLayout x:Name="total">
+            <!--<StackLayout x:Name="total">
             <ListView x:Name="listview" 
                       HorizontalOptions="Center"
                       VerticalOptions="Center"
@@ -188,5 +189,40 @@
                     HasUnevenRows="True"
                     />
         </StackLayout>-->
-    </StackLayout>
+        </StackLayout>
+        <StackLayout HorizontalOptions="FillAndExpand"
+                     VerticalOptions="FillAndExpand"
+                     x:Name="loadingView"
+                     Margin="0,50,0,0"
+                     IsVisible="false">
+
+
+
+            <StackLayout VerticalOptions="CenterAndExpand"
+                         HorizontalOptions="Center">
+
+                <ActivityIndicator IsRunning="True"
+                                   VerticalOptions="CenterAndExpand"
+                                   HorizontalOptions="Center"
+                                   Color="#457b9d"
+                                   Scale="1"/>
+
+            </StackLayout>
+            <StackLayout VerticalOptions="Start"
+                         HorizontalOptions="Center">
+
+                <Label x:Name="loadingLabel"
+                           Text="載入中...請稍後!"
+                           HorizontalOptions="Start"
+                           VerticalOptions="Start"
+                           FontSize="Medium"
+                           TextColor="Black"/>
+
+            </StackLayout>
+
+
+
+        </StackLayout>
+    </Grid>
+    
 </ContentPage>
