@@ -282,7 +282,8 @@ namespace PULI.Views
                             // 輸入帳號登入
                             if (MainPage.Loginway == "Enter")
                             {
-                                AccDatabase.DeleteAll_Punch(); // 記錄無網路環境打卡的
+                            DisplayAlert("msg", "bb" + totalList.daily_shipments.Count(), "ok");
+                            AccDatabase.DeleteAll_Punch(); // 記錄無網路環境打卡的
                                 AccDatabase.DeleteAll_Punch2(); // 紀錄案主家打卡進度的(setnum)
                                 AccDatabase.DeleteAll_PunchTmp(); // 紀錄無網路環境下，後來自動簽到成功的
                                 AccDatabase.DeleteAll_PunchTmp2(); // 紀錄無網路環境下，後來自動簽退成功的
@@ -396,7 +397,7 @@ namespace PULI.Views
                                     });
                                     //Console.WriteLine("date_nodata_save~~");
                                 }
-                                
+                            //DisplayAlert("msg", "aa" + totalList.daily_shipments.Count, "ok");
                                                                                             
                                 for (int i = 0; i < totalList.daily_shipments.Count; i++)
                                 {
@@ -2006,7 +2007,7 @@ namespace PULI.Views
                         }
                         catch (Exception ex)
                         {
-                            DisplayAlert("error", "AAA" + ex.ToString(), "OK");
+                            //DisplayAlert("error", "AAA" + ex.ToString(), "OK");
                             //Console.WriteLine("GET");
                             //Console.WriteLine("ERRORLA~~~" + ex.ToString());
                             //if (!isAlert)
@@ -2018,7 +2019,7 @@ namespace PULI.Views
                     }
                 } catch(Exception ex)
                 {
-                    DisplayAlert("error", "location null" + ex.ToString(), "ok");
+                    //DisplayAlert("error", "location null" + ex.ToString(), "ok");
                 }
                
                 
