@@ -60,7 +60,7 @@
 
     </NavigationPage>
 
-    <NavigationPage Title="列表"
+    <!--<NavigationPage Title="列表"
                     Style="{StaticResource NavigationPage_Style}"
                     Icon="activity.png">
 
@@ -70,7 +70,7 @@
 
         </x:Arguments>
 
-    </NavigationPage>
+    </NavigationPage>-->
 
 
 

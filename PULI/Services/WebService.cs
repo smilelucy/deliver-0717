@@ -256,28 +256,28 @@ namespace Deliver.Services
             }
 
         }
-        public async Task<bool> Save_Punch_In(string token, string ct_s_num, string sec_s_num, string mlo_s_num, string reh_s_num, double lat, double lot, string time, string phl50)
+        public async Task<bool> Save_Punch_In(PunchIn punin)
         {
             try
             {
                 HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Add("Authorization", "Token " + token);
+                client.DefaultRequestHeaders.Add("Authorization", "Token " + punin.token);
                 //Console.WriteLine("TOKEN>>>> " + token);
                 MultipartFormDataContent formData = new MultipartFormDataContent();
                 //formData.Add(tempData);
-                formData.Add(new StringContent(ct_s_num), "ct_s_num");
+                formData.Add(new StringContent(punin.ct_s_num), "ct_s_num");
                 //Console.WriteLine("NAME>>>> " + ct_s_num);
-                formData.Add(new StringContent(sec_s_num), "sec_s_num");
+                formData.Add(new StringContent(punin.sec_s_num), "sec_s_num");
                 //Console.WriteLine("SEC_S_NUM>>>> " + sec_s_num);
-                formData.Add(new StringContent(mlo_s_num), "mlo_s_num");
+                formData.Add(new StringContent(punin.mlo_s_num), "mlo_s_num");
                 //Console.WriteLine("MLO>>>> " + mlo_s_num);
-                formData.Add(new StringContent(reh_s_num), "reh_s_num");
-                formData.Add(new StringContent(time), "phl01");
-                formData.Add(new StringContent(phl50), "phl50");
+                formData.Add(new StringContent(punin.reh_s_num), "reh_s_num");
+                formData.Add(new StringContent(punin.time), "phl01");
+                formData.Add(new StringContent(punin.phl50), "phl50");
                 formData.Add(new StringContent("1"), "phl02");
-                formData.Add(new StringContent(lot.ToString()), "phl03");
+                formData.Add(new StringContent(punin.longitude), "phl03");
                 //Console.WriteLine("LOT>>>> " + lot.ToString());
-                formData.Add(new StringContent(lat.ToString()), "phl04");
+                formData.Add(new StringContent(punin.latitude), "phl04");
                 //Console.WriteLine("LAT>>>> " + lat.ToString());
                 formData.Add(new StringContent("1"), "phl05");
                 formData.Add(new StringContent("1"), "phl99");
@@ -296,7 +296,7 @@ namespace Deliver.Services
                 Console.WriteLine("content" + content);
                 if (response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine(ct_s_num + "INN");
+                    //Console.WriteLine(ct_s_num + "INN");
                     
                     Console.WriteLine("content_in~~~~~ " + content);
                     if (content == "ok" || content == "duplicate")
@@ -322,24 +322,24 @@ namespace Deliver.Services
             }
             
         }
-        public async Task<bool> Save_Punch_Out(string token, string ct_s_num, string sec_s_num, string reh_s_num, string mlo_s_num, double lat, double lot, string time, string phl50)
+        public async Task<bool> Save_Punch_Out(PunchIn punout)
         {
             try
             {
                 HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Add("AUTHORIZATION", "Token " + token);
+                client.DefaultRequestHeaders.Add("AUTHORIZATION", "Token " + punout.token);
 
                 MultipartFormDataContent formData = new MultipartFormDataContent();
                 //formData.Add(tempData);
-                formData.Add(new StringContent(ct_s_num), "ct_s_num");
-                formData.Add(new StringContent(sec_s_num), "sec_s_num");
-                formData.Add(new StringContent(mlo_s_num), "mlo_s_num");
-                formData.Add(new StringContent(reh_s_num), "reh_s_num");
-                formData.Add(new StringContent(time), "phl01");
-                formData.Add(new StringContent(phl50), "phl50");
+                formData.Add(new StringContent(punout.ct_s_num), "ct_s_num");
+                formData.Add(new StringContent(punout.sec_s_num), "sec_s_num");
+                formData.Add(new StringContent(punout.mlo_s_num), "mlo_s_num");
+                formData.Add(new StringContent(punout.reh_s_num), "reh_s_num");
+                formData.Add(new StringContent(punout.time), "phl01");
+                formData.Add(new StringContent(punout.phl50), "phl50");
                 formData.Add(new StringContent("2"), "phl02");
-                formData.Add(new StringContent(lot.ToString()), "phl03");
-                formData.Add(new StringContent(lat.ToString()), "phl04");
+                formData.Add(new StringContent(punout.longitude), "phl03");
+                formData.Add(new StringContent(punout.latitude), "phl04");
                 formData.Add(new StringContent("1"), "phl05");
                 formData.Add(new StringContent("1"), "phl99");
 
@@ -357,7 +357,7 @@ namespace Deliver.Services
                 //Console.WriteLine("content" + content);
                 if (response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine(ct_s_num + "OUT");
+                    //Console.WriteLine(ct_s_num + "OUT");
                     Console.WriteLine("content_out~~~ " + content);
                     if (content == "ok" || content == "duplicate")
                     {

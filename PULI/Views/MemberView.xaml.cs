@@ -335,8 +335,8 @@ namespace PULI.Views
             //listview.Items.Clear();
             //listview.ItemTemplate = new DataTemplate(typeof(RecordCell)); // 把模式設為activitycell
             listview.SelectedItem = null; // 
+            TmpPunchList2.Clear();
             TmpPunchList2 = MapView.AccDatabase.GetAccountAsync2_PunchTmp();
-            Console.WriteLine("tmpnum~~~" + TmpPunchList2.Count());
             listview.ItemsSource = TmpPunchList2; // itemtemplate的資料來源
                                          //listview.ItemsSource = MapView.name_list_in2; // itemtemplate的資料來源
         }
@@ -348,8 +348,8 @@ namespace PULI.Views
             //TmpPunchList3.Clear();
             //listview2.ItemTemplate = new DataTemplate(typeof(RecordCell)); // 把模式設為activitycell
             listview2.SelectedItem = null; // 
+            TmpPunchList3.Clear();
             TmpPunchList3 = MapView.AccDatabase.GetAccountAsync2_PunchTmp2();
-            Console.WriteLine("tmpnum2~~~" + TmpPunchList3.Count());
             listview2.ItemsSource = TmpPunchList3; // itemtemplate的資料來源
                                                   //listview.ItemsSource = MapView.name_list_in2; // itemtemplate的資料來源
         }
@@ -365,9 +365,9 @@ namespace PULI.Views
             await Navigation.PushAsync(new UploadView());
         }
 
-        private async void addnew_btn_clicked(object sender, EventArgs e)
+        private async void activity_btn_clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new AddNewClnView());
+            await Navigation.PushAsync(new ActivityView());
         }
         //private void Messager2()
         //{

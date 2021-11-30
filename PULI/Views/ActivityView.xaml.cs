@@ -30,8 +30,8 @@ namespace PULI.Views
         private List<string> ct_mp04_list = new List<string>(); // 代餐是否送達
         private restorename restoreList = new restorename();
         WebService web = new WebService();
-        
 
+        int cc = 1;
         public ActivityView()
         {
             InitializeComponent();
@@ -41,24 +41,29 @@ namespace PULI.Views
             //_totalList = totalList;
             //total_table.ItemsSource = MapView.totalList.daily_shipments;
         }
-        public async void setView() // 總表
+        private async void setView() // 總表
         {
-            Console.WriteLine("SETVIEW");
-            loadingView.IsVisible = true;
-            loadingView.IsEnabled = true;
-            activityView.IsVisible = false;
-            activityView.IsEnabled = false;
+
+            Console.WriteLine("SETVIEW" + cc);
+            Console.WriteLine("tqweqwe" + Navigation.NavigationStack.Count);
+            cc++;
+           
             //Console.WriteLine("timeactivity~~~ " + MainPage._time);
-            if (MainPage._time == "早上")
+            if(totalList != null)
             {
-                totalList = await web.Get_Daily_Shipment(MainPage.token);
+                if (MainPage._time == "早上")
+                {
+                    totalList = await web.Get_Daily_Shipment(MainPage.token);
+                }
+                else
+                {
+                    totalList = await web.Get_Daily_Shipment_night(MainPage.token);
+                }
+                stopList = await web.Get_Stop(MainPage.token);
+                restoreList = await web.Get_Restore(MainPage.token);
             }
-            else
-            {
-                totalList = await web.Get_Daily_Shipment_night(MainPage.token);
-            }
-            stopList = await web.Get_Stop(MainPage.token);
-            restoreList = await web.Get_Restore(MainPage.token);
+            
+            
             //Console.WriteLine("04~~~~" + totalList.daily_shipments[0].dys04);
             //Console.WriteLine("05~~~~" + totalList.daily_shipments[0].dys05);
             //Console.WriteLine("QQQQ~~" + totalList.daily_shipments.Count());
@@ -66,10 +71,12 @@ namespace PULI.Views
             {
                 if (totalList.daily_shipments.Count() != 0)
                 {
+                    
+                    //Console.WriteLine("isvisible~~ " + loadingView.IsVisible);
                     //listview.ItemTemplate = new DataTemplate(typeof(ShipCell)); // 把模式設為ActivityCell
                     //listview.SelectedItem = null; // 
                     //listview.ItemsSource = totalList.daily_shipments; // ItemTemplate的資料來源
-                   // Console.WriteLine("count~~ " + totalList.daily_shipments.Count());
+                    // Console.WriteLine("count~~ " + totalList.daily_shipments.Count());
                     for (int i = 0; i < totalList.daily_shipments.Count; i++)
                     {
 
@@ -845,6 +852,7 @@ namespace PULI.Views
                 //});
                 MessagingCenter.Subscribe<MemberView, bool>(this, "OUT", (sender, arg) =>
                 {
+                    Console.WriteLine("asdadasq");
                     if (arg)
                     {
                         Navigation.PushAsync(new ActivityView());
@@ -928,6 +936,7 @@ namespace PULI.Views
             //Messager();
             TotalStack.Children.Clear();
             TotalStack_other.Children.Clear();
+            Console.WriteLine("21121331313");
             setView();
             base.OnAppearing();
             //totalList = new TotalList();

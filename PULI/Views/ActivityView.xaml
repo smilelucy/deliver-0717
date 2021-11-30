@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              x:Class="PULI.Views.ActivityView">
     <Grid HorizontalOptions="Center" VerticalOptions="Center">
-        <StackLayout Orientation="Vertical" x:Name="activityView">
+        <StackLayout Orientation="Vertical" x:Name="activityView" IsVisible="false" IsEnabled="False">
             <Frame BackgroundColor="#5ABFC9"
                            
                            Padding="0,0,0,0"
@@ -194,7 +194,8 @@
                      VerticalOptions="FillAndExpand"
                      x:Name="loadingView"
                      Margin="0,50,0,0"
-                     IsVisible="false">
+                     IsVisible="true"
+                     IsEnabled="True">
 
 
 
