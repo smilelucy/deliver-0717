@@ -423,6 +423,28 @@ namespace PULI.Models.DataInfo
         }
 
 
+        // ActivityView
+
+        public int SaveAccountAsync_ActivityView(TotalList tmp)
+        {
+            lock (locker)
+            {
+                return _database2.Insert(tmp);
+
+            }
+        }
+
+        public IEnumerable<TotalList> GetAccountAsync_ActivityView()
+        {
+            lock (locker)
+            {
+                //return (from i in _database2.Table<TotalList>() select i).ToList();
+                return (from i in _database2.Table<TotalList>() select i);
+            }
+        }
+
+
+
         // Choose
         //public IEnumerable<Choose> GetAccountAsync2_Choose()
         //{
@@ -613,7 +635,7 @@ namespace PULI.Models.DataInfo
         //    lock (locker)
         //    {
         //        return _database2.Insert(tmp);
-               
+
         //    }
         //}
         //public int DeleteItem_ResetLabel(int id)

@@ -169,13 +169,18 @@ namespace PULI
                         if (time == "早上")
                         {
                             _time = "早上";
-                            totalList = await web.Get_Daily_Shipment(MainPage.token);
-
+                            totalList = await web.Get_Daily_Shipment(token);
+                            ActivityView.totalList = await web.Get_Daily_Shipment(token);
+                            ActivityView.stopList = await web.Get_Stop(token);
+                            ActivityView.restoreList = await web.Get_Restore(token);
                         }
                         else
                         {
                             _time = "晚上";
-                            totalList = await web.Get_Daily_Shipment_night(MainPage.token);
+                            totalList = await web.Get_Daily_Shipment_night(token);
+                            ActivityView.totalList = await web.Get_Daily_Shipment_night(token);
+                            ActivityView.stopList = await web.Get_Stop(token);
+                            ActivityView.restoreList = await web.Get_Restore(token);
                         }
 
 
@@ -500,7 +505,10 @@ namespace PULI
                             if (MainPage._time == "早上")
                             {
                                 totalList = await web.Get_Daily_Shipment(MainPage.token);
-                                if(totalList.daily_shipments != null)
+                                ActivityView.totalList = await web.Get_Daily_Shipment(token);
+                                ActivityView.stopList = await web.Get_Stop(token);
+                                ActivityView.restoreList = await web.Get_Restore(token);
+                                if (totalList.daily_shipments != null)
                                 {
                                     Console.WriteLine("count~~~ " + totalList.daily_shipments.Count());
                                 }
@@ -512,6 +520,9 @@ namespace PULI
                             else
                             {
                                 totalList = await web.Get_Daily_Shipment_night(MainPage.token);
+                                ActivityView.totalList = await web.Get_Daily_Shipment_night(token);
+                                ActivityView.stopList = await web.Get_Stop(token);
+                                ActivityView.restoreList = await web.Get_Restore(token);
                             }
 
                             //Console.WriteLine("CHANGE" + totalList.abnormals.Count);
@@ -560,6 +571,8 @@ namespace PULI
                                 //Start();
                                 //-------------------------------------------------
                                 loadingView.IsVisible = false;
+                               
+                                
                                 await Navigation.PushModalAsync(new HomeView2());
                                 Console.WriteLine("deliver~~ ");
                             }

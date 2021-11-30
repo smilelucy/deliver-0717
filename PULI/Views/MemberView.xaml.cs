@@ -2,6 +2,7 @@
 using Deliver.Models.DataInfo;
 using Deliver.Services;
 using Newtonsoft.Json;
+using Plugin.Connectivity;
 using PULI.Models.DataCell;
 using PULI.Models.DataInfo;
 using PULI.Services;
@@ -79,6 +80,10 @@ namespace PULI.Views
             {
                 auth.Text = "送餐員";
                 usrname.Text = MainPage.userList.acc_name;
+                if(!CrossConnectivity.Current.IsConnected)
+                {
+                    activity_btn.IsEnabled = false;
+                }
             }
             else
             {
@@ -368,6 +373,7 @@ namespace PULI.Views
         private async void activity_btn_clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new ActivityView());
+
         }
         //private void Messager2()
         //{

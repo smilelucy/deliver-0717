@@ -14,4 +14,5 @@ namespace PULI.Models.DataInfo
         public int ID { get; set; }
         public int setnum { get; set; }
     }
+    
 }

@@ -3,6 +3,7 @@ using PULI.Models.DataCell;
 using PULI.Models.DataInfo;
 using System;
 using System.Collections.Generic;
+using Plugin.Connectivity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,9 @@ namespace PULI.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ActivityView : ContentPage
     {
-        private TotalList totalList = new TotalList();
-        private stopname stopList = new stopname();
+        public static TempDatabase AccDatabase;
+        public static TotalList totalList;
+        public static stopname stopList;
         private List<string> dys08_list = new List<string>();
         private List<string> ct_name_list = new List<string>();
         private List<string> dys02_list = new List<string>();
@@ -28,7 +30,7 @@ namespace PULI.Views
         private List<string> ct_address_list = new List<string>();
         private List<string> ct_mp06_list = new List<string>();
         private List<string> ct_mp04_list = new List<string>(); // 代餐是否送達
-        private restorename restoreList = new restorename();
+        public static restorename restoreList;
         WebService web = new WebService();
 
         int cc = 1;
@@ -41,6 +43,8 @@ namespace PULI.Views
             //_totalList = totalList;
             //total_table.ItemsSource = MapView.totalList.daily_shipments;
         }
+
+
         private async void setView() // 總表
         {
 
@@ -53,14 +57,29 @@ namespace PULI.Views
             {
                 if (MainPage._time == "早上")
                 {
-                    totalList = await web.Get_Daily_Shipment(MainPage.token);
-                }
+                    if(CrossConnectivity.Current.IsConnected)
+                    {
+                        totalList = await web.Get_Daily_Shipment(MainPage.token);
+                    }
+                        
+                        //AccDatabase.SaveAccountAsync_ActivityView(totalList);
+                    
+                    
+    }
                 else
                 {
-                    totalList = await web.Get_Daily_Shipment_night(MainPage.token);
+                    if (CrossConnectivity.Current.IsConnected)
+                    {
+                        totalList = await web.Get_Daily_Shipment_night(MainPage.token);
+                    }
+                       
                 }
-                stopList = await web.Get_Stop(MainPage.token);
-                restoreList = await web.Get_Restore(MainPage.token);
+                if (CrossConnectivity.Current.IsConnected)
+                {
+                    stopList = await web.Get_Stop(MainPage.token);
+                    restoreList = await web.Get_Restore(MainPage.token);
+                }
+                
             }
             
             
