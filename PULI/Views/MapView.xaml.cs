@@ -282,7 +282,7 @@ namespace PULI.Views
                             // 輸入帳號登入
                             if (MainPage.Loginway == "Enter")
                             {
-                            DisplayAlert("msg", "bb" + totalList.daily_shipments.Count(), "ok");
+                            //DisplayAlert("msg", "bb" + totalList.daily_shipments.Count(), "ok");
                             AccDatabase.DeleteAll_Punch(); // 記錄無網路環境打卡的
                                 AccDatabase.DeleteAll_Punch2(); // 紀錄案主家打卡進度的(setnum)
                                 AccDatabase.DeleteAll_PunchTmp(); // 紀錄無網路環境下，後來自動簽到成功的
@@ -2027,7 +2027,7 @@ namespace PULI.Views
             }
             catch (Exception ex)
             {
-                DisplayAlert("error", "BBB" + ex.ToString(), "ok");
+                //DisplayAlert("error", "BBB" + ex.ToString(), "ok");
                 //Console.WriteLine("GETERROR");
                 //Console.WriteLine(ex.ToString());
             }
@@ -2837,21 +2837,25 @@ namespace PULI.Views
                         await getLocation();
                         //post_gps();
                         //-----------------MQTT-----------------------
-                        //var lat = position.Latitude.ToString();
-                        //var lon = position.Longitude.ToString();
+                        var lat = position.Latitude.ToString();
+                        var lon = position.Longitude.ToString();
                         //Console.WriteLine("TF~~ " + MainPage.mqttClient.IsConnected);
                         //Console.WriteLine("lat~~ " + lat);
                         //Console.WriteLine("lon~~~" + lon);
+                        if(CrossConnectivity.Current.IsConnected)
+                        {
+                            //Console.WriteLine("mqttin~~~");
+                            if (MainPage.mqttClient.IsConnected == true)
+                            { // 有連線的話就傳送資料
+                                Connected(lat, lon, MainPage.NAME);
+                            }
+                            else
+                            { // 沒有連線的話就重新連線再傳送資料 
+                                MainPage.Start();
+                                Connected(lat, lon, MainPage.NAME);
+                            }
+                        }
                        
-                        //if (MainPage.mqttClient.IsConnected == true)
-                        //{ // 有連線的話就傳送資料
-                            //Connected(lat, lon, MainPage.NAME);
-                        //}
-                        //else
-                        //{ // 沒有連線的話就重新連線再傳送資料 
-                            //MainPage.Start();
-                            //Connected(lat, lon, MainPage.NAME);
-                        //}
                         //--------------------------------------------
                         //post_gps();
                         //checknowifi();

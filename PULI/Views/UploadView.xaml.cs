@@ -233,7 +233,8 @@ namespace PULI.Views
                     formData.Add(img_from_gallery, "WorkLogPicture", "WorkLogPicture");
                     var request = new HttpRequestMessage()
                     {
-                        RequestUri = new Uri("http://59.120.147.32:8080/lt_care/api/account/save_worklog"),
+                        //RequestUri = new Uri("http://59.120.147.32:8080/lt_care/api/account/save_worklog"),
+                        RequestUri = new Uri("https://s1.fcts.org.tw/api/account/save_worklog"),
                         Method = HttpMethod.Post,
                         Content = formData
                     };

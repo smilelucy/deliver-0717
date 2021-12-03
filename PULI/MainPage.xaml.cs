@@ -327,7 +327,7 @@ namespace PULI
                                 if (AUTH == "14") // 純外送員 & 社工幫忙送餐
                                 {
                                     //------------------MQTT-------------------
-                                    //Start();
+                                    Start();
                                     //--------------------------------------------
                                     Console.WriteLine("4~~~~");
                                     await Navigation.PushModalAsync(new HomeView2());
@@ -568,7 +568,7 @@ namespace PULI
                             if (AUTH == "14") // 純外送員 & 社工幫忙外送
                             {
                                 //--------------------MQTT--------------------------
-                                //Start();
+                                Start();
                                 //-------------------------------------------------
                                 loadingView.IsVisible = false;
                                
@@ -788,7 +788,8 @@ namespace PULI
                 var factory = new MqttFactory();　　　　　　　　//聲明一個MQTT客戶端的標準步驟 的第一步
                 mqttClient = factory.CreateMqttClient() as MqttClient;  //factory.CreateMqttClient()實際是一個介面類型（IMqttClient）,這裡是把他的類型變了一下
                 options = new MqttClientOptionsBuilder()　　　　//實例化一個MqttClientOptionsBulider
-                    .WithTcpServer("192.168.50.163", 1883)
+                    //.WithTcpServer("192.168.50.163", 1883)
+                    .WithTcpServer("61.218.250.30",4220)
                     .Build();
                         
                 mqttClient.ConnectAsync(options);      //連接伺服器
