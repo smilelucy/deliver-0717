@@ -163,7 +163,7 @@ namespace PULI.Views
             if(MainPage.AUTH == "14") // 外送員(有打卡功能)
             {
                 Device.StartTimer(TimeSpan.FromSeconds(1), OnTimerTick);
-                //Device.StartTimer(TimeSpan.FromSeconds(5), OnTimerTick2);
+                Device.StartTimer(TimeSpan.FromSeconds(5), OnTimerTick2);
                 Device.StartTimer(TimeSpan.FromSeconds(3), OnTimerTick_for_PunchInfo);
                 //Device.StartTimer(TimeSpan.FromSeconds(10), OnTimerTick_for_movemap);
               
@@ -2836,6 +2836,7 @@ namespace PULI.Views
                         //Console.WriteLine("TIMER~~~");
                         await getLocation();
                         //post_gps();
+                        
                         //-----------------MQTT-----------------------
                         var lat = position.Latitude.ToString();
                         var lon = position.Longitude.ToString();
@@ -2909,8 +2910,8 @@ namespace PULI.Views
                     {
                         // UI interaction goes here
                         await getLocation2();
-                        ///post_gps();
-                        
+                        web.post_gps(MainPage.token, position.Latitude.ToString(), position.Longitude.ToString());
+
                     });
                 }
                 catch (Exception ex)
