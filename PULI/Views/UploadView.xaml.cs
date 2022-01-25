@@ -30,12 +30,15 @@ namespace PULI.Views
         {
             InitializeComponent();
             identityStack.Children.Add(pickerStack());
-            
-            foreach (var i in MapView.totalList.daily_shipments)
+            if(MapView.totalList.daily_shipments.Count != 0)
             {
-                selectvalueList.Add(i.ct_s_num);
+                foreach (var i in MapView.totalList.daily_shipments)
+                {
+                    selectvalueList.Add(i.ct_s_num);
+                }
+                NOWREH = MapView.totalList.daily_shipments[0].reh_s_num;
             }
-            NOWREH = MapView.totalList.daily_shipments[0].reh_s_num;
+            
 
         }
 

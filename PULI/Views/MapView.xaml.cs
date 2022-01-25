@@ -136,7 +136,7 @@ namespace PULI.Views
         bool successIn;
         bool successOut;
         //public static string NOWHOME; // for拍照上傳帶案主家編號
-        //public static string NOWREH;  // for拍照上傳帶reh_s_num
+        private static string MQTTREH;  // for mqtt gps info帶reh_s_num
 
         public MapView()
         {
@@ -213,11 +213,12 @@ namespace PULI.Views
                         if(MainPage._time == "早上") // 早上跟下午用不同api
                         {
                             totalList = await web.Get_Daily_Shipment(MainPage.token);
-                           
+                            MQTTREH = totalList.daily_shipments[0].reh_s_num;
                         }
                         else
                         {
                             totalList = await web.Get_Daily_Shipment_night(MainPage.token);
+                            MQTTREH = totalList.daily_shipments[0].reh_s_num;
                         }
                         //Console.WriteLine("nnnn~~~ " + totalList.daily_shipments.Count());
                         
@@ -2852,12 +2853,12 @@ namespace PULI.Views
                             //Console.WriteLine("mqttin~~~");
                             if (MainPage.mqttClient.IsConnected == true)
                             { // 有連線的話就傳送資料
-                                Connected(lat, lon, MainPage.NAME);
+                                Connected(lat, lon, MainPage.NAME, MQTTREH);
                             }
                             else
                             { // 沒有連線的話就重新連線再傳送資料 
                                 MainPage.Start();
-                                Connected(lat, lon, MainPage.NAME);
+                                Connected(lat, lon, MainPage.NAME, MQTTREH);
                             }
                         }
                        
@@ -2876,7 +2877,7 @@ namespace PULI.Views
             return true;
         }
         
-        private static async Task Connected(string lat, string lon, string name)
+        private static async Task Connected(string lat, string lon, string name, string reh)
         {
             try
             {
@@ -2890,7 +2891,7 @@ namespace PULI.Views
 
                 var message = new MqttApplicationMessageBuilder()
                  .WithTopic("sensor/Test/room1")
-                 .WithPayload(lat + "," + lon+ "," + name)
+                 .WithPayload(lat + "," + lon+ "," + name + "," + reh)
                  .WithExactlyOnceQoS()
                  .WithRetainFlag()
                  .Build();
