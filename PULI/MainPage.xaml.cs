@@ -738,6 +738,7 @@ namespace PULI
                 if (selectedIndex != -1)
                 {
                     _resIdentity = (string)picker.ItemsSource[selectedIndex];
+                    Console.WriteLine("selected~~~ " + selectedIndex);
                     Console.WriteLine("identity~~~" + _resIdentity);
                 }
             }

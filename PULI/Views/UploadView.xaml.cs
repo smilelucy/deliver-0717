@@ -22,11 +22,21 @@ namespace PULI.Views
         WebService web = new WebService();
         private static bool istakephoto = false;
         private static bool ispickphoto = false;
-
+        private string _selecttext = "";
+        List<string> selectvalueList = new List<string>();
+        private static string NOWHOME; // for拍照上傳帶案主家編號
+        private static string NOWREH;  // for拍照上傳帶reh_s_num
         public UploadView()
         {
             InitializeComponent();
+            identityStack.Children.Add(pickerStack());
             
+            foreach (var i in MapView.totalList.daily_shipments)
+            {
+                selectvalueList.Add(i.ct_s_num);
+            }
+            NOWREH = MapView.totalList.daily_shipments[0].reh_s_num;
+
         }
 
         StreamContent img_sc;
@@ -119,9 +129,87 @@ namespace PULI.Views
         {
             await Navigation.PopAsync();
         }
+        
+        private StackLayout pickerStack()
+        {
+            try
+            {
+                Label label = new Label
+                {
+                    FontSize = 25,
+                    Text = "案主 : "
+                };
+
+                Picker picker = new Picker
+                {
+                    BackgroundColor = Color.White,
+                    Title = "請選擇案主",
+                    TextColor = Color.FromHex("#326292"),
+                    TitleColor = Color.FromHex("#326292")
+                };
+                picker.SelectedIndexChanged += usrIdentity_SelectedIndexChanged; // 選了一個職之後會觸發一個事件
+
+                List<string> identityList = new List<string>();
+                foreach (var i in MapView.totalList.daily_shipments)
+                {
+                    identityList.Add(i.ct_name);
+                }
+                picker.ItemsSource = identityList;
+
+                Frame frame = new Frame // frame包上面那個stacklayout
+                {
+                    BorderColor = Color.Olive,
+                    Padding = new Thickness(10, 5, 10, 5),
+                    Margin = new Thickness(0, 0, 0, 0),
+                    //BackgroundColor = Color.FromHex("eddcd2"),
+                    CornerRadius = 20,
+                    HasShadow = false,
+                    Content = picker
+                };
+
+                StackLayout stack = new StackLayout
+                {
+                    Orientation = StackOrientation.Vertical,
+                    Children = { label, frame }
+                };
+                
 
 
 
+
+                return stack;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+        }
+
+        private void usrIdentity_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                Picker picker = (Picker)sender;
+                int selectedIndex = picker.SelectedIndex;
+
+                if (selectedIndex != -1)
+                {
+                    _selecttext = (string)picker.ItemsSource[selectedIndex];
+                    NOWHOME = selectvalueList[selectedIndex];
+                    //Console.WriteLine("selected~~~ " + selectedIndex);
+                    //Console.WriteLine("text~~~" + _selecttext);
+                    //Console.WriteLine("value~~~" + NOWHOME);
+                    //Console.WriteLine("reh~~~" + NOWREH);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+        
         private async void post_Clicked(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(note.Text))
@@ -146,6 +234,9 @@ namespace PULI.Views
 
                         if (!string.IsNullOrEmpty(note.Text))
                             formData.Add(new StringContent(note.Text), "WorkLogNote");
+                        formData.Add(new StringContent(NOWHOME), "ct_s_num");
+                        formData.Add(new StringContent(NOWREH), "reh_s_num");
+                        //Console.WriteLine("picupload" + MapView.NOWHOME);
                         //WorkLogPicture
                         if (istakephoto == true && ispickphoto == false)
                         {
@@ -229,6 +320,8 @@ namespace PULI.Views
 
                     if (!string.IsNullOrEmpty(note.Text))
                         formData.Add(new StringContent(note.Text), "WorkLogNote");
+                    formData.Add(new StringContent(NOWHOME), "ct_s_num");
+                    formData.Add(new StringContent(NOWREH), "reh_s_num");
                     //WorkLogPicture
                     formData.Add(img_from_gallery, "WorkLogPicture", "WorkLogPicture");
                     var request = new HttpRequestMessage()

@@ -7,15 +7,17 @@
         <Grid x:Name="uploadlayout">
         <ScrollView>
             <StackLayout Margin="10,5,10,5">
-                <Label Text="輸入筆記或上傳照片" FontSize="30" HorizontalOptions="Center"/>
+                <Label Text="狀況回報" FontSize="30" HorizontalOptions="Center"/>
+                    <StackLayout x:Name="identityStack" Orientation="Vertical" Padding="20,3,20,3">
 
-                <StackLayout Margin="20,3,20,3" >
+                    </StackLayout>
+                    <StackLayout Margin="20,3,20,3" >
                         <Label Text="筆記 ： " FontSize="25"/>
                    
                             <Editor x:Name="note" HorizontalOptions="FillAndExpand" AutoSize="TextChanges"/>
                     
                     </StackLayout>
-            
+                
                 <StackLayout>
                  
                     <!--<Button x:Name="btnCam" Text="拍照" Clicked="btnCam_Clicked"/>-->

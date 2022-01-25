@@ -135,6 +135,8 @@ namespace PULI.Views
         bool wifi_punch_out;
         bool successIn;
         bool successOut;
+        //public static string NOWHOME; // for拍照上傳帶案主家編號
+        //public static string NOWREH;  // for拍照上傳帶reh_s_num
 
         public MapView()
         {
@@ -1279,6 +1281,8 @@ namespace PULI.Views
                                 distance.Text = d2;
                                 Latitude.Text = position.Latitude.ToString();
                                 Longitude.Text = position.Longitude.ToString();
+                                //NOWHOME = "0";
+                                //NOWREH = totalList.daily_shipments[i].reh_s_num;
                                 //Console.WriteLine("lat~~ " + position.Latitude.ToString());
                                 //Console.WriteLine("lot~~~ " + position.Longitude.ToString());
                                 //foreach (var a in punchList)
@@ -1336,8 +1340,8 @@ namespace PULI.Views
                                         which = i;
                                         //setName = cList2[i].ct_name;
                                         // 抓取案主資料
-
-
+                                        //NOWHOME = totalList.daily_shipments[i].ct_s_num;
+                                        //NOWREH = totalList.daily_shipments[i].reh_s_num;
                                         setname.Text = "成功簽到" + totalList.daily_shipments[i].ct_name + "的家";
                                         //setname2.Text = totalList.daily_shipments[i].ct_name;
                                         setname3.Text = totalList.daily_shipments[i].ct_name;
