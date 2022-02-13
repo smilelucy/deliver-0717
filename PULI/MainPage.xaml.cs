@@ -63,10 +63,10 @@ namespace PULI
         public static string oldday2;
         public static string _login_time;
         private string _identity;
-        public static string _time = "";
+        public static string _time = "早上";
         private string time;
         public static bool checkdate = false;
-        private string _resIdentity = "";
+        private string _resIdentity = "送餐員";
         private string[] identityArray = new string[] { "社工", "送餐員" };
         private string[] timeArray = new string[] { "早上", "下午"};
 
@@ -794,23 +794,27 @@ namespace PULI
                     .Build();
                         
                 mqttClient.ConnectAsync(options);      //連接伺服器
-                if (!mqttClient.IsConnected)
-                {
-                    Console.WriteLine("isconnect? " + mqttClient.IsConnected);
-                    //Console.WriteLine("Not connected, connecting from CheckMqttConnection");
-                    try
-                    {
+                //if (!mqttClient.IsConnected)
+                //{
+                //    Console.WriteLine("isconnect? " + mqttClient.IsConnected);
+                //    //Console.WriteLine("Not connected, connecting from CheckMqttConnection");
+                //    try
+                //    {
 
-                        mqttClient.ConnectAsync(options);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                    }
-                }
-                Console.WriteLine("MQTTconnected");
+                //        mqttClient.ConnectAsync(options);
+                //    }
+                //    catch (Exception e)
+                //    {
+                //        Console.WriteLine(e);
+                //    }
+                //}
+                //Console.WriteLine("MQTTconnected");
                 await mqttClient.SubscribeAsync(new TopicFilterBuilder()
                   .WithTopic("sensor/Test/room1")
+                  //.WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
+                  .Build());
+                await mqttClient.SubscribeAsync(new TopicFilterBuilder()
+                  .WithTopic("sensor/Test/room2")
                   //.WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
                   .Build());
                 Console.WriteLine("Connected >>Subscribe Success");
@@ -827,7 +831,7 @@ namespace PULI
             catch (Exception exp)
             {
 
-                Console.WriteLine(exp);
+                //Console.WriteLine(exp);
             }
             Console.WriteLine("Work >>End");
 

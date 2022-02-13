@@ -911,8 +911,9 @@ namespace PULI.Views
                         //Console.WriteLine("count!!!~~ " + questionList.qbs.Count());
                         if (i.qb_order == "3" && questionList.qbs.Count() == 5 && result_num < 3) // 星期一 ~ 三的第三題只有已發選項
                         {
-                            ////Console.WriteLine("nameBB~~~ " + questionList.ClientName);
-                            ////Console.WriteLine("countBB~~~ " + questionList.qbs.Count());
+                            Console.WriteLine("ASD~~");
+                            Console.WriteLine("nameBB~~~ " + questionList.ClientName);
+                            Console.WriteLine("countBB~~~ " + questionList.qbs.Count());
                             ////Console.WriteLine("order~~~ " + i.qb_order);
                             ////Console.WriteLine("result_num~~~ " + result_num);
                             ////////Console.WriteLine("reseultnum~~LA~~~ " + result_num);
@@ -1034,7 +1035,7 @@ namespace PULI.Views
                                         IsChecked = ischeck,
                                         Margin = new Thickness(-5, 0, 0, 0),
                                         //Color = Color.FromHex("264653")
-                                        Color = Color.Red
+                                        Color = Color.Green
                                     };
                                 }
                                 else
@@ -1045,7 +1046,7 @@ namespace PULI.Views
                                         IsChecked = ischeck,
                                         Margin = new Thickness(-5, 0, 0, 0),
                                         //Color = Color.FromHex("264653")
-                                        Color = Color.Green
+                                        Color = Color.Red
                                     };
                                 }
                                 check_box.CheckedChanged += async (s, e) =>
@@ -1115,15 +1116,16 @@ namespace PULI.Views
 
                                         if (j == "是" || j == "已發")
                                         {
-                                            color = "Red";
-                                            IsResetList[questionList.wqh_s_num + i.qb_order] = true;
-                                            IsGreenOrRed[questionList.wqh_s_num + i.qb_order] = "Red";
-                                        }
-                                        else
-                                        {
+                                            Console.WriteLine("green~~ ");
                                             color = "Green";
                                             IsResetList[questionList.wqh_s_num + i.qb_order] = true;
                                             IsGreenOrRed[questionList.wqh_s_num + i.qb_order] = "Green";
+                                        }
+                                        else
+                                        {
+                                            color = "Red";
+                                            IsResetList[questionList.wqh_s_num + i.qb_order] = true;
+                                            IsGreenOrRed[questionList.wqh_s_num + i.qb_order] = "Red";
                                         }
                                         //////Console.WriteLine("color~~~ " + color);
                                         TmpAnsList[questionList.wqh_s_num + questionList.ClientName + i.qb_order] = j;
@@ -1161,6 +1163,7 @@ namespace PULI.Views
                                         if ((stack_ques.Children.Where(x => x.ClassId == stack_name).ToString()) != null)
                                         {
                                             Console.WriteLine("成功~~ ");
+                                            Console.WriteLine("ASDD~ " + stack_name);
                                             //stack_check2 = new StackLayout // checkbox跟選項
                                             //{
                                             //    Orientation = StackOrientation.Horizontal,
@@ -2114,7 +2117,7 @@ namespace PULI.Views
                                     check_box.CheckedChanged += async (s, e) =>
                                     {
                                         stack_name = questionList.wqh_s_num + i.qb_order;
-                                        Console.WriteLine("THUUUU~~~ " + j);
+                                        //Console.WriteLine("THUUUU~~~ " + j);
                                         ////////Console.WriteLine("checkboxin1~~~");
                                         if (e.Value) // 如果選是，要跳出entry所以需要reset
                                         {
@@ -2653,8 +2656,8 @@ namespace PULI.Views
                                         ClassId = questionList.wqh_s_num + i.qb_order
                                     };
                                     var key = questionList.wqh_s_num + j + i.qb_order;
-                                    Console.WriteLine("wqh~~ " + questionList.wqh_s_num);
-                                    Console.WriteLine("j~~ " + j);
+                                    //Console.WriteLine("wqh~~ " + questionList.wqh_s_num);
+                                    //Console.WriteLine("j~~ " + j);
                                     if (checkboxDictionary.ContainsKey(key) == false)
                                     {
                                         checkboxDictionary.Add(key, check_box);
@@ -3239,8 +3242,8 @@ namespace PULI.Views
                                             ClassId = questionList.wqh_s_num + i.qb_order
                                         };
                                         var key = questionList.wqh_s_num + j + i.qb_order;
-                                        Console.WriteLine("wqh~~ " + questionList.wqh_s_num);
-                                        Console.WriteLine("j~~ " + j);
+                                        //Console.WriteLine("wqh~~ " + questionList.wqh_s_num);
+                                        //Console.WriteLine("j~~ " + j);
                                         if (checkboxDictionary.ContainsKey(key) == false)
                                         {
                                             checkboxDictionary.Add(key, check_box);
@@ -4200,8 +4203,8 @@ namespace PULI.Views
                                             ClassId = questionList.wqh_s_num + i.qb_order
                                         };
                                         var key = questionList.wqh_s_num + j + i.qb_order;
-                                        Console.WriteLine("wqh~~ " + questionList.wqh_s_num);
-                                        Console.WriteLine("j~~ " + j);
+                                        //Console.WriteLine("wqh~~ " + questionList.wqh_s_num);
+                                        //Console.WriteLine("j~~ " + j);
                                         if (checkboxDictionary.ContainsKey(key) == false)
                                         {
                                             checkboxDictionary.Add(key, check_box);
@@ -5672,8 +5675,8 @@ namespace PULI.Views
                                     //    };
                                     //}
                                     var key = questionList.wqh_s_num + j + i.qb_order;
-                                    Console.WriteLine("wqh~~ " + questionList.wqh_s_num);
-                                    Console.WriteLine("j~~ " + j);
+                                    //Console.WriteLine("wqh~~ " + questionList.wqh_s_num);
+                                    //Console.WriteLine("j~~ " + j);
                                     if (checkboxDictionary.ContainsKey(key) == false)
                                     {
                                         checkboxDictionary.Add(key, check_box);
@@ -6538,11 +6541,11 @@ namespace PULI.Views
                                         //stack_ques.Children.RemoveAt(0);
                                         //stack_ques.Children.Insert(0, stack_check2);
                                         //stack_ques.Children.Insert(1, stack_check2);
-                                        Console.WriteLine("wqh~~ " + questionList.wqh_s_num);
-                                        Console.WriteLine("qb~~~ " + a.qb_order);
-                                        Console.WriteLine("stack_count~~ " + ques_stack_count);
-                                        Console.WriteLine("count~~~ " + Stack_Count[questionList.wqh_s_num + a.qb_order]);
-                                        Console.WriteLine("countlaaaa~~ " + Stack_Count.Count());
+                                        //Console.WriteLine("wqh~~ " + questionList.wqh_s_num);
+                                        //Console.WriteLine("qb~~~ " + a.qb_order);
+                                        //Console.WriteLine("stack_count~~ " + ques_stack_count);
+                                        //Console.WriteLine("count~~~ " + Stack_Count[questionList.wqh_s_num + a.qb_order]);
+                                        //Console.WriteLine("countlaaaa~~ " + Stack_Count.Count());
                                         //Console.WriteLine("lastcount~~ " + Stack_Count[]);
 
                                         //if (Stack_Count[questionList.wqh_s_num + a.qb_order] == Stack_Count.Count())

@@ -452,7 +452,7 @@ namespace PULI.Views
 
                                             foreach (var TempNameList in c)
                                             {
-                                                Console.WriteLine("tmpname1111~~~" + TempNameList.name);
+                                                //Console.WriteLine("tmpname1111~~~" + TempNameList.name);
                                                 if (!name_list_in.Contains(TempNameList.name))
                                                 {
                                                     // 把判斷無網路打卡的紀錄寫回去
@@ -486,7 +486,7 @@ namespace PULI.Views
 
                                             foreach (var TempNameList in c)
                                             {
-                                                Console.WriteLine("tmpname2222~~~" + TempNameList.name);
+                                                //Console.WriteLine("tmpname2222~~~" + TempNameList.name);
                                             if (!name_list_out.Contains(TempNameList.name))
                                             {
                                                 name_list_out.Add(TempNameList.name);
@@ -991,6 +991,7 @@ namespace PULI.Views
                                                             time = TempAnsList.time,
                                                             phl50 = "2"
                                                         };
+                                                        Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "1", "2", TempAnsList.ct_s_num);
                                                         //no_wifi_punch_in = await web.Save_Punch_In(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.reh_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time, "2");
                                                         no_wifi_punch_in = await web.Save_Punch_In(punin);
                                                         //Console.WriteLine("web_resin~~~ " + web_res2);
@@ -1106,6 +1107,7 @@ namespace PULI.Views
                                                             time = TempAnsList.time,
                                                             phl50 = "2"
                                                         };
+                                                        Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "2", "2", TempAnsList.ct_s_num);
                                                         //no_wifi_punch_out = await web.Save_Punch_Out(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.reh_s_num, TempAnsList.mlo_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time, "2");
                                                         no_wifi_punch_out = await web.Save_Punch_Out(punout);
                                                         Console.WriteLine("no_wifi_punch_out~~~ " + no_wifi_punch_out);
@@ -1404,6 +1406,7 @@ namespace PULI.Views
                                                 time = time,
                                                 phl50 = "1"
                                             };
+                                            Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "1", "1", totalList.daily_shipments[i].ct_s_num);
                                             //wifi_punch_in = await web.Save_Punch_In(MainPage.token, totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].mlo_s_num, totalList.daily_shipments[i].reh_s_num, position.Latitude, position.Longitude, time, "1");
                                             wifi_punch_in = await web.Save_Punch_In(punin);
                                             //Console.WriteLine("web_res" + web_res);
@@ -1610,6 +1613,7 @@ namespace PULI.Views
                                                 time = time,
                                                 phl50 = "1"
                                             };
+                                            Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "2", "1", totalList.daily_shipments[i].ct_s_num);
                                             //wifi_punch_out = await web.Save_Punch_Out(MainPage.token, totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].reh_s_num, totalList.daily_shipments[i].mlo_s_num, position.Latitude, position.Longitude, time, "1");
                                             wifi_punch_out = await web.Save_Punch_Out(punout);
                                             //Console.WriteLine("web_res2" + web_res2);
@@ -2876,7 +2880,8 @@ namespace PULI.Views
             });
             return true;
         }
-        
+
+        // push gps to mqtt server
         private static async Task Connected(string lat, string lon, string name, string reh)
         {
             try
@@ -2891,7 +2896,7 @@ namespace PULI.Views
 
                 var message = new MqttApplicationMessageBuilder()
                  .WithTopic("sensor/Test/room1")
-                 .WithPayload(lat + "," + lon+ "," + name + "," + reh)
+                 .WithPayload(lat + "," + lon+ "," + name + "," + reh + "," + MainPage.token)
                  .WithExactlyOnceQoS()
                  .WithRetainFlag()
                  .Build();
@@ -2904,6 +2909,36 @@ namespace PULI.Views
                 Console.WriteLine(exp.Message);
             }
         }
+
+        // push punch record to mqtt server
+        private static async Task Connected_punch(string lat, string lon,string reh, string inorout, string wifi , string ctsnum)
+        {
+            try
+            {
+                //List<TopicFilter> listTopic = new List<TopicFilter>();
+                //if (listTopic.Count() <= 0)
+                //{
+                //    var topicFilterBulder = new TopicFilterBuilder().WithTopic("sensor/TestView/room1").Build();
+                //    //listTopic.Add(topicFilterBulder);
+                //    Console.WriteLine("Connected >>Subscribe + Topic");
+                //}
+
+                var message = new MqttApplicationMessageBuilder()
+                 .WithTopic("sensor/Test/room2")
+                 .WithPayload(lat + "," + lon + "," + reh + "," + MainPage.token + "," + inorout + "," + wifi + "," + ctsnum)
+                 .WithExactlyOnceQoS()
+                 .WithRetainFlag()
+                 .Build();
+
+                await MainPage.mqttClient.PublishAsync(message);
+                //Console.WriteLine("Connected >>publish msg Success");
+            }
+            catch (Exception exp)
+            {
+                Console.WriteLine(exp.Message);
+            }
+        }
+
         bool OnTimerTick2()
         {
             Task.Run(() =>
