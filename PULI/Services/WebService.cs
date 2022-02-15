@@ -14,8 +14,8 @@ namespace Deliver.Services
 {
     class WebService
     {
-        public static string host = "http://59.120.147.32:8080/lt_care/api/app";
-        //public static string host = "https://s1.fcts.org.tw/api/app";
+        //public static string host = "http://59.120.147.32:8080/lt_care/api/app";
+        public static string host = "https://s1.fcts.org.tw/api/app";
 
         public async Task<LoginInfo> Login(String acc, String pwd, String identity)
         {
