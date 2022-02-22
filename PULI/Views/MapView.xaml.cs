@@ -169,7 +169,7 @@ namespace PULI.Views
                 Device.StartTimer(TimeSpan.FromSeconds(3), OnTimerTick_for_PunchInfo);
                 //Device.StartTimer(TimeSpan.FromSeconds(10), OnTimerTick_for_movemap);
               
-                Console.WriteLine("shipment~~~");
+                //Console.WriteLine("shipment~~~");
             }
             //else if(MainPage.AUTH == "6" && MainPage.userList.daily_shipment_nums > 0) // 社工幫忙送餐(有打卡功能)
             //{
@@ -193,8 +193,9 @@ namespace PULI.Views
         {
             try
             {
-                if (totalList.daily_shipments == null)
-                {
+                
+                //if (totalList.daily_shipments == null)
+                //{
                    
                     questionnaireslist = await web.Get_Questionaire(MainPage.token); // 拿問卷
                     
@@ -202,7 +203,7 @@ namespace PULI.Views
                    
                     //Console.WriteLine("TOKEN" +MainPage.token);
                    
-                    if (MainPage.AUTH == "14" )
+                    if (MainPage.AUTH == "14")
                     {
 
                         //Console.WriteLine("外送員~~~~");
@@ -213,12 +214,26 @@ namespace PULI.Views
                         if(MainPage._time == "早上") // 早上跟下午用不同api
                         {
                             totalList = await web.Get_Daily_Shipment(MainPage.token);
-                            MQTTREH = totalList.daily_shipments[0].reh_s_num;
+                            if (totalList != null) {
+                                MQTTREH = totalList.daily_shipments[0].reh_s_num;
+                            } else {
+                                totalList = await web.Get_Daily_Shipment(MainPage.token);
+                                MQTTREH = totalList.daily_shipments[0].reh_s_num;
+                            }
+                            
                         }
                         else
                         {
                             totalList = await web.Get_Daily_Shipment_night(MainPage.token);
-                            MQTTREH = totalList.daily_shipments[0].reh_s_num;
+                            if (totalList != null)
+                            {
+                                MQTTREH = totalList.daily_shipments[0].reh_s_num;
+                            }
+                            else
+                            {
+                                totalList = await web.Get_Daily_Shipment(MainPage.token);
+                                MQTTREH = totalList.daily_shipments[0].reh_s_num;
+                            }
                         }
                         //Console.WriteLine("nnnn~~~ " + totalList.daily_shipments.Count());
                         
@@ -278,11 +293,12 @@ namespace PULI.Views
                         //    }
                         //}
 
-                        MyMap.Pins.Clear(); 
-                        
-                        
-                            //Console.WriteLine("loginway~~" + MainPage.Loginway);
-                            // 輸入帳號登入
+                        MyMap.Pins.Clear();
+
+
+                        //Console.WriteLine("loginway~~" + MainPage.Loginway);
+                        // 輸入帳號登入
+                        //DisplayAlert("way", MainPage.Loginway, "ok");
                             if (MainPage.Loginway == "Enter")
                             {
                             //DisplayAlert("msg", "bb" + totalList.daily_shipments.Count(), "ok");
@@ -348,6 +364,7 @@ namespace PULI.Views
                             }
                             else
                             {
+                            //DisplayAlert("loginway", "autologin" + totalList.daily_shipments.Count, "ok");
                                 // 自動登入
                                 //Console.WriteLine("Auto~~~");
                                 if (MainPage.dateDatabase.GetAccountAsync2().Count() != 0) // 如果紀錄登入日期的SQLite裡面有資料，先比對
@@ -705,7 +722,7 @@ namespace PULI.Views
                     
 
 
-                }
+                //}
             }
             catch (Exception ex)
             {
@@ -2016,6 +2033,7 @@ namespace PULI.Views
                         }
                         catch (Exception ex)
                         {
+                            Console.WriteLine("EX222~~ " + ex.ToString());
                             //DisplayAlert("error", "AAA" + ex.ToString(), "OK");
                             //Console.WriteLine("GET");
                             //Console.WriteLine("ERRORLA~~~" + ex.ToString());
@@ -2028,6 +2046,7 @@ namespace PULI.Views
                     }
                 } catch(Exception ex)
                 {
+                    Console.WriteLine("EX~~ " + ex.ToString());
                     //DisplayAlert("error", "location null" + ex.ToString(), "ok");
                 }
                
@@ -2036,6 +2055,7 @@ namespace PULI.Views
             }
             catch (Exception ex)
             {
+                Console.WriteLine("EX333~~ " + ex.ToString());
                 //DisplayAlert("error", "BBB" + ex.ToString(), "ok");
                 //Console.WriteLine("GETERROR");
                 //Console.WriteLine(ex.ToString());
@@ -2847,11 +2867,12 @@ namespace PULI.Views
                         //post_gps();
                         
                         //-----------------MQTT-----------------------
-                        var lat = position.Latitude.ToString();
-                        var lon = position.Longitude.ToString();
+                        //var lat = position.Latitude.ToString();
+                        //var lon = position.Longitude.ToString();
                         //Console.WriteLine("TF~~ " + MainPage.mqttClient.IsConnected);
                         //Console.WriteLine("lat~~ " + lat);
                         //Console.WriteLine("lon~~~" + lon);
+                        /*
                         if(CrossConnectivity.Current.IsConnected)
                         {
                             //Console.WriteLine("mqttin~~~");
@@ -2865,6 +2886,7 @@ namespace PULI.Views
                                 Connected(lat, lon, MainPage.NAME, MQTTREH);
                             }
                         }
+                        */
                        
                         //--------------------------------------------
                         //post_gps();
@@ -2898,7 +2920,6 @@ namespace PULI.Views
                  .WithTopic("sensor/Test/room1")
                  .WithPayload(lat + "," + lon+ "," + name + "," + reh + "," + MainPage.token)
                  .WithExactlyOnceQoS()
-                 .WithRetainFlag()
                  .Build();
 
                 await MainPage.mqttClient.PublishAsync(message);
@@ -2927,7 +2948,6 @@ namespace PULI.Views
                  .WithTopic("sensor/Test/room2")
                  .WithPayload(lat + "," + lon + "," + reh + "," + MainPage.token + "," + inorout + "," + wifi + "," + ctsnum)
                  .WithExactlyOnceQoS()
-                 .WithRetainFlag()
                  .Build();
 
                 await MainPage.mqttClient.PublishAsync(message);
@@ -2951,7 +2971,19 @@ namespace PULI.Views
                         // UI interaction goes here
                         await getLocation2();
                         web.post_gps(MainPage.token, position.Latitude.ToString(), position.Longitude.ToString());
-
+                        if (CrossConnectivity.Current.IsConnected)
+                        {
+                            //Console.WriteLine("mqttin~~~");
+                            if (MainPage.mqttClient.IsConnected == true)
+                            { // 有連線的話就傳送資料
+                                Connected(position.Latitude.ToString(), position.Longitude.ToString(), MainPage.NAME, MQTTREH);
+                            }
+                            else
+                            { // 沒有連線的話就重新連線再傳送資料 
+                                MainPage.Start();
+                                Connected(position.Latitude.ToString(), position.Longitude.ToString(), MainPage.NAME, MQTTREH);
+                            }
+                        }
                     });
                 }
                 catch (Exception ex)

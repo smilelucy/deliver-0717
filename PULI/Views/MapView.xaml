@@ -155,8 +155,8 @@
             <Label Text="今日已送餐完畢" TextColor="Black" FontSize="18" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
         </StackLayout>
         <maps:Map x:Name="MyMap"
-                  IsEnabled="False"
-                  IsVisible="false"
+                  IsEnabled="True"
+                  IsVisible="True"
                       IsShowingUser="True" />
         <maps:Map x:Name="DeliverMap"
                   IsEnabled="False"

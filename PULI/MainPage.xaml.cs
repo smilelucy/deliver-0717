@@ -154,204 +154,213 @@ namespace PULI
                     AutoLogin.IsVisible = true;
                     AutoLogin.IsEnabled = true;
                     userList = await web.Login(acc, pwd, iden);
-                    _login_time = userList.login_time;
-                    //Console.WriteLine("login_time~~~" + _login_time);
-                    AUTH = userList.acc_auth;
-                    //Console.WriteLine("auth~~~" + userList.acc_auth);
-                    NAME = userList.acc_name;
-                    //Console.WriteLine("name~~~" + userList.acc_name);
-                    //Console.WriteLine("NAME~~~" + userList.acc_name);
-                    token += userList.acc_token;
-                    //Console.WriteLine("OOOOO " + token);
-                    //Console.WriteLine("auto_time~~ " + time);
-                    if(token != null)
+                    //DisplayAlert("userlist", userList.acc_auth + userList.acc_name + userList.acc_password + userList.acc_token + userList.acc_user, "ok");
+                    if(userList != null)
                     {
-                        if (time == "早上")
+
+                        _login_time = userList.login_time;
+                        //Console.WriteLine("login_time~~~" + _login_time);
+                        AUTH = userList.acc_auth;
+                        //Console.WriteLine("auth~~~" + userList.acc_auth);
+                        NAME = userList.acc_name;
+                        //Console.WriteLine("name~~~" + userList.acc_name);
+                        //Console.WriteLine("NAME~~~" + userList.acc_name);
+                        token += userList.acc_token;
+                        //Console.WriteLine("OOOOO " + token);
+                        //Console.WriteLine("auto_time~~ " + time);
+                        if (token != null)
                         {
-                            _time = "早上";
-                            totalList = await web.Get_Daily_Shipment(token);
-                            ActivityView.totalList = await web.Get_Daily_Shipment(token);
-                            ActivityView.stopList = await web.Get_Stop(token);
-                            ActivityView.restoreList = await web.Get_Restore(token);
-                        }
-                        else
-                        {
-                            _time = "晚上";
-                            totalList = await web.Get_Daily_Shipment_night(token);
-                            ActivityView.totalList = await web.Get_Daily_Shipment_night(token);
-                            ActivityView.stopList = await web.Get_Stop(token);
-                            ActivityView.restoreList = await web.Get_Restore(token);
-                        }
+                            if (time == "早上")
+                            {
+                                _time = "早上";
+                                totalList = await web.Get_Daily_Shipment(token);
+                                ActivityView.totalList = await web.Get_Daily_Shipment(token);
+                                ActivityView.stopList = await web.Get_Stop(token);
+                                ActivityView.restoreList = await web.Get_Restore(token);
+                            }
+                            else
+                            {
+                                _time = "晚上";
+                                totalList = await web.Get_Daily_Shipment_night(token);
+                                ActivityView.totalList = await web.Get_Daily_Shipment_night(token);
+                                ActivityView.stopList = await web.Get_Stop(token);
+                                ActivityView.restoreList = await web.Get_Restore(token);
+                            }
 
 
-                        if (string.IsNullOrEmpty(NAME))
-                        {
-                            login(acc, pwd, iden, time);
-                        }
-                        else
-                        {
-                            if (string.IsNullOrEmpty(AUTH))
+                            if (string.IsNullOrEmpty(NAME))
                             {
                                 login(acc, pwd, iden, time);
                             }
                             else
                             {
-                                //BeaconScan scan = new BeaconScan();
-                                //if (BeaconScan.BleStatus == 0)
-                                //{
-                                //    //await DisplayAlert("提示", "藍芽未開啟", "ok");
-                                //    AutoLogin.IsVisible = true;
-                                //    searchLabel.Text = param.CONNECT_BLUETOOTH_ERROR_MESSAGE;
-                                //}
-                                //Console.WriteLine("auth" + AUTH + "auth");
-                                //Console.WriteLine("AUTH~~~" + AUTH);
-                                //DisplayAlert("提示", "[弗傳慈心基金會] 會收集位置資料，以便在應用程式關閉或未使用時，也可支援紀錄外送員gps位置以判斷打卡。", "ok");
-
-                                if (AUTH == "13")
+                                if (string.IsNullOrEmpty(AUTH))
                                 {
-                                    allclientList = await web.Get_All_Client(token);
-                                    //Console.WriteLine("num~~~~" + userList.daily_shipment_nums);
-                                    //Console.WriteLine("ALL~~~" + allclientList.Count());
+                                    login(acc, pwd, iden, time);
                                 }
-                                if (dateDatabase.GetAccountAsync2().Count() != 0) // 裡面有資料，先比對
+                                else
                                 {
-                                    string oldday = dateDatabase.GetAccountAsync2().Last().date;
-                                    oldday2 = fooDoggyDatabase.GetAccountAsync().Last().login_time;
-                                    //Console.WriteLine("oldday~~" + oldday);
-                                    //Console.WriteLine("oldday2~~~" + oldday2);
-                                    //Console.WriteLine("LoginTime~~~" + LoginTime);
-                                    // Console.WriteLine("date~~~" + date);
-                                    if (_login_time != oldday2)
+                                    //BeaconScan scan = new BeaconScan();
+                                    //if (BeaconScan.BleStatus == 0)
+                                    //{
+                                    //    //await DisplayAlert("提示", "藍芽未開啟", "ok");
+                                    //    AutoLogin.IsVisible = true;
+                                    //    searchLabel.Text = param.CONNECT_BLUETOOTH_ERROR_MESSAGE;
+                                    //}
+                                    //Console.WriteLine("auth" + AUTH + "auth");
+                                    //Console.WriteLine("AUTH~~~" + AUTH);
+                                    //DisplayAlert("提示", "[弗傳慈心基金會] 會收集位置資料，以便在應用程式關閉或未使用時，也可支援紀錄外送員gps位置以判斷打卡。", "ok");
+
+                                    if (AUTH == "13")
                                     {
-                                        //Console.WriteLine("mainpage~~~1~~~");
-                                        //Console.WriteLine("date_renew_save~~~");
-                                        try
+                                        allclientList = await web.Get_All_Client(token);
+                                        //Console.WriteLine("num~~~~" + userList.daily_shipment_nums);
+                                        //Console.WriteLine("ALL~~~" + allclientList.Count());
+                                    }
+                                    if (dateDatabase.GetAccountAsync2().Count() != 0) // 裡面有資料，先比對
+                                    {
+                                        string oldday = dateDatabase.GetAccountAsync2().Last().date;
+                                        oldday2 = fooDoggyDatabase.GetAccountAsync().Last().login_time;
+                                        //Console.WriteLine("oldday~~" + oldday);
+                                        //Console.WriteLine("oldday2~~~" + oldday2);
+                                        //Console.WriteLine("LoginTime~~~" + LoginTime);
+                                        // Console.WriteLine("date~~~" + date);
+                                        if (_login_time != oldday2)
                                         {
-                                            MessagingCenter.Send(this, "NewDayDelete", true);
-                                            Console.WriteLine("newdaysend~~~");
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            Console.WriteLine("Error_send~~" + ex.ToString());
-                                        }
+                                            //Console.WriteLine("mainpage~~~1~~~");
+                                            //Console.WriteLine("date_renew_save~~~");
+                                            try
+                                            {
+                                                MessagingCenter.Send(this, "NewDayDelete", true);
+                                                Console.WriteLine("newdaysend~~~");
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Console.WriteLine("Error_send~~" + ex.ToString());
+                                            }
 
 
-                                        checkdate = true;
-                                        //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
-                                        dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
-                                        dateDatabase.SaveAccountAsync(new CheckDate
+                                            checkdate = true;
+                                            //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
+                                            dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
+                                            dateDatabase.SaveAccountAsync(new CheckDate
+                                            {
+                                                date = _login_time
+                                            });
+
+                                        }
+                                    }
+                                    else // 裡面還沒有資料
+                                    {
+                                        dateDatabase.SaveAccountAsync(
+                                        new CheckDate
                                         {
                                             date = _login_time
                                         });
-
+                                        Console.WriteLine("date_nodata_save~~");
                                     }
-                                }
-                                else // 裡面還沒有資料
-                                {
-                                    dateDatabase.SaveAccountAsync(
-                                    new CheckDate
+                                    //~~~~~~test2~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                    if (dateDatabase.GetAccountAsync2().Count() != 0) // 裡面有資料，先比對
                                     {
-                                        date = _login_time
-                                    });
-                                    Console.WriteLine("date_nodata_save~~");
-                                }
-                                //~~~~~~test2~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                                if (dateDatabase.GetAccountAsync2().Count() != 0) // 裡面有資料，先比對
-                                {
-                                    string oldday = dateDatabase.GetAccountAsync2().Last().date;
-                                    oldday2 = fooDoggyDatabase.GetAccountAsync().Last().login_time;
-                                    //Console.WriteLine("oldday~~~main~~~" + oldday);
-                                    //Console.WriteLine("oldday2~~~main~~~" + oldday2);
-                                    //Console.WriteLine("_login_time~~main~~" + _login_time);
-                                    ////Console.WriteLine("LoginTime~~~" + LoginTime);
-                                    // Console.WriteLine("date~~~" + date);
-                                    if (_login_time.Equals(oldday2) == false)
-                                    {
-                                        //Console.WriteLine("test~~~~2~~~");
-                                        //Console.WriteLine("date_renew_save~~~");
-                                        try
+                                        string oldday = dateDatabase.GetAccountAsync2().Last().date;
+                                        oldday2 = fooDoggyDatabase.GetAccountAsync().Last().login_time;
+                                        //Console.WriteLine("oldday~~~main~~~" + oldday);
+                                        //Console.WriteLine("oldday2~~~main~~~" + oldday2);
+                                        //Console.WriteLine("_login_time~~main~~" + _login_time);
+                                        ////Console.WriteLine("LoginTime~~~" + LoginTime);
+                                        // Console.WriteLine("date~~~" + date);
+                                        if (_login_time.Equals(oldday2) == false)
                                         {
-                                            MessagingCenter.Send(this, "NewDayDelete", true);
-                                            Console.WriteLine("newdaysend~~~");
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            Console.WriteLine("Error_send~~" + ex.ToString());
-                                        }
+                                            //Console.WriteLine("test~~~~2~~~");
+                                            //Console.WriteLine("date_renew_save~~~");
+                                            try
+                                            {
+                                                MessagingCenter.Send(this, "NewDayDelete", true);
+                                                Console.WriteLine("newdaysend~~~");
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Console.WriteLine("Error_send~~" + ex.ToString());
+                                            }
 
 
-                                        checkdate = true;
-                                        //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
-                                        dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
-                                        dateDatabase.SaveAccountAsync(new CheckDate
+                                            checkdate = true;
+                                            //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
+                                            dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
+                                            dateDatabase.SaveAccountAsync(new CheckDate
+                                            {
+                                                date = _login_time
+                                            });
+
+                                        }
+                                    }
+                                    else // 裡面還沒有資料
+                                    {
+                                        dateDatabase.SaveAccountAsync(
+                                        new CheckDate
                                         {
                                             date = _login_time
                                         });
+                                        Console.WriteLine("date_nodata_save~~");
+                                    }
+
+                                    Console.WriteLine("ACC" + token);
+                                    //dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
+                                    //dateDatabase.SaveAccountAsync(new CheckDate
+                                    //{
+                                    //    date = _login_time
+                                    //});
+                                    //InitMqttClient();
+                                    //ConnectMqttServer();
+
+                                    fooDoggyDatabase.SaveAccountAsync(new Account
+                                    {
+                                        account = acc,
+                                        password = pwd,
+                                        identity = iden,
+                                        login_time = _login_time
+                                    });
+                                    //await App.Database.SaveAccountAsync(acc);
+                                    //Console.WriteLine("LOGIN2");
+                                    //Console.WriteLine("TOKEN2" + token);
+
+                                    // Console.WriteLine("AUTH~~~" + AUTH);
+                                    //Console.WriteLine("CHANGE" + totalList.abnormals.Count);
+                                    //Console.WriteLine("SHIP~~" + totalList.daily_shipments.Count);
+                                    //Console.WriteLine("ABNORMAL~~" + totalList.abnormals.Count);
+                                    if (AUTH == "14") // 純外送員 & 社工幫忙送餐
+                                    {
+                                        //------------------MQTT-------------------
+                                        Start();
+                                        //--------------------------------------------
+                                        Console.WriteLine("4~~~~");
+                                        await Navigation.PushModalAsync(new HomeView2());
 
                                     }
-                                }
-                                else // 裡面還沒有資料
-                                {
-                                    dateDatabase.SaveAccountAsync(
-                                    new CheckDate
+                                    //else if (AUTH == "6" && userList.daily_shipment_nums > 0) // 社工mix外送員
+                                    //{
+                                    //    Console.WriteLine("6mix~~~~~");
+                                    //    await Navigation.PushModalAsync(new HomeViewHelperAndDiliver());
+
+                                    //}
+                                    else // 純社工
                                     {
-                                        date = _login_time
-                                    });
-                                    Console.WriteLine("date_nodata_save~~");
-                                }
-                                
-                                Console.WriteLine("ACC" + token);
-                                //dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
-                                //dateDatabase.SaveAccountAsync(new CheckDate
-                                //{
-                                //    date = _login_time
-                                //});
-                                //InitMqttClient();
-                                //ConnectMqttServer();
-                                
-                                fooDoggyDatabase.SaveAccountAsync(new Account
-                                {
-                                    account = acc,
-                                    password = pwd,
-                                    identity = iden,
-                                    login_time = _login_time
-                                });
-                                //await App.Database.SaveAccountAsync(acc);
-                                //Console.WriteLine("LOGIN2");
-                                //Console.WriteLine("TOKEN2" + token);
+                                        Console.WriteLine("6only~~~~");
+                                        await Navigation.PushModalAsync(new HomeView());
 
-                                // Console.WriteLine("AUTH~~~" + AUTH);
-                                //Console.WriteLine("CHANGE" + totalList.abnormals.Count);
-                                //Console.WriteLine("SHIP~~" + totalList.daily_shipments.Count);
-                                //Console.WriteLine("ABNORMAL~~" + totalList.abnormals.Count);
-                                if (AUTH == "14") // 純外送員 & 社工幫忙送餐
-                                {
-                                    //------------------MQTT-------------------
-                                    Start();
-                                    //--------------------------------------------
-                                    Console.WriteLine("4~~~~");
-                                    await Navigation.PushModalAsync(new HomeView2());
-
-                                }
-                                //else if (AUTH == "6" && userList.daily_shipment_nums > 0) // 社工mix外送員
-                                //{
-                                //    Console.WriteLine("6mix~~~~~");
-                                //    await Navigation.PushModalAsync(new HomeViewHelperAndDiliver());
-
-                                //}
-                                else // 純社工
-                                {
-                                    Console.WriteLine("6only~~~~");
-                                    await Navigation.PushModalAsync(new HomeView());
-
+                                    }
                                 }
                             }
                         }
-                    }
-                    else
+                        else
+                        {
+                            login(acc, pwd, iden, time); // token沒拿到，再登入一次，打一次api要token
+                        }
+                    } else
                     {
                         login(acc, pwd, iden, time); // token沒拿到，再登入一次，打一次api要token
                     }
+                    
                     
 
                     
