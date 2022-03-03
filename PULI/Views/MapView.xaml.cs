@@ -1008,12 +1008,16 @@ namespace PULI.Views
                                                             time = TempAnsList.time,
                                                             phl50 = "2"
                                                         };
+                                                        // post打卡訊息到mqtt
                                                         Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "1", "2", TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.time, "2", "1", "1", "1");
                                                         //no_wifi_punch_in = await web.Save_Punch_In(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.reh_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time, "2");
-                                                        no_wifi_punch_in = await web.Save_Punch_In(punin);
+                                                        // --------post 打卡訊息 to 後台--------------------
+                                                        //no_wifi_punch_in = await web.Save_Punch_In(punin);
+                                                        //----------------------------------------------
+
                                                         //Console.WriteLine("web_resin~~~ " + web_res2);
-                                                        if (no_wifi_punch_in == true)
-                                                        {
+                                                        //if (no_wifi_punch_in == true)
+                                                        //{
                                                             // 打卡成功
                                                             Console.WriteLine("nowifi_in_true~~~ ");
                                                             Console.WriteLine(TempAnsList.name);
@@ -1056,12 +1060,12 @@ namespace PULI.Views
                                                             //    AccDatabase.DeleteAll_PunchTmp();
                                                             //}
                                                             //MessagingCenter.Send(this, "Setlist", true);
-                                                        }
-                                                        else
-                                                        {
+                                                        //}
+                                                        //else
+                                                        //{
                                                             //await DisplayAlert("FAIL", "打卡失敗in" + setName, "OK");
                                                             //Console.WriteLine("ASQLite簽到失敗");
-                                                        }
+                                                        //}
                                                     }
                                                     //else
                                                     //{
@@ -1124,12 +1128,16 @@ namespace PULI.Views
                                                             time = TempAnsList.time,
                                                             phl50 = "2"
                                                         };
+                                                        // post打卡訊息到mqtt
                                                         Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "2", "2", TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.time, "2", "2", "1", "1");
                                                         //no_wifi_punch_out = await web.Save_Punch_Out(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.reh_s_num, TempAnsList.mlo_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time, "2");
-                                                        no_wifi_punch_out = await web.Save_Punch_Out(punout);
-                                                        Console.WriteLine("no_wifi_punch_out~~~ " + no_wifi_punch_out);
-                                                        if (no_wifi_punch_out == true)
-                                                        {
+                                                        // --------------post打卡訊息到後台-------------------
+                                                        //no_wifi_punch_out = await web.Save_Punch_Out(punout);
+                                                        //----------------------------------------------------
+
+                                                        //Console.WriteLine("no_wifi_punch_out~~~ " + no_wifi_punch_out);
+                                                        //if (no_wifi_punch_out == true)
+                                                        //{
                                                             //Console.WriteLine("no_wifi_out_true~~~");
                                                             //Console.WriteLine(TempAnsList.name);
                                                             // 打卡成功
@@ -1180,12 +1188,12 @@ namespace PULI.Views
                                                             //Console.WriteLine(name_list_out.Count());
                                                             //Console.WriteLine(WIFI_name_list_out.Count());
                                                             //MessagingCenter.Send(this, "Setlist2", true);
-                                                        }
-                                                        else
-                                                        {
+                                                        //}
+                                                        //else
+                                                        //{
                                                             //await DisplayAlert("FAIL", "打卡失敗in" + setName, "OK");
                                                             //Console.WriteLine("ASQLite簽退失敗");
-                                                        }
+                                                        //}
                                                     }
                                                     //else
                                                     //{
@@ -1423,15 +1431,16 @@ namespace PULI.Views
                                                 time = time,
                                                 phl50 = "1"
                                             };
+                                            // post打卡訊息到mqtt
                                             Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "1", "1", totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].mlo_s_num, time, "1", "1", "1","1");
                                             //wifi_punch_in = await web.Save_Punch_In(MainPage.token, totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].mlo_s_num, totalList.daily_shipments[i].reh_s_num, position.Latitude, position.Longitude, time, "1");
-                                            // --------post gps to 後台--------------------
-                                            wifi_punch_in = await web.Save_Punch_In(punin);
+                                            // --------post 打卡訊息 to 後台--------------------
+                                            //wifi_punch_in = await web.Save_Punch_In(punin);
                                             //-------------------------------------------
 
                                             //Console.WriteLine("web_res" + web_res);
-                                            if (wifi_punch_in == true)
-                                            {
+                                            //if (wifi_punch_in == true)
+                                            //{
                                                 // 打卡成功
                                                 //Console.WriteLine("name~~~~" + totalList.daily_shipments[setnum].ct_name + punch_in[totalList.daily_shipments[setnum].ct_name]);
 
@@ -1455,12 +1464,12 @@ namespace PULI.Views
 
                                                 //Thread.Sleep(5000); // 等待五秒之後
                                                 //fadeformin(); // 簽到成功訊息自動消失
-                                            }
-                                            else
-                                            {
+                                            //}
+                                            //else
+                                            //{
                                                 //await DisplayAlert("FAIL", "打卡失敗in" + setName, "OK");
                                                 //Console.WriteLine("簽到失敗");
-                                            }
+                                            //}
                                         }
                                         else // 無網路環境下，先將要打卡資料存進SQLite
                                         {
@@ -1633,12 +1642,15 @@ namespace PULI.Views
                                                 time = time,
                                                 phl50 = "1"
                                             };
+                                            // post打卡訊息到mqtt
                                             Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "2", "1", totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].mlo_s_num, time, "1", "2", "1", "1");
                                             //wifi_punch_out = await web.Save_Punch_Out(MainPage.token, totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].reh_s_num, totalList.daily_shipments[i].mlo_s_num, position.Latitude, position.Longitude, time, "1");
-                                            wifi_punch_out = await web.Save_Punch_Out(punout);
+                                            // --------post 打卡訊息 to 後台--------------------
+                                            //wifi_punch_out = await web.Save_Punch_Out(punout);
+                                            //------------------------------------------
                                             //Console.WriteLine("web_res2" + web_res2);
-                                            if (wifi_punch_out == true)
-                                            {
+                                            //if (wifi_punch_out == true)
+                                            //{
 
                                                 if (!WIFI_name_list_out.Contains(totalList.daily_shipments[i].ct_name))
                                                 {
@@ -1719,12 +1731,12 @@ namespace PULI.Views
                                                 //Thread.Sleep(5000); // 等待五秒之後
                                                 //fadeformout(); // 簽退成功訊息自動消失
 
-                                            }
-                                            else
-                                            {
+                                            //}
+                                            //else
+                                            //{
                                                 //await DisplayAlert("FAIL", "打卡失敗in" + setName, "OK");
                                                 //Console.WriteLine("簽退失敗");
-                                            }
+                                            //}
                                         }
                                         else // 無網路環境下簽退
                                         {
@@ -2763,8 +2775,8 @@ namespace PULI.Views
         {
             try
             {
-                Task.Run(() =>
-                {
+                //Task.Run(() =>
+                //{
                     try
                     {
                         // Run code here
@@ -2843,7 +2855,7 @@ namespace PULI.Views
                         //Console.WriteLine(ex.ToString());
                         //DisplayAlert(param.SYSYTEM_MESSAGE, param.LOCATION_ERROR_MESSAGE, param.DIALOG_MESSAGE);
                     }
-                });
+                //});
                 return true;
             } catch(Exception ex) {
                 DisplayAlert("msg", ex.ToString(), "ok");
@@ -2855,8 +2867,8 @@ namespace PULI.Views
         bool OnTimerTick()
         {
             // running something on another thread 
-            Task.Run(() =>
-            {
+            //Task.Run(() =>
+            //{
                 try
                 {
                     // execute the UI action on the UI thread
@@ -2902,7 +2914,7 @@ namespace PULI.Views
                     //Console.WriteLine(ex.ToString());
                     //DisplayAlert(param.SYSYTEM_MESSAGE, param.LOCATION_ERROR_MESSAGE, param.DIALOG_MESSAGE);
                 }
-            });
+            //});
             return true;
         }
 
@@ -2964,8 +2976,8 @@ namespace PULI.Views
 
         bool OnTimerTick2()
         {
-            Task.Run(() =>
-            {
+            //Task.Run(() =>
+            //{
                 try
                 {
                     // Run code here
@@ -2980,13 +2992,13 @@ namespace PULI.Views
                             if (MainPage.mqttClient.IsConnected == true)
                             { // 有連線的話就傳送資料
                                 Console.WriteLine("AAAAAAAAAAAAAAA");
-                                Connected(position.Latitude.ToString(), position.Longitude.ToString(), MainPage.NAME, MQTTREH);
+                                await Connected(position.Latitude.ToString(), position.Longitude.ToString(), MainPage.NAME, MQTTREH);
                             }
                             else
                             { // 沒有連線的話就重新連線再傳送資料 
                                 Console.WriteLine("BBBBBBBBBBBBBBB");
                                 MainPage.Start();
-                                Connected(position.Latitude.ToString(), position.Longitude.ToString(), MainPage.NAME, MQTTREH);
+                                await Connected(position.Latitude.ToString(), position.Longitude.ToString(), MainPage.NAME, MQTTREH);
                             }
                         }
                     });
@@ -2997,7 +3009,7 @@ namespace PULI.Views
                     //Console.WriteLine(ex.ToString());
                     //DisplayAlert(param.SYSYTEM_MESSAGE, param.LOCATION_ERROR_MESSAGE, param.DIALOG_MESSAGE);
                 }
-            });
+            //});
             return true;
         }
 

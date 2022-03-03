@@ -802,7 +802,7 @@ namespace PULI
                     .WithTcpServer("61.218.250.30",4220)
                     .Build();
                         
-                mqttClient.ConnectAsync(options);      //連接伺服器
+                await mqttClient.ConnectAsync(options);      //連接伺服器
                 //if (!mqttClient.IsConnected)
                 //{
                 //    Console.WriteLine("isconnect? " + mqttClient.IsConnected);
