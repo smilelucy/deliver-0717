@@ -1008,7 +1008,7 @@ namespace PULI.Views
                                                             time = TempAnsList.time,
                                                             phl50 = "2"
                                                         };
-                                                        Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "1", "2", TempAnsList.ct_s_num);
+                                                        Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "1", "2", TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.time, "2", "1", "1", "1");
                                                         //no_wifi_punch_in = await web.Save_Punch_In(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.reh_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time, "2");
                                                         no_wifi_punch_in = await web.Save_Punch_In(punin);
                                                         //Console.WriteLine("web_resin~~~ " + web_res2);
@@ -1124,7 +1124,7 @@ namespace PULI.Views
                                                             time = TempAnsList.time,
                                                             phl50 = "2"
                                                         };
-                                                        Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "2", "2", TempAnsList.ct_s_num);
+                                                        Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "2", "2", TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.time, "2", "2", "1", "1");
                                                         //no_wifi_punch_out = await web.Save_Punch_Out(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.reh_s_num, TempAnsList.mlo_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time, "2");
                                                         no_wifi_punch_out = await web.Save_Punch_Out(punout);
                                                         Console.WriteLine("no_wifi_punch_out~~~ " + no_wifi_punch_out);
@@ -1423,9 +1423,12 @@ namespace PULI.Views
                                                 time = time,
                                                 phl50 = "1"
                                             };
-                                            Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "1", "1", totalList.daily_shipments[i].ct_s_num);
+                                            Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "1", "1", totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].mlo_s_num, time, "1", "1", "1","1");
                                             //wifi_punch_in = await web.Save_Punch_In(MainPage.token, totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].mlo_s_num, totalList.daily_shipments[i].reh_s_num, position.Latitude, position.Longitude, time, "1");
+                                            // --------post gps to 後台--------------------
                                             wifi_punch_in = await web.Save_Punch_In(punin);
+                                            //-------------------------------------------
+
                                             //Console.WriteLine("web_res" + web_res);
                                             if (wifi_punch_in == true)
                                             {
@@ -1630,7 +1633,7 @@ namespace PULI.Views
                                                 time = time,
                                                 phl50 = "1"
                                             };
-                                            Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "2", "1", totalList.daily_shipments[i].ct_s_num);
+                                            Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "2", "1", totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].mlo_s_num, time, "1", "2", "1", "1");
                                             //wifi_punch_out = await web.Save_Punch_Out(MainPage.token, totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].reh_s_num, totalList.daily_shipments[i].mlo_s_num, position.Latitude, position.Longitude, time, "1");
                                             wifi_punch_out = await web.Save_Punch_Out(punout);
                                             //Console.WriteLine("web_res2" + web_res2);
@@ -2932,7 +2935,7 @@ namespace PULI.Views
         }
 
         // push punch record to mqtt server
-        private static async Task Connected_punch(string lat, string lon,string reh, string inorout, string wifi , string ctsnum)
+        private static async Task Connected_punch(string lat, string lon,string reh, string inorout, string wifi , string ctsnum, string secsnum, string mlosnum, string phl01, string phl50, string phl02, string phl05, string phl99)
         {
             try
             {
@@ -2946,7 +2949,7 @@ namespace PULI.Views
 
                 var message = new MqttApplicationMessageBuilder()
                  .WithTopic("sensor/Test/room2")
-                 .WithPayload(lat + "," + lon + "," + reh + "," + MainPage.token + "," + inorout + "," + wifi + "," + ctsnum)
+                 .WithPayload(lat + "," + lon + "," + reh + "," + MainPage.token + "," + inorout + "," + wifi + "," + ctsnum + "," + secsnum + "," + mlosnum + "," + phl01 + "," + phl50 + "," + phl02 + "," + phl05 + "," + phl99)
                  .WithExactlyOnceQoS()
                  .Build();
 
@@ -2970,16 +2973,18 @@ namespace PULI.Views
                     {
                         // UI interaction goes here
                         await getLocation2();
-                        web.post_gps(MainPage.token, position.Latitude.ToString(), position.Longitude.ToString());
+                        //web.post_gps(MainPage.token, position.Latitude.ToString(), position.Longitude.ToString());
                         if (CrossConnectivity.Current.IsConnected)
                         {
                             //Console.WriteLine("mqttin~~~");
                             if (MainPage.mqttClient.IsConnected == true)
                             { // 有連線的話就傳送資料
+                                Console.WriteLine("AAAAAAAAAAAAAAA");
                                 Connected(position.Latitude.ToString(), position.Longitude.ToString(), MainPage.NAME, MQTTREH);
                             }
                             else
                             { // 沒有連線的話就重新連線再傳送資料 
+                                Console.WriteLine("BBBBBBBBBBBBBBB");
                                 MainPage.Start();
                                 Connected(position.Latitude.ToString(), position.Longitude.ToString(), MainPage.NAME, MQTTREH);
                             }
