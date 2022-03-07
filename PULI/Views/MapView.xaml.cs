@@ -171,15 +171,11 @@ namespace PULI.Views
               
                 //Console.WriteLine("shipment~~~");
             }
-            //else if(MainPage.AUTH == "6" && MainPage.userList.daily_shipment_nums > 0) // 社工幫忙送餐(有打卡功能)
-            //{
-            //    Device.StartTimer(TimeSpan.FromSeconds(5), OnTimerTick);
-            //    Console.WriteLine("helpermixshipment~~~");
-            //}
             else
             {
                 Device.StartTimer(TimeSpan.FromSeconds(5), OnTimerTick2); // 只有postgps(單純社工，無打卡功能)
             }
+
             //else // 單純社工(無打卡功能)
             //{
             //    Device.StartTimer(TimeSpan.FromSeconds(5), OnTimerTick2);
@@ -1009,7 +1005,7 @@ namespace PULI.Views
                                                             phl50 = "2"
                                                         };
                                                         // post打卡訊息到mqtt
-                                                        Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "1", "2", TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.time, "2", "1", "1", "1");
+                                                        await Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "1", "2", TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.time, "2", "1", "1", "1");
                                                         //no_wifi_punch_in = await web.Save_Punch_In(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.reh_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time, "2");
                                                         // --------post 打卡訊息 to 後台--------------------
                                                         //no_wifi_punch_in = await web.Save_Punch_In(punin);
@@ -1129,7 +1125,7 @@ namespace PULI.Views
                                                             phl50 = "2"
                                                         };
                                                         // post打卡訊息到mqtt
-                                                        Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "2", "2", TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.time, "2", "2", "1", "1");
+                                                        await Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "2", "2", TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.time, "2", "2", "1", "1");
                                                         //no_wifi_punch_out = await web.Save_Punch_Out(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.reh_s_num, TempAnsList.mlo_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time, "2");
                                                         // --------------post打卡訊息到後台-------------------
                                                         //no_wifi_punch_out = await web.Save_Punch_Out(punout);
@@ -1432,7 +1428,7 @@ namespace PULI.Views
                                                 phl50 = "1"
                                             };
                                             // post打卡訊息到mqtt
-                                            Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "1", "1", totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].mlo_s_num, time, "1", "1", "1","1");
+                                            await Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "1", "1", totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].mlo_s_num, time, "1", "1", "1","1");
                                             //wifi_punch_in = await web.Save_Punch_In(MainPage.token, totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].mlo_s_num, totalList.daily_shipments[i].reh_s_num, position.Latitude, position.Longitude, time, "1");
                                             // --------post 打卡訊息 to 後台--------------------
                                             //wifi_punch_in = await web.Save_Punch_In(punin);
@@ -1643,7 +1639,7 @@ namespace PULI.Views
                                                 phl50 = "1"
                                             };
                                             // post打卡訊息到mqtt
-                                            Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "2", "1", totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].mlo_s_num, time, "1", "2", "1", "1");
+                                            await Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "2", "1", totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].mlo_s_num, time, "1", "2", "1", "1");
                                             //wifi_punch_out = await web.Save_Punch_Out(MainPage.token, totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].reh_s_num, totalList.daily_shipments[i].mlo_s_num, position.Latitude, position.Longitude, time, "1");
                                             // --------post 打卡訊息 to 後台--------------------
                                             //wifi_punch_out = await web.Save_Punch_Out(punout);
@@ -2932,7 +2928,8 @@ namespace PULI.Views
                 //}
 
                 var message = new MqttApplicationMessageBuilder()
-                 .WithTopic("sensor/Test/room1")
+                 //.WithTopic("sensor/Test/room1")
+                 .WithTopic("sensor/Test/room3")
                  .WithPayload(lat + "," + lon+ "," + name + "," + reh + "," + MainPage.token)
                  .WithExactlyOnceQoS()
                  .Build();
@@ -2960,7 +2957,8 @@ namespace PULI.Views
                 //}
 
                 var message = new MqttApplicationMessageBuilder()
-                 .WithTopic("sensor/Test/room2")
+                 //.WithTopic("sensor/Test/room2")
+                 .WithTopic("sensor/Test/room4")
                  .WithPayload(lat + "," + lon + "," + reh + "," + MainPage.token + "," + inorout + "," + wifi + "," + ctsnum + "," + secsnum + "," + mlosnum + "," + phl01 + "," + phl50 + "," + phl02 + "," + phl05 + "," + phl99)
                  .WithExactlyOnceQoS()
                  .Build();

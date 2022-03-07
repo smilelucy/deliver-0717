@@ -736,7 +736,6 @@ namespace PULI
                 return null;
             }
         }
-
         private void usrIdentity_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
