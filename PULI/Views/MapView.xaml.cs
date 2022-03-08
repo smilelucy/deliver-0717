@@ -2928,8 +2928,8 @@ namespace PULI.Views
                 //}
 
                 var message = new MqttApplicationMessageBuilder()
-                 //.WithTopic("sensor/Test/room1")
-                 .WithTopic("sensor/Test/room3")
+                 .WithTopic("sensor/Test/room1")
+                 //.WithTopic("sensor/Test/room3")
                  .WithPayload(lat + "," + lon+ "," + name + "," + reh + "," + MainPage.token)
                  .WithExactlyOnceQoS()
                  .Build();
@@ -2957,8 +2957,8 @@ namespace PULI.Views
                 //}
 
                 var message = new MqttApplicationMessageBuilder()
-                 //.WithTopic("sensor/Test/room2")
-                 .WithTopic("sensor/Test/room4")
+                 .WithTopic("sensor/Test/room2")
+                 //.WithTopic("sensor/Test/room4")
                  .WithPayload(lat + "," + lon + "," + reh + "," + MainPage.token + "," + inorout + "," + wifi + "," + ctsnum + "," + secsnum + "," + mlosnum + "," + phl01 + "," + phl50 + "," + phl02 + "," + phl05 + "," + phl99)
                  .WithExactlyOnceQoS()
                  .Build();
