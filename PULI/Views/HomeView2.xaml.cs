@@ -36,6 +36,8 @@ namespace PULI.Views
                     //MapView.PunchYN.DeleteAll();
                     MapView.name_list_in.Clear();
                     MapView.name_list_out.Clear();
+                    MapView.AccDatabase.DeleteAll_Wifi_Punchin();
+                    MapView.AccDatabase.DeleteAll_Wifi_Punchout();
                 }
 
             });

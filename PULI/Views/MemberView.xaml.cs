@@ -80,7 +80,10 @@ namespace PULI.Views
             {
                 auth.Text = "送餐員";
                 usrname.Text = MainPage.userList.acc_name;
-                if(!CrossConnectivity.Current.IsConnected)
+                newdate.Text = MainPage._login_time;
+                olddate.Text = MainPage.oldday2;
+                function.Text = MainPage.function;
+                if (!CrossConnectivity.Current.IsConnected)
                 {
                     activity_btn.IsEnabled = false;
                 }

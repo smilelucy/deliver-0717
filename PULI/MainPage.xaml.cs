@@ -49,7 +49,7 @@ namespace PULI
         public static string AUTH;
         public static string NAME;
         //public static string user_name;
-        Database fooDoggyDatabase;
+        public static Database fooDoggyDatabase;
         public static Date dateDatabase;
         WebService web = new WebService();
         ParamInfo param = new ParamInfo();
@@ -62,6 +62,7 @@ namespace PULI
         public static string Loginway;
         public static string oldday2;
         public static string _login_time;
+        public static string function;
         private string _identity;
         public static string _time = "早上";
         private string time;
@@ -159,7 +160,7 @@ namespace PULI
                     {
 
                         _login_time = userList.login_time;
-                        //Console.WriteLine("login_time~~~" + _login_time);
+                        Console.WriteLine("login_time~~~" + _login_time);
                         AUTH = userList.acc_auth;
                         //Console.WriteLine("auth~~~" + userList.acc_auth);
                         NAME = userList.acc_name;
@@ -219,14 +220,18 @@ namespace PULI
                                     }
                                     if (dateDatabase.GetAccountAsync2().Count() != 0) // 裡面有資料，先比對
                                     {
+                                        
                                         string oldday = dateDatabase.GetAccountAsync2().Last().date;
                                         oldday2 = fooDoggyDatabase.GetAccountAsync().Last().login_time;
                                         //Console.WriteLine("oldday~~" + oldday);
-                                        //Console.WriteLine("oldday2~~~" + oldday2);
+                                        Console.WriteLine("oldday2~~~" + oldday2);
                                         //Console.WriteLine("LoginTime~~~" + LoginTime);
                                         // Console.WriteLine("date~~~" + date);
+                                        string now = DateTime.Now.ToString("yyyy-MM-dd");
+                                        Console.WriteLine("now~~~~" + now);
                                         if (_login_time != oldday2)
                                         {
+                                            function = "Auto_A1";
                                             //Console.WriteLine("mainpage~~~1~~~");
                                             //Console.WriteLine("date_renew_save~~~");
                                             try
@@ -249,6 +254,28 @@ namespace PULI
                                             });
 
                                         }
+                                        if(now != oldday2)
+                                        {
+                                            function = "Auto_A2";
+                                            try
+                                            {
+                                                MessagingCenter.Send(this, "NewDayDelete", true);
+                                                Console.WriteLine("newdaysend~~~");
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Console.WriteLine("Error_send~~" + ex.ToString());
+                                            }
+
+
+                                            checkdate = true;
+                                            //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
+                                            dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
+                                            dateDatabase.SaveAccountAsync(new CheckDate
+                                            {
+                                                date = now
+                                            });
+                                        }
                                     }
                                     else // 裡面還沒有資料
                                     {
@@ -264,6 +291,8 @@ namespace PULI
                                     {
                                         string oldday = dateDatabase.GetAccountAsync2().Last().date;
                                         oldday2 = fooDoggyDatabase.GetAccountAsync().Last().login_time;
+                                        string now = DateTime.Now.ToString("yyyy-MM-dd");
+                                        Console.WriteLine("now~~~~" + now);
                                         //Console.WriteLine("oldday~~~main~~~" + oldday);
                                         //Console.WriteLine("oldday2~~~main~~~" + oldday2);
                                         //Console.WriteLine("_login_time~~main~~" + _login_time);
@@ -273,6 +302,7 @@ namespace PULI
                                         {
                                             //Console.WriteLine("test~~~~2~~~");
                                             //Console.WriteLine("date_renew_save~~~");
+                                            function = "Auto_B1";
                                             try
                                             {
                                                 MessagingCenter.Send(this, "NewDayDelete", true);
@@ -292,6 +322,28 @@ namespace PULI
                                                 date = _login_time
                                             });
 
+                                        }
+                                        if(now.Equals(oldday2) == false)
+                                        {
+                                            function = "Auto_B2";
+                                            try
+                                            {
+                                                MessagingCenter.Send(this, "NewDayDelete", true);
+                                                Console.WriteLine("newdaysend~~~");
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Console.WriteLine("Error_send~~" + ex.ToString());
+                                            }
+
+
+                                            checkdate = true;
+                                            //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
+                                            dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
+                                            dateDatabase.SaveAccountAsync(new CheckDate
+                                            {
+                                                date = now
+                                            });
                                         }
                                     }
                                     else // 裡面還沒有資料
@@ -467,7 +519,7 @@ namespace PULI
                             loadingView.IsVisible = true;
                             _login_time = userList.login_time;
                             Console.WriteLine("login_time~~~" + _login_time);
-
+                            
                             // -------------beacon-------------------
                             //BeaconScan scan = new BeaconScan();
                             // -------------beacon-------------------
@@ -547,9 +599,12 @@ namespace PULI
                             {
                                 string oldday = dateDatabase.GetAccountAsync2().Last().date;
                                 Console.WriteLine("oldday~~" + oldday);
+                                string now = DateTime.Now.ToString("yyyy-MM-dd");
+                                Console.WriteLine("now~~~~" + now);
                                 // Console.WriteLine("date~~~" + date);
                                 if (_login_time != oldday)
                                 {
+                                    function = "Click_A1";
                                     Console.WriteLine("date_renew_save~~~");
                                     MessagingCenter.Send(this, "Deletesetnum", true);
                                     Console.WriteLine("send~~~");
@@ -560,6 +615,18 @@ namespace PULI
                                         date = _login_time
                                     });
 
+                                }
+                                if(now != oldday)
+                                {
+                                    function = "Click_A2";
+                                    MessagingCenter.Send(this, "Deletesetnum", true);
+                                    Console.WriteLine("send~~~");
+                                    //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
+                                    dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
+                                    dateDatabase.SaveAccountAsync(new CheckDate
+                                    {
+                                        date = now
+                                    });
                                 }
                             }
                             else // 裡面還沒有資料
@@ -818,13 +885,13 @@ namespace PULI
                 //}
                 //Console.WriteLine("MQTTconnected");
                 await mqttClient.SubscribeAsync(new TopicFilterBuilder()
-                  .WithTopic("sensor/Test/room1")
-                  //.WithTopic("sensor/Test/room3")
+                  //.WithTopic("sensor/Test/room1")
+                  .WithTopic("sensor/Test/room3")
                   //.WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
                   .Build());
                 await mqttClient.SubscribeAsync(new TopicFilterBuilder()
-                  .WithTopic("sensor/Test/room2")
-                  //.WithTopic("sensor/Test/room4")
+                  //.WithTopic("sensor/Test/room2")
+                  .WithTopic("sensor/Test/room4")
                   //.WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
                   .Build());
                 Console.WriteLine("Connected >>Subscribe Success");

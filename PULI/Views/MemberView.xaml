@@ -158,11 +158,47 @@
                                            Text="" />
 
                             </StackLayout>
+                        <StackLayout Orientation="Horizontal">
 
-                        
+                            <Label Text="newdate : "
+                                                       TextColor="Black"
+                                                       FontSize="Small" />
 
+                            <Label x:Name="newdate"
+                                                       FontSize="Small"
+                                                       TextColor="Red"
+                                                       Text="" />
 
                         </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+
+                            <Label Text="olddate : "
+                                                       TextColor="Black"
+                                                       FontSize="Small" />
+
+                            <Label x:Name="olddate"
+                                                       FontSize="Small"
+                                                       TextColor="Red"
+                                                       Text="" />
+
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+
+                            <Label Text="function : "
+                                                       TextColor="Black"
+                                                       FontSize="Small" />
+
+                            <Label x:Name="function"
+                                                       FontSize="Small"
+                                                       TextColor="Red"
+                                                       Text="" />
+
+                        </StackLayout>
+
+
+
+
+                    </StackLayout>
                     
                     </StackLayout>
                     

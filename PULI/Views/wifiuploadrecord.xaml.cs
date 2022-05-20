@@ -17,10 +17,101 @@ namespace PULI.Views
         ParamInfo param = new ParamInfo();
         private List<Wifi_Punchin> Wifi_Punchin_List = new List<Wifi_Punchin>();
         private List<Wifi_Punchout> Wifi_Punchout_List = new List<Wifi_Punchout>();
+        
         public wifiuploadrecord()
         {
             InitializeComponent();
-            
+            checkSQLite();
+        }
+
+        private void checkSQLite()
+        {
+            if (MainPage.dateDatabase.GetAccountAsync2().Count() != 0) // 裡面有資料，先比對
+            {
+                string oldday = MainPage.dateDatabase.GetAccountAsync2().Last().date;
+                string oldday2 = MainPage.fooDoggyDatabase.GetAccountAsync().Last().login_time;
+                string now = DateTime.Now.ToString("yyyy-MM-dd");
+                Console.WriteLine("now~~~~" + now);
+                //Console.WriteLine("oldday~~~main~~~" + oldday);
+                //Console.WriteLine("oldday2~~~main~~~" + oldday2);
+                //Console.WriteLine("_login_time~~main~~" + _login_time);
+                ////Console.WriteLine("LoginTime~~~" + LoginTime);
+                // Console.WriteLine("date~~~" + date);
+                if (MainPage._login_time.Equals(oldday2) == false)
+                {
+                    //Console.WriteLine("test~~~~2~~~");
+                    //Console.WriteLine("date_renew_save~~~");
+                    //wifi_page_function.Text = "Wifi_Auto_B1";
+                    try
+                    {
+                        MapView.AccDatabase.DeleteAll_TempAccount();
+                        MapView.AccDatabase.DeleteAll_Punch();
+                        MapView.AccDatabase.DeleteAll_Punch2();
+                        MapView.AccDatabase.DeleteAll_PunchTmp();
+                        MapView.AccDatabase.DeleteAll_PunchTmp2();
+                        //MapView.PunchYN.DeleteAll();
+                        MapView.name_list_in.Clear();
+                        MapView.name_list_out.Clear();
+                        MapView.AccDatabase.DeleteAll_Wifi_Punchin();
+                        MapView.AccDatabase.DeleteAll_Wifi_Punchout();
+                        Console.WriteLine("newdaysend~~~");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error_send~~" + ex.ToString());
+                    }
+
+
+                    //checkdate = true;
+                    //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
+                    MainPage.dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
+                    MainPage.dateDatabase.SaveAccountAsync(new CheckDate
+                    {
+                        date = MainPage._login_time
+                    });
+
+                }
+                if (now.Equals(oldday2) == false)
+                {
+                    //wifi_page_function.Text = "Wifi_Auto_B2";
+                    try
+                    {
+                        MapView.AccDatabase.DeleteAll_TempAccount();
+                        MapView.AccDatabase.DeleteAll_Punch();
+                        MapView.AccDatabase.DeleteAll_Punch2();
+                        MapView.AccDatabase.DeleteAll_PunchTmp();
+                        MapView.AccDatabase.DeleteAll_PunchTmp2();
+                        MapView.AccDatabase.DeleteAll_Wifi_Punchin();
+                        MapView.AccDatabase.DeleteAll_Wifi_Punchout();
+                        //MapView.PunchYN.DeleteAll();
+                        MapView.name_list_in.Clear();
+                        MapView.name_list_out.Clear();
+                        Console.WriteLine("wifi_newdaysend~~~");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error_send~~" + ex.ToString());
+                    }
+
+
+                    //checkdate = true;
+                    //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
+                    MainPage.dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
+                    MainPage.dateDatabase.SaveAccountAsync(new CheckDate
+                    {
+                        date = now
+                    });
+                }
+            }
+            else // 裡面還沒有資料
+            {
+                MainPage.dateDatabase.SaveAccountAsync(
+                new CheckDate
+                {
+                    date = MainPage._login_time
+                });
+                Console.WriteLine("date_nodata_save~~");
+            }
         }
 
         private async void wifi_punchin_setlist()
