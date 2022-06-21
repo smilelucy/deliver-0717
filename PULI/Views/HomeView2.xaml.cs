@@ -28,7 +28,7 @@ namespace PULI.Views
                 if (arg)
                 {
                     Console.WriteLine("newdayrecieve~homeview2~");
-                    MapView.AccDatabase.DeleteAll_TempAccount();
+                   // MapView.AccDatabase.DeleteAll_TempAccount();
                     MapView.AccDatabase.DeleteAll_Punch();
                     MapView.AccDatabase.DeleteAll_Punch2();
                     MapView.AccDatabase.DeleteAll_PunchTmp();
@@ -36,6 +36,8 @@ namespace PULI.Views
                     //MapView.PunchYN.DeleteAll();
                     MapView.name_list_in.Clear();
                     MapView.name_list_out.Clear();
+                    MapView.WIFI_name_list_in.Clear();
+                    MapView.WIFI_name_list_out.Clear();
                     MapView.AccDatabase.DeleteAll_Wifi_Punchin();
                     MapView.AccDatabase.DeleteAll_Wifi_Punchout();
                 }

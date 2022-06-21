@@ -6,6 +6,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="PULI.Views.MapView">
+    <ContentPage.ToolbarItems>
+
+        <ToolbarItem Text="導航"
+                     Order="Primary"
+                     x:Name="notififcation"
+                     Clicked="all_navigate_Clicked"
+                     IconImageSource="compass.png">
+        </ToolbarItem>
+
+    </ContentPage.ToolbarItems>
     <StackLayout>
         <Frame 
                            Padding="0,0,0,0"

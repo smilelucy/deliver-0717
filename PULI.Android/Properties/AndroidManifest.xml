@@ -1,6 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="4.2" package="com.NCNU.puli" android:installLocation="preferExternal" android:persistent="true" android:versionCode="41">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="4.3" package="com.NCNU.puli" android:installLocation="preferExternal" android:persistent="true" android:versionCode="42">
 	<uses-sdk android:minSdkVersion="17" android:targetSdkVersion="30" />
+  <!-- 外部連結 -->
+  <queries>
+    <package android:name="com.google.android.gm" />
+    <package android:name="com.facebook.katana" />
+    <intent>
+      <action android:name="android.intent.action.VIEW" />
+      <data android:scheme="https" />
+    </intent>
+    <intent>
+      <action android:name="android.intent.action.DIAL" />
+      <data android:scheme="tel" />
+    </intent>
+    <intent>
+      <action android:name="android.intent.action.SEND" />
+      <data android:mimeType="*/*" />
+    </intent>
+    <intent>
+      <action android:name="android.intent.action.VIEW" />
+      <category android:name="android.intent.category.BROWSABLE" />
+      <data android:scheme="https" />
+    </intent>
+  </queries>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />

@@ -70,6 +70,7 @@ namespace PULI
         private string _resIdentity = "送餐員";
         private string[] identityArray = new string[] { "社工", "送餐員" };
         private string[] timeArray = new string[] { "早上", "下午"};
+      
 
         public MainPage()
         {
@@ -218,143 +219,221 @@ namespace PULI
                                         //Console.WriteLine("num~~~~" + userList.daily_shipment_nums);
                                         //Console.WriteLine("ALL~~~" + allclientList.Count());
                                     }
-                                    if (dateDatabase.GetAccountAsync2().Count() != 0) // 裡面有資料，先比對
-                                    {
+                                    //if (dateDatabase.GetAccountAsync2().Count() != 0) // 裡面有資料，先比對
+                                    //{
                                         
-                                        string oldday = dateDatabase.GetAccountAsync2().Last().date;
-                                        oldday2 = fooDoggyDatabase.GetAccountAsync().Last().login_time;
-                                        //Console.WriteLine("oldday~~" + oldday);
-                                        Console.WriteLine("oldday2~~~" + oldday2);
-                                        //Console.WriteLine("LoginTime~~~" + LoginTime);
-                                        // Console.WriteLine("date~~~" + date);
-                                        string now = DateTime.Now.ToString("yyyy-MM-dd");
-                                        Console.WriteLine("now~~~~" + now);
-                                        if (_login_time != oldday2)
-                                        {
-                                            function = "Auto_A1";
-                                            //Console.WriteLine("mainpage~~~1~~~");
-                                            //Console.WriteLine("date_renew_save~~~");
-                                            try
-                                            {
-                                                MessagingCenter.Send(this, "NewDayDelete", true);
-                                                Console.WriteLine("newdaysend~~~");
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                Console.WriteLine("Error_send~~" + ex.ToString());
-                                            }
+                                    //    string oldday = dateDatabase.GetAccountAsync2().Last().date;
+                                    //    oldday2 = fooDoggyDatabase.GetAccountAsync().Last().login_time;
+                                    //    Console.WriteLine("olddayA~~" + oldday);
+                                    //    Console.WriteLine("oldday2A~~~" + oldday2);
+                                    //    //Console.WriteLine("LoginTime~~~" + LoginTime);
+                                    //    // Console.WriteLine("date~~~" + date);
+                                    //    string now = DateTime.Now.ToString("yyyy-MM-dd");
+                                    //    Console.WriteLine("now~~~~" + now);
+                                    //    if (now != oldday2)
+                                    //    {
+                                    //        function = "Auto_A2";
+                                    //        try
+                                    //        {
+                                    //            MessagingCenter.Send(this, "NewDayDelete", true);
+                                    //            //MapView.AccDatabase.DeleteAll_TempAccount();
+                                    //            //MapView.AccDatabase.DeleteAll_Punch();
+                                    //            //MapView.AccDatabase.DeleteAll_Punch2();
+                                    //            //MapView.AccDatabase.DeleteAll_PunchTmp();
+                                    //            //MapView.AccDatabase.DeleteAll_PunchTmp2();
+                                    //            ////MapView.PunchYN.DeleteAll();
+                                    //            //MapView.name_list_in.Clear();
+                                    //            //MapView.name_list_out.Clear();
+                                    //            //MapView.WIFI_name_list_in.Clear();
+                                    //            //MapView.WIFI_name_list_out.Clear();
+                                    //            //MapView.AccDatabase.DeleteAll_Wifi_Punchin();
+                                    //            //MapView.AccDatabase.DeleteAll_Wifi_Punchout();
+                                    //            Console.WriteLine("newdaysend~~~");
+                                    //        }
+                                    //        catch (Exception ex)
+                                    //        {
+                                    //            Console.WriteLine("Error_send~~" + ex.ToString());
+                                    //        }
 
 
-                                            checkdate = true;
-                                            //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
-                                            dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
-                                            dateDatabase.SaveAccountAsync(new CheckDate
-                                            {
-                                                date = _login_time
-                                            });
+                                    //        checkdate = true;
+                                    //        //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
+                                    //        dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
+                                    //        dateDatabase.SaveAccountAsync(new CheckDate
+                                    //        {
+                                    //            date = now
+                                    //        });
+                                    //        fooDoggyDatabase.SaveAccountAsync(new Account
+                                    //        {
+                                    //            account = acc,
+                                    //            password = pwd,
+                                    //            identity = iden,
+                                    //            login_time = now
+                                    //        });
+                                    //    }
+                                    //    if (_login_time != oldday2)
+                                    //    {
+                                    //        function = "Auto_A1";
+                                    //        //Console.WriteLine("mainpage~~~1~~~");
+                                    //        //Console.WriteLine("date_renew_save~~~");
+                                    //        try
+                                    //        {
+                                    //            MessagingCenter.Send(this, "NewDayDelete", true);
+                                    //            //MapView.AccDatabase.DeleteAll_TempAccount();
+                                    //            //MapView.AccDatabase.DeleteAll_Punch();
+                                    //            //MapView.AccDatabase.DeleteAll_Punch2();
+                                    //            //MapView.AccDatabase.DeleteAll_PunchTmp();
+                                    //            //MapView.AccDatabase.DeleteAll_PunchTmp2();
+                                    //            ////MapView.PunchYN.DeleteAll();
+                                    //            //MapView.name_list_in.Clear();
+                                    //            //MapView.name_list_out.Clear();
+                                    //            //MapView.WIFI_name_list_in.Clear();
+                                    //            //MapView.WIFI_name_list_out.Clear();
+                                    //            //MapView.AccDatabase.DeleteAll_Wifi_Punchin();
+                                    //            //MapView.AccDatabase.DeleteAll_Wifi_Punchout();
+                                    //            Console.WriteLine("newdaysend~~~");
+                                    //        }
+                                    //        catch (Exception ex)
+                                    //        {
+                                    //            Console.WriteLine("Error_send~~" + ex.ToString());
+                                    //        }
 
-                                        }
-                                        if(now != oldday2)
-                                        {
-                                            function = "Auto_A2";
-                                            try
-                                            {
-                                                MessagingCenter.Send(this, "NewDayDelete", true);
-                                                Console.WriteLine("newdaysend~~~");
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                Console.WriteLine("Error_send~~" + ex.ToString());
-                                            }
 
+                                    //        checkdate = true;
+                                    //        //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
+                                    //        dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
+                                    //        dateDatabase.SaveAccountAsync(new CheckDate
+                                    //        {
+                                    //            date = _login_time
+                                    //        });
+                                    //        fooDoggyDatabase.SaveAccountAsync(new Account
+                                    //        {
+                                    //            account = acc,
+                                    //            password = pwd,
+                                    //            identity = iden,
+                                    //            login_time = _login_time
+                                    //        });
 
-                                            checkdate = true;
-                                            //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
-                                            dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
-                                            dateDatabase.SaveAccountAsync(new CheckDate
-                                            {
-                                                date = now
-                                            });
-                                        }
-                                    }
-                                    else // 裡面還沒有資料
-                                    {
-                                        dateDatabase.SaveAccountAsync(
-                                        new CheckDate
-                                        {
-                                            date = _login_time
-                                        });
-                                        Console.WriteLine("date_nodata_save~~");
-                                    }
+                                    //    }
+                                       
+                                    //}
+                                    //else // 裡面還沒有資料
+                                    //{
+                                    //    dateDatabase.SaveAccountAsync(
+                                    //    new CheckDate
+                                    //    {
+                                    //        date = _login_time
+                                    //    });
+                                    //    Console.WriteLine("date_nodata_save~~");
+                                    //}
                                     //~~~~~~test2~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                                    if (dateDatabase.GetAccountAsync2().Count() != 0) // 裡面有資料，先比對
-                                    {
-                                        string oldday = dateDatabase.GetAccountAsync2().Last().date;
-                                        oldday2 = fooDoggyDatabase.GetAccountAsync().Last().login_time;
-                                        string now = DateTime.Now.ToString("yyyy-MM-dd");
-                                        Console.WriteLine("now~~~~" + now);
-                                        //Console.WriteLine("oldday~~~main~~~" + oldday);
-                                        //Console.WriteLine("oldday2~~~main~~~" + oldday2);
-                                        //Console.WriteLine("_login_time~~main~~" + _login_time);
-                                        ////Console.WriteLine("LoginTime~~~" + LoginTime);
-                                        // Console.WriteLine("date~~~" + date);
-                                        if (_login_time.Equals(oldday2) == false)
-                                        {
-                                            //Console.WriteLine("test~~~~2~~~");
-                                            //Console.WriteLine("date_renew_save~~~");
-                                            function = "Auto_B1";
-                                            try
-                                            {
-                                                MessagingCenter.Send(this, "NewDayDelete", true);
-                                                Console.WriteLine("newdaysend~~~");
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                Console.WriteLine("Error_send~~" + ex.ToString());
-                                            }
+                                    //if (dateDatabase.GetAccountAsync2().Count() != 0) // 裡面有資料，先比對
+                                    //{
+                                    //    string oldday = dateDatabase.GetAccountAsync2().Last().date;
+                                    //    oldday2 = fooDoggyDatabase.GetAccountAsync().Last().login_time;
+                                    //    string now = DateTime.Now.ToString("yyyy-MM-dd");
+                                    //    Console.WriteLine("now~~~~" + now);
+                                    //    Console.WriteLine("olddayB~~~main~~~" + oldday);
+                                    //    Console.WriteLine("oldday2B~~~main~~~" + oldday2);
+                                    //    //Console.WriteLine("_login_time~~main~~" + _login_time);
+                                    //    ////Console.WriteLine("LoginTime~~~" + LoginTime);
+                                    //    // Console.WriteLine("date~~~" + date);
+                                    //    if (now.Equals(oldday2) == false)
+                                    //    {
+                                    //        function = "Auto_B2";
+                                    //        try
+                                    //        {
+                                    //            MessagingCenter.Send(this, "NewDayDelete", true);
+                                    //            //MapView.AccDatabase.DeleteAll_TempAccount();
+                                    //            //MapView.AccDatabase.DeleteAll_Punch();
+                                    //            //MapView.AccDatabase.DeleteAll_Punch2();
+                                    //            //MapView.AccDatabase.DeleteAll_PunchTmp();
+                                    //            //MapView.AccDatabase.DeleteAll_PunchTmp2();
+                                    //            ////MapView.PunchYN.DeleteAll();
+                                    //            //MapView.name_list_in.Clear();
+                                    //            //MapView.name_list_out.Clear();
+                                    //            //MapView.WIFI_name_list_in.Clear();
+                                    //            //MapView.WIFI_name_list_out.Clear();
+                                    //            //MapView.AccDatabase.DeleteAll_Wifi_Punchin();
+                                    //            //MapView.AccDatabase.DeleteAll_Wifi_Punchout();
+                                    //            Console.WriteLine("newdaysend~~~");
+                                    //        }
+                                    //        catch (Exception ex)
+                                    //        {
+                                    //            Console.WriteLine("Error_send~~" + ex.ToString());
+                                    //        }
 
 
-                                            checkdate = true;
-                                            //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
-                                            dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
-                                            dateDatabase.SaveAccountAsync(new CheckDate
-                                            {
-                                                date = _login_time
-                                            });
+                                    //        checkdate = true;
+                                    //        //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
+                                    //        dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
+                                    //        dateDatabase.SaveAccountAsync(new CheckDate
+                                    //        {
+                                    //            date = now
+                                    //        });
 
-                                        }
-                                        if(now.Equals(oldday2) == false)
-                                        {
-                                            function = "Auto_B2";
-                                            try
-                                            {
-                                                MessagingCenter.Send(this, "NewDayDelete", true);
-                                                Console.WriteLine("newdaysend~~~");
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                Console.WriteLine("Error_send~~" + ex.ToString());
-                                            }
+                                    //        fooDoggyDatabase.SaveAccountAsync(new Account
+                                    //        {
+                                    //            account = acc,
+                                    //            password = pwd,
+                                    //            identity = iden,
+                                    //            login_time = now
+                                    //        });
+                                    //    }
+                                    //    if (_login_time.Equals(oldday2) == false)
+                                    //    {
+                                    //        //Console.WriteLine("test~~~~2~~~");
+                                    //        //Console.WriteLine("date_renew_save~~~");
+                                    //        function = "Auto_B1";
+                                    //        try
+                                    //        {
+                                    //            MessagingCenter.Send(this, "NewDayDelete", true);
+                                    //            //MapView.AccDatabase.DeleteAll_TempAccount();
+                                    //            //MapView.AccDatabase.DeleteAll_Punch();
+                                    //            //MapView.AccDatabase.DeleteAll_Punch2();
+                                    //            //MapView.AccDatabase.DeleteAll_PunchTmp();
+                                    //            //MapView.AccDatabase.DeleteAll_PunchTmp2();
+                                    //            ////MapView.PunchYN.DeleteAll();
+                                    //            //MapView.name_list_in.Clear();
+                                    //            //MapView.name_list_out.Clear();
+                                    //            //MapView.WIFI_name_list_in.Clear();
+                                    //            //MapView.WIFI_name_list_out.Clear();
+                                    //            //MapView.AccDatabase.DeleteAll_Wifi_Punchin();
+                                    //            //MapView.AccDatabase.DeleteAll_Wifi_Punchout();
+                                    //            Console.WriteLine("newdaysend~~~");
+                                    //        }
+                                    //        catch (Exception ex)
+                                    //        {
+                                    //            Console.WriteLine("Error_send~~" + ex.ToString());
+                                    //        }
 
 
-                                            checkdate = true;
-                                            //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
-                                            dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
-                                            dateDatabase.SaveAccountAsync(new CheckDate
-                                            {
-                                                date = now
-                                            });
-                                        }
-                                    }
-                                    else // 裡面還沒有資料
-                                    {
-                                        dateDatabase.SaveAccountAsync(
-                                        new CheckDate
-                                        {
-                                            date = _login_time
-                                        });
-                                        Console.WriteLine("date_nodata_save~~");
-                                    }
+                                    //        checkdate = true;
+                                    //        //Console.WriteLine("howmany~" + MapView.PunchDatabase2.GetAccountAsync2().Count());
+                                    //        dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
+                                    //        dateDatabase.SaveAccountAsync(new CheckDate
+                                    //        {
+                                    //            date = _login_time
+                                    //        });
+                                    //        fooDoggyDatabase.SaveAccountAsync(new Account
+                                    //        {
+                                    //            account = acc,
+                                    //            password = pwd,
+                                    //            identity = iden,
+                                    //            login_time = _login_time
+                                    //        });
+                                    //    }
+                                      
+                                    //}
+                                    //else // 裡面還沒有資料
+                                    //{
+                                    //    dateDatabase.SaveAccountAsync(
+                                    //    new CheckDate
+                                    //    {
+                                    //        date = _login_time
+                                    //    });
+                                    //    Console.WriteLine("date_nodata_save~~");
+                                    //}
 
                                     Console.WriteLine("ACC" + token);
                                     //dateDatabase.DeleteAll(); // 讓裡面永遠只保持最新的一筆
@@ -365,13 +444,7 @@ namespace PULI
                                     //InitMqttClient();
                                     //ConnectMqttServer();
 
-                                    fooDoggyDatabase.SaveAccountAsync(new Account
-                                    {
-                                        account = acc,
-                                        password = pwd,
-                                        identity = iden,
-                                        login_time = _login_time
-                                    });
+                                   
                                     //await App.Database.SaveAccountAsync(acc);
                                     //Console.WriteLine("LOGIN2");
                                     //Console.WriteLine("TOKEN2" + token);
@@ -631,12 +704,15 @@ namespace PULI
                             }
                             else // 裡面還沒有資料
                             {
+                                string now = DateTime.Now.ToString("yyyy-MM-dd");
                                 dateDatabase.SaveAccountAsync(
                                 new CheckDate
                                 {
-                                    date = _login_time
+                                    date = now
                                 });
                                 Console.WriteLine("date_nodata_save~~");
+                                string oldday = dateDatabase.GetAccountAsync2().Last().date;
+                                Console.WriteLine("login_clicked~~~ " + oldday);
                             }
 
                             //await Navigation.PushModalAsync(new HomeView());
@@ -908,7 +984,7 @@ namespace PULI
             catch (Exception exp)
             {
 
-                //Console.WriteLine(exp);
+               // Console.WriteLine("MQTT~~ " + exp);
             }
             Console.WriteLine("Work >>End");
 

@@ -81,7 +81,7 @@ namespace PULI.Views
                 auth.Text = "送餐員";
                 usrname.Text = MainPage.userList.acc_name;
                 newdate.Text = MainPage._login_time;
-                olddate.Text = MainPage.oldday2;
+                olddate.Text = wifiuploadrecord.oldday;
                 function.Text = MainPage.function;
                 if (!CrossConnectivity.Current.IsConnected)
                 {
@@ -121,7 +121,7 @@ namespace PULI.Views
                 if(MainPage.AUTH == "14") // 送餐員
                 {
                     fooDoggyDatabase.DeleteAll();
-                    MapView.AccDatabase.DeleteAll_TempAccount();
+                   // MapView.AccDatabase.DeleteAll_TempAccount();
                     MapView.AccDatabase.DeleteAll_Punch();
                     MapView.AccDatabase.DeleteAll_Punch2();
                     //PunchDataBaseTmp ppunchTmp = new PunchDataBaseTmp();

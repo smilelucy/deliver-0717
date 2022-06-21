@@ -138,7 +138,9 @@ namespace PULI.Views
         bool successOut;
         //public static string NOWHOME; // for拍照上傳帶案主家編號
         private static string MQTTREH;  // for mqtt gps info帶reh_s_num
+        private string dys09; // 早上 1 , 晚上 2
         private int count = 0;
+        private string googleMapUrl;
 
         public MapView()
         {
@@ -211,9 +213,11 @@ namespace PULI.Views
                         //Console.WriteLine("timemap~~~ " + MainPage._time);
                         if(MainPage._time == "早上") // 早上跟下午用不同api
                         {
+                            dys09 = "1";
                             totalList = await web.Get_Daily_Shipment(MainPage.token);
                             if (totalList != null) {
                                 MQTTREH = totalList.daily_shipments[0].reh_s_num;
+                               
                             } else {
                                 totalList = await web.Get_Daily_Shipment(MainPage.token);
                                 MQTTREH = totalList.daily_shipments[0].reh_s_num;
@@ -222,6 +226,7 @@ namespace PULI.Views
                         }
                         else
                         {
+                            dys09 = "2";
                             totalList = await web.Get_Daily_Shipment_night(MainPage.token);
                             if (totalList != null)
                             {
@@ -322,7 +327,16 @@ namespace PULI.Views
                                 //SetIcon(setnum); // 地圖上設案主標點(只存在下一家要送餐的)
                                 for (int i = 0; i < totalList.daily_shipments.Count; i++)
                                 {
-                                    punchList[totalList.daily_shipments[i].ct_name] = false; // 判斷簽到+簽退都成功的
+                            if (i == 0)
+                            {
+                                googleMapUrl = totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                            }
+                            else
+                            {
+
+                                googleMapUrl = googleMapUrl + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                            }
+                            punchList[totalList.daily_shipments[i].ct_name] = false; // 判斷簽到+簽退都成功的
                                     punch_in[totalList.daily_shipments[i].ct_name] = false; // 判斷簽到成功的
                                     punch_out[totalList.daily_shipments[i].ct_name] = false; // 判斷簽退成功的
                                     isform[totalList.daily_shipments[i].ct_name] = false; // 判斷跳出問卷的
@@ -367,14 +381,14 @@ namespace PULI.Views
                                 //Console.WriteLine("Auto~~~");
                                 if (MainPage.dateDatabase.GetAccountAsync2().Count() != 0) // 如果紀錄登入日期的SQLite裡面有資料，先比對
                                 {
-                                    //Console.WriteLine("old~~ " + MainPage.oldday2);
-                                    //Console.WriteLine("new~~~ " + MainPage._login_time);
+                                    Console.WriteLine("old~~MMap~~~ " + wifiuploadrecord.oldday);
+                                    Console.WriteLine("new~~~MMap~~~ " + MainPage._login_time);
                                     // 判斷上次登入日期跟這次登入日期
                                     // 若不同則刪除SQLite裡面的資料
-                                    if (MainPage._login_time != MainPage.oldday2)
+                                    if (MainPage._login_time != wifiuploadrecord.oldday)
                                     {
 
-                                        //Console.WriteLine("newdayrecieve~~Mapview~~22~");
+                                        Console.WriteLine("newdayrecieve~~Mapview~~22~");
                                         AccDatabase.DeleteAll_TempAccount();  // 紀錄問卷的
                                         AccDatabase.DeleteAll_Punch(); // 記錄無網路環境打卡的
                                         //AccDatabase.DeleteAll_Punch2(); // 紀錄案主家打卡進度的(setnum)
@@ -419,6 +433,17 @@ namespace PULI.Views
                                                                                             
                                 for (int i = 0; i < totalList.daily_shipments.Count; i++)
                                 {
+                                    
+                            if(i == 0)
+                            {
+                                googleMapUrl = totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                            } else
+                            {
+                                
+                                googleMapUrl = googleMapUrl + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                            }
+                                    
+
                                     punchList[totalList.daily_shipments[i].ct_name] = false;  // 判斷簽到+簽退都成功的
                                     punch_in[totalList.daily_shipments[i].ct_name] = false;  // 判斷簽到成功的
                                     punch_out[totalList.daily_shipments[i].ct_name] = false;  // 判斷簽退成功的
@@ -530,10 +555,10 @@ namespace PULI.Views
                                     double lot = Convert.ToDouble(totalList.daily_shipments[i].ct17);
                                     ////Console.WriteLine("LOT" + lot);
                                     home = totalList.daily_shipments[i].ct_name + " 的家";
-                                s_num = totalList.daily_shipments[i].ct_s_num;
-                                //Console.WriteLine("@@@@ " + s_num);
-                                ////Console.WriteLine("HOME" + home);
-                                gps = lat + "," + lot;
+                                    s_num = totalList.daily_shipments[i].ct_s_num;
+                                    //Console.WriteLine("@@@@ " + s_num);
+                                    ////Console.WriteLine("HOME" + home);
+                                    gps = lat + "," + lot;
                                     //gender = allclientList[i].ct04; // 性別
                                     //bday = allclientList[i].ct05; // 生日
                                     //phone = allclientList[i].ct06_homephone; // 家裡電話
@@ -543,6 +568,8 @@ namespace PULI.Views
                                     //PinMarker(param.PNG_MAP_HOME_ICON, new Xamarin.Forms.GoogleMaps.Position(lat, lot), home, gps);
                                     PinMarker3(param.PNG_MAP_HOME_ICON, new Xamarin.Forms.GoogleMaps.Position(lat, lot), home, gps, s_num);
                                 }
+                        Console.WriteLine("googleMapUrl");
+                        Console.WriteLine(googleMapUrl);
                                 /*
                                 location = CrossGeolocator.Current;
                                 location.DesiredAccuracy = location_DesiredAccuracy;
@@ -1007,7 +1034,7 @@ namespace PULI.Views
                                                             phl50 = "2"
                                                         };
                                                         // post打卡訊息到mqtt
-                                                        await Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "1", "2", TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.time, "2", "1", "1", "1");
+                                                        await Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "1", "2", TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.time, "2", "1", "1", "1", dys09, "APP");
                                                         //no_wifi_punch_in = await web.Save_Punch_In(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.reh_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time, "2");
                                                         // --------post 打卡訊息 to 後台--------------------
                                                         //no_wifi_punch_in = await web.Save_Punch_In(punin);
@@ -1127,7 +1154,7 @@ namespace PULI.Views
                                                             phl50 = "2"
                                                         };
                                                         // post打卡訊息到mqtt
-                                                        await Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "2", "2", TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.time, "2", "2", "1", "1");
+                                                        await Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "2", "2", TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.mlo_s_num, TempAnsList.time, "2", "2", "1", "1", dys09, "APP");
                                                         //no_wifi_punch_out = await web.Save_Punch_Out(TempAnsList.token, TempAnsList.ct_s_num, TempAnsList.sec_s_num, TempAnsList.reh_s_num, TempAnsList.mlo_s_num, TempAnsList.latitude, TempAnsList.longitude, TempAnsList.time, "2");
                                                         // --------------post打卡訊息到後台-------------------
                                                         //no_wifi_punch_out = await web.Save_Punch_Out(punout);
@@ -1435,7 +1462,7 @@ namespace PULI.Views
                                             };
                                             //Console.WriteLine("time~~~ " + time);
                                             // post打卡訊息到mqtt
-                                            await Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "1", "1", totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].mlo_s_num, time, "1", "1", "1","1");
+                                            await Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "1", "1", totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].mlo_s_num, time, "1", "1", "1","1", dys09, "APP");
                                             //wifi_punch_in = await web.Save_Punch_In(MainPage.token, totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].mlo_s_num, totalList.daily_shipments[i].reh_s_num, position.Latitude, position.Longitude, time, "1");
                                             // --------post 打卡訊息 to 後台--------------------
                                             //wifi_punch_in = await web.Save_Punch_In(punin);
@@ -1647,7 +1674,7 @@ namespace PULI.Views
                                                 phl50 = "1"
                                             };
                                             // post打卡訊息到mqtt
-                                            await Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "2", "1", totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].mlo_s_num, time, "1", "2", "1", "1");
+                                            await Connected_punch(NowLat.ToString(), NowLon.ToString(), MQTTREH, "2", "1", totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].mlo_s_num, time, "1", "2", "1", "1", dys09, "APP");
                                             //wifi_punch_out = await web.Save_Punch_Out(MainPage.token, totalList.daily_shipments[i].ct_s_num, totalList.daily_shipments[i].sec_s_num, totalList.daily_shipments[i].reh_s_num, totalList.daily_shipments[i].mlo_s_num, position.Latitude, position.Longitude, time, "1");
                                             // --------post 打卡訊息 to 後台--------------------
                                             //wifi_punch_out = await web.Save_Punch_Out(punout);
@@ -2953,7 +2980,7 @@ namespace PULI.Views
         }
 
         // push punch record to mqtt server
-        private static async Task Connected_punch(string lat, string lon,string reh, string inorout, string wifi , string ctsnum, string secsnum, string mlosnum, string phl01, string phl50, string phl02, string phl05, string phl99)
+        private static async Task Connected_punch(string lat, string lon,string reh, string inorout, string wifi , string ctsnum, string secsnum, string mlosnum, string phl01, string phl50, string phl02, string phl05, string phl99, string dys09, string source)
         {
             try
             {
@@ -2968,7 +2995,7 @@ namespace PULI.Views
                 var message = new MqttApplicationMessageBuilder()
                  //.WithTopic("sensor/Test/room2")
                  .WithTopic("sensor/Test/room4")
-                 .WithPayload(lat + "," + lon + "," + reh + "," + MainPage.token + "," + inorout + "," + wifi + "," + ctsnum + "," + secsnum + "," + mlosnum + "," + phl01 + "," + phl50 + "," + phl02 + "," + phl05 + "," + phl99)
+                 .WithPayload(lat + "," + lon + "," + reh + "," + MainPage.token + "," + inorout + "," + wifi + "," + ctsnum + "," + secsnum + "," + mlosnum + "," + phl01 + "," + phl50 + "," + phl02 + "," + phl05 + "," + phl99 + "," + dys09 + "," + source)
                  .WithExactlyOnceQoS()
                  .Build();
 
@@ -3322,6 +3349,28 @@ namespace PULI.Views
                 //Console.WriteLine(ex.ToString());
             }
         }
+
+        private async void all_navigate_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                string uri = "https://www.google.com.tw/maps/dir/" + googleMapUrl;
+                Console.WriteLine("URI" + uri);
+                if (await Launcher.CanOpenAsync(uri))
+                {
+                    await Launcher.OpenAsync(uri);
+                }
+                else
+                {
+                    await DisplayAlert(param.SYSYTEM_MESSAGE, param.BROWSER_ERROR_MESSAGE, param.DIALOG_MESSAGE);
+                }
+            }
+            catch (Exception ex)
+            {
+                //Console.WriteLine(ex.ToString());
+            }
+        }
+
         private async void updatebtn_Clicked(object sender, EventArgs e)
         {
             try
