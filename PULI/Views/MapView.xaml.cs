@@ -140,13 +140,16 @@ namespace PULI.Views
         private static string MQTTREH;  // for mqtt gps info帶reh_s_num
         private string dys09; // 早上 1 , 晚上 2
         private int count = 0;
-        private string googleMapUrl;
+        private string googleMapUrl; // 存要導到google map整條路線導航的url
+        public static double nowlat;
+        public static double nowlon;
 
         public MapView()
         {
             InitializeComponent();
             AccDatabase = new TempDatabase();
             MapUiSetting();
+            
             //setView(); 
             //if(MainPage.checkdate == true)
             //{
@@ -164,7 +167,7 @@ namespace PULI.Views
             //    }
             //});
             //Console.WriteLine("GGG~~~" + MainPage.dateDatabase.GetAccountAsync2().Count());
-           
+
             Messager();
             if(MainPage.AUTH == "14") // 外送員(有打卡功能)
             {
@@ -193,11 +196,16 @@ namespace PULI.Views
         {
             try
             {
-                
+
                 //if (totalList.daily_shipments == null)
                 //{
-                   
-                    questionnaireslist = await web.Get_Questionaire(MainPage.token); // 拿問卷
+                location = CrossGeolocator.Current;
+                location.DesiredAccuracy = location_DesiredAccuracy;
+                position = await location.GetPositionAsync();
+                var nowlon = position.Longitude;
+                var nowlat = position.Latitude;
+              
+                questionnaireslist = await web.Get_Questionaire(MainPage.token); // 拿問卷
                     
                     
                    
@@ -327,9 +335,15 @@ namespace PULI.Views
                                 //SetIcon(setnum); // 地圖上設案主標點(只存在下一家要送餐的)
                                 for (int i = 0; i < totalList.daily_shipments.Count; i++)
                                 {
+                            //location.DesiredAccuracy = location_DesiredAccuracy;
+                            //position = await location.GetPositionAsync();
+                            //var nowlon = position.Longitude;
+                            //var nowlat = position.Latitude;
                             if (i == 0)
                             {
-                                googleMapUrl = totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                              
+                                googleMapUrl = nowlat.ToString() + ',' + nowlon.ToString() + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                                //googleMapUrl = totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
                             }
                             else
                             {
@@ -433,10 +447,14 @@ namespace PULI.Views
                                                                                             
                                 for (int i = 0; i < totalList.daily_shipments.Count; i++)
                                 {
-                                    
-                            if(i == 0)
+                            //location.DesiredAccuracy = location_DesiredAccuracy;
+                            //position = await location.GetPositionAsync();
+                            //var nowlon = position.Longitude;
+                            //var nowlat = position.Latitude;
+                            if (i == 0)
                             {
-                                googleMapUrl = totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                                googleMapUrl = nowlat.ToString() + ',' + nowlon.ToString() + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                                //googleMapUrl = totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
                             } else
                             {
                                 
@@ -2964,8 +2982,8 @@ namespace PULI.Views
                 //}
 
                 var message = new MqttApplicationMessageBuilder()
-                 //.WithTopic("sensor/Test/room1")
-                 .WithTopic("sensor/Test/room3")
+                 .WithTopic("sensor/Test/room1")
+                 //.WithTopic("sensor/Test/room3")
                  .WithPayload(lat + "," + lon+ "," + name + "," + reh + "," + MainPage.token)
                  .WithExactlyOnceQoS()
                  .Build();
@@ -2993,8 +3011,8 @@ namespace PULI.Views
                 //}
 
                 var message = new MqttApplicationMessageBuilder()
-                 //.WithTopic("sensor/Test/room2")
-                 .WithTopic("sensor/Test/room4")
+                 .WithTopic("sensor/Test/room2")
+                 //.WithTopic("sensor/Test/room4")
                  .WithPayload(lat + "," + lon + "," + reh + "," + MainPage.token + "," + inorout + "," + wifi + "," + ctsnum + "," + secsnum + "," + mlosnum + "," + phl01 + "," + phl50 + "," + phl02 + "," + phl05 + "," + phl99 + "," + dys09 + "," + source)
                  .WithExactlyOnceQoS()
                  .Build();
