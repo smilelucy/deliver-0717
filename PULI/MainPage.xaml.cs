@@ -961,13 +961,13 @@ namespace PULI
                 //}
                 //Console.WriteLine("MQTTconnected");
                 await mqttClient.SubscribeAsync(new TopicFilterBuilder()
-                  .WithTopic("sensor/Test/room1")
-                  //.WithTopic("sensor/Test/room3")
+                  //.WithTopic("sensor/Test/room1")
+                  .WithTopic("sensor/Test/room3")
                   //.WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
                   .Build());
                 await mqttClient.SubscribeAsync(new TopicFilterBuilder()
-                  .WithTopic("sensor/Test/room2")
-                  //.WithTopic("sensor/Test/room4")
+                  //.WithTopic("sensor/Test/room2")
+                  .WithTopic("sensor/Test/room4")
                   //.WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
                   .Build());
                 Console.WriteLine("Connected >>Subscribe Success");
