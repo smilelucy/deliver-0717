@@ -8,6 +8,8 @@ using MQTTnet.Client.Disconnecting;
 using MQTTnet.Client.Options;
 using MQTTnet.Client.Receiving;
 using Plugin.Connectivity;
+using Plugin.Geolocator;
+using Plugin.Geolocator.Abstractions;
 using PULI.Model;
 using PULI.Models.DataInfo;
 using PULI.Services.SQLite;
@@ -31,6 +33,9 @@ namespace PULI
     {
         //public IMqttClient mqttClient;
         //public IMqttClientOptions options;
+        IGeolocator location;
+        Plugin.Geolocator.Abstractions.Position position;
+        int location_DesiredAccuracy = 20, map_Zoom = 14;
         public static MqttClient mqttClient = null;
         private static IMqttClientOptions options = null;
         private static bool runState = false;
@@ -70,7 +75,10 @@ namespace PULI
         private string _resIdentity = "送餐員";
         private string[] identityArray = new string[] { "社工", "送餐員" };
         private string[] timeArray = new string[] { "早上", "下午"};
-      
+        public static string googleMapUrl; // 存要導到google map整條路線導航的url
+        private List<string> Urlname = new List<string>();
+        private List<string> Urllist = new List<string>();
+        private List<string> Finallist = new List<string>();
 
         public MainPage()
         {
@@ -188,7 +196,17 @@ namespace PULI
                                 ActivityView.stopList = await web.Get_Stop(token);
                                 ActivityView.restoreList = await web.Get_Restore(token);
                             }
-
+                            location = CrossGeolocator.Current;
+                            location.DesiredAccuracy = location_DesiredAccuracy;
+                            position = await location.GetPositionAsync();
+                            var nowlon = position.Longitude;
+                            var nowlat = position.Latitude;
+                            googleMapUrl = getUrl(nowlat.ToString(), nowlon.ToString());
+                            //Finallist = getUrl();
+                            Console.WriteLine("MAinurl");
+                            Console.WriteLine(googleMapUrl);
+                            //Console.WriteLine(Finallist);
+                            //Console.WriteLine(Finallist[0]);
 
                             if (string.IsNullOrEmpty(NAME))
                             {
@@ -769,6 +787,127 @@ namespace PULI
 
 
                 Console.WriteLine("login_error", ex.ToString());
+            }
+
+        }
+
+        private string getUrl(string nowlat, string nowlon)
+        //private List<string>  getUrl()
+        {
+
+            //if (MainPage.AUTH == "14")
+            //{
+
+            //    //Console.WriteLine("外送員~~~~");
+            //    MyMap.IsVisible = true;
+            //    MyMap.IsEnabled = true;
+            //    //Console.WriteLine("AUTH " + MainPage.AUTH);
+            //    //Console.WriteLine("timemap~~~ " + MainPage._time);
+            //    if (MainPage._time == "早上") // 早上跟下午用不同api
+            //    {
+            //        dys09 = "1";
+            //        totalList = await web.Get_Daily_Shipment(MainPage.token);
+            //        if (totalList != null)
+            //        {
+            //            MQTTREH = totalList.daily_shipments[0].reh_s_num;
+
+            //        }
+            //        else
+            //        {
+            //            totalList = await web.Get_Daily_Shipment(MainPage.token);
+            //            MQTTREH = totalList.daily_shipments[0].reh_s_num;
+            //        }
+
+            //    }
+            //    else
+            //    {
+            //        dys09 = "2";
+            //        totalList = await web.Get_Daily_Shipment_night(MainPage.token);
+            //        if (totalList != null)
+            //        {
+            //            MQTTREH = totalList.daily_shipments[0].reh_s_num;
+            //        }
+            //        else
+            //        {
+            //            totalList = await web.Get_Daily_Shipment_night(MainPage.token);
+            //            MQTTREH = totalList.daily_shipments[0].reh_s_num;
+            //        }
+            //    }
+            //}
+            try
+            {
+                Console.WriteLine("QQQQcount~~~ ");
+                Console.WriteLine(totalList.daily_shipments.Count);
+                for (int i = 0; i < totalList.daily_shipments.Count; i++)
+                {
+
+                    if (!Urlname.Contains(totalList.daily_shipments[i].ct_name))
+                    {
+                        Urlname.Add(totalList.daily_shipments[i].ct_name);
+                        Console.WriteLine("~~~~~");
+                        Console.WriteLine(totalList.daily_shipments[i].ct_name);
+
+                        if (totalList.daily_shipments[i].ct16.Equals("0") == false && totalList.daily_shipments[i].ct17.Equals("0") == false)
+                        {
+                            // Console.WriteLine("AA");
+                            if (i == 0)
+                            {
+                                // 過濾掉志工經緯度為0(google map會找不到點)
+                                Console.WriteLine("AAA");
+                                Console.WriteLine(i);
+                                googleMapUrl = nowlat.ToString() + ',' + nowlon.ToString() + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                                Console.WriteLine(googleMapUrl);
+                                //googleMapUrl = totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                            }
+                            else
+                            {
+                                Console.WriteLine("AAB");
+                                Console.WriteLine(i);
+                                googleMapUrl = googleMapUrl + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                                Console.WriteLine(googleMapUrl);
+                            }
+                            //googleMapUrl = googleMapUrl + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                        }
+                        else
+                        {
+                            //Console.WriteLine("BB");
+                            if (i == 0)
+                            {
+                                Console.WriteLine("BBB");
+                                Console.WriteLine(i);
+                                // 過濾掉志工經緯度為0(google map會找不到點)
+                                totalList.daily_shipments[i].ct16 = "";
+                                totalList.daily_shipments[i].ct17 = "";
+                                //googleMapUrl = totalList.daily_shipments[i].ct16 + totalList.daily_shipments[i].ct17;
+                                googleMapUrl = nowlat.ToString() + ',' + nowlon.ToString() + '/' + totalList.daily_shipments[i].ct16 + totalList.daily_shipments[i].ct17;
+                                Console.WriteLine(googleMapUrl);
+                                //googleMapUrl = totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                            }
+                            else
+                            {
+                                Console.WriteLine("XXXX");
+                                Console.WriteLine(i);
+                                googleMapUrl = googleMapUrl + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+
+                            }
+
+
+                        }
+                    }
+                    //if(i%23 == 0)
+                    //{
+                    //    Urllist[i / 23] = googleMapUrl;
+                    //    Console.WriteLine("WEEEEEEE");
+                    //    Console.WriteLine(Urllist[i / 23]);
+                    //    googleMapUrl = "";
+                    //}
+
+                }
+                return googleMapUrl;
+            }
+            catch (Exception e)
+            {
+                return null;
             }
 
         }

@@ -259,8 +259,15 @@
                                                     Clicked="update_closebtn_Clicked"/>
             </StackLayout>
         </StackLayout>
-        
-      
+        <StackLayout x:Name="NavigateWindow" IsVisible="false" HorizontalOptions="Center" VerticalOptions="Center" >
+            <ScrollView Orientation="Horizontal" Margin="4,8,4,0">
+                <StackLayout x:Name="qrStack" Orientation="Horizontal" Spacing="24">
+
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+
+
     </StackLayout>
     
 </ContentPage>
