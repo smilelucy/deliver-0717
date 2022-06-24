@@ -324,8 +324,37 @@ namespace PULI.Views
                 button.Clicked += async (sender, args) =>
                 {
                     string btnnumber = ((Button)sender).Text;
-                    all_navigate_button_Clicked(btnnumber);
+                    Console.WriteLine("btnnumber~~~ " + btnnumber);
+                    location = CrossGeolocator.Current;
+                    Console.WriteLine("location~~ " + location);
+                    location.DesiredAccuracy = location_DesiredAccuracy;
+                    Console.WriteLine("location.DesiredAccuracy~~ " + location.DesiredAccuracy);
+                    position = await location.GetPositionAsync(TimeSpan.FromSeconds(1));
+                    Console.WriteLine("position~~ " + position);
+                    var nowlon = position.Longitude;
+                    var nowlat = position.Latitude;
+                    //var nowlon = "120.14222";
+                    //var nowlat = "23.25555";
+                    Console.WriteLine("nowlat" + nowlat);
+                    Console.WriteLine("nowlon" + nowlon);
+                    //all_navigate_button_Clicked(btnnumber, nowlat, nowlon);
+                    Console.WriteLine("MainPage.Finallist QQQQ~~ " + MainPage.Finallist[0]);
+                    if (MainPage.Finallist != null)
+                    {
+                        //string uri = "https://www.google.com.tw/maps/dir/" + MainPage.googleMapUrl;
+                        string uri = "https://www.google.com.tw/maps/dir/" + nowlat.ToString() + ',' + nowlon.ToString() + '/' + MainPage.Finallist[Int32.Parse(btnnumber)];
+                        Console.WriteLine("URI" + uri);
+                        Console.WriteLine(await Launcher.CanOpenAsync(uri));
+                        if (await Launcher.CanOpenAsync(uri))
+                        {
+                            await Launcher.OpenAsync(uri);
 
+                        }
+                        else
+                        {
+                            await DisplayAlert(param.SYSYTEM_MESSAGE, param.BROWSER_ERROR_MESSAGE, param.DIALOG_MESSAGE);
+                        }
+                    }
 
                 };
 
@@ -397,7 +426,7 @@ namespace PULI.Views
                     var btnumber = totalList.daily_shipments.Count/23;
                     Console.WriteLine("btnumber");
                     Console.WriteLine(btnumber);
-                    for(int i = 0; i < btnumber; i++)
+                    for(int i = 0; i < btnumber+1; i++)
                     {
                         qrStack.Children.Add(supplyBtn(i.ToString()));
                     }
@@ -3619,7 +3648,7 @@ namespace PULI.Views
 
 
 
-        private async void all_navigate_button_Clicked(string num)
+        private async void all_navigate_button_Clicked(string num, double nowlat, double nowlon)
         {
             try
             {
@@ -3631,9 +3660,18 @@ namespace PULI.Views
                 //googleMapUrl = getUrl(nowlat.ToString(), nowlon.ToString());
                 //Console.WriteLine("QQQQQQQ");
                 //Console.WriteLine(googleMapUrl);
-                if (MainPage.googleMapUrl != null)
+                Console.WriteLine("all_navigate_button_Clicked");
+                Console.WriteLine("MainPage.Finallist QQQQ~~ " + MainPage.Finallist);
+                //location = CrossGeolocator.Current;
+                //location.DesiredAccuracy = location_DesiredAccuracy;
+                //position = await location.GetPositionAsync();
+                //var nowlon = position.Longitude;
+                //var nowlat = position.Latitude;
+                Console.WriteLine("MainPage.Finallist~~ " + MainPage.Finallist);
+                if (MainPage.Finallist != null)
                 {
-                    string uri = "https://www.google.com.tw/maps/dir/" + MainPage.googleMapUrl;
+                    //string uri = "https://www.google.com.tw/maps/dir/" + MainPage.googleMapUrl;
+                    string uri = "https://www.google.com.tw/maps/dir/" + nowlat.ToString() + ','+ nowlon.ToString() +'/'+ MainPage.Finallist[Int32.Parse(num)];
                     Console.WriteLine("URI" + uri);
                     if (await Launcher.CanOpenAsync(uri))
                     {
@@ -3654,6 +3692,12 @@ namespace PULI.Views
             {
                 //Console.WriteLine(ex.ToString());
             }
+        }
+
+        private void infoCancelTapped(object sender, EventArgs e)
+        {
+
+            NavigateWindow.IsVisible = false;
         }
 
         private async void updatebtn_Clicked(object sender, EventArgs e)

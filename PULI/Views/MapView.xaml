@@ -259,12 +259,32 @@
                                                     Clicked="update_closebtn_Clicked"/>
             </StackLayout>
         </StackLayout>
-        <StackLayout x:Name="NavigateWindow" IsVisible="false" HorizontalOptions="Center" VerticalOptions="Center" >
+        <StackLayout x:Name="NavigateWindow" IsVisible="false" >
             <ScrollView Orientation="Horizontal" Margin="4,8,4,0">
                 <StackLayout x:Name="qrStack" Orientation="Horizontal" Spacing="24">
 
                 </StackLayout>
             </ScrollView>
+            <StackLayout VerticalOptions="End"
+                         HorizontalOptions="End">
+
+                <Label x:Name="cancel"
+                       VerticalOptions="End"
+                       HorizontalOptions="End"
+                       VerticalTextAlignment="End"
+                       HorizontalTextAlignment="End"
+                       TextColor="CadetBlue"
+                       Text="關閉"
+                       Margin="0,0,15,15"
+                       FontSize="18"/>
+
+                <StackLayout.GestureRecognizers>
+
+                    <TapGestureRecognizer Tapped="infoCancelTapped" />
+
+                </StackLayout.GestureRecognizers>
+
+            </StackLayout>
         </StackLayout>
 
 

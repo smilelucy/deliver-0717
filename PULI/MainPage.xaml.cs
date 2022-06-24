@@ -78,7 +78,7 @@ namespace PULI
         public static string googleMapUrl; // 存要導到google map整條路線導航的url
         private List<string> Urlname = new List<string>();
         private List<string> Urllist = new List<string>();
-        private List<string> Finallist = new List<string>();
+        public static List<string> Finallist = new List<string>();
 
         public MainPage()
         {
@@ -196,17 +196,13 @@ namespace PULI
                                 ActivityView.stopList = await web.Get_Stop(token);
                                 ActivityView.restoreList = await web.Get_Restore(token);
                             }
-                            location = CrossGeolocator.Current;
-                            location.DesiredAccuracy = location_DesiredAccuracy;
-                            position = await location.GetPositionAsync();
-                            var nowlon = position.Longitude;
-                            var nowlat = position.Latitude;
-                            googleMapUrl = getUrl(nowlat.ToString(), nowlon.ToString());
-                            //Finallist = getUrl();
+                         
+                            //googleMapUrl = getUrl(nowlat.ToString(), nowlon.ToString());
+                            Finallist = getUrl();
                             Console.WriteLine("MAinurl");
-                            Console.WriteLine(googleMapUrl);
-                            //Console.WriteLine(Finallist);
-                            //Console.WriteLine(Finallist[0]);
+                            //Console.WriteLine(googleMapUrl);
+                            Console.WriteLine(Finallist);
+                            Console.WriteLine(Finallist[0]);
 
                             if (string.IsNullOrEmpty(NAME))
                             {
@@ -791,8 +787,8 @@ namespace PULI
 
         }
 
-        private string getUrl(string nowlat, string nowlon)
-        //private List<string>  getUrl()
+        //private string getUrl(string nowlat, string nowlon)
+        private List<string>  getUrl()
         {
 
             //if (MainPage.AUTH == "14")
@@ -855,9 +851,9 @@ namespace PULI
                                 // 過濾掉志工經緯度為0(google map會找不到點)
                                 Console.WriteLine("AAA");
                                 Console.WriteLine(i);
-                                googleMapUrl = nowlat.ToString() + ',' + nowlon.ToString() + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                                //googleMapUrl = nowlat.ToString() + ',' + nowlon.ToString() + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
                                 Console.WriteLine(googleMapUrl);
-                                //googleMapUrl = totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                                googleMapUrl = totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
                             }
                             else
                             {
@@ -878,8 +874,8 @@ namespace PULI
                                 // 過濾掉志工經緯度為0(google map會找不到點)
                                 totalList.daily_shipments[i].ct16 = "";
                                 totalList.daily_shipments[i].ct17 = "";
-                                //googleMapUrl = totalList.daily_shipments[i].ct16 + totalList.daily_shipments[i].ct17;
-                                googleMapUrl = nowlat.ToString() + ',' + nowlon.ToString() + '/' + totalList.daily_shipments[i].ct16 + totalList.daily_shipments[i].ct17;
+                                googleMapUrl = totalList.daily_shipments[i].ct16 + totalList.daily_shipments[i].ct17 ;
+                                //googleMapUrl = nowlat.ToString() + ',' + nowlon.ToString() + '/' + totalList.daily_shipments[i].ct16 + totalList.daily_shipments[i].ct17;
                                 Console.WriteLine(googleMapUrl);
                                 //googleMapUrl = totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
                             }
@@ -894,16 +890,43 @@ namespace PULI
 
                         }
                     }
-                    //if(i%23 == 0)
+                    Console.WriteLine("i~~ ");
+                    Console.WriteLine(i);
+                    Console.WriteLine(i % 23);
+                    if (i % 23 == 0 && i != 0)
+                    {
+                        Console.WriteLine("WWWWWW" + i);
+                        Urllist.Add(googleMapUrl);
+                        googleMapUrl = "";
+                    }
+                    else
+                    {
+                        Console.Write("EEEEE" + i);
+                        if (i % 23 != 0 && i == totalList.daily_shipments.Count-1)
+                        {
+                            Console.Write("RRRR" + i);
+                            Urllist.Add(googleMapUrl);
+                        }
+                    }
+                    //if (i % 23 == 0)
                     //{
+                    //    Console.WriteLine("inAAA~~~ ");
                     //    Urllist[i / 23] = googleMapUrl;
                     //    Console.WriteLine("WEEEEEEE");
                     //    Console.WriteLine(Urllist[i / 23]);
                     //    googleMapUrl = "";
                     //}
+                    //else
+                    //{
+                    //    continue;
+                    //}
 
                 }
-                return googleMapUrl;
+                //for(int i = 0; i < Urllist.Count; i++)
+                //{
+                //    Console.WriteLine("TTTT" + Urllist[i]);
+                //}
+                return Urllist;
             }
             catch (Exception e)
             {
