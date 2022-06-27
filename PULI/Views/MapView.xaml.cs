@@ -143,7 +143,7 @@ namespace PULI.Views
         private string googleMapUrl; // 存要導到google map整條路線導航的url
         public static double nowlat;
         public static double nowlon;
-        private List<string> Urlname = new List<string>();
+        private List<string> Urllist = new List<string>();
         
 
         public MapView()
@@ -194,116 +194,7 @@ namespace PULI.Views
           
         }
 
-        private string getUrl(string nowlat, string nowlon)
-        {
-            
-            //if (MainPage.AUTH == "14")
-            //{
-
-            //    //Console.WriteLine("外送員~~~~");
-            //    MyMap.IsVisible = true;
-            //    MyMap.IsEnabled = true;
-            //    //Console.WriteLine("AUTH " + MainPage.AUTH);
-            //    //Console.WriteLine("timemap~~~ " + MainPage._time);
-            //    if (MainPage._time == "早上") // 早上跟下午用不同api
-            //    {
-            //        dys09 = "1";
-            //        totalList = await web.Get_Daily_Shipment(MainPage.token);
-            //        if (totalList != null)
-            //        {
-            //            MQTTREH = totalList.daily_shipments[0].reh_s_num;
-
-            //        }
-            //        else
-            //        {
-            //            totalList = await web.Get_Daily_Shipment(MainPage.token);
-            //            MQTTREH = totalList.daily_shipments[0].reh_s_num;
-            //        }
-
-            //    }
-            //    else
-            //    {
-            //        dys09 = "2";
-            //        totalList = await web.Get_Daily_Shipment_night(MainPage.token);
-            //        if (totalList != null)
-            //        {
-            //            MQTTREH = totalList.daily_shipments[0].reh_s_num;
-            //        }
-            //        else
-            //        {
-            //            totalList = await web.Get_Daily_Shipment_night(MainPage.token);
-            //            MQTTREH = totalList.daily_shipments[0].reh_s_num;
-            //        }
-            //    }
-            //}
-            try
-            {
-                Console.WriteLine("QQQQcount~~~ ");
-                Console.WriteLine(totalList.daily_shipments.Count);
-                for (int i = 0; i < totalList.daily_shipments.Count; i++)
-                {
-
-                    if (!Urlname.Contains(totalList.daily_shipments[i].ct_name))
-                    {
-                        Urlname.Add(totalList.daily_shipments[i].ct_name);
-                        Console.WriteLine("~~~~~");
-                        Console.WriteLine(totalList.daily_shipments[i].ct_name);
-
-                        if (totalList.daily_shipments[i].ct16.Equals("0") == false && totalList.daily_shipments[i].ct17.Equals("0") == false)
-                        {
-                            // Console.WriteLine("AA");
-                            if (i == 0)
-                            {
-                                // 過濾掉志工經緯度為0(google map會找不到點)
-                                Console.WriteLine("AAA");
-                                Console.WriteLine(i);
-                                googleMapUrl = nowlat.ToString() + ',' + nowlon.ToString() + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
-                                Console.WriteLine(googleMapUrl);
-                                //googleMapUrl = totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
-                            }
-                            else
-                            {
-                                Console.WriteLine("AAB");
-                                Console.WriteLine(i);
-                                googleMapUrl = googleMapUrl + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
-                                Console.WriteLine(googleMapUrl);
-                            }
-                        }
-                        else
-                        {
-                            //Console.WriteLine("BB");
-                            if (i == 0)
-                            {
-                                Console.WriteLine("BBB");
-                                Console.WriteLine(i);
-                                // 過濾掉志工經緯度為0(google map會找不到點)
-                                totalList.daily_shipments[i].ct16 = "";
-                                totalList.daily_shipments[i].ct17 = "";
-                                googleMapUrl = nowlat.ToString() + ',' + nowlon.ToString() + '/' + totalList.daily_shipments[i].ct16 + totalList.daily_shipments[i].ct17;
-                                Console.WriteLine(googleMapUrl);
-                                //googleMapUrl = totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
-                            }
-                            else
-                            {
-                                Console.WriteLine("XXXX");
-                                Console.WriteLine(i);
-                                googleMapUrl = googleMapUrl + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
-
-                            }
-
-
-                        }
-                    }
-
-                }
-                return googleMapUrl;
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
-              
-        }
+       
 
         private Button supplyBtn(string supply)
         {
@@ -338,7 +229,7 @@ namespace PULI.Views
                     Console.WriteLine("nowlat" + nowlat);
                     Console.WriteLine("nowlon" + nowlon);
                     //all_navigate_button_Clicked(btnnumber, nowlat, nowlon);
-                    Console.WriteLine("MainPage.Finallist QQQQ~~ " + MainPage.Finallist[0]);
+                    Console.WriteLine("MainPage.Finallist QQQQ~~ " + MainPage.Finallist[Int32.Parse(btnnumber)]);
                     if (MainPage.Finallist != null)
                     {
                         //string uri = "https://www.google.com.tw/maps/dir/" + MainPage.googleMapUrl;
@@ -423,13 +314,35 @@ namespace PULI.Views
                             }
                         }
                     qrStack.Children.Clear();
-                    var btnumber = totalList.daily_shipments.Count/23;
+                    //for (int i = 0; i < totalList.daily_shipments.Count; i++)
+                    //{
+
+                    //    if (!Urllist.Contains(totalList.daily_shipments[i].ct_name))
+                    //    {
+                    //        Urllist.Add(totalList.daily_shipments[i].ct_name);
+                    //    }
+                    //}
+                    var btnumber = MainPage.Urlname.Count/23;
                     Console.WriteLine("btnumber");
                     Console.WriteLine(btnumber);
-                    for(int i = 0; i < btnumber+1; i++)
+                    Console.WriteLine(MainPage.Urlname.Count);
+                    //Console.WriteLine(btnumber Mod 23);
+                    if(MainPage.Urlname.Count % 23 == 0)
                     {
-                        qrStack.Children.Add(supplyBtn(i.ToString()));
+                        Console.WriteLine("qwe~~ ");
+                        for (int i = 0; i < btnumber; i++)
+                        {
+                            qrStack.Children.Add(supplyBtn(i.ToString()));
+                        }
+                    } else
+                    {
+                        Console.WriteLine("asd~~~ ");
+                        for (int i = 0; i < btnumber + 1; i++)
+                        {
+                            qrStack.Children.Add(supplyBtn(i.ToString()));
+                        }
                     }
+                   
 
                     //Console.WriteLine("nnnn~~~ " + totalList.daily_shipments.Count());
 
@@ -3255,8 +3168,8 @@ namespace PULI.Views
                 //}
 
                 var message = new MqttApplicationMessageBuilder()
-                 //.WithTopic("sensor/Test/room1")
-                 .WithTopic("sensor/Test/room3")
+                 .WithTopic("sensor/Test/room1")
+                 //.WithTopic("sensor/Test/room3")
                  .WithPayload(lat + "," + lon+ "," + name + "," + reh + "," + MainPage.token)
                  .WithExactlyOnceQoS()
                  .Build();
@@ -3284,8 +3197,8 @@ namespace PULI.Views
                 //}
 
                 var message = new MqttApplicationMessageBuilder()
-                 //.WithTopic("sensor/Test/room2")
-                 .WithTopic("sensor/Test/room4")
+                 .WithTopic("sensor/Test/room2")
+                 //.WithTopic("sensor/Test/room4")
                  .WithPayload(lat + "," + lon + "," + reh + "," + MainPage.token + "," + inorout + "," + wifi + "," + ctsnum + "," + secsnum + "," + mlosnum + "," + phl01 + "," + phl50 + "," + phl02 + "," + phl05 + "," + phl99 + "," + dys09 + "," + source)
                  .WithExactlyOnceQoS()
                  .Build();
