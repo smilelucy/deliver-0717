@@ -76,3 +76,4 @@ D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\PULI.dll
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\ref\PULI.dll
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\PULI.pdb
 D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\PULI.GeneratedMSBuildEditorConfig.editorconfig
+D:\xamarin_project\deliver-try-master\PULI\obj\Debug\netstandard2.0\PULI.csproj.AssemblyReference.cache

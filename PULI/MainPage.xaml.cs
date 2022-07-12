@@ -88,7 +88,9 @@ namespace PULI
             AUTH = "";
             token = "";
             Loginway = "";
+            
             identityStack.Children.Add(pickerStack());
+            
             //fooDoggyDatabase.DeleteAll();
             //Content = ViewService.LoadingLogin();
             checkDatabase();
@@ -152,7 +154,7 @@ namespace PULI
                 if (CrossConnectivity.Current.IsConnected) // 有網路
                 {
                     Loginway = "Auto";
-                    MessagingCenter.Send(this, "Auto", true);
+                  
                     Console.WriteLine("send~~~");
                     //var time = string.Format("{hh:mm:ss tt}", DateTime.Now);
                     //Console.WriteLine("time~~~" + time);
@@ -180,6 +182,7 @@ namespace PULI
                         //Console.WriteLine("auto_time~~ " + time);
                         if (token != null)
                         {
+                            totalList = null;
                             if (time == "早上")
                             {
                                 _time = "早上";
@@ -196,9 +199,9 @@ namespace PULI
                                 ActivityView.stopList = await web.Get_Stop(token);
                                 ActivityView.restoreList = await web.Get_Restore(token);
                             }
-                         
+
                             //googleMapUrl = getUrl(nowlat.ToString(), nowlon.ToString());
-                            Finallist = getUrl();
+                            
                             Console.WriteLine("MAinurl");
                             //Console.WriteLine(googleMapUrl);
                             //Console.WriteLine(Finallist);
@@ -472,7 +475,23 @@ namespace PULI
                                         //------------------MQTT-------------------
                                         Start();
                                         //--------------------------------------------
+                                      
+                                        
+                                     
+                                        if(Finallist.Any() == true) // contain value
+                                        {
+                                            //DisplayAlert("msg", "hiA", "ok");
+                                            Finallist.Clear();
+                                            Finallist = getUrl();
+                                            //DisplayAlert("msg", Finallist, "ok");
+                                        } else
+                                        {
+                                            //DisplayAlert("msg", "hiB", "ok");
+                                            Finallist = getUrl();
+                                        }
+                                       
                                         Console.WriteLine("4~~~~");
+                                        MessagingCenter.Send(this, "Auto", true);
                                         await Navigation.PushModalAsync(new HomeView2());
 
                                     }
@@ -836,8 +855,8 @@ namespace PULI
             //}
             try
             {
-                Console.WriteLine("QQQQcount~~~ ");
-                Console.WriteLine(totalList.daily_shipments.Count);
+                //Console.WriteLine("QQQQcount~~~ ");
+                //Console.WriteLine(totalList.daily_shipments.Count);
                 for (int i = 0; i < totalList.daily_shipments.Count; i++)
                 {
 
@@ -846,24 +865,39 @@ namespace PULI
                         Urlname.Add(totalList.daily_shipments[i].ct_name);
                         //Console.WriteLine("~~~~~");
                         //Console.WriteLine(totalList.daily_shipments[i].ct_name);
-
+                        //Console.WriteLine("EE" + totalList.daily_shipments[i].ct16);
+                       
                         if (totalList.daily_shipments[i].ct16.Equals("0") == false && totalList.daily_shipments[i].ct17.Equals("0") == false)
                         {
-                            // Console.WriteLine("AA");
+                            //Console.WriteLine("AA" + totalList.daily_shipments[i].ct16);
+
                             if (i == 0)
                             {
                                 // 過濾掉志工經緯度為0(google map會找不到點)
-                                //Console.WriteLine("AAA");
+                                Console.WriteLine("AAA");
+                                Console.WriteLine(totalList.daily_shipments[i].ct_name);
                                 //Console.WriteLine(i);
                                 ////googleMapUrl = nowlat.ToString() + ',' + nowlon.ToString() + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
-                                //Console.WriteLine(googleMapUrl);
-                                googleMapUrl = totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                                Console.WriteLine(String.IsNullOrEmpty(totalList.daily_shipments[i].dys21));
+                                Console.WriteLine(totalList.daily_shipments[i].dys21);
+                                if (String.IsNullOrEmpty(totalList.daily_shipments[i].dys21) == true)
+                                {
+                                    googleMapUrl = totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                                }
+                                
                             }
                             else
                             {
-                                //Console.WriteLine("AAB");
+                                Console.WriteLine("AAB");
                                 //Console.WriteLine(i);
-                                googleMapUrl = googleMapUrl + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                                Console.WriteLine(totalList.daily_shipments[i].ct_name);
+                                Console.WriteLine(String.IsNullOrEmpty(totalList.daily_shipments[i].dys21));
+                                Console.WriteLine(totalList.daily_shipments[i].dys21);
+                                if (String.IsNullOrEmpty(totalList.daily_shipments[i].dys21) == true)
+                                {
+                                    googleMapUrl = googleMapUrl + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                                }
+                               
                                // Console.WriteLine(googleMapUrl);
                             }
                             //googleMapUrl = googleMapUrl + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
@@ -885,34 +919,40 @@ namespace PULI
                             }
                             else
                             {
-                                //Console.WriteLine("XXXX");
+                                Console.WriteLine("XXXX");
                                 //Console.WriteLine(i);
-                                googleMapUrl = googleMapUrl + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                                Console.WriteLine(String.IsNullOrEmpty(totalList.daily_shipments[i].dys21));
+                                Console.WriteLine(totalList.daily_shipments[i].dys21);
+                                if (String.IsNullOrEmpty(totalList.daily_shipments[i].dys21) == true)
+                                {
+                                    googleMapUrl = googleMapUrl + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
+                                }
+                                    
 
                             }
 
 
                         }
-                        Console.WriteLine("i~~ ");
-                        Console.WriteLine(i);
-                        Console.WriteLine(Urlname.Count);
-                        Console.WriteLine(Urlname.Count % 23);
-                        Console.WriteLine(totalList.daily_shipments.Count - 1);
-                        Console.WriteLine(i == totalList.daily_shipments.Count - 1);
+                        //Console.WriteLine("i~~ ");
+                        //Console.WriteLine(i);
+                        //Console.WriteLine(Urlname.Count);
+                        //Console.WriteLine(Urlname.Count % 23);
+                        //Console.WriteLine(totalList.daily_shipments.Count - 1);
+                        //Console.WriteLine(i == totalList.daily_shipments.Count - 1);
                         if (Urlname.Count % 23 == 0 && Urlname.Count != 0)
                         {
-                            Console.WriteLine("WWWWWW" + i);
-                            Console.WriteLine(googleMapUrl);
+                            //Console.WriteLine("WWWWWW" + i);
+                            //Console.WriteLine(googleMapUrl);
                             Urllist.Add(googleMapUrl);
                             googleMapUrl = "";
                         }
                         else
                         {
-                            Console.Write("EEEEE" + i);
+                            //Console.Write("EEEEE" + i);
                             if (Urlname.Count % 23 != 0 && i == totalList.daily_shipments.Count - 1)
                             {
-                                Console.Write("RRRR" + i);
-                                Console.WriteLine(googleMapUrl);
+                                //Console.Write("RRRR" + i);
+                                //Console.WriteLine(googleMapUrl);
                                 Urllist.Add(googleMapUrl);
                             }
                         }

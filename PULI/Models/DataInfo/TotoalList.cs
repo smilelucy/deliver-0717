@@ -59,7 +59,10 @@ namespace PULI.Models.DataInfo
         [JsonProperty("ct06_telephone")]
         public string ct06_telephone { set; get; }// 電話
 
-        
+        [JsonProperty("dys21")]
+        public string dys21 { set; get; }// 電話
+
+
 
 
         //private string setcolor = null;
