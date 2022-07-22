@@ -478,17 +478,22 @@ namespace PULI
                                       
                                         
                                      
-                                        if(Finallist.Any() == true) // contain value
-                                        {
-                                            //DisplayAlert("msg", "hiA", "ok");
-                                            Finallist.Clear();
-                                            Finallist = getUrl();
-                                            //DisplayAlert("msg", Finallist, "ok");
-                                        } else
-                                        {
-                                            //DisplayAlert("msg", "hiB", "ok");
-                                            Finallist = getUrl();
-                                        }
+                                        //if(Finallist.Any() == true) // contain value
+                                        //{
+                                        //    //DisplayAlert("msg", "hiA", "ok");
+                                        //    Finallist.Clear();
+                                        //    Finallist = getUrl();
+                                        //    MessagingCenter.Send(this, "URL", "123");
+                                        //    Console.WriteLine("URL~~~~");
+                                        //    //DisplayAlert("msg", Finallist, "ok");
+                                        //} else
+                                        //{
+                                        //    //DisplayAlert("msg", "hiB", "ok");
+                                        //    Finallist = getUrl();
+                                        //    MessagingCenter.Send(this, "URL", "123");
+                                        //    Console.WriteLine("URL~~~~2");
+                                        //}
+                                      
                                        
                                         Console.WriteLine("4~~~~");
                                         MessagingCenter.Send(this, "Auto", true);
@@ -691,7 +696,8 @@ namespace PULI
                                 ActivityView.stopList = await web.Get_Stop(token);
                                 ActivityView.restoreList = await web.Get_Restore(token);
                             }
-                            Finallist = getUrl();
+                            //Finallist = getUrl();
+                            //MessagingCenter.Send(this, "URL", Finallist);
                             Console.WriteLine("MAinurl");
                             //Console.WriteLine(googleMapUrl);
                             //Console.WriteLine(Finallist);

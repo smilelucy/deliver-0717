@@ -57,13 +57,13 @@ namespace PULI.Droid
             });
             ad.Show();
             LoadApplication(new App());
-            
 
-            //Intent startIntent = new Intent(this, typeof(ForService));
-            //if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)   // if API >= 26
-            //    StartForegroundService(startIntent);
-            //else                                // if API <= 25
-            //    StartService(startIntent);
+
+            Intent startIntent = new Intent(this, typeof(ForService));
+            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)   // if API >= 26
+                StartForegroundService(startIntent);
+            else                                // if API <= 25
+                StartService(startIntent);
 
 
 

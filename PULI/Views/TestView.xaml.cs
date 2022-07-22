@@ -78,6 +78,7 @@ namespace PULI.Views
         private bool isReset = false; // for判斷是否進入label顏色判斷
         private bool isDB = false; // for判斷是否進入label顏色判斷
         public static string color; // for存紅色還是綠色
+        public static List<string> Finallist = new List<string>();
 
 
         public TestView()
@@ -92,8 +93,9 @@ namespace PULI.Views
             //TempAddDB_else = new TempAddDatabase_else();
             //////Console.WriteLine("way~~ " + MainPage.Loginway);
 
-
+            Finallist.Add("123");
             Messager();
+            MessagingCenter.Send(this, "URL", Finallist);
 
         }
 
