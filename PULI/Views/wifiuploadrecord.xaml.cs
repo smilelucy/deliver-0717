@@ -236,5 +236,10 @@ namespace PULI.Views
             wifi_punchout_listview.ItemTemplate = new DataTemplate(typeof(RecordCell));
             base.OnAppearing();
         }
+        //lock the previous page
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
     }
 }

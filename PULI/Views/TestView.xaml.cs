@@ -7452,6 +7452,10 @@ namespace PULI.Views
 
         }
 
-
+        //lock the previous page
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
     }
 }

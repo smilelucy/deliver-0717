@@ -92,6 +92,8 @@ namespace PULI.Views
         //public static string homename;
         private double px;
         private double py;
+        private string pa;
+        private string pb;
         private double dx;
         private double dy;
         private double d;
@@ -327,12 +329,12 @@ namespace PULI.Views
                             if (i == 0)
                             {
                                 // 過濾掉志工經緯度為0(google map會找不到點)
-                                Console.WriteLine("AAA");
-                                Console.WriteLine(totalList.daily_shipments[i].ct_name);
+                                //Console.WriteLine("AAA");
+                                //Console.WriteLine(totalList.daily_shipments[i].ct_name);
                                 //Console.WriteLine(i);
                                 ////googleMapUrl = nowlat.ToString() + ',' + nowlon.ToString() + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
-                                Console.WriteLine(String.IsNullOrEmpty(totalList.daily_shipments[i].dys21));
-                                Console.WriteLine(totalList.daily_shipments[i].dys21);
+                                //Console.WriteLine(String.IsNullOrEmpty(totalList.daily_shipments[i].dys21));
+                                //Console.WriteLine(totalList.daily_shipments[i].dys21);
                                 if (String.IsNullOrEmpty(totalList.daily_shipments[i].dys21) == true)
                                 {
                                     googleMapUrl = totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/' + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
@@ -341,11 +343,11 @@ namespace PULI.Views
                             }
                             else
                             {
-                                Console.WriteLine("AAB");
+                               // Console.WriteLine("AAB");
                                 //Console.WriteLine(i);
-                                Console.WriteLine(totalList.daily_shipments[i].ct_name);
-                                Console.WriteLine(String.IsNullOrEmpty(totalList.daily_shipments[i].dys21));
-                                Console.WriteLine(totalList.daily_shipments[i].dys21);
+                               // Console.WriteLine(totalList.daily_shipments[i].ct_name);
+                               // Console.WriteLine(String.IsNullOrEmpty(totalList.daily_shipments[i].dys21));
+                               // Console.WriteLine(totalList.daily_shipments[i].dys21);
                                 if (String.IsNullOrEmpty(totalList.daily_shipments[i].dys21) == true)
                                 {
                                     googleMapUrl = googleMapUrl + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
@@ -372,10 +374,10 @@ namespace PULI.Views
                             }
                             else
                             {
-                                Console.WriteLine("XXXX");
+                                //Console.WriteLine("XXXX");
                                 //Console.WriteLine(i);
-                                Console.WriteLine(String.IsNullOrEmpty(totalList.daily_shipments[i].dys21));
-                                Console.WriteLine(totalList.daily_shipments[i].dys21);
+                               // Console.WriteLine(String.IsNullOrEmpty(totalList.daily_shipments[i].dys21));
+                              //  Console.WriteLine(totalList.daily_shipments[i].dys21);
                                 if (String.IsNullOrEmpty(totalList.daily_shipments[i].dys21) == true)
                                 {
                                     googleMapUrl = googleMapUrl + totalList.daily_shipments[i].ct16 + ',' + totalList.daily_shipments[i].ct17 + '/';
@@ -414,8 +416,8 @@ namespace PULI.Views
                     {
                         if (Urlname.Count % 23 != 0 && i == totalList.daily_shipments.Count - 1)
                         {
-                            Console.Write("RRRR" + i);
-                            Console.WriteLine(googleMapUrl);
+                            //Console.Write("RRRR" + i);
+                            //Console.WriteLine(googleMapUrl);
                             Urllist.Add(googleMapUrl);
                         }
                     }
@@ -557,7 +559,7 @@ namespace PULI.Views
                     var btnumber = Urlname.Count/23;
                     Console.WriteLine("btnumber");
                     Console.WriteLine(btnumber);
-                    Console.WriteLine(MainPage.Urlname.Count);
+                    //Console.WriteLine(MainPage.Urlname.Count);
                     //Console.WriteLine(btnumber Mod 23);
                     if(Urlname.Count % 23 == 0)
                     {
@@ -574,7 +576,14 @@ namespace PULI.Views
                             qrStack.Children.Add(supplyBtn(i.ToString()));
                         }
                     }
-                   
+
+                    for (int i = 0; i < totalList.daily_shipments.Count; i++)
+                    {
+
+                        //Console.WriteLine(totalList.daily_shipments[i].ct_name);
+                        Console.WriteLine(totalList.daily_shipments[i].ct16);
+                        Console.WriteLine(totalList.daily_shipments[i].ct17);
+                    }
 
                     //Console.WriteLine("nnnn~~~ " + totalList.daily_shipments.Count());
 
@@ -722,9 +731,13 @@ namespace PULI.Views
                                     isform[totalList.daily_shipments[i].ct_name] = false; // 判斷跳出問卷的
                                     gomap[totalList.daily_shipments[i].ct_name] = false; // 判斷導航的
                                     punchyesorno[totalList.daily_shipments[i].ct_name] = false; // 判斷是否進入判斷打卡(無論打卡成功與否)
-                                    double lat = Convert.ToDouble(totalList.daily_shipments[i].ct16);
+                            double lat;
+                            double lot;
+                            Double.TryParse(totalList.daily_shipments[i].ct16, out lat);
+                            Double.TryParse(totalList.daily_shipments[i].ct17, out lot);
+                           // double lat = Convert.ToDouble(totalList.daily_shipments[i].ct16);
                                     //Console.WriteLine("LAT" + lat);
-                                    double lot = Convert.ToDouble(totalList.daily_shipments[i].ct17);
+                                   // double lot = Convert.ToDouble(totalList.daily_shipments[i].ct17);
                                     //Console.WriteLine("LOT" + lot);
                                     home = totalList.daily_shipments[i].ct_name + " 的家";
                                     s_num = totalList.daily_shipments[i].ct_s_num;
@@ -985,9 +998,14 @@ namespace PULI.Views
                                     {
                                         punchList[totalList.daily_shipments[i].ct_name] = true;
                                     }
-                                    double lat = Convert.ToDouble(totalList.daily_shipments[i].ct16);
+                            //double lat = Convert.ToDouble(totalList.daily_shipments[i].ct16);
+                            double lat;
+                            Double.TryParse(totalList.daily_shipments[i].ct16, out lat);
                                     Console.WriteLine("LAT" + totalList.daily_shipments[i].ct16);
-                                    double lot = Convert.ToDouble(totalList.daily_shipments[i].ct17);
+                            Console.WriteLine(lat);
+                            double lot;
+                            //double lot = Convert.ToDouble(totalList.daily_shipments[i].ct17);
+                            Double.TryParse(totalList.daily_shipments[i].ct17, out lot);
                                     ////Console.WriteLine("LOT" + lot);
                                     home = totalList.daily_shipments[i].ct_name + " 的家";
                                     s_num = totalList.daily_shipments[i].ct_s_num;
@@ -1761,12 +1779,22 @@ namespace PULI.Views
                                     */
                                 //px = double.Parse(totalList.daily_shipments[setnum].ct16);
                                 Console.WriteLine("ct16~~~ ");
-                               
-                                px = double.Parse(totalList.daily_shipments[i].ct16);
-                                //py = double.Parse(totalList.daily_shipments[setnum].ct17);
-                                py = double.Parse(totalList.daily_shipments[i].ct17);
+                                // Console.WriteLine(totalList.daily_shipments[i].ct16);
+                                // Console.WriteLine(totalList.daily_shipments[i].ct17);
+                                //px = double.Parse(totalList.daily_shipments[i].ct16);
+
+
+                                //px = Convert.ToDouble(totalList.daily_shipments[i].ct16);
+                                Double.TryParse(totalList.daily_shipments[i].ct16, out px);
+                                //pa = totalList.daily_shipments[i].ct16;
+                                //py = Convert.ToDouble(totalList.daily_shipments[i].ct17);
+                                Double.TryParse(totalList.daily_shipments[i].ct17, out py);
+                                //py = double.Parse(totalList.daily_shipments[i].ct17);
+                                //pb = totalList.daily_shipments[i].ct17);
                                 dx = position.Latitude - px > 0 ? position.Latitude - px : px - position.Latitude;
                                 dy = position.Longitude - py > 0 ? position.Longitude - py : py - position.Longitude;
+
+
                                 d = Math.Sqrt(dx * 110000 * dx * 110000 + dy * 100000 * dy * 100000);
                                 //Console.WriteLine("d2" + d);
                                 d2 = d.ToString();
@@ -2518,7 +2546,7 @@ namespace PULI.Views
                         catch (Exception ex)
                         {
                             Console.WriteLine("EX222~~ " + ex.ToString());
-                            DisplayAlert("msg", ex.ToString(), "ok");
+                            //DisplayAlert("msg", ex.ToString(), "ok");
                             //DisplayAlert("error", "AAA" + ex.ToString(), "OK");
                             //Console.WriteLine("GET");
                             //Console.WriteLine("ERRORLA~~~" + ex.ToString());

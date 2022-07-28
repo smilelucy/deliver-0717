@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="4.7" package="com.NCNU.puli" android:installLocation="preferExternal" android:persistent="true" android:versionCode="46">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="4.9" package="com.NCNU.puli" android:installLocation="preferExternal" android:persistent="true" android:versionCode="48">
 	<uses-sdk android:minSdkVersion="17" android:targetSdkVersion="30" />
 	<!-- 外部連結 -->
 	<queries>

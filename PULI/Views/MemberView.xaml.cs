@@ -447,5 +447,11 @@ namespace PULI.Views
             totalList = new TotalList();
             allclientList = new List<AllClientInfo>();
         }
+
+        //lock the previous page
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
     }
 }
