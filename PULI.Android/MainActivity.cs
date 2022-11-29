@@ -72,8 +72,10 @@ namespace PULI.Droid
             OpenLocationSettings();
         }
 
-        
-       
+ 
+
+
+
         public void OpenLocationSettings()
         {
             LocationManager LM = (LocationManager)Forms.Context.GetSystemService(Android.Content.Context.LocationService);

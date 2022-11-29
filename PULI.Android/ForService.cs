@@ -116,6 +116,30 @@ namespace PULI.Droid
             StopForeground(true);
 
             base.OnDestroy();
+
+        }
+
+
+
+        public override void OnTaskRemoved(Intent rootIntent)
+        {
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
+                StopForeground(true);
+            else
+                StopService(new Intent(this, typeof(MainActivity)));
+            base.OnTaskRemoved(rootIntent);
+            //will kill threads when app is manually killed by user.
+            Java.Lang.JavaSystem.Exit(0);
+        }
+
+        public void A()
+        {
+            var notificationManager = (NotificationManager)GetSystemService(NotificationService);
+            notificationManager.Cancel(FORSERVICE_NOTIFICATION_ID);
+            StopSelf();
+            StopForeground(true);
+
+
         }
     }
 }

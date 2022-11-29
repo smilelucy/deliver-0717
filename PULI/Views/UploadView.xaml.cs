@@ -24,7 +24,8 @@ namespace PULI.Views
         private static bool ispickphoto = false;
         private string _selecttext = "";
         List<string> selectvalueList = new List<string>();
-        private static string NOWHOME; // for拍照上傳帶案主家編號
+        private Picker namePicker = new Picker();
+        private static string NOWHOME = ""; // for拍照上傳帶案主家編號
         private static string NOWREH;  // for拍照上傳帶reh_s_num
         public UploadView()
         {
@@ -37,9 +38,15 @@ namespace PULI.Views
                     selectvalueList.Add(i.ct_s_num);
                 }
                 NOWREH = MapView.totalList.daily_shipments[0].reh_s_num;
-            }
-            
 
+            }
+            //DisplayAlert("Mapview.name", MapView.NOWCTNAME, "OK");
+            if(MapView.NOWCTNAME != "")
+            {
+                namePicker.SelectedIndex = namePicker.Items.IndexOf(MapView.NOWCTNAME);
+            }
+           
+        
         }
 
         StreamContent img_sc;
@@ -71,9 +78,11 @@ namespace PULI.Views
                 Console.WriteLine("picname~~~ " + DateTime.UtcNow);
                 if (photo != null)
                 {
+                    img.IsVisible = true;
                     img.Source = ImageSource.FromStream(() => { return photo.GetStream(); });
                     //BinaryReader br = new BinaryReader(photo.GetStream());
                     img_sc = new StreamContent(photo.GetStream());
+                    photoPickArea.IsEnabled = false;
                     Console.WriteLine("path~~" + photo.AlbumPath);
                     Console.WriteLine("path2~~~ " + photo.Path);
                     //Console.WriteLine($"File size: {img_sc.} bytes");
@@ -105,8 +114,26 @@ namespace PULI.Views
                 await DisplayAlert("Errorcamera :", ex.Message.ToString(), "ok");
             }
         }
-        
-        private async void PickPhoto_Clicked(object sender, EventArgs e)
+
+       
+
+        private async void Cam_BtnCancel_onclick(object sender, EventArgs e)
+        {
+            img_sc = null;
+            img.IsVisible = false;
+            photoPickArea.IsEnabled = true;
+        }
+
+        private async void Pic_BtnCancel_onclick(object sender, EventArgs e)
+        {
+            img_from_gallery = null;
+            PhotoImage.IsVisible = false;
+            //photoCamArea.IsEnabled = true;
+            photo.IsEnabled = true; // 照片記錄buuton
+            photo_cancel.IsEnabled = true; // 照片記錄清除button
+        }
+
+        private async void PickPhoto_Clicked(object sender, EventArgs e) // 點選照片選擇
         {
             await CrossMedia.Current.Initialize();
             img_sc = null;
@@ -120,12 +147,18 @@ namespace PULI.Views
             {
                 return;
             }
+            PhotoImage.IsVisible = true;
+            //photoCamArea.IsEnabled = false;
+            photo.IsEnabled = false; // 照片記錄buuton
+            photo_cancel.IsEnabled = false; // 照片記錄清除button
+
 
             PhotoImage.Source = ImageSource.FromStream(() =>
             {
                 return _mediafile.GetStream();
             });
             img_from_gallery = new StreamContent(_mediafile.GetStream());
+            Console.WriteLine("img_from_gallery", img_from_gallery);
         }
 
         private async void back_Clicked(object sender, EventArgs e)
@@ -143,21 +176,23 @@ namespace PULI.Views
                     Text = "案主 : "
                 };
 
-                Picker picker = new Picker
+                namePicker = new Picker
                 {
                     BackgroundColor = Color.White,
                     Title = "請選擇案主",
                     TextColor = Color.FromHex("#326292"),
                     TitleColor = Color.FromHex("#326292")
                 };
-                picker.SelectedIndexChanged += usrIdentity_SelectedIndexChanged; // 選了一個職之後會觸發一個事件
-
                 List<string> identityList = new List<string>();
                 foreach (var i in MapView.totalList.daily_shipments)
                 {
                     identityList.Add(i.ct_name);
                 }
-                picker.ItemsSource = identityList;
+                namePicker.ItemsSource = identityList;
+                namePicker.SelectedIndexChanged += usrIdentity_SelectedIndexChanged; // 選了一個職之後會觸發一個事件
+
+                //List<string> identityList = new List<string>();
+               
 
                 Frame frame = new Frame // frame包上面那個stacklayout
                 {
@@ -167,7 +202,7 @@ namespace PULI.Views
                     //BackgroundColor = Color.FromHex("eddcd2"),
                     CornerRadius = 20,
                     HasShadow = false,
-                    Content = picker
+                    Content = namePicker
                 };
 
                 StackLayout stack = new StackLayout
@@ -190,6 +225,7 @@ namespace PULI.Views
             }
         }
 
+
         private void usrIdentity_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -201,6 +237,7 @@ namespace PULI.Views
                 {
                     _selecttext = (string)picker.ItemsSource[selectedIndex];
                     NOWHOME = selectvalueList[selectedIndex];
+                 
                     //Console.WriteLine("selected~~~ " + selectedIndex);
                     //Console.WriteLine("text~~~" + _selecttext);
                     //Console.WriteLine("value~~~" + NOWHOME);
@@ -216,105 +253,21 @@ namespace PULI.Views
         private async void post_Clicked(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(note.Text))
-                await DisplayAlert("提示", "您尚有東西未填寫", "ok");
-            else
             {
-                try
-                {
-                    if(!CrossConnectivity.Current.IsConnected)
-                    {
-                        DisplayAlert("提示", "目前無網路無法上傳，照片已存入相簿，可在有網路的時候透過照片選擇上傳", "ok");
-                    }
-                    else
-                    {
-                        Content = ViewService.Loading();
-
-                        //bool post = web.Post_work(MainPage.token, note.Text, img_sc);
-                        HttpClient client = new HttpClient();
-                        client.DefaultRequestHeaders.Add("AUTHORIZATION", "Token " + MainPage.token);
-                        MultipartFormDataContent formData = new MultipartFormDataContent();
-                        //img_sc.Headers.Add("Content-Type", "image/jpeg");
-
-                        if (!string.IsNullOrEmpty(note.Text))
-                            formData.Add(new StringContent(note.Text), "WorkLogNote");
-                        formData.Add(new StringContent(NOWHOME), "ct_s_num");
-                        formData.Add(new StringContent(NOWREH), "reh_s_num");
-                        //Console.WriteLine("picupload" + MapView.NOWHOME);
-                        //WorkLogPicture
-                        if (istakephoto == true && ispickphoto == false)
-                        {
-                            formData.Add(img_sc, "WorkLogPicture", "WorkLogPicture");
-                            Console.WriteLine("Ain~~~ ");
-                        }
-                        else if (istakephoto == false && ispickphoto == true)
-                        {
-                            formData.Add(img_from_gallery, "WorkLogPicture", "WorkLogPicture");
-                            Console.WriteLine("Bin~~~ ");
-                        }
-                        //else
-                        //{
-                        //    if (ispickphoto == true && istakephoto == true)
-                        //    {
-                        //        formData.Add(img_sc, "WorkLogPicture", "WorkLogPicture");
-                        //        formData.Add(img_from_gallery, "WorkLogPicture", "WorkLogPicture");
-                                
-                        //    }
-                        //}
-
-                        var request = new HttpRequestMessage()
-                        {
-                            //RequestUri = new Uri("http://59.125.154.98:8080/lt_care/api/app/account/save_worklog"),
-                            RequestUri = new Uri("https://s1.fcts.org.tw/api/app/account/save_worklog"),
-                            Method = HttpMethod.Post,
-                            Content = formData
-                        };
-                        request.Headers.Add("Connection", "closed");
-
-                        var response = await client.SendAsync(request);
-                        Console.WriteLine("WHY ~  " + response.ToString());
-                        if (response.IsSuccessStatusCode)
-                        {
-                            var content = await response.Content.ReadAsStringAsync();
-                            if (content == "ok")
-                            {
-                                Console.WriteLine("xxxxxxxxxxxxx : " + content);
-                                await Navigation.PopAsync();
-                                //Content = uploadlayout;
-                                await DisplayAlert("上傳結果", "上傳成功！", "ok");
-                                istakephoto = false;
-                                ispickphoto = false;
-
-                            }
-                            else
-                            {
-                                Console.WriteLine("================================ : " + content);
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("WHY2~ ");
-                            Console.WriteLine("WHY ~2" + response.ToString());
-                        }
-                    }
-                    
-
-                }
-                catch (Exception ex)
-                {
-                    await DisplayAlert("ErrorMA~~~", ex.Message.ToString(), "ok");
-                    Console.WriteLine("uploaderror~~~ " + ex.Message.ToString());
-                }
+                note.Text = "未填寫";
             }
-        }
-        private async void post_from_gallery_Clicked(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(note.Text))
-                await DisplayAlert("提示", "您尚有東西未填寫", "ok");
-            else
+                //await DisplayAlert("提示", "您尚有東西未填寫", "ok");
+              
+            try
             {
-                try
+                if (!CrossConnectivity.Current.IsConnected)
+                {
+                    DisplayAlert("提示", "目前無網路無法上傳，照片已存入相簿，可在有網路的時候透過照片選擇上傳", "ok");
+                }
+                else
                 {
                     Content = ViewService.Loading();
+
                     //bool post = web.Post_work(MainPage.token, note.Text, img_sc);
                     HttpClient client = new HttpClient();
                     client.DefaultRequestHeaders.Add("AUTHORIZATION", "Token " + MainPage.token);
@@ -323,10 +276,41 @@ namespace PULI.Views
 
                     if (!string.IsNullOrEmpty(note.Text))
                         formData.Add(new StringContent(note.Text), "WorkLogNote");
-                    formData.Add(new StringContent(NOWHOME), "ct_s_num");
+                    if(NOWHOME != "") // 如果有偵測到打卡案家
+                    {
+                        formData.Add(new StringContent(NOWHOME), "ct_s_num");
+                     
+                    } else // 自己選擇案主
+                    {
+                        formData.Add(new StringContent(MapView.NOWCTSNUM), "ct_s_num");
+                    }
+                       
                     formData.Add(new StringContent(NOWREH), "reh_s_num");
+                    //Console.WriteLine("picupload" + MapView.NOWHOME);
                     //WorkLogPicture
-                    formData.Add(img_from_gallery, "WorkLogPicture", "WorkLogPicture");
+                    if (istakephoto == true && ispickphoto == false)
+                    {
+                        formData.Add(img_sc, "WorkLogPicture", "WorkLogPicture");
+                        Console.WriteLine("Ain~~~ ");
+                    }
+                    else if (istakephoto == false && ispickphoto == true)
+                    {
+                        formData.Add(img_from_gallery, "WorkLogPicture", "WorkLogPicture");
+                        Console.WriteLine("Bin~~~ ");
+                    }
+
+                    formData.Add(new StringContent(MapView.NowLat.ToString()), "wkl03_lat");
+                    formData.Add(new StringContent(MapView.NowLon.ToString()), "wkl03_lng");
+                    //else
+                    //{
+                    //    if (ispickphoto == true && istakephoto == true)
+                    //    {
+                    //        formData.Add(img_sc, "WorkLogPicture", "WorkLogPicture");
+                    //        formData.Add(img_from_gallery, "WorkLogPicture", "WorkLogPicture");
+
+                    //    }
+                    //}
+
                     var request = new HttpRequestMessage()
                     {
                         //RequestUri = new Uri("http://59.125.154.98:8080/lt_care/api/app/account/save_worklog"),
@@ -337,7 +321,6 @@ namespace PULI.Views
                     request.Headers.Add("Connection", "closed");
 
                     var response = await client.SendAsync(request);
-                    Console.WriteLine("WHY ~  " + response.ToString());
                     if (response.IsSuccessStatusCode)
                     {
                         var content = await response.Content.ReadAsStringAsync();
@@ -347,6 +330,8 @@ namespace PULI.Views
                             await Navigation.PopAsync();
                             //Content = uploadlayout;
                             await DisplayAlert("上傳結果", "上傳成功！", "ok");
+                            istakephoto = false;
+                            ispickphoto = false;
 
                         }
                         else
@@ -359,14 +344,78 @@ namespace PULI.Views
                         Console.WriteLine("WHY2~ ");
                         Console.WriteLine("WHY ~2" + response.ToString());
                     }
+                }
 
-                }
-                catch (Exception ex)
-                {
-                    await DisplayAlert("ErrorMA~~~", ex.Message.ToString(), "ok");
-                    Console.WriteLine("uploaderror");
-                }
+
             }
+            catch (Exception ex)
+            {
+                //await DisplayAlert("ErrorMA~~~", ex.Message.ToString(), "ok");
+                Console.WriteLine("uploaderror~~~ " + ex.Message.ToString());
+            }
+            
         }
+        //private async void post_from_gallery_Clicked(object sender, EventArgs e)
+        //{
+        //    if (string.IsNullOrEmpty(note.Text))
+        //    {
+        //        note.Text = "未填寫";
+        //    }
+        //    try
+        //    {
+        //        Content = ViewService.Loading();
+        //        //bool post = web.Post_work(MainPage.token, note.Text, img_sc);
+        //        HttpClient client = new HttpClient();
+        //        client.DefaultRequestHeaders.Add("AUTHORIZATION", "Token " + MainPage.token);
+        //        MultipartFormDataContent formData = new MultipartFormDataContent();
+        //        //img_sc.Headers.Add("Content-Type", "image/jpeg");
+
+        //        if (!string.IsNullOrEmpty(note.Text))
+        //            formData.Add(new StringContent(note.Text), "WorkLogNote");
+        //        formData.Add(new StringContent(NOWHOME), "ct_s_num");
+        //        formData.Add(new StringContent(NOWREH), "reh_s_num");
+        //        //WorkLogPicture
+        //        formData.Add(img_from_gallery, "WorkLogPicture", "WorkLogPicture");
+        //        var request = new HttpRequestMessage()
+        //        {
+        //            //RequestUri = new Uri("http://59.125.154.98:8080/lt_care/api/app/account/save_worklog"),
+        //            RequestUri = new Uri("https://s1.fcts.org.tw/api/app/account/save_worklog"),
+        //            Method = HttpMethod.Post,
+        //            Content = formData
+        //        };
+        //        request.Headers.Add("Connection", "closed");
+
+        //        var response = await client.SendAsync(request);
+        //        Console.WriteLine("WHY ~  " + response.ToString());
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var content = await response.Content.ReadAsStringAsync();
+        //            if (content == "ok")
+        //            {
+        //                Console.WriteLine("xxxxxxxxxxxxx : " + content);
+        //                await Navigation.PopAsync();
+        //                //Content = uploadlayout;
+        //                await DisplayAlert("上傳結果", "上傳成功！", "ok");
+
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine("================================ : " + content);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("WHY2~ ");
+        //            Console.WriteLine("WHY ~2" + response.ToString());
+        //        }
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await DisplayAlert("ErrorMA~~~", ex.Message.ToString(), "ok");
+        //        Console.WriteLine("uploaderror");
+        //    }
+
+        //}
     }
 }

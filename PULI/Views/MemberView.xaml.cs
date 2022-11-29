@@ -1,6 +1,7 @@
 ﻿using Deliver.Models;
 using Deliver.Models.DataInfo;
 using Deliver.Services;
+using JSJ.Services;
 using Newtonsoft.Json;
 using Plugin.Connectivity;
 using PULI.Models.DataCell;
@@ -249,6 +250,8 @@ namespace PULI.Views
                 //FormInfo.IsVisible = false;
                 //FormInfo.IsEnabled = false;
                 //userList = null;
+
+             //   await DependencyService.Get<IQRCode>().ScanAsync();
                 MessagingCenter.Send(this, "OUT", true);
                 DependencyService.Get<IAppExit>().Exit();// 把APP關掉再重開
             }

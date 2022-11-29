@@ -1176,12 +1176,23 @@ namespace PULI
             {
                 var factory = new MqttFactory();　　　　　　　　//聲明一個MQTT客戶端的標準步驟 的第一步
                 mqttClient = factory.CreateMqttClient() as MqttClient;  //factory.CreateMqttClient()實際是一個介面類型（IMqttClient）,這裡是把他的類型變了一下
+                // old mqtt server
+                /*
                 options = new MqttClientOptionsBuilder()　　　　//實例化一個MqttClientOptionsBulider
-                    //.WithTcpServer("192.168.50.163", 1883)
                     .WithTcpServer("61.218.250.30",4220)
                     .Build();
-                        
+                */
+                
+                // 5334 new mqtt server
+                
+                options = new MqttClientOptionsBuilder()    //實例化一個MqttClientOptionsBulider
+                                                            //.WithTcpServer("192.168.50.163", 1883)
+                    .WithTcpServer("163.22.32.40", 19883)
+                    .Build();
+                
                 await mqttClient.ConnectAsync(options);      //連接伺服器
+                
+
                 //if (!mqttClient.IsConnected)
                 //{
                 //    Console.WriteLine("isconnect? " + mqttClient.IsConnected);
@@ -1198,13 +1209,13 @@ namespace PULI
                 //}
                 //Console.WriteLine("MQTTconnected");
                 await mqttClient.SubscribeAsync(new TopicFilterBuilder()
-                  //.WithTopic("sensor/Test/room1")
-                  .WithTopic("sensor/Test/room3")
+                  .WithTopic("sensor/Test/room1")
+                  //.WithTopic("sensor/Test/room3")
                   //.WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
                   .Build());
                 await mqttClient.SubscribeAsync(new TopicFilterBuilder()
-                  //.WithTopic("sensor/Test/room2")
-                  .WithTopic("sensor/Test/room4")
+                  .WithTopic("sensor/Test/room2")
+                  //.WithTopic("sensor/Test/room4")
                   //.WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
                   .Build());
                 Console.WriteLine("Connected >>Subscribe Success");

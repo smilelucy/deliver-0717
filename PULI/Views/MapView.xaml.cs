@@ -100,6 +100,8 @@ namespace PULI.Views
         private int setnum;
         public static double NowLon;
         public static double NowLat;
+        public static string NOWCTSNUM = "";
+        public static string NOWCTNAME;
         private string inorout; // 判斷SQLite為簽到還是簽退
         private string gendertxt; // for社工地圖?!
         public static List<string> name_list_in = new List<string>(); // 紀錄處理無網路簽到成功
@@ -1349,6 +1351,8 @@ namespace PULI.Views
                 //Console.WriteLine("nowlot" + position.Longitude);
                 //Console.WriteLine("NoewLon~~~" + NowLon);
                 //Console.WriteLine("NoewLat~~~" + NowLat);
+                
+                // version 5.2.2把這三行註解掉
                 CameraPosition cameraPosition = new CameraPosition(new Xamarin.Forms.GoogleMaps.Position(position.Latitude, position.Longitude), map_Zoom);
                 await MyMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition)); // 地圖上抓取目前位置
                 await DeliverMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition));
@@ -1879,7 +1883,9 @@ namespace PULI.Views
                                         //----------------------------------
                                         //Console.WriteLine("name1~~" + setname.Text);
                                         //Clname = totalList.daily_shipments[i].ct_name;
-
+                                        NOWCTSNUM = totalList.daily_shipments[i].ct_s_num;
+                                        NOWCTNAME = totalList.daily_shipments[i].ct_name;
+                                        //DisplayAlert("ct_s_num", NOWCTSNUM + totalList.daily_shipments[i].ct_name, "OK");
 
 
                                         //ct_s_num = totalList.daily_shipments[i].ct_s_num;
@@ -4001,7 +4007,6 @@ namespace PULI.Views
             try
             {
                 Console.WriteLine("Msg~~~~~ ");
-               
 
                 MessagingCenter.Subscribe<HomeView, bool>(this, "SET_MAP", (sender, arg) =>
                 {
